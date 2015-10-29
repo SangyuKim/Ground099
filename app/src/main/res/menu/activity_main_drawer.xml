@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_myprofile" android:icon="@android:drawable/ic_menu_gallery"
+            android:title="내 프로필" />
+        <item android:id="@+id/nav_fc" android:icon="@android:drawable/ic_menu_gallery"
+            android:title="FC 페이지" />
+        <item android:id="@+id/nav_mymessage" android:icon="@android:drawable/ic_menu_slideshow"
+            android:title="메시지 함" />
+        <item android:id="@+id/nav_ground" android:icon="@android:drawable/ic_menu_manage"
+            android:title="그라운드" />
+        <item android:id="@+id/nav_fccreate" android:icon="@android:drawable/ic_menu_manage"
+            android:title="FC 창단하기" />
+    </group>
+
+    <item android:title="Setting">
+        <menu>
+            <item android:id="@+id/nav_setting" android:icon="@android:drawable/ic_menu_manage"
+                android:title="Setting" />
+        </menu>
+    </item>
+
+</menu>
