@@ -6,11 +6,28 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.naver.MovieAdapter;
+import com.android.ground.ground.model.naver.MovieItem;
+import com.android.ground.ground.model.naver.MovieItemView;
+import com.android.ground.ground.model.naver.NaverMovies;
+import com.android.ground.ground.view.view.person.main.MVPview;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +38,19 @@ import com.android.ground.ground.R;
  * create an instance of this fragment.
  */
 public class FragmentMainCheckMatch extends Fragment {
+
+    //todo
+    /*네이버 예제*/
+    EditText keywordView;
+    ListView listView;
+    LinearLayout mLinearLayout;
+    PullToRefreshListView refreshView;
+    //    SwipeRefreshLayout refreshLayout;
+    MovieAdapter mAdapter;
+    private static final boolean isNaverMovie = true;
+    boolean isUpdate = false;
+    boolean isLastItem = false;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,10 +102,72 @@ public class FragmentMainCheckMatch extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mLinearLayout.setVisibility(View.VISIBLE);
+                view.setVisibility(View.GONE);
             }
         });
+        mLinearLayout = (LinearLayout)view.findViewById(R.id.custom_search_bar);
+        mLinearLayout.setVisibility(View.GONE);
+        keywordView = (EditText) view.findViewById(R.id.custom_search_bar_editText);
+        refreshView = (PullToRefreshListView)view.findViewById(R.id.pulltorefresh);
+        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                String keyword = mAdapter.getKeyword();
+                searchMovie(keyword);
+            }
+        });
+
+        refreshView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+            @Override
+            public void onLastItemVisible() {
+                getMoreItem();
+            }
+        });
+
+        listView = refreshView.getRefreshableView();
+        listView.addHeaderView(new MVPview(getContext()));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listView.getItemAtPosition(position) instanceof MovieItem) {
+                    MovieItem item = (MovieItem) listView.getItemAtPosition(position);
+                    Toast.makeText(getContext(), "item  : " + item.toString(), Toast.LENGTH_SHORT).show();
+                    MovieItemView i = (MovieItemView) view;
+                    i.setVisible();
+                }
+            }
+        });
+
+
+
+        mAdapter = new MovieAdapter();
+        listView.setAdapter(mAdapter);
+        keywordView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchMovie(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        mAdapter.setOnAdapterExtraButtonListener(new MovieAdapter.OnAdapterExtraButtonListener() {
+            @Override
+            public void onAdapterExtraButtonClick(MovieAdapter adapter, MovieItemView view, MovieItem data) {
+                Toast.makeText(getContext(), "포지션 보여주기", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
         return view;
     }
 
@@ -116,6 +208,60 @@ public class FragmentMainCheckMatch extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+    private void getMoreItem() {
+        if (!isUpdate) {
+            String keyword = mAdapter.getKeyword();
+            int startIndex = mAdapter.getStartIndex();
+            if (!TextUtils.isEmpty(keyword) && startIndex != -1) {
+                isUpdate = true;
+                NetworkManager.getInstance().getNetworkMelon(getContext(), keyword, startIndex, 10, new NetworkManager.OnResultListener<NaverMovies>() {
+                    @Override
+                    public void onSuccess(NaverMovies result) {
+                        for (MovieItem item : result.items) {
+                            mAdapter.add(item);
+                        }
+                        isUpdate = false;
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        isUpdate = false;
+                    }
+                });
+            }
+        }
+    }
+    private void searchMovie(final String keyword) {
+        if (!TextUtils.isEmpty(keyword)) {
+            NetworkManager.getInstance().getNetworkMelon(getContext(), keyword, 1, 10, new NetworkManager.OnResultListener<NaverMovies>() {
+                @Override
+                public void onSuccess(NaverMovies result) {
+                    mAdapter.setKeyword(keyword);
+                    mAdapter.setTotalCount(result.total);
+                    mAdapter.clear();
+                    for (MovieItem item : result.items) {
+                        mAdapter.add(item);
+                    }
+
+                    refreshView.onRefreshComplete();
+
+                }
+
+                @Override
+                public void onFail(int code) {
+                    Toast.makeText(getContext(), "error : " + code, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            mAdapter.clear();
+            mAdapter.setKeyword(keyword);
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
     }
 
 }

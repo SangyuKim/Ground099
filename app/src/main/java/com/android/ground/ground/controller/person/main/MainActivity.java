@@ -2,10 +2,20 @@ package com.android.ground.ground.controller.person.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.ListPopupWindow;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +25,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.setting.SettingFragment;
@@ -22,9 +41,23 @@ import com.android.ground.ground.controller.fc.create.FCCreateActivity;
 import com.android.ground.ground.controller.fc.fcmain.FCFragment;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.naver.MovieAdapter;
+import com.android.ground.ground.model.naver.MovieItem;
+import com.android.ground.ground.model.naver.NaverMovies;
+import com.android.ground.ground.model.person.main.AlarmItemData;
+import com.android.ground.ground.view.view.person.main.AlarmItemView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private boolean isBackPressed = false;
+    ListPopupWindow listPopup;
+    MainAlarmAdapter mAlarmAdapter;
+    Menu menu;
+
 
 
     @Override
@@ -34,7 +67,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -43,6 +75,34 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        listPopup = new ListPopupWindow(this);
+        mAlarmAdapter = new MainAlarmAdapter();
+        listPopup.setAdapter(mAlarmAdapter);
+        listPopup.setAnchorView(toolbar);
+
+//        listPopup.setContentWidth();
+        listPopup.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "item 선택 -> 메시지 이동", Toast.LENGTH_SHORT).show();
+                listPopup.dismiss();
+            }
+        });
+        listPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                menu.findItem(R.id.action_alarm).setIcon(R.drawable.ground_alarm);
+            }
+        });
+        listPopup.setForceIgnoreOutsideTouch(true);
+        mAlarmAdapter.setOnAdapterImageListener(new MainAlarmAdapter.OnAdapterImageListener() {
+            @Override
+            public void onAdapterImageClick(MainAlarmAdapter adapter, AlarmItemView view, AlarmItemData data) {
+                Toast.makeText(MainActivity.this, "image 선택 -> 해당 이미지 프로필로 이동", Toast.LENGTH_SHORT).show();
+            }
+        });
+        initAlarmData();
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -82,7 +142,17 @@ public class MainActivity extends AppCompatActivity
 //                }
 //            });
 
+    }//onCreate
+
+    private void initAlarmData() {
+        for(int i=0; i<5; i ++){
+            AlarmItemData data = new AlarmItemData();
+            data.name = "test id : " + i;
+            data.content = "님이 보낸 메시지입니다. " +i;
+            mAlarmAdapter.add(data);
+        }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -90,27 +160,39 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (isBackPressed) {
+                super.onBackPressed();
+            } else {
+                isBackPressed = true;
+                Toast.makeText(this, "한 번 더 누르시면 종료합니다.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        this.menu = menu;
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_alarm) {
-            return true;
+
+
+            if(!listPopup.isShowing()){
+                listPopup.show();
+                item.setIcon(R.mipmap.ic_launcher);
+                return true;
+            }else{
+                listPopup.dismiss();
+                return true;
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -133,14 +215,14 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container,mFragment)
+                    .replace(R.id.container, mFragment)
                     .addToBackStack(null)
                     .commit();
         } else if (id == R.id.nav_mymessage) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             Fragment mFragment = (Fragment)MyMessageFragment.newInstance("","");
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container,mFragment)
+                    .replace(R.id.container, mFragment)
                     .addToBackStack(null)
                     .commit();
         } else if (id == R.id.nav_ground) {
@@ -153,7 +235,7 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             Fragment mFragment = (Fragment) SettingFragment.newInstance("", "");
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container,mFragment)
+                    .replace(R.id.container, mFragment)
                     .addToBackStack(null)
                     .commit();
         }
@@ -162,4 +244,40 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+//    private int measureContentWidth(MainAlarmAdapter listAdapter) {
+//        ViewGroup mMeasureParent = null;
+//        int maxWidth = 0;
+//        View itemView = null;
+//        int itemType = 0;
+//
+//        final MainAlarmAdapter adapter = listAdapter;
+//        final int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+//        final int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+//        final int count = adapter.getCount();
+//        for (int i = 0; i < count; i++) {
+//            final int positionType = adapter.getItemViewType(i);
+//            if (positionType != itemType) {
+//                itemType = positionType;
+//                itemView = null;
+//            }
+//
+//            if (mMeasureParent == null) {
+//                mMeasureParent = new FrameLayout(MyApplication.getContext());
+//            }
+//
+//            itemView = adapter.getView(i, itemView, mMeasureParent);
+//            itemView.measure(widthMeasureSpec, heightMeasureSpec);
+//
+//            final int itemWidth = itemView.getMeasuredWidth();
+//
+//            if (itemWidth > maxWidth) {
+//                maxWidth = itemWidth;
+//            }
+//        }
+//
+//        return maxWidth;
+//    }
+
+
+
 }
