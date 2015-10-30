@@ -1,6 +1,7 @@
 package com.android.ground.ground.controller.person.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.person.finalposition.FinalPositionActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.naver.MovieAdapter;
@@ -163,10 +165,10 @@ public class FragmentMainCheckMatch extends Fragment {
             @Override
             public void onAdapterExtraButtonClick(MovieAdapter adapter, MovieItemView view, MovieItem data) {
                 Toast.makeText(getContext(), "포지션 보여주기", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), FinalPositionActivity.class);
+                startActivity(intent);
             }
         });
-
-
 
         return view;
     }

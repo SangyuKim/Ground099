@@ -55,6 +55,18 @@ public class MovieItemView extends RelativeLayout {
                 }
             }
         });
+
+        btn = (Button)findViewById(R.id.button21);
+        btn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("hello", "requeset button clicked");
+                if (mRequestListener != null) {
+                    mRequestListener.onRequestButtonClick(MovieItemView.this, mItem);
+                }
+            }
+        });
+
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_stub)
                 .showImageForEmptyUri(R.drawable.ic_empty)
@@ -88,5 +100,12 @@ public class MovieItemView extends RelativeLayout {
     public void setOnExtraButtonListener(OnExtraButtonClickListener listener) {
         mListener = listener;
     }
+    public interface OnRequestButtonClickListener {
+        public void onRequestButtonClick(MovieItemView view, MovieItem data);
+    }
 
+    OnRequestButtonClickListener mRequestListener;
+    public void setOnRequestButtonListener(OnRequestButtonClickListener listener) {
+        mRequestListener = listener;
+    }
 }

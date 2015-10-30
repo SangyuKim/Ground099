@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by dongja94 on 2015-10-19.
  */
-public class MovieAdapter extends BaseAdapter implements MovieItemView.OnExtraButtonClickListener {
+public class MovieAdapter extends BaseAdapter implements MovieItemView.OnExtraButtonClickListener, MovieItemView.OnRequestButtonClickListener {
 
     List<MovieItem> items = new ArrayList<MovieItem>();
 
@@ -68,7 +68,8 @@ public class MovieAdapter extends BaseAdapter implements MovieItemView.OnExtraBu
         MovieItemView view;
         if (convertView == null) {
             view = new MovieItemView(parent.getContext());
-
+            view.setOnExtraButtonListener(this);
+            view.setOnRequestButtonListener(this);
         } else {
             view = (MovieItemView)convertView;
             view.setInvisible();
@@ -76,7 +77,7 @@ public class MovieAdapter extends BaseAdapter implements MovieItemView.OnExtraBu
         view.setMovieItem(items.get(position));
         return view;
     }
-    MovieItemView.OnExtraButtonClickListener mOnExtraButtonClickListener;
+
     public interface OnAdapterExtraButtonListener {
         public void onAdapterExtraButtonClick(MovieAdapter adapter, MovieItemView view, MovieItem data);
     }
@@ -91,5 +92,17 @@ public class MovieAdapter extends BaseAdapter implements MovieItemView.OnExtraBu
             mListener.onAdapterExtraButtonClick(this, view, data);
         }
     }
-
+    public interface OnAdapterRequestButtonListener {
+        public void onAdapterRequestButtonClick(MovieAdapter adapter, MovieItemView view, MovieItem data);
+    }
+    OnAdapterRequestButtonListener mRequestListener;
+    public void setOnAdapteRequestButtonListener(OnAdapterRequestButtonListener listener) {
+        mRequestListener = listener;
+    }
+    @Override
+    public void onRequestButtonClick(MovieItemView view, MovieItem data) {
+        if (mRequestListener != null) {
+            mRequestListener.onAdapterRequestButtonClick(this, view, data);
+        }
+    }
 }

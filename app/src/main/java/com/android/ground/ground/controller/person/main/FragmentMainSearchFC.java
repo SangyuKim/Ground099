@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,6 +23,7 @@ import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.naver.MovieAdapter;
 import com.android.ground.ground.model.naver.MovieItem;
+import com.android.ground.ground.model.naver.MovieItemView;
 import com.android.ground.ground.model.naver.NaverMovies;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -123,27 +125,43 @@ public class FragmentMainSearchFC extends Fragment {
         });
 
         listView = refreshView.getRefreshableView();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), "팀 프로필", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        if (isNaverMovie) {
-            mAdapter = new MovieAdapter();
-            listView.setAdapter(mAdapter);
-            keywordView.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
+        mAdapter = new MovieAdapter();
+        listView.setAdapter(mAdapter);
+        keywordView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    searchMovie(s.toString());
-                }
+            }
 
-                @Override
-                public void afterTextChanged(Editable s) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchMovie(s.toString());
+            }
 
-                }
-            });
-        } //if
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mAdapter.setOnAdapteRequestButtonListener(new MovieAdapter.OnAdapterRequestButtonListener() {
+            @Override
+            public void onAdapterRequestButtonClick(MovieAdapter adapter, MovieItemView view, MovieItem data) {
+                Toast.makeText(getContext(), "가입 신청하기", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
 
         return view;
     }
