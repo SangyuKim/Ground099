@@ -1,4 +1,4 @@
-package com.android.ground.ground.view.view.person.main;
+package com.android.ground.ground.view.person.main;
 
 import android.content.Context;
 import android.util.AttributeSet;

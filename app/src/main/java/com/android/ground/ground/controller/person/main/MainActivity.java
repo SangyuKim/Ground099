@@ -2,20 +2,9 @@ package com.android.ground.ground.controller.person.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.ListPopupWindow;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,13 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -41,15 +24,8 @@ import com.android.ground.ground.controller.fc.create.FCCreateActivity;
 import com.android.ground.ground.controller.fc.fcmain.FCFragment;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileFragment;
-import com.android.ground.ground.manager.NetworkManager;
-import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.naver.MovieAdapter;
-import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.model.person.main.AlarmItemData;
-import com.android.ground.ground.view.view.person.main.AlarmItemView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.android.ground.ground.view.person.main.AlarmItemView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,6 +33,8 @@ public class MainActivity extends AppCompatActivity
     ListPopupWindow listPopup;
     MainAlarmAdapter mAlarmAdapter;
     Menu menu;
+
+    public static final String TAG_MAIN_FRAGMENT = "1";
 
 
 
@@ -85,7 +63,12 @@ public class MainActivity extends AppCompatActivity
         listPopup.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "item 선택 -> 메시지 이동", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                Fragment mFragment = (Fragment)MyMessageFragment.newInstance("","");
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
                 listPopup.dismiss();
             }
         });
@@ -100,14 +83,16 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onAdapterImageClick(MainAlarmAdapter adapter, AlarmItemView view, AlarmItemData data) {
                 Toast.makeText(MainActivity.this, "image 선택 -> 해당 이미지 프로필로 이동", Toast.LENGTH_SHORT).show();
+
             }
         });
         initAlarmData();
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, MainFragment.newInstance("","")).commit();
+                    .add(R.id.container, MainFragment.newInstance("",""), TAG_MAIN_FRAGMENT).commit();
         }
+
 
 
 
@@ -144,6 +129,17 @@ public class MainActivity extends AppCompatActivity
 
     }//onCreate
 
+
+//    public Fragment getActiveFragment() {
+//        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+//            Log.d("hello", "0 statck");
+//            return null;
+//        }
+//        String tag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
+//        return getSupportFragmentManager().findFragmentByTag(tag);
+//    }
+
+
     private void initAlarmData() {
         for(int i=0; i<5; i ++){
             AlarmItemData data = new AlarmItemData();
@@ -156,13 +152,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if (isBackPressed) {
+            if (isBackPressed &&  getSupportFragmentManager().findFragmentByTag(TAG_MAIN_FRAGMENT).isVisible()) {
                 super.onBackPressed();
-            } else {
+            }else if(!getSupportFragmentManager().findFragmentByTag(TAG_MAIN_FRAGMENT).isVisible()){
+                super.onBackPressed();
+            }else{
                 isBackPressed = true;
                 Toast.makeText(this, "한 번 더 누르시면 종료합니다.", Toast.LENGTH_SHORT).show();
             }
@@ -204,13 +203,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_myprofile) {
-
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             Fragment mFragment = (Fragment)MyProfileFragment.newInstance("", "");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, mFragment)
                     .addToBackStack(null)
                     .commit();
+
         } else if (id == R.id.nav_fc) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             Fragment mFragment = (Fragment) FCFragment.newInstance("", "");

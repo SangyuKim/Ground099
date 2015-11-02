@@ -1,7 +1,6 @@
-package com.android.ground.ground.view.view.person.main;
+package com.android.ground.ground.view.person.main;
 
 import android.content.Context;
-import android.support.v7.internal.view.menu.MenuView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;

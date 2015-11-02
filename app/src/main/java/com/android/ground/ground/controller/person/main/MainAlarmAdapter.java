@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.android.ground.ground.model.person.main.AlarmItemData;
-import com.android.ground.ground.view.view.person.main.AlarmItemView;
+import com.android.ground.ground.view.person.main.AlarmItemView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.fc.fcmain.FCFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileFragment;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.naver.MovieAdapter;
@@ -128,7 +130,12 @@ public class FragmentMainSearchFC extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "팀 프로필", Toast.LENGTH_SHORT).show();
+
+                Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 

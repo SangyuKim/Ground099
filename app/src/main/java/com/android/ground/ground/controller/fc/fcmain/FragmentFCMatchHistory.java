@@ -5,11 +5,26 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.model.fc.fcmain.FCMatchHistoryListItem;
+import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
+import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryHeaderItemView;
+import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryHeaderItemView2;
+import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView;
+import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView2;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +35,12 @@ import com.android.ground.ground.R;
  * create an instance of this fragment.
  */
 public class FragmentFCMatchHistory extends Fragment {
+
+    ExpandableListView listView;
+    FCMatchHistoryAdapter mAdapter;
+    PullToRefreshExpandableListView refreshView;
+    List<FCMatchHistoryListItem> children = new ArrayList<FCMatchHistoryListItem>();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -65,9 +86,51 @@ public class FragmentFCMatchHistory extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_fcmatch_history, container, false);
+        View view =inflater.inflate(R.layout.fragment_fragment_fcmatch_history, container, false);
+        refreshView = (PullToRefreshExpandableListView)view.findViewById(R.id.view_fcmatch_history);
+        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ExpandableListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
+
+            }
+        });
+
+        listView = refreshView.getRefreshableView();
+//        listView = (ExpandableListView)view.findViewById(R.id.expandableListView);
+        mAdapter = new FCMatchHistoryAdapter();
+        listView.addHeaderView(new FCMatchHistoryHeaderItemView(getContext()));
+        listView.addHeaderView(new FCMatchHistoryHeaderItemView2(getContext()));
+        listView.setAdapter(mAdapter);
+        listView.setGroupIndicator(null);
+        listView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                listView.expandGroup(groupPosition);
+            }
+        });
+        initData();
+        expandGroup();
+
+
+
+        return view;
     }
+    public void expandGroup(){
+        for(int i=0; i <mAdapter.getGroupCount(); i++){
+            listView.expandGroup(i);
+        }
+    }
+    public void initData(){
+        for(int i=0; i< 20; i ++){
+            FCMatchHistoryListItem data = new FCMatchHistoryListItem();
+
+           children.add(data);
+        }
+        mAdapter.add("예정된 매치", children);
+        mAdapter.add("마무리된 매치", children);
+
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

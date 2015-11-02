@@ -91,6 +91,8 @@ public class MainFragment extends Fragment {
             tabHost.setCurrentTab(savedInstanceState.getInt("tabIndex"));
             mAdapter.onRestoreInstanceState(savedInstanceState);
         }
+
+        Log.d("hello", "how many fragment : " + getActivity().getSupportFragmentManager().getBackStackEntryCount());
         return view;
     }
 

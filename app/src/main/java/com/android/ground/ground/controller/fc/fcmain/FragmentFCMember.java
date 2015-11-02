@@ -8,8 +8,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
+import com.android.ground.ground.model.naver.MovieAdapter;
+import com.android.ground.ground.model.person.main.AlarmItemData;
+import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView;
+import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView2;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +30,11 @@ import com.android.ground.ground.R;
  * create an instance of this fragment.
  */
 public class FragmentFCMember extends Fragment {
+
+    ListView listView;
+    FCMemberAdapter mAdapter;
+    PullToRefreshListView refreshView;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -65,8 +80,29 @@ public class FragmentFCMember extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_fcmember, container, false);
+        View view = inflater.inflate(R.layout.fragment_fragment_fcmember, container, false);
+        refreshView = (PullToRefreshListView)view.findViewById(R.id.view_fcmember);
+        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+
+            }
+        });
+        listView = refreshView.getRefreshableView();
+        mAdapter = new FCMemberAdapter();
+        listView.addHeaderView(new FCMemberHeaderItemView(getContext()));
+        listView.addHeaderView(new FCMemberHeaderItemView2(getContext()));
+        listView.setAdapter(mAdapter);
+
+        initData();
+        return view;
+    }
+    public void initData(){
+        for(int i=0; i< 20; i ++){
+            FCMemberListItem data = new FCMemberListItem();
+
+            mAdapter.add(data);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

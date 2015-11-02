@@ -1,11 +1,9 @@
 package com.android.ground.ground.controller.person.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -27,7 +25,7 @@ import com.android.ground.ground.model.naver.MovieAdapter;
 import com.android.ground.ground.model.naver.MovieItem;
 import com.android.ground.ground.model.naver.MovieItemView;
 import com.android.ground.ground.model.naver.NaverMovies;
-import com.android.ground.ground.view.view.person.main.MVPview;
+import com.android.ground.ground.view.person.main.MVPview;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 

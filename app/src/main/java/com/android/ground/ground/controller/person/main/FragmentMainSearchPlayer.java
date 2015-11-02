@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.finalposition.FinalPositionActivity;
+import com.android.ground.ground.controller.person.message.MyMessageFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileFragment;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.naver.MovieAdapter;
@@ -134,7 +136,11 @@ public class FragmentMainSearchPlayer extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "개인 프로필", Toast.LENGTH_SHORT).show();
+                Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -272,4 +278,5 @@ public class FragmentMainSearchPlayer extends Fragment {
         super.onDestroy();
         NetworkManager.getInstance().cancelAll(MyApplication.getContext());
     }
+
 }
