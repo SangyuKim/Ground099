@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.main.MainActivity;
@@ -23,6 +25,8 @@ import com.android.ground.ground.controller.person.main.MainActivity;
  * create an instance of this fragment.
  */
 public class SignupFragment extends Fragment {
+    ImageView imageView;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -79,7 +83,20 @@ public class SignupFragment extends Fragment {
                 getActivity().finish();
             }
         });
-
+        btn = (Button)view.findViewById(R.id.button_area_search);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "지역 검색으로 이동", Toast.LENGTH_SHORT).show();
+            }
+        });
+        imageView = (ImageView)view.findViewById(R.id.imageView_my_profile);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "이미지 picker ", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }

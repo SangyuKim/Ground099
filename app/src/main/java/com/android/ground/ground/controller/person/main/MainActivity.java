@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.container, mFragment)
                     .addToBackStack(null)
                     .commit();
+            isBackPressed = false;
 
         } else if (id == R.id.nav_fc) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -217,6 +218,7 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.container, mFragment)
                     .addToBackStack(null)
                     .commit();
+            isBackPressed = false;
         } else if (id == R.id.nav_mymessage) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             Fragment mFragment = (Fragment)MyMessageFragment.newInstance("","");
@@ -224,12 +226,15 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.container, mFragment)
                     .addToBackStack(null)
                     .commit();
+            isBackPressed = false;
         } else if (id == R.id.nav_ground) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            isBackPressed = false;
 
         } else if (id == R.id.nav_fccreate) {
             Intent intent = new Intent(MainActivity.this, FCCreateActivity.class);
             startActivity(intent);
+            isBackPressed = false;
          } else if (id == R.id.nav_setting) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             Fragment mFragment = (Fragment) SettingFragment.newInstance("", "");
@@ -237,6 +242,7 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.container, mFragment)
                     .addToBackStack(null)
                     .commit();
+            isBackPressed = false;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

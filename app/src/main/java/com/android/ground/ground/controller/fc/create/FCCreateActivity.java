@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 
 public class FCCreateActivity extends AppCompatActivity {
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,20 @@ public class FCCreateActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Button btn = (Button)findViewById(R.id.button_area_search);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(FCCreateActivity.this,"지역 검색 ㄱㄱ",Toast.LENGTH_SHORT).show();
+            }
+        });
+        imageView = (ImageView)findViewById(R.id.imageView_fc_profile);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(FCCreateActivity.this,"이미지 picker ",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -7,10 +7,12 @@ import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.profile.MyProfileFragment;
@@ -24,6 +26,7 @@ import com.android.ground.ground.controller.person.profile.MyProfileFragment;
  * create an instance of this fragment.
  */
 public class TutorialFragment extends Fragment {
+    ViewPager pager;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -79,6 +82,32 @@ public class TutorialFragment extends Fragment {
                         .replace(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+        pager = (ViewPager)view.findViewById(R.id.pager);
+        pager.setClipToPadding(false);
+        pager.setAdapter(new TutorialAdapter(getFragmentManager()));
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                Toast.makeText(getContext(), "selected : " + position, Toast.LENGTH_SHORT).show();
+                if(position == 4){
+                Fragment mFragment = (Fragment) SignupFragment.newInstance("", "");
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
         return view;
