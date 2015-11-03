@@ -11,9 +11,7 @@
         android:id="@+id/textView5"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp" />
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -209,11 +207,13 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/editText_signup"
         android:layout_below="@+id/imageView_my_profile"
         android:layout_toRightOf="@+id/textView50"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:imeOptions="actionDone"
+        android:singleLine="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -221,7 +221,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="포지션"
         android:id="@+id/textView51"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/editText_signup"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

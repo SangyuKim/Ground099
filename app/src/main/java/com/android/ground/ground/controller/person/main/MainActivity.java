@@ -157,9 +157,9 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if (isBackPressed &&  getSupportFragmentManager().findFragmentByTag(TAG_MAIN_FRAGMENT).isVisible()) {
+            if (isBackPressed &&  getSupportFragmentManager().findFragmentByTag(TAG_MAIN_FRAGMENT).isVisible() && getSupportFragmentManager().getBackStackEntryCount()==0) {
                 super.onBackPressed();
-            }else if(!getSupportFragmentManager().findFragmentByTag(TAG_MAIN_FRAGMENT).isVisible()){
+            }else if(!getSupportFragmentManager().findFragmentByTag(TAG_MAIN_FRAGMENT).isVisible() || getSupportFragmentManager().getBackStackEntryCount() !=0){
                 super.onBackPressed();
             }else{
                 isBackPressed = true;

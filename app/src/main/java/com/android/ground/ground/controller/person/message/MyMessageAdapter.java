@@ -33,7 +33,7 @@ public class MyMessageAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(c);
         this.items =items;
         this.isCheckedConfrim = new boolean[this.items.size()];
-         Log.d("hello", "item size : " + items.size());
+
     }
     public void setAllChecked(boolean ischeked) {
         int tempSize = isCheckedConfrim.length;

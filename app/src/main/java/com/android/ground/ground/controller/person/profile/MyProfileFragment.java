@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCFragment;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
+import com.android.ground.ground.model.Profile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +26,7 @@ import com.android.ground.ground.controller.person.message.MyMessageFragment;
  * Use the {@link MyProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyProfileFragment extends Fragment {
+public class MyProfileFragment extends Fragment implements Profile {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,13 +74,8 @@ public class MyProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_my_profile, container, false);
-        Button btn = (Button)view.findViewById(R.id.button6);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "사진 확대 ",Toast.LENGTH_SHORT).show();
-            }
-        });
+        Button btn;
+
         btn =  (Button)view.findViewById(R.id.button7);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +113,39 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "가입 권유 ",Toast.LENGTH_SHORT).show();
+            }
+        });
+        ImageView imageView = (ImageView)view.findViewById(R.id.imageView12);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        imageView = (ImageView)view.findViewById(R.id.imageView13);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        imageView = (ImageView)view.findViewById(R.id.imageView14);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         return view;

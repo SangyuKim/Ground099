@@ -76,6 +76,7 @@ public class MainFragment extends Fragment {
 
         tabHost = (TabHost)view.findViewById(R.id.tabHost);
         tabHost.setup();
+
         pager = (ViewPager)view.findViewById(R.id.pager);
 
         mAdapter = new TabsAdapter(getContext(), getChildFragmentManager(), tabHost, pager);
@@ -84,15 +85,12 @@ public class MainFragment extends Fragment {
         mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("선수 찾기"), FragmentMainSearchPlayer.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("FC 찾기"), FragmentMainSearchFC.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab3").setIndicator("매치 확인"), FragmentMainCheckMatch.class, null);
-
-
+        tabHost.setCurrentTab(1);
         if (savedInstanceState != null) {
-            Log.d("hello","savedInstanceState in MainFragment");
             tabHost.setCurrentTab(savedInstanceState.getInt("tabIndex"));
             mAdapter.onRestoreInstanceState(savedInstanceState);
         }
 
-        Log.d("hello", "how many fragment : " + getActivity().getSupportFragmentManager().getBackStackEntryCount());
         return view;
     }
 

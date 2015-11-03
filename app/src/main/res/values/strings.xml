@@ -48,4 +48,5 @@
     <string name="ground_invite">가입권유</string>
     <string name="title_activity_my_profilectivity">MyProfilectivity</string>
     <string name="title_activity_ready_match_result">ReadyMatchResultActivity</string>
+    <string name="title_activity_area_search">AreaSearchActivity</string>
 </resources>

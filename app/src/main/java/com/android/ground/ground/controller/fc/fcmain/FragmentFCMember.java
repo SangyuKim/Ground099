@@ -1,23 +1,31 @@
 package com.android.ground.ground.controller.fc.fcmain;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.fc.management.FCManagementFragment;
+import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
 import com.android.ground.ground.model.naver.MovieAdapter;
 import com.android.ground.ground.model.person.main.AlarmItemData;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView2;
+import com.android.ground.ground.view.fc.fcmain.FCMemberItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -92,7 +100,66 @@ public class FragmentFCMember extends Fragment {
         mAdapter = new FCMemberAdapter();
         listView.addHeaderView(new FCMemberHeaderItemView(getContext()));
         listView.addHeaderView(new FCMemberHeaderItemView2(getContext()));
+        Button btn = (Button)view.findViewById(R.id.button24);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment mFragment = (Fragment) FCManagementFragment.newInstance("", "");
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+        btn = (Button)view.findViewById(R.id.button22);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setTitle("가입신청");
+                builder.setMessage("가입 신청하시겠습니까? ");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setCancelable(true);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+        });
+        btn = (Button)view.findViewById(R.id.button23);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                dialog.show(getChildFragmentManager(), "custom");
+            }
+        });
         listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+            }
+        });
 
         initData();
         return view;

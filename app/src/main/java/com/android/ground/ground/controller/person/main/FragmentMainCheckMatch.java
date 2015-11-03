@@ -8,24 +8,32 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.fc.fcmain.FCFragment;
 import com.android.ground.ground.controller.person.finalposition.FinalPositionActivity;
+import com.android.ground.ground.controller.person.profile.MyProfileFragment;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.naver.MovieAdapter;
 import com.android.ground.ground.model.naver.MovieItem;
 import com.android.ground.ground.model.naver.MovieItemView;
 import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.view.person.main.MVPview;
+import com.android.ground.ground.view.person.main.SearchMatchTestItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -37,16 +45,17 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  * Use the {@link FragmentMainCheckMatch#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentMainCheckMatch extends Fragment {
+public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeaderImageClickListener {
 
     //todo
+    View view;
     /*네이버 예제*/
     EditText keywordView;
     ListView listView;
     LinearLayout mLinearLayout;
     PullToRefreshListView refreshView;
     //    SwipeRefreshLayout refreshLayout;
-    MovieAdapter mAdapter;
+    SearchMatchAdapter mAdapter;
     private static final boolean isNaverMovie = true;
     boolean isUpdate = false;
     boolean isLastItem = false;
@@ -96,8 +105,76 @@ public class FragmentMainCheckMatch extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_fragment_main_check_match, container, false);
+        view = inflater.inflate(R.layout.fragment_fragment_main_check_match, container, false);
+        setSearchFab();
+        refreshView = (PullToRefreshListView)view.findViewById(R.id.pulltorefresh);
+        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                String keyword = mAdapter.getKeyword();
+                searchMovie(keyword);
+            }
+        });
+        refreshView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+            @Override
+            public void onLastItemVisible() {
+                getMoreItem();
+            }
+        });
+
+        listView = refreshView.getRefreshableView();
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        MVPview hView = new MVPview(getContext());
+        hView.setOnHeaderImageListener(new MVPview.OnHeaderImageClickListener() {
+            @Override
+            public void onHeaderImageClick(MVPview view, Profile data) {
+                if(data instanceof MyProfileFragment){
+                    Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, mFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }else if(data instanceof FCFragment){
+                    Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, mFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            }
+        });
+        listView.addHeaderView(hView);
+
+        mAdapter = new SearchMatchAdapter();
+        listView.setAdapter(mAdapter);
+        if(keywordView.getText().toString().equals("")){
+            searchMovie("매치");
+        }
+        keywordView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchMovie(s.toString());
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        mAdapter.setOnAdapterExtraButtonListener(new SearchMatchAdapter.OnAdapterExtraButtonListener() {
+            @Override
+            public void onAdapterExtraButtonClick(SearchMatchAdapter adapter, SearchMatchTestItemView view, MovieItem data) {
+                   Intent intent = new Intent(getContext(), FinalPositionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return view;
+    }
+
+    private void setSearchFab() {
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,66 +186,15 @@ public class FragmentMainCheckMatch extends Fragment {
         mLinearLayout = (LinearLayout)view.findViewById(R.id.custom_search_bar);
         mLinearLayout.setVisibility(View.GONE);
         keywordView = (EditText) view.findViewById(R.id.custom_search_bar_editText);
-        refreshView = (PullToRefreshListView)view.findViewById(R.id.pulltorefresh);
-        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+        keywordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                String keyword = mAdapter.getKeyword();
-                searchMovie(keyword);
-            }
-        });
-
-        refreshView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
-            @Override
-            public void onLastItemVisible() {
-                getMoreItem();
-            }
-        });
-
-        listView = refreshView.getRefreshableView();
-        listView.addHeaderView(new MVPview(getContext()));
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (listView.getItemAtPosition(position) instanceof MovieItem) {
-                    MovieItem item = (MovieItem) listView.getItemAtPosition(position);
-                    Toast.makeText(getContext(), "item  : " + item.toString(), Toast.LENGTH_SHORT).show();
-                    MovieItemView i = (MovieItemView) view;
-                    i.setVisible();
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE){
+                    MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
+                return true;
             }
         });
-
-
-
-        mAdapter = new MovieAdapter();
-        listView.setAdapter(mAdapter);
-        keywordView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searchMovie(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        mAdapter.setOnAdapterExtraButtonListener(new MovieAdapter.OnAdapterExtraButtonListener() {
-            @Override
-            public void onAdapterExtraButtonClick(MovieAdapter adapter, MovieItemView view, MovieItem data) {
-                Toast.makeText(getContext(), "포지션 보여주기", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), FinalPositionActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -194,6 +220,8 @@ public class FragmentMainCheckMatch extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -264,4 +292,13 @@ public class FragmentMainCheckMatch extends Fragment {
         NetworkManager.getInstance().cancelAll(MyApplication.getContext());
     }
 
+
+
+    MVPview.OnHeaderImageClickListener mHeaderImageListener;
+    @Override
+    public void onHeaderImageClick(MVPview view, Profile data) {
+        if (mHeaderImageListener != null) {
+            mHeaderImageListener.onHeaderImageClick(view, data);
+        }
+    }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -88,13 +89,30 @@ public class MyMessageFragment extends Fragment {
         mAdapter = new MyMessageAdapter(getContext(), items);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(mItemClickListener);
-        Button btn = (Button)view.findViewById(R.id.button11);
-        btn.setOnClickListener(new View.OnClickListener() {
+        final Button btn2 = (Button)view.findViewById(R.id.button6);
+        final LinearLayout mLinearLayout = (LinearLayout)view.findViewById(R.id.linearLayout_clear_cancel);
+        btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onChoiceItem();
             }
         });
+        Button btn = (Button)view.findViewById(R.id.button11);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(btn2.getVisibility()==View.GONE){
+                    btn2.setVisibility(View.VISIBLE);
+                    mLinearLayout.setVisibility(View.VISIBLE);}
+                else if(btn2.getVisibility() == View.VISIBLE){
+                    btn2.setVisibility(View.GONE);
+                    mLinearLayout.setVisibility(View.GONE);
+                }
+
+
+            }
+        });
+
 
         return view;
     }

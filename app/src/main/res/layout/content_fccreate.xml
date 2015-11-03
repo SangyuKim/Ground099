@@ -233,4 +233,14 @@
         android:layout_toRightOf="@+id/imageView_fc_profile"
         android:layout_toEndOf="@+id/imageView_fc_profile"
         android:checked="false" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="창단하기"
+        android:id="@+id/button17"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.android.ground.ground.model;
 
 import android.app.Application;
 import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.manager.NetworkManager;
@@ -15,11 +16,17 @@ import com.nostra13.universalimageloader.core.download.HttpClientImageDownloader
 
 public class MyApplication extends Application {
     private static Context mContext;
+    private static InputMethodManager mIMM;
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = this;
         initImageLoader(this);
+        mIMM = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    }
+
+    public static InputMethodManager getmIMM() {
+        return mIMM;
     }
 
     public static Context getContext() {

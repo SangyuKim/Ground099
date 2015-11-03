@@ -39,23 +39,17 @@
         android:layout_toRightOf="@+id/imageView8"
         android:layout_toEndOf="@+id/imageView8" />
 
-    <RatingBar
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBar"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView30" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button25"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ratingBar"
-        android:layout_toEndOf="@+id/ratingBar"
         android:text="P"
-        android:focusable="false" />
+        android:focusable="false"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/button26"
+        android:layout_toStartOf="@+id/button26" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -63,8 +57,8 @@
         android:layout_height="wrap_content"
         android:text="M"
         android:id="@+id/button26"
+        android:focusable="false"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/button25"
-        android:layout_toEndOf="@+id/button25"
-        android:focusable="false" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

@@ -1,10 +1,269 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.android.ground.ground.controller.fc.management.FragmentFCProfile">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="FC 프로필 수정" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="FC 이름:"
+        android:id="@+id/textView53"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-</FrameLayout>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:layout_alignTop="@+id/textView53"
+        android:layout_toRightOf="@+id/textView53"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="소개 글:"
+        android:id="@+id/textView54"
+        android:layout_below="@+id/editText2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText3"
+        android:layout_below="@+id/editText2"
+        android:layout_alignLeft="@+id/editText2"
+        android:layout_alignStart="@+id/editText2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="활동 지역"
+        android:id="@+id/textView55"
+        android:layout_below="@+id/editText3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="지역 검색"
+        android:id="@+id/button_area_search"
+        android:layout_below="@+id/editText3"
+        android:layout_toRightOf="@+id/textView55"
+        android:layout_toEndOf="@+id/textView55" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="활동요일"
+        android:id="@+id/textView56"
+        android:layout_below="@+id/button_area_search"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="월"
+        android:id="@+id/checkBox8"
+        android:layout_below="@+id/textView56"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="화"
+        android:id="@+id/checkBox9"
+        android:layout_alignTop="@+id/checkBox8"
+        android:layout_toRightOf="@+id/checkBox8"
+        android:layout_toEndOf="@+id/checkBox8"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="수"
+        android:id="@+id/checkBox10"
+        android:checked="false"
+        android:layout_alignTop="@+id/checkBox9"
+        android:layout_alignRight="@+id/button_area_search"
+        android:layout_alignEnd="@+id/button_area_search" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="목"
+        android:id="@+id/checkBox11"
+        android:layout_alignTop="@+id/checkBox10"
+        android:layout_toRightOf="@+id/checkBox10"
+        android:layout_toEndOf="@+id/checkBox10"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="금"
+        android:id="@+id/checkBox12"
+        android:layout_alignTop="@+id/checkBox11"
+        android:layout_toRightOf="@+id/checkBox11"
+        android:layout_toEndOf="@+id/checkBox11"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="토"
+        android:id="@+id/checkBox13"
+        android:layout_alignTop="@+id/checkBox12"
+        android:layout_toRightOf="@+id/checkBox12"
+        android:layout_toEndOf="@+id/checkBox12"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일"
+        android:id="@+id/checkBox14"
+        android:layout_alignTop="@+id/checkBox13"
+        android:layout_toRightOf="@+id/checkBox13"
+        android:layout_toEndOf="@+id/checkBox13"
+        android:checked="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="대표사진:"
+        android:id="@+id/textView57"
+        android:layout_below="@+id/checkBox8"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/imageView_fc_profile"
+        android:layout_below="@+id/textView57"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="제휴구장"
+        android:id="@+id/textView58"
+        android:layout_below="@+id/imageView_fc_profile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switch1"
+        android:layout_below="@+id/imageView_fc_profile"
+        android:layout_toRightOf="@+id/textView53"
+        android:layout_toEndOf="@+id/textView53"
+        android:checked="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText4"
+        android:layout_below="@+id/imageView_fc_profile"
+        android:layout_toRightOf="@+id/switch1"
+        android:layout_alignRight="@+id/editText3"
+        android:layout_alignEnd="@+id/editText3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="맴버모집"
+        android:id="@+id/textView59"
+        android:layout_below="@+id/editText4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switch2"
+        android:checked="false"
+        android:layout_below="@+id/editText4"
+        android:layout_alignLeft="@+id/button_area_search"
+        android:layout_alignStart="@+id/button_area_search" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="매치신청 받기"
+        android:id="@+id/textView60"
+        android:layout_below="@+id/switch2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switch3"
+        android:layout_below="@+id/switch2"
+        android:layout_toRightOf="@+id/imageView_fc_profile"
+        android:layout_toEndOf="@+id/imageView_fc_profile"
+        android:checked="false" />
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="수정확인"
+        android:id="@+id/button17"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="참석여부공지"
+        android:id="@+id/textView61"
+        android:layout_below="@+id/switch3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switch4"
+        android:checked="false"
+        android:layout_alignTop="@+id/textView61"
+        android:layout_toRightOf="@+id/textView61"
+        android:layout_toEndOf="@+id/textView61" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FC없애기"
+        android:id="@+id/button33"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/button17"
+        android:layout_toStartOf="@+id/button17" />
+</RelativeLayout>

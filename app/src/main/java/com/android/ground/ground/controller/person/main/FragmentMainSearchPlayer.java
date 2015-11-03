@@ -1,37 +1,35 @@
 package com.android.ground.ground.controller.person.main;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.person.finalposition.FinalPositionActivity;
-import com.android.ground.ground.controller.person.message.MyMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileFragment;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.naver.MovieAdapter;
 import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.naver.MovieItemView;
 import com.android.ground.ground.model.naver.NaverMovies;
+import com.android.ground.ground.view.person.main.SearchPlayerTestItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -46,13 +44,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 public class FragmentMainSearchPlayer extends Fragment {
 
     //todo
+    View view;
     /*네이버 예제*/
     EditText keywordView;
     ListView listView;
     LinearLayout mLinearLayout;
     PullToRefreshListView refreshView;
     //    SwipeRefreshLayout refreshLayout;
-    MovieAdapter mAdapter;
+    SearchPlayerTestAdapter mAdapter;
     private static final boolean isNaverMovie = true;
     boolean isUpdate = false;
     boolean isLastItem = false;
@@ -103,19 +102,9 @@ public class FragmentMainSearchPlayer extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_fragment_main_search_player, container, false);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mLinearLayout.setVisibility(View.VISIBLE);
-                view.setVisibility(View.GONE);
-            }
-        });
-        mLinearLayout = (LinearLayout)view.findViewById(R.id.custom_search_bar);
-        mLinearLayout.setVisibility(View.GONE);
-        keywordView = (EditText) view.findViewById(R.id.custom_search_bar_editText);
+        view = inflater.inflate(R.layout.fragment_fragment_main_search_player, container, false);
+        setSearchFab();
+
         refreshView = (PullToRefreshListView)view.findViewById(R.id.pulltorefresh);
         refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -138,16 +127,19 @@ public class FragmentMainSearchPlayer extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
+                        .add(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
             }
         });
 
 
-
-        mAdapter = new MovieAdapter();
+        mAdapter = new SearchPlayerTestAdapter();
         listView.setAdapter(mAdapter);
+        if(keywordView.getText().toString().equals("")){
+            searchMovie("선수");
+        }
+
         keywordView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -166,16 +158,64 @@ public class FragmentMainSearchPlayer extends Fragment {
         });
 
 
-        mAdapter.setOnAdapteRequestButtonListener(new MovieAdapter.OnAdapterRequestButtonListener() {
+        mAdapter.setOnAdapteRequestButtonListener(new SearchPlayerTestAdapter.OnAdapterRequestButtonListener() {
             @Override
-            public void onAdapterRequestButtonClick(MovieAdapter adapter, MovieItemView view, MovieItem data) {
-                Toast.makeText(getContext(), "영입하기", Toast.LENGTH_SHORT).show();
+            public void onAdapterRequestButtonClick(SearchPlayerTestAdapter adapter, SearchPlayerTestItemView view, MovieItem data) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setTitle("영입하기");
+                builder.setMessage("영입 신청하시겠습니까? ");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setCancelable(true);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 
 
-
         return view;
+    }
+
+    private void setSearchFab() {
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLinearLayout.setVisibility(View.VISIBLE);
+                view.setVisibility(View.GONE);
+            }
+        });
+        mLinearLayout = (LinearLayout)view.findViewById(R.id.custom_search_bar);
+        mLinearLayout.setVisibility(View.GONE);
+        keywordView = (EditText) view.findViewById(R.id.custom_search_bar_editText);
+        keywordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE){
+                    MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return true;
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

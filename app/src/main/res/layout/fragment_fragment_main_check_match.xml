@@ -26,7 +26,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/custom_search_bar_editText"
                 android:layout_gravity="bottom"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:imeOptions="actionDone"/>
 
             <Button
                 style="?android:attr/buttonStyleSmall"

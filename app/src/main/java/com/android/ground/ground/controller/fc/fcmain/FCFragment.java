@@ -17,6 +17,7 @@ import com.android.ground.ground.controller.person.main.FragmentMainCheckMatch;
 import com.android.ground.ground.controller.person.main.FragmentMainSearchFC;
 import com.android.ground.ground.controller.person.main.FragmentMainSearchPlayer;
 import com.android.ground.ground.controller.person.main.TabsAdapter;
+import com.android.ground.ground.model.Profile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +27,7 @@ import com.android.ground.ground.controller.person.main.TabsAdapter;
  * Use the {@link FCFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FCFragment extends Fragment {
+public class FCFragment extends Fragment implements Profile {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -92,7 +93,6 @@ public class FCFragment extends Fragment {
         mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("경기 기록"), FragmentFCMatchHistory.class, null);
 
         if (savedInstanceState != null) {
-            Log.d("hello","savedInstanceState in FCFragment");
             tabHost.setCurrentTab(savedInstanceState.getInt("tabIndex"));
             mAdapter.onRestoreInstanceState(savedInstanceState);
         }

@@ -73,17 +73,7 @@ public class TutorialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tutorial, container, false);
-        Button btn = (Button)view.findViewById(R.id.button5);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment mFragment = (Fragment) SignupFragment.newInstance("", "");
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+
         pager = (ViewPager)view.findViewById(R.id.pager);
         pager.setClipToPadding(false);
         pager.setAdapter(new TutorialAdapter(getFragmentManager()));
@@ -96,12 +86,15 @@ public class TutorialFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
 //                Toast.makeText(getContext(), "selected : " + position, Toast.LENGTH_SHORT).show();
+
                 if(position == 4){
-                Fragment mFragment = (Fragment) SignupFragment.newInstance("", "");
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
-                        .addToBackStack(null)
-                        .commit();
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    Fragment mFragment = (Fragment) SignupFragment.newInstance("", "");
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.container, mFragment)
+                            .addToBackStack(null)
+                            .commit();
+
                 }
             }
 
