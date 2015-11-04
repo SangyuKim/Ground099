@@ -1,28 +1,23 @@
 package com.android.ground.ground.controller.person.message;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ListView;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Profile;
-import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.naver.MovieItemView;
 import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.view.OnAdapterProfileListener;
+import com.android.ground.ground.view.OnAdapterReplyListener;
+import com.android.ground.ground.view.OnAdapterYesListener;
 import com.android.ground.ground.view.OnNoClickListener;
 import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
 import com.android.ground.ground.view.OnYesClickListener;
-import com.android.ground.ground.view.person.main.SearchPlayerTestItemView;
+import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.person.message.MyMessageItemView;
 
 import java.util.ArrayList;
@@ -115,54 +110,43 @@ public class MyMessageAdapter extends BaseAdapter implements OnProfileClickListe
     class ViewHolder {
         public CheckBox chk = null;
     }
-    public interface OnAdapterProfileListener {
-        public void onAdapterProfileClick(MyMessageAdapter adapter, MyMessageItemView view, Profile data);
-    }
+
     OnAdapterProfileListener mProfileListener;
     public void setOnAdapterProfileListener(OnAdapterProfileListener listener) {
         mProfileListener = listener;
     }
     @Override
-    public void onProfileClick(MyMessageItemView view, Profile data) {
+    public void onProfileClick(View view, Profile data) {
         if (mProfileListener != null) {
             mProfileListener.onAdapterProfileClick(this, view, data);
         }
-    }
-    public interface OnAdapterNoListener {
-        public void onAdapterNoClick(MyMessageAdapter adapter, MyMessageItemView view);
     }
     OnAdapterNoListener mNoListener;
     public void setOnAdapterNoListener(OnAdapterNoListener listener) {
         mNoListener = listener;
     }
     @Override
-    public void onNoClick(MyMessageItemView view) {
+    public void onNoClick(View view) {
         if (mNoListener != null) {
             mNoListener.onAdapterNoClick(this, view);
         }
-    }
-    public interface OnAdapterReplyListener {
-        public void onAdapterReplyClick(MyMessageAdapter adapter, MyMessageItemView view);
     }
     OnAdapterReplyListener mReplyListener;
     public void setOnAdapterReplyListener(OnAdapterReplyListener listener) {
         mReplyListener = listener;
     }
     @Override
-    public void onReplyClick(MyMessageItemView view) {
+    public void onReplyClick(View view) {
         if (mReplyListener != null) {
             mReplyListener.onAdapterReplyClick(this, view);
         }
-    }
-    public interface OnAdapterYesListener {
-        public void onAdapterYesClick(MyMessageAdapter adapter, MyMessageItemView view);
     }
     OnAdapterYesListener mYesListener;
     public void setOnAdapterYesListener(OnAdapterYesListener listener) {
         mYesListener = listener;
     }
     @Override
-    public void onYesClick(MyMessageItemView view) {
+    public void onYesClick(View view) {
         if (mYesListener != null) {
             mYesListener.onAdapterYesClick(this, view);
         }

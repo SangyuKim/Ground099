@@ -5,6 +5,8 @@ import android.widget.FrameLayout;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.model.fc.management.ManagementMemberItem;
+import com.android.ground.ground.view.OnProfileClickListener;
+import com.android.ground.ground.view.OnReplyClickListener;
 
 /**
  * Created by Tacademy on 2015-11-04.
@@ -21,4 +23,5 @@ public class ManagementMemberItemView extends FrameLayout{
     public void setManagementMemberItem(ManagementMemberItem item){
 
     }
+
 }

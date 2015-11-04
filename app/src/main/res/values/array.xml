@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="items_search_player">
+        <item>거리순으로 보기</item>
+        <item>주말 가능 선수만보기</item>
+        <item>무소속 선수만보기</item>
+        <item>최다 득점 순으로 보기</item>
+        <item>나이순으로 보기</item>
+        <item>실력순으로 보기</item>
+    </string-array>
+    <string-array name="items_search_fc">
+        <item>거리순으로 보기</item>
+        <item>주말가능 FC만 보기</item>
+        <item>제휴구장있는 FC만 보기</item>
+        <item>선수모집 FC만 보기</item>
+        <item>매치가능 FC만 보기 </item>
+        <item>다승순위보기 (랭킹보기)</item>
+    </string-array>
+    <string-array name="items_search_match">
+        <item>최근 경기순으로 보기</item>
+        <item>내가 뛰었던 경기만 보기</item>
+        <item>예정된 매치만 보기 </item>
+        <item>종료된 매치만 보기</item>
+        <item>기록 대기중 매치만 보기</item>
+    </string-array>
+</resources>

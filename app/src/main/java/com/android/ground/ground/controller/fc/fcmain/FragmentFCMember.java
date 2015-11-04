@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,9 +21,13 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.management.FCManagementFragment;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
 import com.android.ground.ground.model.naver.MovieAdapter;
 import com.android.ground.ground.model.person.main.AlarmItemData;
+import com.android.ground.ground.view.OnAdapterProfileListener;
+import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView2;
 import com.android.ground.ground.view.fc.fcmain.FCMemberItemView;
@@ -162,6 +167,33 @@ public class FragmentFCMember extends Fragment {
         });
 
         initData();
+
+        mAdapter.setOnAdapterReplyListener(new OnAdapterReplyListener() {
+            @Override
+            public void onAdapterReplyClick(Adapter adapter, View view) {
+                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                dialog.show(getChildFragmentManager(), "custom");
+            }
+        });
+        mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
+            @Override
+            public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
+                if(data instanceof FCFragment){
+                    Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, mFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }else if(data instanceof MyProfileFragment) {
+                    Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, mFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            }
+        });
+
         return view;
     }
     public void initData(){

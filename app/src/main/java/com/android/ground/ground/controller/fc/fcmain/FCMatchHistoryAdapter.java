@@ -9,6 +9,10 @@ import android.widget.BaseExpandableListAdapter;
 import com.android.ground.ground.model.fc.fcmain.FCMatchGroupItem;
 import com.android.ground.ground.model.fc.fcmain.FCMatchHistoryListItem;
 import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
+import com.android.ground.ground.view.OnAdapterDialogListener;
+import com.android.ground.ground.view.OnAdapterProfileListener;
+import com.android.ground.ground.view.OnDialogClickListener;
+import com.android.ground.ground.view.OnExpandableAdapterDialogListener;
 import com.android.ground.ground.view.fc.fcmain.FCMatchGroupItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMemberItemView;
@@ -19,7 +23,7 @@ import java.util.List;
 /**
  * Created by dongja94 on 2015-10-19.
  */
-public class FCMatchHistoryAdapter extends BaseExpandableListAdapter {
+public class FCMatchHistoryAdapter extends BaseExpandableListAdapter implements OnDialogClickListener {
     List<FCMatchGroupItem> items = new ArrayList<FCMatchGroupItem>();
 
     public void add(String groupName, List<FCMatchHistoryListItem> child) {
@@ -102,6 +106,7 @@ public class FCMatchHistoryAdapter extends BaseExpandableListAdapter {
             v = (FCMatchHistoryItemView)convertView;
         } else {
             v = new FCMatchHistoryItemView(parent.getContext());
+            v.setOnDialogListener(this);
         }
         v.setFCMatchHistoryListItem(items.get(groupPosition).children.get(childPosition));
 
@@ -111,5 +116,17 @@ public class FCMatchHistoryAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    OnExpandableAdapterDialogListener mDialogListener;
+    public void setOnExpandableAdapterProfileListener(OnExpandableAdapterDialogListener listener) {
+        mDialogListener = listener;
+    }
+
+    @Override
+    public void onDialogClick(View view) {
+        if(mDialogListener != null){
+            mDialogListener.onAdapterDialogClick(this, view);
+        }
     }
 }

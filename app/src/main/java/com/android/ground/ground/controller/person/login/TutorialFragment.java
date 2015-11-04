@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.PageIndicator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +30,7 @@ import com.android.ground.ground.controller.person.profile.MyProfileFragment;
  */
 public class TutorialFragment extends Fragment {
     ViewPager pager;
+    PageIndicator mIndicator;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -77,30 +81,29 @@ public class TutorialFragment extends Fragment {
         pager = (ViewPager)view.findViewById(R.id.pager);
         pager.setClipToPadding(false);
         pager.setAdapter(new TutorialAdapter(getFragmentManager()));
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mIndicator = (CirclePageIndicator)view.findViewById(R.id.inidicator);
+
+        mIndicator.setViewPager(pager);
+        mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                Log.d("hello", "position : " + position + "// offset : " + positionOffset);
 
             }
 
             @Override
             public void onPageSelected(int position) {
-//                Toast.makeText(getContext(), "selected : " + position, Toast.LENGTH_SHORT).show();
-
-                if(position == 4){
+                if (position == 4) {
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     Fragment mFragment = (Fragment) SignupFragment.newInstance("", "");
                     getFragmentManager().beginTransaction()
                             .replace(R.id.container, mFragment)
                             .addToBackStack(null)
                             .commit();
-
                 }
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
         return view;

@@ -1,20 +1,24 @@
 package com.android.ground.ground.controller.fc.fcmain;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.model.fc.fcmain.FCMatchHistoryListItem;
 import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
+import com.android.ground.ground.view.OnExpandableAdapterDialogListener;
 import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryHeaderItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryHeaderItemView2;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView;
@@ -111,7 +115,37 @@ public class FragmentFCMatchHistory extends Fragment {
         initData();
         expandGroup();
 
+        mAdapter.setOnExpandableAdapterProfileListener(new OnExpandableAdapterDialogListener() {
+            @Override
+            public void onAdapterDialogClick(ExpandableListAdapter adapter, View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setTitle("경기 정정하기");
+                builder.setMessage("정정 신청하시겠습니까? ");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
+                    }
+                });
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setCancelable(true);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+        });
 
         return view;
     }

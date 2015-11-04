@@ -15,9 +15,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,9 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
     //todo
     View view;
+    FloatingActionButton fab;
+    Spinner spinner;
+    MySpinnerAdapter mySpinnerAdapter;
     /*네이버 예제*/
     EditText keywordView;
     ListView listView;
@@ -107,6 +112,8 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_fragment_main_check_match, container, false);
         setSearchFab();
+        setSpinner();
+
         refreshView = (PullToRefreshListView)view.findViewById(R.id.pulltorefresh);
         refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -156,6 +163,9 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().equals("")){
+                    searchMovie("매치");
+                }
                 searchMovie(s.toString());
             }
             @Override
@@ -174,8 +184,34 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         return view;
     }
 
+    private void setSpinner() {
+        spinner = (Spinner)view.findViewById(R.id.spinner);
+        mySpinnerAdapter = new MySpinnerAdapter();
+        spinner.setAdapter(mySpinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        initSpinnerData();
+    }
+
+    private void initSpinnerData() {
+        String[] items = getResources().getStringArray(R.array.items_search_match);
+        for (String s : items) {
+            mySpinnerAdapter.add(s);
+        }
+    }
+
     private void setSearchFab() {
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,8 +227,19 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
                     MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    mLinearLayout.setVisibility(View.GONE);
+                    fab.setVisibility(View.VISIBLE);
                 }
                 return true;
+            }
+        });
+        Button btn = (Button)view.findViewById(R.id.custom_search_bar_button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                mLinearLayout.setVisibility(View.GONE);
+                fab.setVisibility(View.VISIBLE);
             }
         });
     }

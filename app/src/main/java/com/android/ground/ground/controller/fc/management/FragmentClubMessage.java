@@ -9,6 +9,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -22,6 +23,10 @@ import com.android.ground.ground.controller.person.message.MyMessageAdapter;
 import com.android.ground.ground.controller.person.profile.MyProfileFragment;
 import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.view.OnAdapterNoListener;
+import com.android.ground.ground.view.OnAdapterProfileListener;
+import com.android.ground.ground.view.OnAdapterReplyListener;
+import com.android.ground.ground.view.OnAdapterYesListener;
 import com.android.ground.ground.view.person.message.MyMessageItemView;
 
 import java.util.ArrayList;
@@ -156,9 +161,9 @@ public class FragmentClubMessage extends Fragment {
                 onChoiceItem();
             }
         });
-        mAdapter.setOnAdapterProfileListener(new MyMessageAdapter.OnAdapterProfileListener() {
+        mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
-            public void onAdapterProfileClick(MyMessageAdapter adapter, MyMessageItemView view, Profile data) {
+            public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
                 if(data instanceof FCFragment){
                     Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -174,21 +179,21 @@ public class FragmentClubMessage extends Fragment {
                 }
             }
         });
-        mAdapter.setOnAdapterYesListener(new MyMessageAdapter.OnAdapterYesListener() {
+        mAdapter.setOnAdapterYesListener(new OnAdapterYesListener() {
             @Override
-            public void onAdapterYesClick(MyMessageAdapter adapter, MyMessageItemView view) {
+            public void onAdapterYesClick(Adapter adapter, View view) {
                 Toast.makeText(getContext(), "YES", Toast.LENGTH_SHORT).show();
             }
         });
-        mAdapter.setOnAdapterNoListener(new MyMessageAdapter.OnAdapterNoListener() {
+        mAdapter.setOnAdapterNoListener(new OnAdapterNoListener() {
             @Override
-            public void onAdapterNoClick(MyMessageAdapter adapter, MyMessageItemView view) {
+            public void onAdapterNoClick(Adapter adapter, View view) {
                 Toast.makeText(getContext(), "NO", Toast.LENGTH_SHORT).show();
             }
         });
-        mAdapter.setOnAdapterReplyListener(new MyMessageAdapter.OnAdapterReplyListener() {
+        mAdapter.setOnAdapterReplyListener(new OnAdapterReplyListener() {
             @Override
-            public void onAdapterReplyClick(MyMessageAdapter adapter, MyMessageItemView view) {
+            public void onAdapterReplyClick(Adapter adapter, View view) {
                 CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
                 dialog.show(getChildFragmentManager(), "custom");
             }

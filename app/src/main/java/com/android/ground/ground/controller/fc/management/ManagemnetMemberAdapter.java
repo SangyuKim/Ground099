@@ -11,6 +11,10 @@ import com.android.ground.ground.R;
 import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.fc.management.ManagementMemberItem;
 import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.view.OnAdapterProfileListener;
+import com.android.ground.ground.view.OnAdapterReplyListener;
+import com.android.ground.ground.view.OnProfileClickListener;
+import com.android.ground.ground.view.OnReplyClickListener;
 import com.android.ground.ground.view.fc.management.ManagementMemberItemView;
 import com.android.ground.ground.view.person.message.MyMessageItemView;
 
@@ -20,7 +24,7 @@ import java.util.List;
 /**
  * Created by Tacademy on 2015-11-02.
  */
-public class ManagemnetMemberAdapter extends BaseAdapter{
+public class ManagemnetMemberAdapter extends BaseAdapter {
     private ViewHolder viewHolder = null;
     private LayoutInflater inflater = null;
     List<ManagementMemberItem> items = new ArrayList<ManagementMemberItem>();

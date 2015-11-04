@@ -32,4 +32,5 @@ dependencies {
     compile project(':refresh')
     compile 'com.google.code.gson:gson:2.2.4'
     compile files('libs/simplexmlparser_0.1.2.jar')
+    compile project(':viewpagerindicatorlibrary')
 }
