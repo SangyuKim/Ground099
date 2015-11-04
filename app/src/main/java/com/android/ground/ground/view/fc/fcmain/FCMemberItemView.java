@@ -29,4 +29,5 @@ public class FCMemberItemView extends FrameLayout {
     }
     public void setFCMemberListItem(FCMemberListItem item) {
     }
+
 }

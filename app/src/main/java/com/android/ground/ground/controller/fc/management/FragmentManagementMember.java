@@ -5,11 +5,24 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
+import com.android.ground.ground.controller.person.message.MyMessageAdapter;
+import com.android.ground.ground.model.fc.management.ManagementMemberItem;
+import com.android.ground.ground.model.person.message.MyMessageItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +33,12 @@ import com.android.ground.ground.R;
  * create an instance of this fragment.
  */
 public class FragmentManagementMember extends Fragment {
+
+    ListView listView;
+    ManagemnetMemberAdapter mAdapter;
+    List<ManagementMemberItem> items = new ArrayList<ManagementMemberItem>();
+    Button btn, btn2;
+    boolean isAllchecked= false;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -65,9 +84,93 @@ public class FragmentManagementMember extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_management_member, container, false);
+        View view = inflater.inflate(R.layout.fragment_fragment_management_member, container, false);
+        listView = (ListView)view.findViewById(R.id.listView_management_member);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        initData();
+
+        mAdapter = new ManagemnetMemberAdapter(getContext(), items);
+        listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(mItemClickListener);
+
+        btn2 = (Button)view.findViewById(R.id.button13);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isAllchecked) {
+
+                    for (int i = 0; i < mAdapter.getCount(); i++) {
+
+                        listView.setItemChecked(i, true);
+                        if (!mAdapter.getChecked(i))
+                            mAdapter.setChecked(i);
+                        // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                        mAdapter.notifyDataSetChanged();
+                        isAllchecked = true;
+                    }
+                } else {
+                    for (int i = 0; i < mAdapter.getCount(); i++) {
+
+                        listView.setItemChecked(i, false);
+                        if (mAdapter.getChecked(i))
+                            mAdapter.setChecked(i);
+                        // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                        mAdapter.notifyDataSetChanged();
+                        isAllchecked = false;
+
+                    }
+                }
+            }
+        });
+        //임명
+        Button btn3 = (Button)view.findViewById(R.id.button38);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChoiceItem();
+            }
+        });
+        //박탈
+        btn3 = (Button)view.findViewById(R.id.button39);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChoiceItem();
+            }
+        });
+        btn3 = (Button)view.findViewById(R.id.button37);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                dialog.show(getChildFragmentManager(), "custom");
+            }
+        });
+
+        return view;
     }
+
+    private void onChoiceItem() {
+        SparseBooleanArray selection = listView.getCheckedItemPositions();
+        StringBuilder sb = new StringBuilder();
+        for (int index = 0; index < selection.size(); index++) {
+            int position = selection.keyAt(index);
+            if (selection.get(position)) {
+                sb.append(Integer.toString(position)).append(",");
+            }
+        }
+        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void initData(){
+        for(int i=0; i< 20; i++){
+            ManagementMemberItem item = new ManagementMemberItem();
+            items.add(item);
+        }
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -107,5 +210,16 @@ public class FragmentManagementMember extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+    private AdapterView.OnItemClickListener mItemClickListener = new
+            AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1,
+                                        int position, long arg3) {
+                    mAdapter.setChecked(position);
+                    // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                    mAdapter.notifyDataSetChanged();
+
+                }
+            };
 
 }

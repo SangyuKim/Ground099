@@ -16,7 +16,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.fc.fcmain.FCFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.view.person.message.MyMessageItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +38,9 @@ public class MyMessageFragment extends Fragment {
     ListView listView;
     MyMessageAdapter mAdapter;
     List<MyMessageItem> items = new ArrayList<MyMessageItem>();
+    Button btn, btn2;
+    LinearLayout mLinearLayout;
+    boolean isAllchecked= false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,27 +96,100 @@ public class MyMessageFragment extends Fragment {
         mAdapter = new MyMessageAdapter(getContext(), items);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(mItemClickListener);
-        final Button btn2 = (Button)view.findViewById(R.id.button6);
-        final LinearLayout mLinearLayout = (LinearLayout)view.findViewById(R.id.linearLayout_clear_cancel);
+        //전체선택
+        btn2 = (Button)view.findViewById(R.id.button6);
+        mLinearLayout = (LinearLayout)view.findViewById(R.id.linearLayout_clear_cancel);
         btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isAllchecked){
+
+                    for(int i=0; i< mAdapter.getCount(); i++){
+
+                        listView.setItemChecked(i, true);
+                        if(!mAdapter.getChecked(i))
+                            mAdapter.setChecked(i);
+                        // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                        mAdapter.notifyDataSetChanged();
+                        isAllchecked = true;
+                    }
+                }else{
+                    for(int i=0; i< mAdapter.getCount(); i++){
+
+                        listView.setItemChecked(i, false);
+                        if(mAdapter.getChecked(i))
+                            mAdapter.setChecked(i);
+                        // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                        mAdapter.notifyDataSetChanged();
+                        isAllchecked = false;
+
+                    }
+                }
+            }
+        });
+        btn  = (Button)view.findViewById(R.id.button11);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(btn2.getVisibility()==View.GONE){
+                    btn.setText("편집취소");
+                    btn2.setVisibility(View.VISIBLE);
+                    mLinearLayout.setVisibility(View.VISIBLE);
+                    mAdapter.setCheckBoxVisible(View.VISIBLE);
+                    mAdapter.notifyDataSetChanged();
+                }
+                else if(btn2.getVisibility() == View.VISIBLE){
+                    btn.setText("편집");
+                    btn2.setVisibility(View.GONE);
+                    mLinearLayout.setVisibility(View.GONE);
+                    mAdapter.setCheckBoxVisible(View.GONE);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+        //삭제
+        Button btn3 = (Button)view.findViewById(R.id.button12);
+        btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onChoiceItem();
             }
         });
-        Button btn = (Button)view.findViewById(R.id.button11);
-        btn.setOnClickListener(new View.OnClickListener() {
+        mAdapter.setOnAdapterProfileListener(new MyMessageAdapter.OnAdapterProfileListener() {
             @Override
-            public void onClick(View v) {
-                if(btn2.getVisibility()==View.GONE){
-                    btn2.setVisibility(View.VISIBLE);
-                    mLinearLayout.setVisibility(View.VISIBLE);}
-                else if(btn2.getVisibility() == View.VISIBLE){
-                    btn2.setVisibility(View.GONE);
-                    mLinearLayout.setVisibility(View.GONE);
+            public void onAdapterProfileClick(MyMessageAdapter adapter, MyMessageItemView view, Profile data) {
+                if(data instanceof FCFragment){
+                    Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, mFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }else if(data instanceof MyProfileFragment){
+                    Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, mFragment)
+                            .addToBackStack(null)
+                            .commit();
                 }
-
-
+            }
+        });
+        mAdapter.setOnAdapterYesListener(new MyMessageAdapter.OnAdapterYesListener() {
+            @Override
+            public void onAdapterYesClick(MyMessageAdapter adapter, MyMessageItemView view) {
+                Toast.makeText(getContext(), "YES", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mAdapter.setOnAdapterNoListener(new MyMessageAdapter.OnAdapterNoListener() {
+            @Override
+            public void onAdapterNoClick(MyMessageAdapter adapter, MyMessageItemView view) {
+                Toast.makeText(getContext(), "NO", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mAdapter.setOnAdapterReplyListener(new MyMessageAdapter.OnAdapterReplyListener() {
+            @Override
+            public void onAdapterReplyClick(MyMessageAdapter adapter, MyMessageItemView view) {
+                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                dialog.show(getChildFragmentManager(), "custom");
             }
         });
 

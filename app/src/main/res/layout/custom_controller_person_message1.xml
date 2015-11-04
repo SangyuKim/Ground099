@@ -31,10 +31,11 @@
         android:layout_height="wrap_content"
         android:text="프로필"
         android:id="@+id/button29"
-        android:layout_below="@+id/checkBox_message"
+        android:focusable="false"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:focusable="false" />
+        android:layout_marginTop="30dp" />
 
     <ImageView
         android:layout_width="30dp"
@@ -88,25 +89,16 @@
         android:layout_alignParentEnd="true"
         android:focusable="false" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView10"
-        android:layout_alignStart="@+id/imageView10"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="혹시 일요일 가능하신가요? 가능하시면 저희 팀에서 같이 뛰시는 건 어떠세요~?"
+        android:id="@+id/textView44"
         android:layout_toLeftOf="@+id/button31"
+        android:layout_toRightOf="@+id/button29"
+        android:layout_toEndOf="@+id/button29"
         android:layout_toStartOf="@+id/button31"
-        android:layout_below="@+id/imageView10">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="혹시 일요일 가능하신가요? 가능하시면 저희 팀에서 같이 뛰시는 건 어떠세요~?"
-            android:id="@+id/textView44"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/checkBox_message"
-            android:layout_toEndOf="@+id/checkBox_message" />
-    </LinearLayout>
+        android:layout_alignTop="@+id/button29" />
 
 </RelativeLayout>

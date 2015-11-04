@@ -48,14 +48,6 @@
             android:layout_gravity="bottom"
             android:focusable="false" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="취소"
-            android:id="@+id/button13"
-            android:layout_gravity="bottom"
-            android:focusable="false" />
     </LinearLayout>
 
     <ListView
