@@ -81,31 +81,30 @@ public class TutorialFragment extends Fragment {
         pager = (ViewPager)view.findViewById(R.id.pager);
         pager.setClipToPadding(false);
         pager.setAdapter(new TutorialAdapter(getFragmentManager()));
-        mIndicator = (CirclePageIndicator)view.findViewById(R.id.inidicator);
-
-        mIndicator.setViewPager(pager);
-        mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                Log.d("hello", "position : " + position + "// offset : " + positionOffset);
 
             }
 
             @Override
             public void onPageSelected(int position) {
                 if (position == 4) {
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     Fragment mFragment = (Fragment) SignupFragment.newInstance("", "");
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                           .replace(R.id.container, mFragment)
+                           .addToBackStack(null)
+                           .commit();
                 }
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
+
             }
         });
+
         return view;
     }
 

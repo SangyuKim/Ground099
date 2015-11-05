@@ -1,31 +1,25 @@
 package com.android.ground.ground.controller.fc.fcmain;
 
-import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.model.fc.fcmain.FCMatchHistoryListItem;
-import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
 import com.android.ground.ground.view.OnExpandableAdapterDialogListener;
 import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryHeaderItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryHeaderItemView2;
-import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView;
-import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +104,22 @@ public class FragmentFCMatchHistory extends Fragment {
             @Override
             public void onGroupCollapse(int groupPosition) {
                 listView.expandGroup(groupPosition);
+            }
+        });
+
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                if(groupPosition==0){
+                    Intent intent = new Intent(getContext(), ReadyMatchResultActivity.class);
+                    startActivity(intent);
+                }
+                else if(groupPosition ==1){
+                    Intent intent = new Intent(getContext(), MatchResultActivity.class);
+                    startActivity(intent);
+                }
+
+                return true;
             }
         });
         initData();

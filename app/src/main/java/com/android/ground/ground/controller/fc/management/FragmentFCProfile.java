@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ import android.widget.ImageView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.login.AreaSearchActivity;
+import com.android.ground.ground.controller.person.main.MainFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileFragment;
 
 import java.io.File;
 
@@ -134,6 +137,45 @@ public class FragmentFCProfile extends Fragment {
                 dialog.show();
             }
         });
+        //fc 없애기
+        btn = (Button)view.findViewById(R.id.button33);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setTitle("FC없애기");
+                builder.setMessage("FC를 해산하시겠습니까? ");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+//                        Fragment mFragment = (Fragment) MainFragment.newInstance("", "");
+//                        getChildFragmentManager().beginTransaction()
+//                                .replace(R.id.container, mFragment)
+//                                .commit();
+                    }
+                });
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setCancelable(true);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+        });
+
         if (savedInstanceState != null) {
             String file = savedInstanceState.getString("filename");
             if (file != null) {

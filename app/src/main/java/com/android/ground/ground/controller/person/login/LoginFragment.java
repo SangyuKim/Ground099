@@ -86,6 +86,7 @@ public class LoginFragment extends Fragment {
                         .replace(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
+
             }
         });
 

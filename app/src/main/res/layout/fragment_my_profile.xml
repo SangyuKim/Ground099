@@ -6,16 +6,6 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="가입권유"
-        android:id="@+id/button10"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -125,7 +115,7 @@
             android:src="@mipmap/ic_launcher" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -141,10 +131,10 @@
             android:layout_height="wrap_content"
             android:text="FC페이지"
             android:id="@+id/button7"
-            android:layout_above="@+id/button8"
-            android:layout_alignRight="@+id/button10"
-            android:layout_alignEnd="@+id/button10"
-            android:layout_weight="1" />
+
+            android:layout_weight="1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -152,11 +142,32 @@
             android:layout_height="wrap_content"
             android:text="메시지"
             android:id="@+id/button8"
-            android:layout_above="@+id/button9"
+            android:layout_weight="1"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_weight="1" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가입권유"
+            android:id="@+id/button10"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/button7"
+            android:layout_toEndOf="@+id/button7" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메시지보내기"
+            android:id="@+id/button41"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/button8"
+            android:layout_toStartOf="@+id/button8" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

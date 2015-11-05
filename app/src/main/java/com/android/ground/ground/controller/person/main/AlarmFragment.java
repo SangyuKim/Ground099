@@ -1,40 +1,40 @@
-package com.android.ground.ground.controller.fc.management;
+package com.android.ground.ground.controller.person.main;
 
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TabHost;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.fc.fcmain.FCTabsAdapter;
-import com.android.ground.ground.controller.fc.fcmain.FragmentFCMatchHistory;
-import com.android.ground.ground.controller.fc.fcmain.FragmentFCMember;
-import com.android.ground.ground.controller.person.login.SignupFragment;
+import com.android.ground.ground.controller.person.message.MyMessageFragment;
+import com.android.ground.ground.model.person.main.AlarmItemData;
+import com.android.ground.ground.view.OnAlarmClickListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FCManagementFragment.OnFragmentInteractionListener} interface
+ * {@link AlarmFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FCManagementFragment#newInstance} factory method to
+ * Use the {@link AlarmFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FCManagementFragment extends Fragment {
+public class AlarmFragment extends Fragment {
+    MainAlarmAdapter mAdapter;
+    ListView listView;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    TabHost tabHost;
-    ViewPager pager;
-    FCManagemnetTabsAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -48,11 +48,11 @@ public class FCManagementFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FCManagementFragment.
+     * @return A new instance of fragment AlarmFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FCManagementFragment newInstance(String param1, String param2) {
-        FCManagementFragment fragment = new FCManagementFragment();
+    public static AlarmFragment newInstance(String param1, String param2) {
+        AlarmFragment fragment = new AlarmFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,7 +60,7 @@ public class FCManagementFragment extends Fragment {
         return fragment;
     }
 
-    public FCManagementFragment() {
+    public AlarmFragment() {
         // Required empty public constructor
     }
 
@@ -76,27 +76,40 @@ public class FCManagementFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_fcmanagement, container, false);
 
-        tabHost = (TabHost)view.findViewById(R.id.tabHost);
-        tabHost.setup();
-        pager = (ViewPager)view.findViewById(R.id.pager);
+        View view = inflater.inflate(R.layout.fragment_alarm, container, false);
 
-        mAdapter = new FCManagemnetTabsAdapter(getContext(), getChildFragmentManager(), tabHost, pager);
-        Log.d("hello", "onCreateView");
+        mAdapter = new MainAlarmAdapter();
+        listView  = (ListView)view.findViewById(R.id.listView_alarm);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mAlarmListener.onDialogClick(false);
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
-        mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("클럽 메신저"), FragmentClubMessage.class, null);
-        mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("멤버 관리"), FragmentManagementMember.class, null);
-        mAdapter.addTab(tabHost.newTabSpec("tab3").setIndicator("기본정보관리"), FragmentFCProfile.class, null);
+        listView.setAdapter(mAdapter);
 
-        if (savedInstanceState != null) {
-            Log.d("hello","savedInstanceState in FCFragment");
-            tabHost.setCurrentTab(savedInstanceState.getInt("tabIndex"));
-            mAdapter.onRestoreInstanceState(savedInstanceState);
-        }
+
+        initAlarmData();
+
+
         return view;
+    }
 
+        private void initAlarmData() {
+        for(int i=0; i<5; i ++){
+            AlarmItemData data = new AlarmItemData();
+            data.name = "test id : " + i;
+            data.content = "님이 보낸 메시지입니다. " +i;
+            mAdapter.add(data);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -136,6 +149,10 @@ public class FCManagementFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+    OnAlarmClickListener mAlarmListener;
+    public void setOnAlarmClickListener(OnAlarmClickListener listener){
+        mAlarmListener =listener;
     }
 
 }

@@ -147,6 +147,13 @@ public class FragmentManagementMember extends Fragment {
                 dialog.show(getChildFragmentManager(), "custom");
             }
         });
+        btn3 = (Button)view.findViewById(R.id.button42);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChoiceItem();
+            }
+        });
 
         return view;
     }

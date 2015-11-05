@@ -39,7 +39,8 @@
         android:id="@+id/button27"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:focusable="false" />
 
     <TextView
         android:layout_width="wrap_content"

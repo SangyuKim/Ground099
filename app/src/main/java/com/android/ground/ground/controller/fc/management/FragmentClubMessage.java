@@ -20,6 +20,7 @@ import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCFragment;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.controller.person.message.MyMessageAdapter;
+import com.android.ground.ground.controller.person.message.MyMessageEditFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileFragment;
 import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.person.message.MyMessageItem;
@@ -103,74 +104,34 @@ public class FragmentClubMessage extends Fragment {
         mAdapter = new MyMessageAdapter(getContext(), items);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(mItemClickListener);
-        //전체선택
-        btn2 = (Button)view.findViewById(R.id.button6);
-        mLinearLayout = (LinearLayout)view.findViewById(R.id.linearLayout_clear_cancel);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!isAllchecked){
 
-                    for(int i=0; i< mAdapter.getCount(); i++){
 
-                        listView.setItemChecked(i, true);
-                        if(!mAdapter.getChecked(i))
-                            mAdapter.setChecked(i);
-                        // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
-                        mAdapter.notifyDataSetChanged();
-                        isAllchecked = true;
-                    }
-                }else{
-                    for(int i=0; i< mAdapter.getCount(); i++){
 
-                        listView.setItemChecked(i, false);
-                        if(mAdapter.getChecked(i))
-                            mAdapter.setChecked(i);
-                        // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
-                        mAdapter.notifyDataSetChanged();
-                        isAllchecked = false;
-
-                    }
-                }
-            }
-        });
+        //편집
         btn  = (Button)view.findViewById(R.id.button11);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(btn2.getVisibility()==View.GONE){
-                    btn.setText("편집취소");
-                    btn2.setVisibility(View.VISIBLE);
-                    mLinearLayout.setVisibility(View.VISIBLE);
-                    mAdapter.setCheckBoxVisible(View.VISIBLE);
-                    mAdapter.notifyDataSetChanged();
-                }
-                else if(btn2.getVisibility() == View.VISIBLE){
-                    btn.setText("편집");
-                    btn2.setVisibility(View.GONE);
-                    mLinearLayout.setVisibility(View.GONE);
-                    mAdapter.setCheckBoxVisible(View.GONE);
-                    mAdapter.notifyDataSetChanged();
-                }
+                Fragment mFragment = (Fragment) MyMessageEditFragment.newInstance("", "");
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
+
             }
         });
-        Button btn3 = (Button)view.findViewById(R.id.button12);
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onChoiceItem();
-            }
-        });
+
+
         mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
             public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
-                if(data instanceof FCFragment){
+                if (data instanceof FCFragment) {
                     Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .add(R.id.container, mFragment)
                             .addToBackStack(null)
                             .commit();
-                }else if(data instanceof MyProfileFragment){
+                } else if (data instanceof MyProfileFragment) {
                     Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .add(R.id.container, mFragment)
@@ -179,6 +140,8 @@ public class FragmentClubMessage extends Fragment {
                 }
             }
         });
+
+
         mAdapter.setOnAdapterYesListener(new OnAdapterYesListener() {
             @Override
             public void onAdapterYesClick(Adapter adapter, View view) {

@@ -111,7 +111,7 @@ public class FragmentFCMember extends Fragment {
             public void onClick(View v) {
                 Fragment mFragment = (Fragment) FCManagementFragment.newInstance("", "");
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
+                        .add(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
 

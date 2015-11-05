@@ -25,7 +25,6 @@ import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.OnAdapterYesListener;
-import com.android.ground.ground.view.person.message.MyMessageItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,18 +32,19 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyMessageFragment.OnFragmentInteractionListener} interface
+ * {@link MyMessageEditFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyMessageFragment#newInstance} factory method to
+ * Use the {@link MyMessageEditFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyMessageFragment extends Fragment {
+public class MyMessageEditFragment extends Fragment {
 
     ListView listView;
     MyMessageAdapter mAdapter;
     List<MyMessageItem> items = new ArrayList<MyMessageItem>();
-    Button btn;
-
+    Button btn, btn2;
+    LinearLayout mLinearLayout;
+    boolean isAllchecked= false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,11 +63,11 @@ public class MyMessageFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyMessageFragment.
+     * @return A new instance of fragment MyMessageEditFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyMessageFragment newInstance(String param1, String param2) {
-        MyMessageFragment fragment = new MyMessageFragment();
+    public static MyMessageEditFragment newInstance(String param1, String param2) {
+        MyMessageEditFragment fragment = new MyMessageEditFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,7 +75,7 @@ public class MyMessageFragment extends Fragment {
         return fragment;
     }
 
-    public MyMessageFragment() {
+    public MyMessageEditFragment() {
         // Required empty public constructor
     }
 
@@ -91,7 +91,7 @@ public class MyMessageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_message, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_message_edit, container, false);
         listView = (ListView)view.findViewById(R.id.listView_my_message);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
@@ -100,59 +100,60 @@ public class MyMessageFragment extends Fragment {
         mAdapter = new MyMessageAdapter(getContext(), items);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(mItemClickListener);
-       //편집
-        btn  = (Button)view.findViewById(R.id.button11);
-        btn.setOnClickListener(new View.OnClickListener() {
+        //전체선택
+        btn2 = (Button)view.findViewById(R.id.button6);
+        mLinearLayout = (LinearLayout)view.findViewById(R.id.linearLayout_clear_cancel);
+        btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment mFragment = (Fragment) MyMessageEditFragment.newInstance("", "");
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, mFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+                if (!isAllchecked) {
 
+                    for (int i = 0; i < mAdapter.getCount(); i++) {
 
-        mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
-            @Override
-            public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
-                if (data instanceof FCFragment) {
-                    Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
-                } else if (data instanceof MyProfileFragment) {
-                    Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
+                        listView.setItemChecked(i, true);
+                        if (!mAdapter.getChecked(i))
+                            mAdapter.setChecked(i);
+                        // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                        mAdapter.notifyDataSetChanged();
+                        isAllchecked = true;
+                    }
+                } else {
+                    for (int i = 0; i < mAdapter.getCount(); i++) {
+
+                        listView.setItemChecked(i, false);
+                        if (mAdapter.getChecked(i))
+                            mAdapter.setChecked(i);
+                        // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                        mAdapter.notifyDataSetChanged();
+                        isAllchecked = false;
+
+                    }
                 }
             }
         });
-
-        mAdapter.setOnAdapterYesListener(new OnAdapterYesListener() {
+        btn2.setVisibility(View.VISIBLE);
+        mLinearLayout.setVisibility(View.VISIBLE);
+        mAdapter.setCheckBoxVisible(View.VISIBLE);
+        mAdapter.notifyDataSetChanged();
+        //편집 버튼
+        btn  = (Button)view.findViewById(R.id.button11);
+        btn.setText("편집취소");
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onAdapterYesClick(Adapter adapter, View view) {
-                Toast.makeText(getContext(), "YES", Toast.LENGTH_SHORT).show();
-            }
-        });
-        mAdapter.setOnAdapterNoListener(new OnAdapterNoListener() {
-            @Override
-            public void onAdapterNoClick(Adapter adapter, View view) {
-                Toast.makeText(getContext(), "NO", Toast.LENGTH_SHORT).show();
-            }
-        });
-        mAdapter.setOnAdapterReplyListener(new OnAdapterReplyListener() {
-            @Override
-            public void onAdapterReplyClick(Adapter adapter, View view) {
-                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
-                dialog.show(getChildFragmentManager(), "custom");
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
 
+
+        //삭제
+        Button btn3 = (Button)view.findViewById(R.id.button12);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChoiceItem();
+            }
+        });
 
         return view;
     }
@@ -176,6 +177,7 @@ public class MyMessageFragment extends Fragment {
             items.add(item);
         }
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -215,6 +217,7 @@ public class MyMessageFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
     private AdapterView.OnItemClickListener mItemClickListener = new
             AdapterView.OnItemClickListener() {
                 @Override
@@ -225,5 +228,7 @@ public class MyMessageFragment extends Fragment {
                     mAdapter.notifyDataSetChanged();
 
                 }
-    };
+            };
+
+
 }

@@ -39,7 +39,7 @@
             android:name=".controller.person.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
             android:name=".controller.person.finalposition.FinalPositionActivity"
@@ -52,7 +52,7 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".controller.fc.matchresult.MatchResultActivity"
+            android:name=".controller.fc.fcmain.MatchResultActivity"
             android:label="@string/title_activity_match_result"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
@@ -72,7 +72,7 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".controller.fc.matchresult.ReadyMatchResultActivity"
+            android:name=".controller.fc.fcmain.ReadyMatchResultActivity"
             android:label="@string/title_activity_ready_match_result"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
@@ -80,6 +80,10 @@
             android:name=".controller.person.login.AreaSearchActivity"
             android:label="@string/title_activity_area_search"
             android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".controller.person.finalposition.Main22Activity" >
+        </activity>
+        <activity android:name=".controller.person.finalposition.Main24Activity" >
         </activity>
     </application>
 

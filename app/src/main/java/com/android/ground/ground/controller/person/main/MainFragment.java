@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TabHost;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.model.MyApplication;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,6 +80,22 @@ public class MainFragment extends Fragment {
         tabHost.setup();
 
         pager = (ViewPager)view.findViewById(R.id.pager);
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                MyApplication.getmIMM().hideSoftInputFromWindow(pager.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         mAdapter = new TabsAdapter(getContext(), getChildFragmentManager(), tabHost, pager);
         Log.d("hello", "onCreateView");

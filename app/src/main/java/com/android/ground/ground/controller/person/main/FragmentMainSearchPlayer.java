@@ -133,6 +133,7 @@ public class FragmentMainSearchPlayer extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .add(R.id.container, mFragment)
@@ -144,6 +145,7 @@ public class FragmentMainSearchPlayer extends Fragment {
 
         mAdapter = new SearchPlayerTestAdapter();
         listView.setAdapter(mAdapter);
+
         if(keywordView.getText().toString().equals("")){
             searchMovie("선수");
         }
@@ -172,6 +174,7 @@ public class FragmentMainSearchPlayer extends Fragment {
         mAdapter.setOnAdapteRequestButtonListener(new SearchPlayerTestAdapter.OnAdapterRequestButtonListener() {
             @Override
             public void onAdapterRequestButtonClick(SearchPlayerTestAdapter adapter, SearchPlayerTestItemView view, MovieItem data) {
+                MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setIcon(R.mipmap.ic_launcher);
                 builder.setTitle("영입하기");

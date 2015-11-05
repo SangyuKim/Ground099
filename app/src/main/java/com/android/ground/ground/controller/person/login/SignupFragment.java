@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,8 @@ public class SignupFragment extends Fragment {
     ImageView imageView;
     public static final int REQUEST_CODE_CROP = 0;
     File mSavedFile;
+    EditText editText;
+    ScrollView scrollView;
 
     public static final int REQ_AREA_SEARCH = 1;
     final String[] items = new String[]{"사진 앨범 ",  "카메라"};
@@ -97,6 +100,7 @@ public class SignupFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
+
         Button btn = (Button)view.findViewById(R.id.button_complete);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +119,7 @@ public class SignupFragment extends Fragment {
                 startActivityForResult(intent, REQ_AREA_SEARCH);
             }
         });
-        final EditText editText = (EditText)view.findViewById(R.id.editText_signup);
+        editText = (EditText)view.findViewById(R.id.editText_signup);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

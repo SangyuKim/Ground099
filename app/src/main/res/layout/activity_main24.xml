@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_ready_match_result"
-    tools:context="com.android.ground.ground.controller.fc.fcmain.ReadyMatchResultActivity">
+   >
 
     <com.android.ground.ground.controller.person.finalposition.ListItemView
         android:layout_width="wrap_content"
@@ -42,7 +40,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/view8" />
 
-        <com.android.ground.ground.controller.person.finalposition.GridItemView2
+       <com.android.ground.ground.controller.person.finalposition.GridItemView2
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/view7" />
@@ -403,5 +401,4 @@
             android:layout_column="0"
             android:id="@+id/linearLayout49"></LinearLayout>
     </GridLayout>
-
 </RelativeLayout>

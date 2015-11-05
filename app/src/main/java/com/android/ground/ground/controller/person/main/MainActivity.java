@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.ListPopupWindow;
-import android.view.View;
+import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,18 +14,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.PopupWindow;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.setting.SettingFragment;
 import com.android.ground.ground.controller.fc.create.FCCreateActivity;
 import com.android.ground.ground.controller.fc.fcmain.FCFragment;
+import com.android.ground.ground.controller.fc.management.FragmentFCProfile;
+import com.android.ground.ground.controller.person.login.SignupFragment;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileFragment;
-import com.android.ground.ground.model.person.main.AlarmItemData;
-import com.android.ground.ground.view.person.main.AlarmItemView;
+import com.android.ground.ground.custom.CustomDrawerLayout;
+import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.view.OnAlarmClickListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,48 +48,23 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        CustomDrawerLayout drawer = (CustomDrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
+        drawer.setOnDrawerListener(new CustomDrawerLayout.OnDrawerListener() {
+            @Override
+            public void onAdapterDialogClick() {
+                MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken() , InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        });
         toggle.syncState();
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        listPopup = new ListPopupWindow(this);
-        mAlarmAdapter = new MainAlarmAdapter();
-        listPopup.setAdapter(mAlarmAdapter);
-        listPopup.setAnchorView(toolbar);
 
-//        listPopup.setContentWidth();
-        listPopup.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                Fragment mFragment = (Fragment)MyMessageFragment.newInstance("","");
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
-                        .addToBackStack(null)
-                        .commit();
-                listPopup.dismiss();
-            }
-        });
-        listPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                menu.findItem(R.id.action_alarm).setIcon(R.drawable.ground_alarm);
-            }
-        });
-        listPopup.setForceIgnoreOutsideTouch(true);
-        mAlarmAdapter.setOnAdapterImageListener(new MainAlarmAdapter.OnAdapterImageListener() {
-            @Override
-            public void onAdapterImageClick(MainAlarmAdapter adapter, AlarmItemView view, AlarmItemData data) {
-                Toast.makeText(MainActivity.this, "image 선택 -> 해당 이미지 프로필로 이동", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        initAlarmData();
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -140,20 +118,18 @@ public class MainActivity extends AppCompatActivity
 //    }
 
 
-    private void initAlarmData() {
-        for(int i=0; i<5; i ++){
-            AlarmItemData data = new AlarmItemData();
-            data.name = "test id : " + i;
-            data.content = "님이 보낸 메시지입니다. " +i;
-            mAlarmAdapter.add(data);
-        }
-    }
+
 
 
     @Override
     public void onBackPressed() {
+        if(isAlarmOpened){
+            alarmItem.setIcon(R.drawable.ground_alarm);
+            isAlarmOpened = false;
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -176,21 +152,45 @@ public class MainActivity extends AppCompatActivity
         this.menu = menu;
         return true;
     }
+    boolean isAlarmOpened = false;
+    MenuItem alarmItem;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         int id = item.getItemId();
-
+        MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken() , InputMethodManager.HIDE_NOT_ALWAYS);
         if (id == R.id.action_alarm) {
+            alarmItem = item;
+            if(!isAlarmOpened){
+                Fragment mFragment = (Fragment)AlarmFragment.newInstance("", "");
 
-
-            if(!listPopup.isShowing()){
-                listPopup.show();
+                ((AlarmFragment)mFragment).setOnAlarmClickListener(new OnAlarmClickListener() {
+                    @Override
+                    public void onDialogClick(boolean isClicked) {
+                        alarmItem.setIcon(R.drawable.ground_alarm);
+                    }
+                });
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, mFragment)
+                        .addToBackStack(null)
+                        .commit();
                 item.setIcon(R.mipmap.ic_launcher);
+                isAlarmOpened = true;
                 return true;
             }else{
-                listPopup.dismiss();
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                item.setIcon(R.drawable.ground_alarm);
+                isAlarmOpened = false;
                 return true;
             }
+//            if(!listPopup.isShowing()){
+//                listPopup.show();
+
+//                return true;
+//            }else{
+//                listPopup.dismiss();
+//                return true;
+//            }
 
         }
 
@@ -204,6 +204,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_myprofile) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            if(alarmItem != null){
+                alarmItem.setIcon(R.drawable.ground_alarm);
+                isAlarmOpened = false;
+            }
+
             Fragment mFragment = (Fragment)MyProfileFragment.newInstance("", "");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, mFragment)
@@ -213,6 +218,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_fc) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            if(alarmItem != null){
+                alarmItem.setIcon(R.drawable.ground_alarm);
+                isAlarmOpened = false;
+            }
             Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, mFragment)
@@ -221,6 +230,10 @@ public class MainActivity extends AppCompatActivity
             isBackPressed = false;
         } else if (id == R.id.nav_mymessage) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            if(alarmItem != null){
+                alarmItem.setIcon(R.drawable.ground_alarm);
+                isAlarmOpened = false;
+            }
             Fragment mFragment = (Fragment)MyMessageFragment.newInstance("","");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, mFragment)
@@ -229,6 +242,10 @@ public class MainActivity extends AppCompatActivity
             isBackPressed = false;
         } else if (id == R.id.nav_ground) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            if(alarmItem != null){
+                alarmItem.setIcon(R.drawable.ground_alarm);
+                isAlarmOpened = false;
+            }
             isBackPressed = false;
 
         } else if (id == R.id.nav_fccreate) {
@@ -237,6 +254,10 @@ public class MainActivity extends AppCompatActivity
             isBackPressed = false;
          } else if (id == R.id.nav_setting) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            if(alarmItem != null){
+                alarmItem.setIcon(R.drawable.ground_alarm);
+                isAlarmOpened = false;
+            }
             Fragment mFragment = (Fragment) SettingFragment.newInstance("", "");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, mFragment)

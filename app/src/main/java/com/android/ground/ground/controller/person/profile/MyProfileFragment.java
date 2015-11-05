@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCFragment;
+import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
 import com.android.ground.ground.model.Profile;
 
@@ -84,7 +85,7 @@ public class MyProfileFragment extends Fragment implements Profile {
             public void onClick(View v) {
                 Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
+                        .add(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
             }
@@ -95,7 +96,7 @@ public class MyProfileFragment extends Fragment implements Profile {
             public void onClick(View v) {
                 Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
+                        .add(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
 
@@ -110,6 +111,16 @@ public class MyProfileFragment extends Fragment implements Profile {
 
             }
         });
+        //메시지 보내기
+        btn = (Button)view.findViewById(R.id.button41);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                dialog.show(getChildFragmentManager(), "custom");
+            }
+        });
+
         btn =  (Button)view.findViewById(R.id.button10);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +158,7 @@ public class MyProfileFragment extends Fragment implements Profile {
             public void onClick(View v) {
                 Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
+                        .add(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
             }
@@ -158,7 +169,7 @@ public class MyProfileFragment extends Fragment implements Profile {
             public void onClick(View v) {
                 Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
+                        .add(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
             }
@@ -169,7 +180,7 @@ public class MyProfileFragment extends Fragment implements Profile {
             public void onClick(View v) {
                 Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
+                        .add(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
             }

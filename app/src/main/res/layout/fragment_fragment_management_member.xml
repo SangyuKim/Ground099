@@ -17,7 +17,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전체선택"
+            android:text="전체"
             android:id="@+id/button13"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -27,7 +27,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="메시지 보내기"
+            android:text="send msg"
             android:id="@+id/button37"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/button13"
@@ -52,6 +52,16 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/button38"
             android:layout_toEndOf="@+id/button38" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="강퇴"
+            android:id="@+id/button42"
+            android:layout_above="@+id/listView_management_member"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
     <ListView
@@ -61,4 +71,5 @@
         android:layout_below="@+id/relativeLayout2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
 </RelativeLayout>

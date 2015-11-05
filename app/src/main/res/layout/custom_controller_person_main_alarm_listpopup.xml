@@ -5,7 +5,8 @@
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/imageView_alarm" />
+        android:id="@+id/imageView_alarm"
+        android:focusable="false" />
 
     <TextView
         android:layout_width="wrap_content"

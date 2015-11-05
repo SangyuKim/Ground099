@@ -82,7 +82,11 @@ public class CustomDialogMessageFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String text = inputView.getText().toString();
-                Toast.makeText(getContext(), "text : " + text, Toast.LENGTH_SHORT).show();
+                if (text.equals("")) {
+                    Toast.makeText(getContext(), "no input" , Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "text : " + text, Toast.LENGTH_SHORT).show();
+                }
                 dismiss();
             }
         });
