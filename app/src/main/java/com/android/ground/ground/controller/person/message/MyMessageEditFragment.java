@@ -231,4 +231,13 @@ public class MyMessageEditFragment extends Fragment {
             };
 
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getActivity().setTitle("메시지 편집");
+        }
+    }
+
+
 }

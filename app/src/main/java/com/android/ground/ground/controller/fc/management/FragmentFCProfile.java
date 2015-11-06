@@ -20,9 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.person.login.AreaSearchActivity;
-import com.android.ground.ground.controller.person.main.MainFragment;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
 
 import java.io.File;
 
@@ -244,6 +242,14 @@ public class FragmentFCProfile extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getActivity().setTitle("기본 설정");
+        }
     }
 
 }

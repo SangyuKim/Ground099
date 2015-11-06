@@ -229,4 +229,12 @@ public class FragmentManagementMember extends Fragment {
                 }
             };
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getActivity().setTitle("멤버 관리");
+        }
+    }
+
 }

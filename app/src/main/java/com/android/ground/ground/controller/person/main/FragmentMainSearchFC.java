@@ -391,4 +391,18 @@ public class FragmentMainSearchFC extends Fragment {
         NetworkManager.getInstance().cancelAll(MyApplication.getContext());
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getActivity().setTitle("FC 찾기");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.setUserVisibleHint(true);
+    }
 }

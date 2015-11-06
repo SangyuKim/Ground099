@@ -8,7 +8,8 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_final_position"
-    tools:context="com.android.ground.ground.controller.person.finalposition.FinalPositionActivity">
+    tools:context="com.android.ground.ground.controller.person.finalposition.FinalPositionActivity"
+    android:id="@+id/captureView">
 
     <TextView
         android:layout_width="wrap_content"

@@ -98,7 +98,6 @@ public class MainFragment extends Fragment {
         });
 
         mAdapter = new TabsAdapter(getContext(), getChildFragmentManager(), tabHost, pager);
-        Log.d("hello", "onCreateView");
 
         mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("선수 찾기"), FragmentMainSearchPlayer.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("FC 찾기"), FragmentMainSearchFC.class, null);
@@ -114,7 +113,6 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        Log.d("hello", "onSaveInstanceState in MainFragment");
         super.onSaveInstanceState(outState);
         outState.putInt("tabIndex", tabHost.getCurrentTab());
         mAdapter.onSaveInstanceState(outState);

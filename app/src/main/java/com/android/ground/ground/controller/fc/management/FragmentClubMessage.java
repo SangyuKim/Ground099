@@ -96,6 +96,7 @@ public class FragmentClubMessage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_club_message, container, false);
+        this.setUserVisibleHint(true);
         listView = (ListView)view.findViewById(R.id.listView_club_message);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
@@ -234,4 +235,12 @@ public class FragmentClubMessage extends Fragment {
 
                 }
             };
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getActivity().setTitle("클럽 메신저");
+        }
+    }
 }

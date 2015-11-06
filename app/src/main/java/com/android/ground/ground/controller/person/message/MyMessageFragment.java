@@ -92,6 +92,7 @@ public class MyMessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_message, container, false);
+        this.setUserVisibleHint(true);
         listView = (ListView)view.findViewById(R.id.listView_my_message);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
@@ -226,4 +227,12 @@ public class MyMessageFragment extends Fragment {
 
                 }
     };
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getActivity().setTitle("메시지함");
+        }
+    }
 }

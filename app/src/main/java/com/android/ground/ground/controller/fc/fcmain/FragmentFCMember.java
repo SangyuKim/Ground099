@@ -94,6 +94,7 @@ public class FragmentFCMember extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_fcmember, container, false);
+        this.setUserVisibleHint(true);
         refreshView = (PullToRefreshListView)view.findViewById(R.id.view_fcmember);
         refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -241,6 +242,14 @@ public class FragmentFCMember extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getActivity().setTitle("FC&멤버");
+        }
     }
 
 }

@@ -1,9 +1,11 @@
 package com.android.ground.ground.model.naver;
 
+import com.android.ground.ground.model.person.main.CheckMatchListData;
+
 /**
  * Created by dongja94 on 2015-10-19.
  */
-public class MovieItem {
+public class MovieItem implements CheckMatchListData {
     public String title;
     public String link;
     public String image;

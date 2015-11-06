@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -313,7 +314,7 @@ public class FragmentMainSearchPlayer extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            getActivity().setTitle("FourFragement");
+            getActivity().setTitle("선수 찾기");
         }
     }
     private void getMoreItem() {
@@ -371,4 +372,28 @@ public class FragmentMainSearchPlayer extends Fragment {
         NetworkManager.getInstance().cancelAll(MyApplication.getContext());
     }
 
+    @Override
+    public void onResume() {
+        Log.d("hello", "resume");
+        super.onResume();
+        setUserVisibleHint(true);
+    }
+
+    @Override
+    public void onPause() {
+        Log.d("hello", "onPause");
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        Log.d("hello", "onStop");
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        Log.d("hello", "onStart");
+        super.onStart();
+    }
 }

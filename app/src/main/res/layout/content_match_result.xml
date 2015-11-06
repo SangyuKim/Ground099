@@ -8,7 +8,8 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_match_result"
-    tools:context="com.android.ground.ground.controller.fc.fcmain.MatchResultActivity">
+    tools:context="com.android.ground.ground.controller.fc.fcmain.MatchResultActivity"
+    android:id="@+id/captureView">
     <com.android.ground.ground.controller.person.finalposition.ListItemView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -74,6 +74,7 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
+        this.setUserVisibleHint(true);
         Button btn = (Button)view.findViewById(R.id.button15);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +138,21 @@ public class SettingFragment extends Fragment {
                 }
             }
         });
+        btn = (Button)view.findViewById(R.id.button43);
+        btn.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   String url="mailto:groundfad@gmail.com";
+                   Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(url));
+//                   intent.putExtra(Intent.EXTRA_CC, new String[]{"참조1@gmail.com", "참조2@gmail.com"}); //참조
+                   intent.putExtra(Intent.EXTRA_SUBJECT, "관리자 문의"); //제목
+                   intent.putExtra(Intent.EXTRA_TEXT, "문의 내용:"); //본문
+//                   intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/파일")); //첨부파일
+                   startActivity(intent);
+
+               }
+           }
+        );
         return view;
     }
 
@@ -177,6 +193,14 @@ public class SettingFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getActivity().setTitle("설정");
+        }
     }
 
 }

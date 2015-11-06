@@ -88,7 +88,7 @@ public class FCManagementFragment extends Fragment {
 
         mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("클럽 메신저"), FragmentClubMessage.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("멤버 관리"), FragmentManagementMember.class, null);
-        mAdapter.addTab(tabHost.newTabSpec("tab3").setIndicator("기본정보관리"), FragmentFCProfile.class, null);
+        mAdapter.addTab(tabHost.newTabSpec("tab3").setIndicator("기본설정"), FragmentFCProfile.class, null);
 
         if (savedInstanceState != null) {
             Log.d("hello","savedInstanceState in FCFragment");

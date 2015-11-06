@@ -9,8 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,10 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.person.login.AreaSearchActivity;
+import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
 
 import java.io.File;
 
@@ -128,4 +125,5 @@ public class FCCreateActivity extends AppCompatActivity {
             outState.putString("filename", mSavedFile.getAbsolutePath());
         }
     }
+
 }

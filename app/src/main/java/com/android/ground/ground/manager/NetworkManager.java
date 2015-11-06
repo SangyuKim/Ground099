@@ -1,9 +1,14 @@
 package com.android.ground.ground.manager;
 
 import android.content.Context;
+import android.net.http.Headers;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.naver.NaverMovies;
+import com.android.ground.ground.model.tmap.TmapItem;
 import com.begentgroup.xmlparser.XMLParser;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -13,10 +18,18 @@ import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.apache.http.HeaderElement;
+import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.message.BasicHeader;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -105,8 +118,44 @@ public class NetworkManager {
             }
         });
     }
+    public static final String TMAP_URL = "https://apis.skplanetx.com/tmap/poi/findPoiAreaDataByName";
+//    private static final String SERVER = "http://openapi.naver.com";
+
+//    private static final String MOVIE_URL = SERVER + "/search";
+    private static final String TMAP_API_KEY = "ed4139de-5d31-31a3-aa1d-92a502350a6f";
+//    private static final String TARGET = "movie";
+    public void getNetworkTMAP(final Context context, String keyword, int count, int page, final OnResultListener<TmapItem> listener) {
+        final RequestParams params = new RequestParams();
+
+        params.put("area_dong", keyword);
+        params.put("count", count);
+        params.put("page", page);
+        params.put("version",1);
+        Header[] headers =new Header[2];
+        headers[0] = new BasicHeader("Accept", "application/json" );
+        headers[1] = new BasicHeader("appKey",TMAP_API_KEY);
+
+        client.get(context, TMAP_URL, headers, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+               String s = new String(responseBody, Charset.forName("UTF-8"));
+                TmapItem items = gson.fromJson(s, TmapItem.class);
+                if(items != null)
+                   listener.onSuccess(items);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                 listener.onFail(statusCode);
+            }
+        });
+
+    }
 
      public void cancelAll(Context context) {
         client.cancelRequests(context, true);
     }
+
 }
+

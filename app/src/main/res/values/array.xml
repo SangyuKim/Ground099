@@ -23,4 +23,17 @@
         <item>종료된 매치만 보기</item>
         <item>기록 대기중 매치만 보기</item>
     </string-array>
+    <string-array name="items_player_ability">
+        <item>상</item>
+        <item>중상</item>
+        <item>중 </item>
+        <item>중하</item>
+        <item>하</item>
+    </string-array>
+    <string-array name="items_player_position">
+        <item>GK</item>
+        <item>MF</item>
+        <item>DF</item>
+        <item>FW</item>
+    </string-array>
 </resources>

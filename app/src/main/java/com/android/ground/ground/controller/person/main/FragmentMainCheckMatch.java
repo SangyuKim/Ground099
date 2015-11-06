@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.android.ground.ground.model.naver.MovieAdapter;
 import com.android.ground.ground.model.naver.MovieItem;
 import com.android.ground.ground.model.naver.MovieItemView;
 import com.android.ground.ground.model.naver.NaverMovies;
+import com.android.ground.ground.model.person.main.CheckMatchListGroupItem;
 import com.android.ground.ground.view.person.main.MVPview;
 import com.android.ground.ground.view.person.main.SearchMatchTestItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -50,6 +52,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeaderImageClickListener {
 
     //todo
+    boolean isMoreList = true;
+
     View view;
     FloatingActionButton fab;
     Spinner spinner;
@@ -125,7 +129,15 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         refreshView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
             @Override
             public void onLastItemVisible() {
-                getMoreItem();
+                isMoreList = getMoreItem();
+                if(!isMoreList){
+                    //마무리된 매치 추가
+                    CheckMatchListGroupItem groupItem = new CheckMatchListGroupItem();
+                    groupItem.text ="마무리된 매치";
+                    groupItem.color= 0xffc0c0c0;
+                    mAdapter.add(groupItem);
+                    searchMovie2("사랑");
+                }
             }
         });
 
@@ -135,13 +147,13 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         hView.setOnHeaderImageListener(new MVPview.OnHeaderImageClickListener() {
             @Override
             public void onHeaderImageClick(MVPview view, Profile data) {
-                if(data instanceof MyProfileFragment){
+                if (data instanceof MyProfileFragment) {
                     Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .add(R.id.container, mFragment)
                             .addToBackStack(null)
                             .commit();
-                }else if(data instanceof FCFragment){
+                } else if (data instanceof FCFragment) {
                     Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .add(R.id.container, mFragment)
@@ -154,6 +166,9 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
         mAdapter = new SearchMatchAdapter();
         listView.setAdapter(mAdapter);
+
+
+
         if(keywordView.getText().toString().equals("")){
             searchMovie("매치");
         }
@@ -284,15 +299,23 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-    private void getMoreItem() {
+    private boolean getMoreItem() {
+
         if (!isUpdate) {
+
             String keyword = mAdapter.getKeyword();
             int startIndex = mAdapter.getStartIndex();
+            if( startIndex == -1){
+                return false;
+            }
+
             if (!TextUtils.isEmpty(keyword) && startIndex != -1) {
+
                 isUpdate = true;
                 NetworkManager.getInstance().getNetworkMelon(getContext(), keyword, startIndex, 10, new NetworkManager.OnResultListener<NaverMovies>() {
                     @Override
                     public void onSuccess(NaverMovies result) {
+
                         for (MovieItem item : result.items) {
                             mAdapter.add(item);
                         }
@@ -305,7 +328,8 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                     }
                 });
             }
-        }
+        }//semaphore
+        return true;
     }
     private void searchMovie(final String keyword) {
         if (!TextUtils.isEmpty(keyword)) {
@@ -315,6 +339,37 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                     mAdapter.setKeyword(keyword);
                     mAdapter.setTotalCount(result.total);
                     mAdapter.clear();
+                    CheckMatchListGroupItem groupItem = new CheckMatchListGroupItem();
+                    groupItem.text ="예정된 매치";
+                    groupItem.color= 0xffc0c0c0;
+                    mAdapter.add(groupItem);
+
+                    for (MovieItem item : result.items) {
+                        mAdapter.add(item);
+                    }
+
+                    refreshView.onRefreshComplete();
+
+                }
+
+                @Override
+                public void onFail(int code) {
+                    Toast.makeText(getContext(), "error : " + code, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            mAdapter.clear();
+            mAdapter.setKeyword(keyword);
+        }
+    }
+    private void searchMovie2(final String keyword) {
+        if (!TextUtils.isEmpty(keyword)) {
+            NetworkManager.getInstance().getNetworkMelon(getContext(), keyword, 1, 10, new NetworkManager.OnResultListener<NaverMovies>() {
+                @Override
+                public void onSuccess(NaverMovies result) {
+                    mAdapter.setKeyword(keyword);
+                    mAdapter.setTotalCount(result.total);
+
                     for (MovieItem item : result.items) {
                         mAdapter.add(item);
                     }
@@ -347,5 +402,19 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         if (mHeaderImageListener != null) {
             mHeaderImageListener.onHeaderImageClick(view, data);
         }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getActivity().setTitle("매치 확인");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.setUserVisibleHint(true);
     }
 }

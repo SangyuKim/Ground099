@@ -1,7 +1,6 @@
 package com.android.ground.ground.controller.person.login;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,23 +12,23 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.text.style.AlignmentSpan;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
 import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.model.MyApplication;
 
@@ -49,6 +48,9 @@ public class SignupFragment extends Fragment {
     File mSavedFile;
     EditText editText;
     ScrollView scrollView;
+    Spinner spinner;
+    View view;
+    MySpinnerSignupAdapter mySpinnerAdapter;
 
     public static final int REQ_AREA_SEARCH = 1;
     final String[] items = new String[]{"사진 앨범 ",  "카메라"};
@@ -99,7 +101,12 @@ public class SignupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_signup, container, false);
+        view = inflater.inflate(R.layout.fragment_signup, container, false);
+//        setSpinner(R.id.spinner_age, R.array.items_search_player);
+        setSpinner(R.id.spinner_ability, R.array.items_player_ability);
+        setSpinner(R.id.spinner_position, R.array.items_player_position);
+        DatePicker mDatePicker;
+
 
         Button btn = (Button)view.findViewById(R.id.button_complete);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +182,33 @@ public class SignupFragment extends Fragment {
             }
         }
         return view;
+    }
+
+    private void setSpinner(int id, int dataId) {
+        spinner = (Spinner)view.findViewById(id);
+        mySpinnerAdapter = new MySpinnerSignupAdapter();
+        spinner.setAdapter(mySpinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        initSpinnerData(dataId, mySpinnerAdapter);
+    }
+
+    private void initSpinnerData(int id, MySpinnerSignupAdapter mSpinnerAdapter) {
+
+        String[] items = getResources().getStringArray(id);
+        for (String s : items) {
+            mSpinnerAdapter.add(s);
+        }
     }
 
     @Override
