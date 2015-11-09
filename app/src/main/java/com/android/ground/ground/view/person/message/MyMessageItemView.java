@@ -6,9 +6,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.fc.fcmain.FCFragment;
-import com.android.ground.ground.model.Profile;
-import com.android.ground.ground.model.naver.MovieItem;
+import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.model.person.message.MyMessageItem;
 import com.android.ground.ground.view.OnNoClickListener;
 import com.android.ground.ground.view.OnProfileClickListener;
@@ -30,7 +28,7 @@ public class MyMessageItemView extends FrameLayout {
             @Override
             public void onClick(View v) {
                 if (mProfileListener != null) {
-                    mProfileListener.onProfileClick(MyMessageItemView.this, new FCFragment());
+                    mProfileListener.onProfileClick(MyMessageItemView.this, new FCActivity());
                 }
             }
         });

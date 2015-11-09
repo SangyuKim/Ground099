@@ -1,6 +1,6 @@
 package com.android.ground.ground.controller.person.message;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,20 +12,18 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.fc.fcmain.FCFragment;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.controller.fc.fcmain.FCActivity;
+import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.person.message.MyMessageItem;
 import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.OnAdapterYesListener;
-import com.android.ground.ground.view.person.message.MyMessageItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,18 +116,12 @@ public class MyMessageFragment extends Fragment {
         mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
             public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
-                if (data instanceof FCFragment) {
-                    Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
-                } else if (data instanceof MyProfileFragment) {
-                    Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
+                if (data instanceof FCActivity) {
+                    Intent intent = new Intent(getContext(), FCActivity.class);
+                    startActivity(intent);
+                } else if (data instanceof MyProfileActivity) {
+                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                    startActivity(intent);
                 }
             }
         });

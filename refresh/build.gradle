@@ -15,8 +15,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-}
 
+}
 dependencies {
     compile 'com.android.support:support-v4:22.2.1'
 }

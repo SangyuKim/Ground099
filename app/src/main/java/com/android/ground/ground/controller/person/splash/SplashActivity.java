@@ -1,20 +1,70 @@
 package com.android.ground.ground.controller.person.splash;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.RegistrationIntentService;
 import com.android.ground.ground.controller.person.login.LoginActivity;
 import com.android.ground.ground.controller.person.main.MainActivity;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.manager.ServerUtilities;
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
+import com.loopj.android.http.AsyncHttpClient;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SplashActivity extends AppCompatActivity {
+
+    static final private String TAG = "GCM_Example";
+    static final private String serverAddress = "http://192.168.0.105:3000";
+
+    private Handler handler;
+    private TextView registrationIDLabel;
+    private TextView deviceIDLabel;
+    private RequestQueue mQueue;
+
+    private String deviceID;
+    private String registrationID;
+    private String deviceOS = "Android";
+
+
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +91,261 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
+
+        registrationIDLabel = (TextView) findViewById(R.id.tokenLabel);
+
+        mQueue = Volley.newRequestQueue(this);
+        handler = new Handler();
+
+        Button checkButton = (Button)findViewById(R.id.checkPlayServiceButton);
+        checkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkPlayService();
+            }
+        });
+
+        // 토큰 발급 버튼과 이벤트
+        Button requestTokenButton = (Button)findViewById(R.id.requestDeviceTokenButton);
+        requestTokenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // API19 에서 에러
+//            requestDeviceToken();
+                new RequestTokenThread().start();
+            }
+        });
+
+        Button deviceIDButton = (Button)findViewById(R.id.getDeviceIDButton);
+        deviceIDLabel = (TextView)findViewById(R.id.deviceIdLabel);
+        deviceIDButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resolveDeviceID();
+            }
+        });
+
+        // 토큰 등록 버튼과 이벤트
+        Button registTokenButton = (Button)findViewById(R.id.registTokenButton);
+        registTokenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Register Device Token to App Server");
+                registerToken();
+            }
+        });
+
+        TextView addressView = (TextView)findViewById(R.id.serverAddress);
+        addressView.setText("Server Address : " + serverAddress);
+
+        showStoredToken();
+
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                doRealStart();
+            }
+        };
+        setUpIfNeeded();
+
     }
 
+    private void resolveDeviceID() {
+        String androidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        deviceIDLabel.setText(androidID);
+        Log.d(TAG, "Android ID : " + androidID);
+
+        deviceID = androidID;
+    }
+
+    // 플레이 서비스 사용 가능 여부 체크
+    void checkPlayService() {
+        int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+        Log.d(TAG, "isGooglePlayServicesAvailable : " + resultCode);
+        if (ConnectionResult.SUCCESS == resultCode) {
+            // 구글 플레이 서비스 가능
+            Toast.makeText(this, "플레이 서비스 사용 가능", Toast.LENGTH_SHORT).show();
+        } else {
+            // 구글 플레이 서비스 불가능 - 설치/업데이트 다이얼로그 출력
+            GoogleApiAvailability.getInstance().getErrorDialog(this, resultCode, 0).show();
+        }
+    }
+    // Registration Intent Service를 이용해서 토큰 발급 받기
+    void requestDeviceToken() {
+        // 토큰 발급 브로드캐스트 리시버
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String token = intent.getExtras().getString("TOKEN");
+                if ( registrationID != token ) {
+                    registrationID = token;
+                    saveRegistrationID();
+                }
+
+                registrationIDLabel.setText(token);
+            }
+        }, new IntentFilter(RegistrationIntentService.REGISTRATION_COMPLETE_BROADCAST));
+
+        Log.d(TAG, "start registration service");
+
+        // 토큰 발급 서비스 시작
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
+    }
+
+    // 토큰 직접 발급받기 - IntentService로 작성하는 것을 권장
+    class RequestTokenThread extends Thread {
+        @Override
+        public void run() {
+            Log.d(TAG, "Trying to regist device");
+            try {
+                InstanceID instanceID = InstanceID.getInstance(SplashActivity.this);
+                final String token = instanceID.getToken(getString(R.string.GCM_SenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE);
+                if ( registrationID != token ) {
+                    registrationID = token;
+                    saveRegistrationID();
+                }
+
+                Log.d(TAG, "Token : " + token);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        registrationIDLabel.setText(token);
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e(TAG, "Regist Exception", e);
+            }
+        }
+    }
+
+    void showStoredToken() {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        String storedToken = sharedPref.getString("REGISTRATION_ID", null);
+        if ( storedToken != null ) {
+            registrationID = storedToken;
+            registrationIDLabel.setText(registrationID);
+        }
+    }
+
+    void saveRegistrationID() {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("REGISTRATION_ID", registrationID);
+        editor.commit();
+    }
+
+    void registerToken() {
+        // Device ID가 없으면 발급
+        if ( deviceID == null )
+            resolveDeviceID();
+
+        StringRequest request = new StringRequest(Request.Method.POST, serverAddress + "/register", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Token 등록 결과  : " + response);
+                Toast.makeText(SplashActivity.this, "Token 등록 성공", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Error", error);
+                NetworkResponse response = error.networkResponse;
+                if ( response != null ) {
+                    Log.e(TAG, "Error Response : " + response.statusCode);
+                    Toast.makeText(SplashActivity.this, "Token 등록 에러 " + response.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                // 바디 작성
+                Map<String, String> params = new HashMap<>();
+                params.put("deviceID", deviceID);
+                params.put("token", registrationID);
+                params.put("os", deviceOS);
+
+                return params;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                // 컨텐트 타입
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+        };
+        mQueue.add(request);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(RegistrationIntentService.REGISTRATION_COMPLETE));
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLAY_SERVICES_RESOLUTION_REQUEST &&
+                resultCode == Activity.RESULT_OK) {
+            setUpIfNeeded();
+        }
+    }
+
+    private void setUpIfNeeded() {
+        if (checkPlayServices()) {
+            String regId = PropertyManager.getInstance().getRegistrationToken();
+            if (!regId.equals("")) {
+                doRealStart();
+            } else {
+                Intent intent = new Intent(this, RegistrationIntentService.class);
+                startService(intent);
+            }
+        }
+    }
+
+    private void doRealStart() {
+        // activity start...
+        new AsyncTask<Void,Void,Boolean>(){
+            @Override
+            protected Boolean doInBackground(Void... params) {
+                String regid = PropertyManager.getInstance().getRegistrationToken();
+                ServerUtilities.register(SplashActivity.this, regid);
+                return null;
+            }
+        }.execute();
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                Dialog dialog = apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
+                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                });
+                dialog.show();
+            } else {
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
 }

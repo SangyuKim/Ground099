@@ -1,6 +1,5 @@
 package com.android.ground.ground.controller.person.message;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,7 +8,6 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -17,14 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.fc.fcmain.FCFragment;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
-import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.person.message.MyMessageItem;
-import com.android.ground.ground.view.OnAdapterNoListener;
-import com.android.ground.ground.view.OnAdapterProfileListener;
-import com.android.ground.ground.view.OnAdapterReplyListener;
-import com.android.ground.ground.view.OnAdapterYesListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.android.ground.ground.controller.fc.management;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,18 +17,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.fc.fcmain.FCFragment;
+import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.controller.person.message.MyMessageAdapter;
 import com.android.ground.ground.controller.person.message.MyMessageEditFragment;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.person.message.MyMessageItem;
 import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.OnAdapterYesListener;
-import com.android.ground.ground.view.person.message.MyMessageItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +95,7 @@ public class FragmentClubMessage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_club_message, container, false);
-        this.setUserVisibleHint(true);
+//        this.setUserVisibleHint(true);
         listView = (ListView)view.findViewById(R.id.listView_club_message);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
@@ -126,18 +125,12 @@ public class FragmentClubMessage extends Fragment {
         mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
             public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
-                if (data instanceof FCFragment) {
-                    Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
-                } else if (data instanceof MyProfileFragment) {
-                    Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
+                if (data instanceof FCActivity) {
+                    Intent intent = new Intent(getContext(), FCActivity.class);
+                    startActivity(intent);
+                } else if (data instanceof MyProfileActivity) {
+                   Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -236,11 +229,11 @@ public class FragmentClubMessage extends Fragment {
                 }
             };
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            getActivity().setTitle("클럽 메신저");
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            getActivity().setTitle("클럽 메신저");
+//        }
+//    }
 }

@@ -1,11 +1,10 @@
 package com.android.ground.ground.controller.person.main;
 
-import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -27,13 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.fc.fcmain.FCFragment;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.naver.MovieAdapter;
 import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.naver.MovieItemView;
 import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.view.person.main.SearchFCTestItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -135,11 +131,8 @@ public class FragmentMainSearchFC extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, mFragment)
-                        .addToBackStack(null)
-                        .commit();
+                Intent intent = new Intent(getContext(), FCActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -232,11 +225,8 @@ public class FragmentMainSearchFC extends Fragment {
         });
 
 
-
-
-
         return view;
-    }
+    }//onCreate
 
     private void setSpinner() {
         spinner = (Spinner)view.findViewById(R.id.spinner);
@@ -392,13 +382,7 @@ public class FragmentMainSearchFC extends Fragment {
     }
 
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            getActivity().setTitle("FC 찾기");
-        }
-    }
+
 
     @Override
     public void onResume() {

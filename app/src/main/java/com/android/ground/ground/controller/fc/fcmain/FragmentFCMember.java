@@ -1,7 +1,7 @@
 package com.android.ground.ground.controller.fc.fcmain;
 
-import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,24 +13,18 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.management.FCManagementFragment;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
-import com.android.ground.ground.model.naver.MovieAdapter;
-import com.android.ground.ground.model.person.main.AlarmItemData;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView2;
-import com.android.ground.ground.view.fc.fcmain.FCMemberItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -94,7 +88,7 @@ public class FragmentFCMember extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_fcmember, container, false);
-        this.setUserVisibleHint(true);
+//        this.setUserVisibleHint(true);
         refreshView = (PullToRefreshListView)view.findViewById(R.id.view_fcmember);
         refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -112,7 +106,7 @@ public class FragmentFCMember extends Fragment {
             public void onClick(View v) {
                 Fragment mFragment = (Fragment) FCManagementFragment.newInstance("", "");
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, mFragment)
+                        .replace(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
 
@@ -179,18 +173,12 @@ public class FragmentFCMember extends Fragment {
         mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
             public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
-                if(data instanceof FCFragment){
-                    Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
-                }else if(data instanceof MyProfileFragment) {
-                    Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
+                if(data instanceof FCActivity){
+                    Intent intent = new Intent(getContext(), FCActivity.class);
+                    startActivity(intent);
+                }else if(data instanceof MyProfileActivity) {
+                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -244,12 +232,12 @@ public class FragmentFCMember extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            getActivity().setTitle("FC&멤버");
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            getActivity().setTitle("FC&멤버");
+//        }
+//    }
 
 }

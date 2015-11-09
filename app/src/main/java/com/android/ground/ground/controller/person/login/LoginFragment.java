@@ -1,19 +1,19 @@
 package com.android.ground.ground.controller.person.login;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.main.MainActivity;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,6 +71,9 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.fragment_login, container, false);
+        ((Activity)getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ((Activity)getActivity()).getWindow().setBackgroundDrawableResource(R.drawable.xxdpi_bg);
         //// TODO: 2015-10-29
         //연동 로그인 후, 토큰 값 받기
         //토큰 값 서버에 전달

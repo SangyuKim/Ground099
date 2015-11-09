@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,15 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.fc.fcmain.FCFragment;
+import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.finalposition.FinalPositionActivity;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Profile;
-import com.android.ground.ground.model.naver.MovieAdapter;
 import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.naver.MovieItemView;
 import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.model.person.main.CheckMatchListGroupItem;
 import com.android.ground.ground.view.person.main.MVPview;
@@ -147,18 +144,12 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         hView.setOnHeaderImageListener(new MVPview.OnHeaderImageClickListener() {
             @Override
             public void onHeaderImageClick(MVPview view, Profile data) {
-                if (data instanceof MyProfileFragment) {
-                    Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
-                } else if (data instanceof FCFragment) {
-                    Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.container, mFragment)
-                            .addToBackStack(null)
-                            .commit();
+                if (data instanceof MyProfileActivity) {
+                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                    startActivity(intent);
+                } else if (data instanceof FCActivity) {
+                    Intent intent = new Intent(getContext(), FCActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -404,13 +395,14 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         }
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            getActivity().setTitle("매치 확인");
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        Log.d("hello", "매치 찾기 힌트");
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            getActivity().setTitle("매치 확인");
+//        }
+//    }
 
     @Override
     public void onResume() {

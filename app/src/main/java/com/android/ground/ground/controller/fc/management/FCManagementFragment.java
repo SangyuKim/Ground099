@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
@@ -84,14 +86,31 @@ public class FCManagementFragment extends Fragment {
         pager = (ViewPager)view.findViewById(R.id.pager);
 
         mAdapter = new FCManagemnetTabsAdapter(getContext(), getChildFragmentManager(), tabHost, pager);
-        Log.d("hello", "onCreateView");
 
         mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("클럽 메신저"), FragmentClubMessage.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("멤버 관리"), FragmentManagementMember.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab3").setIndicator("기본설정"), FragmentFCProfile.class, null);
 
+        if(tabHost.getCurrentTab()==0){
+            getActivity().setTitle("클럽 메신저");
+        }
+        mAdapter.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+                @Override
+                public void onTabChanged(String tabId) {
+                    if (tabId.equals("tab1")) {
+                        getActivity().setTitle("클럽 메신저");
+                    } else if (tabId.equals("tab2")) {
+                        getActivity().setTitle("멤버 관리");
+                    } else if (tabId.equals("tab3")) {
+                        getActivity().setTitle("기본설정");
+                    }
+
+
+                }
+            }
+        );
+
         if (savedInstanceState != null) {
-            Log.d("hello","savedInstanceState in FCFragment");
             tabHost.setCurrentTab(savedInstanceState.getInt("tabIndex"));
             mAdapter.onRestoreInstanceState(savedInstanceState);
         }
@@ -137,5 +156,6 @@ public class FCManagementFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
 
 }

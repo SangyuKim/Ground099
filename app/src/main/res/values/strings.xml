@@ -49,4 +49,6 @@
     <string name="title_activity_my_profilectivity">MyProfilectivity</string>
     <string name="title_activity_ready_match_result">ReadyMatchResultActivity</string>
     <string name="title_activity_area_search">AreaSearchActivity</string>
+
+    <string name="GCM_SenderId">155174750894</string>
 </resources>

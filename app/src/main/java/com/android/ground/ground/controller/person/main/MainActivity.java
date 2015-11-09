@@ -2,40 +2,49 @@ package com.android.ground.ground.controller.person.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.ListPopupWindow;
-import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.setting.SettingFragment;
 import com.android.ground.ground.controller.fc.create.FCCreateActivity;
-import com.android.ground.ground.controller.fc.fcmain.FCFragment;
-import com.android.ground.ground.controller.fc.management.FragmentFCProfile;
-import com.android.ground.ground.controller.person.login.SignupFragment;
+import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.custom.CustomDrawerLayout;
+import com.android.ground.ground.custom.CustomNavigationView;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.view.OnAlarmClickListener;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CustomNavigationView.OnHeaderItemSelectedListener {
     private boolean isBackPressed = false;
     ListPopupWindow listPopup;
     MainAlarmAdapter mAlarmAdapter;
     Menu menu;
+    ImageView imageView;
+
+    public static final long NOT_START = -1;
+    long startTime = NOT_START;
+
+    public static final int MESSAGE_BACK_TIMEOUT = 3;
+    public static final int TIME_BACK_TIMEOUT = 2000;
 
     public static final String TAG_MAIN_FRAGMENT = "1";
 
@@ -61,8 +70,16 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        CustomNavigationView navigationView = (CustomNavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setHeaderItemSelectedListener(this);
+//        imageView = (ImageView)findViewById(R.id.imageView_nav_header);
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "hello " , Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
 
@@ -134,15 +151,31 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             if (isBackPressed &&  getSupportFragmentManager().findFragmentByTag(TAG_MAIN_FRAGMENT).isVisible() && getSupportFragmentManager().getBackStackEntryCount()==0) {
+                mHandler.removeMessages(MESSAGE_BACK_TIMEOUT);
                 super.onBackPressed();
             }else if(!getSupportFragmentManager().findFragmentByTag(TAG_MAIN_FRAGMENT).isVisible() || getSupportFragmentManager().getBackStackEntryCount() !=0){
                 super.onBackPressed();
             }else{
                 isBackPressed = true;
                 Toast.makeText(this, "한 번 더 누르시면 종료합니다.", Toast.LENGTH_SHORT).show();
+                mHandler.sendEmptyMessageDelayed(MESSAGE_BACK_TIMEOUT, TIME_BACK_TIMEOUT);
             }
         }
     }
+
+    Handler mHandler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                    case MESSAGE_BACK_TIMEOUT :
+                    isBackPressed = false;
+                    break;
+            }
+        }
+    };
+
+
 
 
     @Override
@@ -209,11 +242,8 @@ public class MainActivity extends AppCompatActivity
                 isAlarmOpened = false;
             }
 
-            Fragment mFragment = (Fragment)MyProfileFragment.newInstance("", "");
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, mFragment)
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = new Intent(MainActivity.this, MyProfileActivity.class);
+            startActivity(intent);
             isBackPressed = false;
 
         } else if (id == R.id.nav_fc) {
@@ -222,11 +252,8 @@ public class MainActivity extends AppCompatActivity
                 alarmItem.setIcon(R.drawable.ground_alarm);
                 isAlarmOpened = false;
             }
-            Fragment mFragment = (Fragment) FCFragment.newInstance("", "");
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, mFragment)
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = new Intent(MainActivity.this, FCActivity.class);
+            startActivity(intent);
             isBackPressed = false;
         } else if (id == R.id.nav_mymessage) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -305,5 +332,10 @@ public class MainActivity extends AppCompatActivity
 //    }
 
 
+    @Override
+    public boolean onHeaderItemSelected() {
+        Toast.makeText(MainActivity.this, "hello " , Toast.LENGTH_SHORT).show();
+        return true;
+    }
 
 }

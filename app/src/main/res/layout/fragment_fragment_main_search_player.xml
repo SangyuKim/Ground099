@@ -27,17 +27,23 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/custom_search_bar_editText"
                 android:layout_gravity="bottom"
-                android:layout_weight="1"
                 android:singleLine="true"
-                android:imeOptions="actionDone"/>
+                android:imeOptions="actionDone"
+                android:layout_weight="1" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="찾기"
-                android:id="@+id/custom_search_bar_button"
-                android:layout_gravity="bottom" />
+                android:id="@+id/custom_search_bar_button_cancel"
+                android:text="X" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="취소"
+                android:id="@+id/custom_search_bar_button" />
         </LinearLayout>
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView

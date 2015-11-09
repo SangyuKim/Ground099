@@ -1,20 +1,15 @@
 package com.android.ground.ground.view.fc.fcmain;
 
 import android.content.Context;
-import android.text.Html;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.fc.fcmain.FCFragment;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
-import com.android.ground.ground.model.naver.MovieItem;
 import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * Created by Tacademy on 2015-11-02.
@@ -35,7 +30,7 @@ public class FCMemberItemView extends FrameLayout {
             @Override
             public void onClick(View v) {
                 if (mProfileListener != null) {
-                    mProfileListener.onProfileClick(FCMemberItemView.this, new MyProfileFragment());
+                    mProfileListener.onProfileClick(FCMemberItemView.this, new MyProfileActivity());
                 }
             }
         });

@@ -1,6 +1,7 @@
 package com.android.ground.ground.controller.person.main;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.person.profile.MyProfileFragment;
+import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.naver.MovieItem;
@@ -135,11 +135,8 @@ public class FragmentMainSearchPlayer extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                Fragment mFragment = (Fragment) MyProfileFragment.newInstance("", "");
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, mFragment)
-                        .addToBackStack(null)
-                        .commit();
+                Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -237,17 +234,19 @@ public class FragmentMainSearchPlayer extends Fragment {
     }
 
     private void setSearchFab() {
+        keywordView = (EditText) view.findViewById(R.id.custom_search_bar_editText);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mLinearLayout.setVisibility(View.VISIBLE);
                 view.setVisibility(View.GONE);
+
             }
         });
         mLinearLayout = (LinearLayout)view.findViewById(R.id.custom_search_bar);
         mLinearLayout.setVisibility(View.GONE);
-        keywordView = (EditText) view.findViewById(R.id.custom_search_bar_editText);
+
         keywordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -310,13 +309,14 @@ public class FragmentMainSearchPlayer extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            getActivity().setTitle("선수 찾기");
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        Log.d("hello", "선수 찾기 힌트");
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            getActivity().setTitle("선수 찾기");
+//        }
+//    }
     private void getMoreItem() {
         if (!isUpdate) {
             String keyword = mAdapter.getKeyword();
@@ -372,28 +372,4 @@ public class FragmentMainSearchPlayer extends Fragment {
         NetworkManager.getInstance().cancelAll(MyApplication.getContext());
     }
 
-    @Override
-    public void onResume() {
-        Log.d("hello", "resume");
-        super.onResume();
-        setUserVisibleHint(true);
-    }
-
-    @Override
-    public void onPause() {
-        Log.d("hello", "onPause");
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        Log.d("hello", "onStop");
-        super.onStop();
-    }
-
-    @Override
-    public void onStart() {
-        Log.d("hello", "onStart");
-        super.onStart();
-    }
 }

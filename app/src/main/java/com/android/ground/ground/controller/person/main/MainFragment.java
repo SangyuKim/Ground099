@@ -97,16 +97,34 @@ public class MainFragment extends Fragment {
             }
         });
 
-        mAdapter = new TabsAdapter(getContext(), getChildFragmentManager(), tabHost, pager);
+         mAdapter = new TabsAdapter(getContext(), getChildFragmentManager(), tabHost, pager);
 
         mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("선수 찾기"), FragmentMainSearchPlayer.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("FC 찾기"), FragmentMainSearchFC.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab3").setIndicator("매치 확인"), FragmentMainCheckMatch.class, null);
         tabHost.setCurrentTab(1);
+        if(tabHost.getCurrentTab()==1){
+            getActivity().setTitle("FC 찾기");
+        }
+        mAdapter.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+
+                if (tabId.equals("tab1")) {
+                    getActivity().setTitle("선수 찾기");
+                } else if (tabId.equals("tab2")) {
+                    getActivity().setTitle("FC 찾기");
+                } else if (tabId.equals("tab3")) {
+                    getActivity().setTitle("매치 확인");
+                }
+
+            }
+        });
         if (savedInstanceState != null) {
             tabHost.setCurrentTab(savedInstanceState.getInt("tabIndex"));
             mAdapter.onRestoreInstanceState(savedInstanceState);
         }
+
 
         return view;
     }
@@ -157,5 +175,6 @@ public class MainFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
 
 }

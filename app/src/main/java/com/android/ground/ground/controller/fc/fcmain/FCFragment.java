@@ -87,10 +87,24 @@ public class FCFragment extends Fragment implements Profile {
         pager = (ViewPager)view.findViewById(R.id.pager);
 
         mAdapter = new FCTabsAdapter(getContext(), getChildFragmentManager(), tabHost, pager);
-        Log.d("hello", "onCreateView");
 
         mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("FC & 멤버"), FragmentFCMember.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("경기 기록"), FragmentFCMatchHistory.class, null);
+
+        if(tabHost.getCurrentTab()==0){
+            getActivity().setTitle("FC & 멤버");
+        }
+        mAdapter.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+                                             @Override
+                                             public void onTabChanged(String tabId) {
+                 if (tabId.equals("tab1")) {
+                     getActivity().setTitle("FC & 멤버");
+                 } else if (tabId.equals("tab2")) {
+                     getActivity().setTitle("경기 기록");
+                 }
+                 }
+         }
+        );
 
         if (savedInstanceState != null) {
             tabHost.setCurrentTab(savedInstanceState.getInt("tabIndex"));
@@ -101,7 +115,6 @@ public class FCFragment extends Fragment implements Profile {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        Log.d("hello", "onSaveInstanceState in FCFragment");
         super.onSaveInstanceState(outState);
         outState.putInt("tabIndex", tabHost.getCurrentTab());
         mAdapter.onSaveInstanceState(outState);
@@ -146,4 +159,8 @@ public class FCFragment extends Fragment implements Profile {
         public void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }
