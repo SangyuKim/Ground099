@@ -106,7 +106,7 @@ public class MyMessageFragment extends Fragment {
             public void onClick(View v) {
                 Fragment mFragment = (Fragment) MyMessageEditFragment.newInstance("", "");
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, mFragment)
+                        .replace(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
             }

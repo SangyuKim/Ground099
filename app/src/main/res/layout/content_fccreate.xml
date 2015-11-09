@@ -38,7 +38,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignTop="@+id/textView53"
-                android:layout_toRightOf="@+id/textView53" />
+                android:layout_toRightOf="@+id/textView53"
+                android:focusable="false" />
 
             <TextView
                 android:id="@+id/textView54"
@@ -58,7 +59,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignStart="@+id/editText2"
-                android:layout_below="@+id/editText2" />
+                android:layout_below="@+id/editText2"
+                android:focusable="false" />
 
             <TextView
                 android:id="@+id/textView55"
@@ -204,7 +206,8 @@
                 android:layout_alignEnd="@+id/editText3"
                 android:layout_alignRight="@+id/editText3"
                 android:layout_below="@+id/imageView_fc_profile"
-                android:layout_toRightOf="@+id/switch1" />
+                android:layout_toRightOf="@+id/switch1"
+                android:focusable="false" />
 
             <TextView
                 android:id="@+id/textView59"

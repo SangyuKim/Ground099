@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
+import com.android.ground.ground.controller.person.message.MyMessageActivity;
 import com.android.ground.ground.model.Profile;
 
 public class MyProfileActivity extends AppCompatActivity implements Profile {
@@ -40,11 +41,8 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
-//                getFragmentManager().beginTransaction()
-//                        .add(R.id.container, mFragment)
-//                        .addToBackStack(null)
-//                        .commit();
+                Intent intent = new Intent(MyProfileActivity.this, MyMessageActivity.class);
+                startActivity(intent);
 
             }
         });

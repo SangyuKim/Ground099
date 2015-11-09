@@ -83,6 +83,7 @@ public class MyMessageEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_message_edit, container, false);
+        getActivity().setTitle("메시지 편집");
         listView = (ListView)view.findViewById(R.id.listView_my_message);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 

@@ -662,5 +662,337 @@
                 }
             }
         ]
+    },
+    {
+        "outputFile": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 2769,
+                    "endColumn": 63,
+                    "endOffset": 2828
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 229,
+                        "endColumn": 63,
+                        "endOffset": 288
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 2833,
+                    "endColumn": 63,
+                    "endOffset": 2892
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 294,
+                        "endColumn": 63,
+                        "endOffset": 353
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 2897,
+                    "endColumn": 54,
+                    "endOffset": 2947
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 115,
+                        "endColumn": 54,
+                        "endOffset": 165
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 2952,
+                    "endColumn": 56,
+                    "endOffset": 3004
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 171,
+                        "endColumn": 56,
+                        "endOffset": 223
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 3009,
+                    "endColumn": 54,
+                    "endOffset": 3059
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 59,
+                        "endColumn": 54,
+                        "endOffset": 109
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 3064,
+                    "endColumn": 37,
+                    "endOffset": 3097
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\ids.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 59,
+                        "endColumn": 38,
+                        "endOffset": 93
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 3102,
+                    "endColumn": 39,
+                    "endOffset": 3137
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\ids.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 138,
+                        "endColumn": 40,
+                        "endOffset": 174
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 3142,
+                    "endColumn": 36,
+                    "endOffset": 3174
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\ids.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 99,
+                        "endColumn": 37,
+                        "endOffset": 132
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 3179,
+                    "endColumn": 64,
+                    "endOffset": 3239
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 19,
+                        "endColumn": 64,
+                        "endOffset": 79
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 3244,
+                    "endColumn": 101,
+                    "endOffset": 3341
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\pull_refresh_strings.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 398,
+                        "endColumn": 101,
+                        "endOffset": 495
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 3346,
+                    "endColumn": 113,
+                    "endOffset": 3455
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\pull_refresh_strings.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 610,
+                        "endColumn": 113,
+                        "endOffset": 719
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 3460,
+                    "endColumn": 107,
+                    "endOffset": 3563
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\pull_refresh_strings.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 501,
+                        "endColumn": 107,
+                        "endOffset": 604
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 3568,
+                    "endColumn": 71,
+                    "endOffset": 3635
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\pull_refresh_strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 59,
+                        "endColumn": 71,
+                        "endOffset": 126
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 3640,
+                    "endColumn": 69,
+                    "endOffset": 3705
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\pull_refresh_strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 211,
+                        "endColumn": 69,
+                        "endOffset": 276
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 17,
+                    "startColumn": 4,
+                    "startOffset": 3710,
+                    "endColumn": 77,
+                    "endOffset": 3783
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\pull_refresh_strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 132,
+                        "endColumn": 77,
+                        "endOffset": 205
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 3788,
+                    "endLine": 24,
+                    "endColumn": 12,
+                    "endOffset": 4074
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 192,
+                        "endLine": 12,
+                        "endColumn": 12,
+                        "endOffset": 484
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 25,
+                    "startColumn": 4,
+                    "startOffset": 4079,
+                    "endLine": 27,
+                    "endColumn": 12,
+                    "endOffset": 4234
+                },
+                "from": {
+                    "file": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 525,
+                        "endLine": 17,
+                        "endColumn": 12,
+                        "endOffset": 682
+                    }
+                }
+            }
+        ]
     }
 ]

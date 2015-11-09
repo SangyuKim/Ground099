@@ -3,6 +3,8 @@ package com.android.ground.ground.controller.person.main;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -10,6 +12,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -217,12 +220,26 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
     }
 
     private void setSearchFab() {
+        keywordView = (EditText) view.findViewById(R.id.custom_search_bar_editText);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mLinearLayout.setVisibility(View.VISIBLE);
                 view.setVisibility(View.GONE);
+                (new Handler()).postDelayed(new Runnable() {
+
+                    public void run() {
+//              ((EditText) findViewById(R.id.et_find)).requestFocus();
+//
+//              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//              imm.showSoftInput(yourEditText, InputMethodManager.SHOW_IMPLICIT);
+
+                        keywordView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
+                        keywordView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+
+                    }
+                }, 200);
             }
         });
         mLinearLayout = (LinearLayout)view.findViewById(R.id.custom_search_bar);
@@ -231,10 +248,10 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         keywordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_DONE){
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    mLinearLayout.setVisibility(View.GONE);
-                    fab.setVisibility(View.VISIBLE);
+//                    mLinearLayout.setVisibility(View.GONE);
+//                    fab.setVisibility(View.VISIBLE);
                 }
                 return true;
             }
@@ -243,9 +260,17 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                keywordView.setText("");
                 MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 mLinearLayout.setVisibility(View.GONE);
                 fab.setVisibility(View.VISIBLE);
+            }
+        });
+        btn = (Button)view.findViewById(R.id.custom_search_bar_button_cancel);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                keywordView.setText("");
             }
         });
     }

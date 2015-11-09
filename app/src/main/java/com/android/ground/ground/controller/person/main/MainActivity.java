@@ -25,6 +25,7 @@ import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.setting.SettingFragment;
 import com.android.ground.ground.controller.fc.create.FCCreateActivity;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
+import com.android.ground.ground.controller.person.message.MyMessageActivity;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.custom.CustomDrawerLayout;
@@ -261,11 +262,8 @@ public class MainActivity extends AppCompatActivity
                 alarmItem.setIcon(R.drawable.ground_alarm);
                 isAlarmOpened = false;
             }
-            Fragment mFragment = (Fragment)MyMessageFragment.newInstance("","");
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, mFragment)
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = new Intent(MainActivity.this, MyMessageActivity.class);
+            startActivity(intent);
             isBackPressed = false;
         } else if (id == R.id.nav_ground) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -338,4 +336,15 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken() , InputMethodManager.HIDE_NOT_ALWAYS);
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken() , InputMethodManager.HIDE_NOT_ALWAYS);
+        super.onPause();
+    }
 }

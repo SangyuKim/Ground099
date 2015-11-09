@@ -125,14 +125,19 @@
         <activity
             android:name=".controller.person.profile.MyProfileActivity"
             android:label="@string/title_activity_my_profile"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
             android:name=".controller.fc.fcmain.FCActivity"
             android:label="@string/title_activity_fc"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".controller.person.message.MyMessageActivity"
+            android:label="@string/title_activity_my_message"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

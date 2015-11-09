@@ -1,10 +1,13 @@
 package com.android.ground.ground.controller.person.main;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +17,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -241,6 +245,26 @@ public class FragmentMainSearchPlayer extends Fragment {
             public void onClick(View view) {
                 mLinearLayout.setVisibility(View.VISIBLE);
                 view.setVisibility(View.GONE);
+//                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.showSoftInput(keywordView, InputMethodManager.SHOW_FORCED);
+//                imm.showSoftInputFromInputMethod (keywordView .getApplicationWindowToken(),InputMethodManager.SHOW_FORCED);
+//                imm.toggleSoftInputFromWindow(keywordView.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+//                imm.showSoftInput(keywordView, InputMethodManager.SHOW_IMPLICIT);
+                (new Handler()).postDelayed(new Runnable() {
+
+                    public void run() {
+//              ((EditText) findViewById(R.id.et_find)).requestFocus();
+//
+//              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//              imm.showSoftInput(yourEditText, InputMethodManager.SHOW_IMPLICIT);
+
+                        keywordView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
+                        keywordView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+
+                    }
+                }, 200);
+//                keywordView.setFocusable(true);
+//                keywordView.setFocusableInTouchMode(true);
 
             }
         });
@@ -252,8 +276,8 @@ public class FragmentMainSearchPlayer extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
                     MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    mLinearLayout.setVisibility(View.GONE);
-                    fab.setVisibility(View.VISIBLE);
+//                    mLinearLayout.setVisibility(View.GONE);
+//                    fab.setVisibility(View.VISIBLE);
                 }
                 return true;
             }
@@ -262,9 +286,18 @@ public class FragmentMainSearchPlayer extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                keywordView.setText("");
                 MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 mLinearLayout.setVisibility(View.GONE);
                 fab.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btn = (Button)view.findViewById(R.id.custom_search_bar_button_cancel);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                keywordView.setText("");
             }
         });
 

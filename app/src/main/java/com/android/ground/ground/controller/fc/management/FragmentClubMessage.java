@@ -114,7 +114,7 @@ public class FragmentClubMessage extends Fragment {
             public void onClick(View v) {
                 Fragment mFragment = (Fragment) MyMessageEditFragment.newInstance("", "");
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, mFragment)
+                        .replace(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
 
@@ -129,7 +129,7 @@ public class FragmentClubMessage extends Fragment {
                     Intent intent = new Intent(getContext(), FCActivity.class);
                     startActivity(intent);
                 } else if (data instanceof MyProfileActivity) {
-                   Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
                     startActivity(intent);
                 }
             }

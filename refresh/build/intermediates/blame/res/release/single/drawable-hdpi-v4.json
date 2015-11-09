@@ -1,11 +1,11 @@
 [
     {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\drawable-hdpi-v4\\progress_bg_holo_light.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progress_bg_holo_light.9.png"
-    },
-    {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\indicator_arrow.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\indicator_arrow.png"
+    },
+    {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\drawable-hdpi-v4\\progress_bg_holo_light.9.png",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progress_bg_holo_light.9.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo7.png",
@@ -22,6 +22,22 @@
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo1.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo1.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo3.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo3.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ic_launcher.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo6.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo6.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo1.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo1.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo2.png",
@@ -52,8 +68,20 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo8.png"
     },
     {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo8.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo8.png"
+    },
+    {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\drawable-hdpi-v4\\progressbar_indeterminate_holo2.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo2.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo2.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo2.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo5.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo5.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\drawable-hdpi-v4\\progressbar_indeterminate_holo5.png",
@@ -68,12 +96,24 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo4.png"
     },
     {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\indicator_arrow.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\indicator_arrow.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progress_bg_holo_light.9.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progress_bg_holo_light.9.png"
+    },
+    {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progress_primary_holo_light.9.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progress_primary_holo_light.9.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\drawable-hdpi-v4\\progressbar_indeterminate_holo7.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo7.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progress_secondary_holo_light.9.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progress_secondary_holo_light.9.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo6.png",
@@ -84,8 +124,16 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\indicator_arrow.png"
     },
     {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\default_ptr_flip.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\default_ptr_flip.png"
+    },
+    {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo3.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo3.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\default_ptr_rotate.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\default_ptr_rotate.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo8.png",
@@ -100,12 +148,20 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo1.png"
     },
     {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo4.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo4.png"
+    },
+    {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\drawable-hdpi-v4\\progressbar_indeterminate_holo6.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo6.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progress_bg_holo_light.9.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progress_bg_holo_light.9.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo7.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo7.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\drawable-hdpi-v4\\progressbar_indeterminate_holo3.png",
@@ -118,5 +174,9 @@
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progressbar_indeterminate_holo4.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\drawable-hdpi\\progressbar_indeterminate_holo4.png"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\progress_primary_holo_light.9.png",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\drawable-hdpi\\progress_primary_holo_light.9.png"
     }
 ]
