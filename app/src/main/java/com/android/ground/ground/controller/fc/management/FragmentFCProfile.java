@@ -244,12 +244,12 @@ public class FragmentFCProfile extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            getActivity().setTitle("기본 설정");
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            getActivity().setTitle("기본 설정");
+//        }
+//    }
 
 }
