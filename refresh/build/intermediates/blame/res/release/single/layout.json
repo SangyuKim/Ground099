@@ -1,15 +1,7 @@
 [
     {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_progress_google_style.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\src\\main\\res\\layout\\pull_to_refresh_progress_google_style.xml"
-    },
-    {
-        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_google_style.xml",
-        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_google_style.xml"
-    },
-    {
-        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_vertical.xml",
-        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_vertical.xml"
+        "merged": "C:\\work_android\\Ground3\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_google_style.xml",
+        "source": "C:\\work_android\\Ground3\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_google_style.xml"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pulling_progress_layout.xml",
@@ -24,12 +16,56 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_horizontal.xml"
     },
     {
-        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_horizontal.xml",
-        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_horizontal.xml"
+        "merged": "C:\\work_android\\Ground3\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_horizontal.xml",
+        "source": "C:\\work_android\\Ground3\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_horizontal.xml"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\layout\\pull_to_refresh_header_horizontal.xml",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_horizontal.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pulling_progress_layout.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\src\\main\\res\\layout\\pulling_progress_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\layout\\pull_to_refresh_progress_google_style.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\layout\\pull_to_refresh_progress_google_style.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_google_style.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_google_style.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground3\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_vertical.xml",
+        "source": "C:\\work_android\\Ground3\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_vertical.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_google_style.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_google_style.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_progress_google_style.xml",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\layout\\pull_to_refresh_progress_google_style.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_progress_google_style.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\src\\main\\res\\layout\\pull_to_refresh_progress_google_style.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_google_style.xml",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_google_style.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground3\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pulling_progress_layout.xml",
+        "source": "C:\\work_android\\Ground3\\refresh\\src\\main\\res\\layout\\pulling_progress_layout.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_vertical.xml",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_vertical.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_horizontal.xml",
+        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_horizontal.xml"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_horizontal.xml",
@@ -44,28 +80,12 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_vertical.xml"
     },
     {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pulling_progress_layout.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\src\\main\\res\\layout\\pulling_progress_layout.xml"
+        "merged": "C:\\work_android\\Ground3\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_progress_google_style.xml",
+        "source": "C:\\work_android\\Ground3\\refresh\\src\\main\\res\\layout\\pull_to_refresh_progress_google_style.xml"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\layout\\pull_to_refresh_header_google_style.xml",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_google_style.xml"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\layout\\pull_to_refresh_progress_google_style.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\layout\\pull_to_refresh_progress_google_style.xml"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_google_style.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_google_style.xml"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_google_style.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\layout\\pull_to_refresh_header_google_style.xml"
-    },
-    {
-        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_progress_google_style.xml",
-        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\layout\\pull_to_refresh_progress_google_style.xml"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\layout\\pull_to_refresh_header_vertical.xml",

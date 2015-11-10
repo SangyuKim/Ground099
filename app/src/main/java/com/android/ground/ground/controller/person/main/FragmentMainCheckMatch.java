@@ -52,6 +52,11 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeaderImageClickListener {
 
     //todo
+    //NetworkManager 만들기
+    //성공 시 -> hView.set ~
+
+    MVPview hView;
+
     boolean isMoreList = true;
 
     View view;
@@ -130,11 +135,11 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             @Override
             public void onLastItemVisible() {
                 isMoreList = getMoreItem();
-                if(!isMoreList){
+                if (!isMoreList) {
                     //마무리된 매치 추가
                     CheckMatchListGroupItem groupItem = new CheckMatchListGroupItem();
-                    groupItem.text ="마무리된 매치";
-                    groupItem.color= 0xffc0c0c0;
+                    groupItem.text = "마무리된 매치";
+                    groupItem.color = 0xffc0c0c0;
                     mAdapter.add(groupItem);
                     searchMovie2("사랑");
                 }
@@ -143,14 +148,21 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
         listView = refreshView.getRefreshableView();
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        MVPview hView = new MVPview(getContext());
+        hView = new MVPview(getContext());
+        //header Search Network 실행
         hView.setOnHeaderImageListener(new MVPview.OnHeaderImageClickListener() {
             @Override
-            public void onHeaderImageClick(MVPview view, Profile data) {
-                if (data instanceof MyProfileActivity) {
+            public void onHeaderImageClick(MVPview view, String tag) {
+                if(tag.equals("MVP")){
+                    Toast.makeText(getContext(), hView.getItemMVP().memName ,Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getContext(), MyProfileActivity.class);
                     startActivity(intent);
-                } else if (data instanceof FCActivity) {
+                }else if(tag.equals("SCR")){
+                    Toast.makeText(getContext(),  hView.getItemScr().memName  ,Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                    startActivity(intent);
+                }else if(tag.equals("CLUB")){
+                    Toast.makeText(getContext(),  hView.getItemWin().clubName ,Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getContext(), FCActivity.class);
                     startActivity(intent);
                 }
@@ -414,9 +426,9 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
     MVPview.OnHeaderImageClickListener mHeaderImageListener;
     @Override
-    public void onHeaderImageClick(MVPview view, Profile data) {
+    public void onHeaderImageClick(MVPview view, String tag) {
         if (mHeaderImageListener != null) {
-            mHeaderImageListener.onHeaderImageClick(view, data);
+            mHeaderImageListener.onHeaderImageClick(view, tag);
         }
     }
 
