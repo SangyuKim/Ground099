@@ -3,11 +3,9 @@ package com.android.ground.ground.view.person.main;
 import android.content.Context;
 import android.text.Html;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Checkable;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 import com.android.ground.ground.R;
 import com.android.ground.ground.model.naver.MovieItem;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class SearchMatchTestItemView extends RelativeLayout implements Checkable {
     public SearchMatchTestItemView(Context context) {
@@ -37,7 +34,7 @@ public class SearchMatchTestItemView extends RelativeLayout implements Checkable
 
     private void init() {
         inflate(getContext(), R.layout.view_search_match_test_item, this);
-        titleView = (TextView)findViewById(R.id.text_title);
+        titleView = (TextView)findViewById(R.id.memNameCountScr);
         directorView = (TextView)findViewById(R.id.text_director);
         mLinearLayout = (LinearLayout)findViewById(R.id.linearLayout_extra);
         Button btn = (Button)findViewById(R.id.button36);

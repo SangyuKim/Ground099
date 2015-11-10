@@ -6,20 +6,32 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout5">
 
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/image_icon"
-            android:src="@mipmap/ic_launcher"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:id="@+id/memImageMVP"
+                android:src="@mipmap/ic_launcher"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/clubImage"
+                android:layout_gravity="left|top"
+                android:src="@mipmap/ic_launcher" />
+        </FrameLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -27,49 +39,159 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/managerYN"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="이름"
+                    android:id="@+id/memNameCountScr"
+                    android:layout_toLeftOf="@+id/button21"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/memImageMVP"
+                    android:layout_toEndOf="@+id/memImageMVP" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="나이"
+                    android:id="@+id/age" />
+
+            </LinearLayout>
+
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="20dp"
-                android:id="@+id/imageView15"
+                android:id="@+id/clubYN"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/text_title"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="지역"
+                android:id="@+id/memLocationName"
                 android:layout_toLeftOf="@+id/button21"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/image_icon"
-                android:layout_toEndOf="@+id/image_icon"
+                android:layout_below="@+id/memNameCountScr"
+                android:layout_toRightOf="@+id/memImageMVP"
+                android:layout_toEndOf="@+id/memImageMVP"
                 android:layout_weight="1" />
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/text_director"
-                android:layout_toLeftOf="@+id/button21"
-                android:layout_below="@+id/text_title"
-                android:layout_toRightOf="@+id/image_icon"
-                android:layout_toEndOf="@+id/image_icon"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/memMainDay_Mon"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/text_actor"
+                    android:layout_toEndOf="@+id/text_actor"
+                    android:checked="false"
+                    android:text="월"
+                    android:focusable="false"
+                    android:clickable="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="선호"
+                    android:id="@+id/text_actor" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/memMainDay_Tue"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/memMainDay_Mon"
+                    android:layout_toEndOf="@+id/memMainDay_Mon"
+                    android:checked="false"
+                    android:text="화"
+                    android:focusable="false"
+                    android:clickable="false"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/memMainDay_Wed"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/memMainDay_Tue"
+                    android:layout_toEndOf="@+id/memMainDay_Tue"
+                    android:checked="false"
+                    android:text="수"
+                    android:focusable="false"
+                    android:clickable="false"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/memMainDay_Thu"
+                    android:checked="false"
+                    android:text="목"
+                    android:layout_below="@+id/memMainDay_Mon"
+                    android:layout_toLeftOf="@+id/memMainDay_Tue"
+                    android:layout_toStartOf="@+id/memMainDay_Tue"
+                    android:focusable="false"
+                    android:clickable="false"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/memMainDay_Fri"
+                    android:checked="false"
+                    android:layout_below="@+id/memMainDay_Tue"
+                    android:layout_toLeftOf="@+id/memMainDay_Wed"
+                    android:layout_toStartOf="@+id/memMainDay_Wed"
+                    android:text="금"
+                    android:focusable="false"
+                    android:clickable="false"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/memMainDay_Sat"
+                    android:checked="false"
+                    android:layout_alignTop="@+id/memMainDay_Fri"
+                    android:layout_alignLeft="@+id/memMainDay_Wed"
+                    android:layout_alignStart="@+id/memMainDay_Wed"
+                    android:text="토"
+                    android:focusable="false"
+                    android:clickable="false"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/memMainDay_Sun"
+                    android:checked="false"
+                    android:text="일"
+                    android:layout_below="@+id/memMainDay_Thu"
+                    android:layout_toLeftOf="@+id/memMainDay_Fri"
+                    android:layout_toStartOf="@+id/memMainDay_Fri"
+                    android:focusable="false"
+                    android:clickable="false"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/text_actor" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/text_rate" />
+                android:text="memIntro"
+                android:id="@+id/memIntro" />
 
         </LinearLayout>
 
@@ -85,6 +207,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:focusable="false" />
+
     </LinearLayout>
 
 </RelativeLayout>

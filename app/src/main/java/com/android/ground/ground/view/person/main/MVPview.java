@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
@@ -16,7 +17,9 @@ import com.android.ground.ground.model.Profile;
  */
 public class MVPview extends FrameLayout {
     Profile mProfile1, mProfile2, mProfile3;
-    ImageView imageView;
+    ImageView memImageMVP, memImageScr, clubImage;
+    TextView month, memNameCountMVP, memNameCountScr, clubNmaeCount;
+
     public MVPview(Context context) {
         super(context);
         init();
@@ -29,9 +32,9 @@ public class MVPview extends FrameLayout {
 
     public void init(){
         inflate(getContext(), R.layout.custom_controller_person_main_fragment_maincheckmatch_mvp, this);
-        imageView = (ImageView)findViewById(R.id.imageView2);
+        memImageMVP = (ImageView)findViewById(R.id.memImageMVP);
         mProfile1 = new MyProfileActivity();
-        imageView.setOnClickListener(new OnClickListener() {
+        memImageMVP.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mRequestListener != null) {
@@ -39,9 +42,9 @@ public class MVPview extends FrameLayout {
                 }
             }
         });
-        imageView = (ImageView)findViewById(R.id.imageView3);
+        memImageScr = (ImageView)findViewById(R.id.memImageScr);
         mProfile2 = new MyProfileActivity();
-        imageView.setOnClickListener(new OnClickListener() {
+        memImageScr.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mRequestListener != null) {
@@ -49,9 +52,9 @@ public class MVPview extends FrameLayout {
                 }
             }
         });
-        imageView = (ImageView)findViewById(R.id.imageView4);
+        clubImage = (ImageView)findViewById(R.id.clubImage);
         mProfile3 = new FCActivity();
-        imageView.setOnClickListener(new OnClickListener() {
+        clubImage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mRequestListener != null) {

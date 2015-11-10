@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_alarm) {
             alarmItem = item;
             if(!isAlarmOpened){
-                Fragment mFragment = (Fragment)AlarmFragment.newInstance("", "");
+                final Fragment mFragment = (Fragment)AlarmFragment.newInstance("", "");
 
                 ((AlarmFragment)mFragment).setOnAlarmClickListener(new OnAlarmClickListener() {
                     @Override
@@ -204,6 +205,7 @@ public class MainActivity extends AppCompatActivity
                         alarmItem.setIcon(R.drawable.ground_alarm);
                     }
                 });
+
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.container, mFragment)
                         .addToBackStack(null)
@@ -230,6 +232,7 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

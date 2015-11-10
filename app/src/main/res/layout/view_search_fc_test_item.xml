@@ -14,20 +14,62 @@
         android:layout_toLeftOf="@+id/button34"
         android:layout_toStartOf="@+id/button34">
 
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/image_icon"
-            android:src="@mipmap/ic_launcher"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/memImageMVP"
+                android:src="@mipmap/ic_launcher"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="월"
+                android:id="@+id/clubMainDay_Mon"
+                android:layout_below="@+id/memImageMVP"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:checked="false"
+                android:clickable="false"
+                android:focusable="false"/>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="화"
+                android:id="@+id/clubMainDay_Tue"
+                android:checked="false"
+                android:layout_below="@+id/clubMainDay_Mon"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:clickable="false"
+                android:focusable="false"/>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/memNameCountScr"
+                android:layout_toLeftOf="@+id/button21"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/memImageMVP"
+                android:layout_toEndOf="@+id/memImageMVP"
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -37,39 +79,27 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="20dp"
-                    android:id="@+id/imageView16"
+                    android:id="@+id/memYN"
                     android:layout_gravity="center_horizontal"
                     android:src="@mipmap/ic_launcher" />
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="20dp"
-                    android:id="@+id/imageView15"
+                    android:id="@+id/matchYN"
                     android:src="@mipmap/ic_launcher" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/text_title"
-                android:layout_toLeftOf="@+id/button21"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/image_icon"
-                android:layout_toEndOf="@+id/image_icon"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
-                android:id="@+id/text_director"
+                android:id="@+id/clubLocationName"
                 android:layout_toLeftOf="@+id/button21"
-                android:layout_below="@+id/text_title"
-                android:layout_toRightOf="@+id/image_icon"
-                android:layout_toEndOf="@+id/image_icon"
+                android:layout_below="@+id/memNameCountScr"
+                android:layout_toRightOf="@+id/memImageMVP"
+                android:layout_toEndOf="@+id/memImageMVP"
                 android:layout_weight="1" />
 
             <TextView
@@ -77,14 +107,22 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
-                android:id="@+id/text_actor" />
+                android:id="@+id/clubSkill" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
-                android:id="@+id/text_rate" />
+                android:id="@+id/clubManner" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/clubField"
+                android:layout_weight="1" />
 
         </LinearLayout>
 
@@ -113,5 +151,65 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="수"
+        android:id="@+id/clubMainDay_Wed"
+        android:checked="false"
+        android:layout_below="@+id/linearLayout5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:clickable="false"
+        android:focusable="false"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="목"
+        android:id="@+id/clubMainDay_Thu"
+        android:layout_below="@+id/clubMainDay_Wed"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:checked="false"
+        android:clickable="false"
+        android:focusable="false"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="금"
+        android:id="@+id/clubMainDay_Fri"
+        android:layout_below="@+id/clubMainDay_Thu"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:checked="false"
+        android:clickable="false"
+        android:focusable="false"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="토"
+        android:id="@+id/clubMainDay_Sat"
+        android:layout_below="@+id/clubMainDay_Fri"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:checked="false"
+        android:clickable="false"
+        android:focusable="false"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일"
+        android:id="@+id/clubMainDay_Sun"
+        android:layout_below="@+id/clubMainDay_Sat"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:checked="false"
+        android:clickable="false"
+        android:focusable="false"/>
 
 </RelativeLayout>

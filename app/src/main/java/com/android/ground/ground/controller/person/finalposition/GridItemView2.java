@@ -27,7 +27,7 @@ public class GridItemView2 extends FrameLayout {
     }
     public void init(){
        inflate(getContext(), R.layout.gird_item2_layout, this);
-        imageView = (ImageView)findViewById(R.id.imageView2);
+        imageView = (ImageView)findViewById(R.id.memImageMVP);
         textView= (TextView)findViewById(R.id.textView2);
     }
 

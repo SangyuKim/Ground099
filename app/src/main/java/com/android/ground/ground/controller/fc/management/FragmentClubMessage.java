@@ -114,24 +114,29 @@ public class FragmentClubMessage extends Fragment {
             public void onClick(View v) {
                 Fragment mFragment = (Fragment) MyMessageEditFragment.newInstance("", "");
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
+                        .add(R.id.childcontainer, mFragment)
                         .addToBackStack(null)
                         .commit();
 
             }
         });
 
-
+        //프로필
         mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
             public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
-                if (data instanceof FCActivity) {
-                    Intent intent = new Intent(getContext(), FCActivity.class);
-                    startActivity(intent);
-                } else if (data instanceof MyProfileActivity) {
-                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
-                    startActivity(intent);
-                }
+
+//                Intent intent = new Intent(getActivity(), MyProfileActivity.class);
+//                startActivity(intent);
+                Intent intent = new Intent(getContext(), FCActivity.class);
+                startActivity(intent);
+//                if (data instanceof FCActivity) {
+//                    Intent intent = new Intent(getContext(), FCActivity.class);
+//                    startActivity(intent);
+//                } else if (data instanceof MyProfileActivity) {
+//                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
+//                    startActivity(intent);
+//                }
             }
         });
 

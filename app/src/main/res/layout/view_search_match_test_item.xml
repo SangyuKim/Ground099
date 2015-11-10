@@ -42,11 +42,11 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/text_title"
+                android:id="@+id/memNameCountScr"
                 android:layout_toLeftOf="@+id/button35"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/image_icon"
-                android:layout_toEndOf="@+id/image_icon"
+                android:layout_toRightOf="@+id/memImageMVP"
+                android:layout_toEndOf="@+id/memImageMVP"
                 android:layout_weight="1"
                 android:gravity="center" />
 
@@ -57,9 +57,9 @@
                 android:text="Small Text"
                 android:id="@+id/text_director"
                 android:layout_toLeftOf="@+id/button35"
-                android:layout_below="@+id/text_title"
-                android:layout_toRightOf="@+id/image_icon"
-                android:layout_toEndOf="@+id/image_icon"
+                android:layout_below="@+id/memNameCountScr"
+                android:layout_toRightOf="@+id/memImageMVP"
+                android:layout_toEndOf="@+id/memImageMVP"
                 android:layout_weight="1"
                 android:gravity="center" />
 

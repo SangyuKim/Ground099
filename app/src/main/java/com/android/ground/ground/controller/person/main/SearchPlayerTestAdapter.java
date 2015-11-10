@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.view.person.main.SearchPlayerTestItemView;
+import com.android.ground.ground.view.person.main.SearchPlayerItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by dongja94 on 2015-10-19.
  */
-public class SearchPlayerTestAdapter extends BaseAdapter implements SearchPlayerTestItemView.OnRequestButtonClickListener {
+public class SearchPlayerTestAdapter extends BaseAdapter{
 
     List<MovieItem> items = new ArrayList<MovieItem>();
 
@@ -68,29 +68,29 @@ public class SearchPlayerTestAdapter extends BaseAdapter implements SearchPlayer
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SearchPlayerTestItemView view;
-        if (convertView == null) {
-            view = new SearchPlayerTestItemView(parent.getContext());
-            view.setOnRequestButtonListener(this);
-        } else {
-            view = (SearchPlayerTestItemView)convertView;
-        }
-        view.setMovieItem(items.get(position));
-        return view;
+//        SearchPlayerItemView view;
+//        if (convertView == null) {
+//            view = new SearchPlayerItemView(parent.getContext());
+//            view.setOnRequestButtonListener(this);
+//        } else {
+//            view = (SearchPlayerItemView)convertView;
+//        }
+//        view.setMovieItem(items.get(position));
+        return null;
     }
 
     public interface OnAdapterRequestButtonListener {
-        public void onAdapterRequestButtonClick(SearchPlayerTestAdapter adapter, SearchPlayerTestItemView view, MovieItem data);
+        public void onAdapterRequestButtonClick(SearchPlayerTestAdapter adapter, SearchPlayerItemView view, MovieItem data);
     }
     OnAdapterRequestButtonListener mRequestListener;
     public void setOnAdapteRequestButtonListener(OnAdapterRequestButtonListener listener) {
         mRequestListener = listener;
     }
-
-    @Override
-    public void onRequestButtonClick(SearchPlayerTestItemView view, MovieItem data) {
-        if (mRequestListener != null) {
-            mRequestListener.onAdapterRequestButtonClick(this, view, data);
-        }
-    }
+//
+//    @Override
+//    public void onRequestButtonClick(SearchPlayerItemView view, MovieItem data) {
+//        if (mRequestListener != null) {
+//            mRequestListener.onAdapterRequestButtonClick(this, view, data);
+//        }
+//    }
 }

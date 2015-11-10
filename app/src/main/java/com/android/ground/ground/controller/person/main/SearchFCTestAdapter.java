@@ -5,15 +5,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.view.person.main.SearchFCTestItemView;
-import com.android.ground.ground.view.person.main.SearchPlayerTestItemView;
+import com.android.ground.ground.view.person.main.SearchFCItemView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchFCTestAdapter extends BaseAdapter implements SearchFCTestItemView.OnMatchButtonClickListener
-        , SearchFCTestItemView.OnRequestButtonClickListener {
+public class SearchFCTestAdapter extends BaseAdapter {
 
     List<MovieItem> items = new ArrayList<MovieItem>();
 
@@ -68,21 +66,21 @@ public class SearchFCTestAdapter extends BaseAdapter implements SearchFCTestItem
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SearchFCTestItemView view;
-        if (convertView == null) {
-            view = new SearchFCTestItemView(parent.getContext());
-            view.setOnRequestButtonListener(this);
-            view.setOnMatchtButtonListener(this);
-
-        } else {
-            view = (SearchFCTestItemView)convertView;
-        }
-        view.setMovieItem(items.get(position));
-        return view;
+        SearchFCItemView view;
+//        if (convertView == null) {
+//            view = new SearchFCTestItemView(parent.getContext());
+//            view.setOnRequestButtonListener(this);
+//            view.setOnMatchtButtonListener(this);
+//
+//        } else {
+//            view = (SearchFCTestItemView)convertView;
+//        }
+//        view.setMovieItem(items.get(position));
+        return null;
     }
 
     public interface OnAdapterRequestButtonListener {
-        public void onAdapterRequestButtonClick(SearchFCTestAdapter adapter, SearchFCTestItemView view, MovieItem data);
+        public void onAdapterRequestButtonClick(SearchFCTestAdapter adapter, SearchFCItemView view, MovieItem data);
     }
     OnAdapterRequestButtonListener mRequestListener;
     public void setOnAdapteRequestButtonListener(OnAdapterRequestButtonListener listener) {
@@ -90,26 +88,7 @@ public class SearchFCTestAdapter extends BaseAdapter implements SearchFCTestItem
     }
 
 
-    @Override
-    public void onRequestButtonClick(SearchFCTestItemView view, MovieItem data) {
-        if (mRequestListener != null) {
-            mRequestListener.onAdapterRequestButtonClick(this, view, data);
-        }
-    }
 
-    public interface OnAdapterMatchButtonListener {
-        public void onAdapterMatchButtonClick(SearchFCTestAdapter adapter, SearchFCTestItemView view, MovieItem data);
-    }
-    OnAdapterMatchButtonListener mMatchListener;
-    public void setOnAdapteMatchButtonListener(OnAdapterMatchButtonListener listener) {
-        mMatchListener = listener;
-    }
-    @Override
-    public void onMatchtButtonClick(SearchFCTestItemView view, MovieItem data) {
-        if (mMatchListener != null) {
-            mMatchListener.onAdapterMatchButtonClick(this, view, data);
-        }
-    }
 
 
 

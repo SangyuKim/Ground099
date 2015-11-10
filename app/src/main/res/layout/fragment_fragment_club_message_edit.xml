@@ -20,16 +20,17 @@
             android:layout_height="wrap_content"
             android:text="전체선택"
             android:id="@+id/button6"
-            android:visibility="gone"
+            android:visibility="visible"
             android:focusable="false" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="편집"
-            android:id="@+id/button11"
+            android:text="편집취소"
+            android:id="@+id/button46"
             android:focusable="false" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -49,7 +50,8 @@
             android:text="삭제"
             android:id="@+id/button12"
             android:layout_gravity="bottom"
-            android:focusable="false" />
+            android:focusable="false"
+            android:visibility="visible" />
     </LinearLayout>
 
     <ListView

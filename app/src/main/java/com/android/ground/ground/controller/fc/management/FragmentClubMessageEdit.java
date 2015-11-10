@@ -84,7 +84,7 @@ public class FragmentClubMessageEdit extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_club_message_edit, container, false);
-        listView = (ListView)view.findViewById(R.id.listView_club_message);
+        listView = (ListView)view.findViewById(R.id.listView_my_message);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         initData();
@@ -123,9 +123,8 @@ public class FragmentClubMessageEdit extends Fragment {
                 }
             }
         });
-        btn  = (Button)view.findViewById(R.id.button11);
-        btn.setText("편집취소");
-        btn2.setVisibility(View.VISIBLE);
+        btn  = (Button)view.findViewById(R.id.button46);
+
         mLinearLayout.setVisibility(View.VISIBLE);
         mAdapter.setCheckBoxVisible(View.VISIBLE);
         mAdapter.notifyDataSetChanged();

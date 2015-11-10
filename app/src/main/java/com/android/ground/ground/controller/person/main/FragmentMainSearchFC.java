@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,9 +34,11 @@ import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.naver.NaverMovies;
-import com.android.ground.ground.view.person.main.SearchFCTestItemView;
+import com.android.ground.ground.model.person.main.searchClub.SearchClub;
+import com.android.ground.ground.model.person.main.searchClub.SearchClubAdapter;
+import com.android.ground.ground.model.person.main.searchClub.SearchClubResult;
+import com.android.ground.ground.view.OnAdapterSpecificDialogListener;
+import com.android.ground.ground.view.person.main.SearchFCItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -49,6 +53,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 public class FragmentMainSearchFC extends Fragment {
 
     //todo
+    String filter;
     View view;
     FloatingActionButton fab;
     Spinner spinner;
@@ -59,7 +64,7 @@ public class FragmentMainSearchFC extends Fragment {
     PullToRefreshListView refreshView;
     LinearLayout mLinearLayout;
     //    SwipeRefreshLayout refreshLayout;
-    SearchFCTestAdapter mAdapter;
+    SearchClubAdapter mAdapter;
     private static final boolean isNaverMovie = true;
     boolean isUpdate = false;
     boolean isLastItem = false;
@@ -119,7 +124,7 @@ public class FragmentMainSearchFC extends Fragment {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                 String keyword = mAdapter.getKeyword();
-                searchMovie(keyword);
+                searchFCClub(filter,keyword);
             }
         });
 
@@ -140,11 +145,9 @@ public class FragmentMainSearchFC extends Fragment {
         });
 
 
-        mAdapter = new SearchFCTestAdapter();
+        mAdapter = new SearchClubAdapter();
         listView.setAdapter(mAdapter);
-        if(keywordView.getText().toString().equals("")){
-            searchMovie("팀");
-        }
+        searchFCClub(filter, keywordView.getText().toString());
         keywordView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -153,10 +156,7 @@ public class FragmentMainSearchFC extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.toString().equals("")){
-                    searchMovie("팀");
-                }
-                searchMovie(s.toString());
+               searchFCClub(filter, s.toString());
             }
 
             @Override
@@ -165,68 +165,71 @@ public class FragmentMainSearchFC extends Fragment {
             }
         });
 
-         mAdapter.setOnAdapteRequestButtonListener(new SearchFCTestAdapter.OnAdapterRequestButtonListener() {
+
+        mAdapter.setOnAdapterSpecificDialogListener(new OnAdapterSpecificDialogListener() {
             @Override
-            public void onAdapterRequestButtonClick(SearchFCTestAdapter adapter, SearchFCTestItemView view, MovieItem data) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher);
-                builder.setTitle("입단 신청하기");
-                builder.setMessage("입단 신청하시겠습니까? ");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+            public void onAdapterDialogClick(Adapter adapter, View view, String tag) {
+                SearchFCItemView mView = (SearchFCItemView)view;
+                int club_id = mView.getmItem().club_id;
 
-                    }
-                });
-                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                if(tag.equals("입단신청")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setIcon(R.mipmap.ic_launcher);
+                    builder.setTitle("입단 신청하기");
+                    builder.setMessage(club_id + "팀에게 " + "입단 신청하시겠습니까? ");
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-                builder.setCancelable(true);
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                        }
+                    });
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    builder.setCancelable(true);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                }else if(tag.equals("매치신청")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setIcon(R.mipmap.ic_launcher);
+                    builder.setTitle("매치 신청하기");
+                    builder.setMessage(club_id + "팀에게 " +  " 매치 신청하시겠습니까? ");
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    builder.setCancelable(true);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+
 
             }
         });
-        mAdapter.setOnAdapteMatchButtonListener(new SearchFCTestAdapter.OnAdapterMatchButtonListener() {
-            @Override
-            public void onAdapterMatchButtonClick(SearchFCTestAdapter adapter, SearchFCTestItemView view, MovieItem data) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher);
-                builder.setTitle("매치 신청하기");
-                builder.setMessage("매치 신청하시겠습니까? ");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.setCancelable(true);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-
 
         return view;
     }//onCreate
@@ -238,7 +241,25 @@ public class FragmentMainSearchFC extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+                if(position ==0){
+                    filter ="dist";
+                    searchFCClub(filter, keywordView.getText().toString() );
+                }else if(position ==1){
+                    filter="weekend";
+                    searchFCClub(filter, keywordView.getText().toString());
+                }else if(position==2){
+                    filter="fieldYN";
+                    searchFCClub(filter, keywordView.getText().toString());
+                }else if(position==3){
+                    filter="memYN";
+                    searchFCClub(filter, keywordView.getText().toString());
+                }else if(position==4){
+                    filter="matchYN";
+                    searchFCClub(filter, keywordView.getText().toString());
+                }else if(position==5){
+                    filter="rank";
+                    searchFCClub(filter, keywordView.getText().toString());
+                }
             }
 
             @Override
@@ -268,11 +289,6 @@ public class FragmentMainSearchFC extends Fragment {
                 (new Handler()).postDelayed(new Runnable() {
 
                     public void run() {
-//              ((EditText) findViewById(R.id.et_find)).requestFocus();
-//
-//              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//              imm.showSoftInput(yourEditText, InputMethodManager.SHOW_IMPLICIT);
-
                         keywordView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
                         keywordView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
 
@@ -288,8 +304,6 @@ public class FragmentMainSearchFC extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
                     MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-//                    mLinearLayout.setVisibility(View.GONE);
-//                    fab.setVisibility(View.VISIBLE);
                 }
                 return true;
             }
@@ -311,6 +325,7 @@ public class FragmentMainSearchFC extends Fragment {
                 keywordView.setText("");
             }
         });
+        keywordView.setText("");
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -354,13 +369,13 @@ public class FragmentMainSearchFC extends Fragment {
     private void getMoreItem() {
         if (!isUpdate) {
             String keyword = mAdapter.getKeyword();
-            int startIndex = mAdapter.getStartIndex();
-            if (!TextUtils.isEmpty(keyword) && startIndex != -1) {
+            int nextPage = mAdapter.getNextPage();
+            if (nextPage != -1) {
                 isUpdate = true;
-                NetworkManager.getInstance().getNetworkMelon(getContext(), keyword, startIndex, 10, new NetworkManager.OnResultListener<NaverMovies>() {
+                NetworkManager.getInstance().getNetworkSearchClub(getContext(), filter,keyword, nextPage, 1, new NetworkManager.OnResultListener<SearchClub>() {
                     @Override
-                    public void onSuccess(NaverMovies result) {
-                        for (MovieItem item : result.items) {
+                    public void onSuccess(SearchClub result) {
+                        for (SearchClubResult item : result.items) {
                             mAdapter.add(item);
                         }
                         isUpdate = false;
@@ -374,30 +389,31 @@ public class FragmentMainSearchFC extends Fragment {
             }
         }
     }
-    private void searchMovie(final String keyword) {
-        if (!TextUtils.isEmpty(keyword)) {
-            NetworkManager.getInstance().getNetworkMelon(getContext(), keyword, 1, 10, new NetworkManager.OnResultListener<NaverMovies>() {
+    private void searchFCClub(final String filter, final String keyword) {
+        if (!TextUtils.isEmpty(filter)) {
+            NetworkManager.getInstance().getNetworkSearchClub(getContext(), filter, keyword,1, 1, new NetworkManager.OnResultListener<SearchClub>() {
                 @Override
-                public void onSuccess(NaverMovies result) {
+                public void onSuccess(SearchClub result) {
                     mAdapter.setKeyword(keyword);
-                    mAdapter.setTotalCount(result.total);
+                    mAdapter.setFilter(filter);
+                    mAdapter.setTotalCount(result.itemCount);
+                    mAdapter.setPgae(1);
+//                    mAdapter.setTotalCount(result.total);
                     mAdapter.clear();
-                    for (MovieItem item : result.items) {
+                    for (SearchClubResult item : result.items) {
                         mAdapter.add(item);
                     }
 
                     refreshView.onRefreshComplete();
 
                 }
-
                 @Override
                 public void onFail(int code) {
-                    Toast.makeText(getContext(), "error : " + code, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Search FC error code :  " + code, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
             mAdapter.clear();
-            mAdapter.setKeyword(keyword);
         }
     }
     @Override

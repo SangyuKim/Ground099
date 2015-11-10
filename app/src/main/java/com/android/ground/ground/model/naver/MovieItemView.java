@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import com.android.ground.ground.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 /**
  * Created by dongja94 on 2015-10-19.
@@ -41,8 +39,8 @@ public class MovieItemView extends RelativeLayout {
 
     private void init() {
         inflate(getContext(), R.layout.view_movie_item, this);
-        iconView = (ImageView)findViewById(R.id.image_icon);
-        titleView = (TextView)findViewById(R.id.text_title);
+        iconView = (ImageView)findViewById(R.id.memImageMVP);
+        titleView = (TextView)findViewById(R.id.memNameCountScr);
         directorView = (TextView)findViewById(R.id.text_director);
         mLinearLayout = (LinearLayout)findViewById(R.id.custom_extra);
         Button btn = (Button)findViewById(R.id.button20);

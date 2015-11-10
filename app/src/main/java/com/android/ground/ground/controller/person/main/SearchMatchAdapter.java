@@ -1,21 +1,12 @@
 package com.android.ground.ground.controller.person.main;
 
-import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 
-import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.naver.MovieItemView;
 import com.android.ground.ground.model.person.main.CheckMatchListData;
 import com.android.ground.ground.model.person.main.CheckMatchListGroupItem;
-import com.android.ground.ground.model.person.message.MyMessageItem;
-import com.android.ground.ground.view.person.main.MVPview;
-import com.android.ground.ground.view.person.main.SearchFCTestItemView;
 import com.android.ground.ground.view.person.main.SearchMatchGroupItemView;
 import com.android.ground.ground.view.person.main.SearchMatchTestItemView;
 
