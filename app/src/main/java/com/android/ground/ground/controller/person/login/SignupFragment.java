@@ -189,7 +189,7 @@ public class SignupFragment extends Fragment {
 
     private void setSpinner(int id, int dataId) {
         spinner = (Spinner)view.findViewById(id);
-        mySpinnerAdapter = new MySpinnerSignupAdapter();
+        mySpinnerAdapter = new MySpinnerSignupAdapter(getContext());
         spinner.setAdapter(mySpinnerAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

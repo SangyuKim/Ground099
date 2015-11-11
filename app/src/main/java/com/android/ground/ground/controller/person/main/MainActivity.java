@@ -33,6 +33,7 @@ import com.android.ground.ground.custom.CustomDrawerLayout;
 import com.android.ground.ground.custom.CustomNavigationView;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.view.OnAlarmClickListener;
+import com.android.ground.ground.view.person.main.NavigationHeaderView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, CustomNavigationView.OnHeaderItemSelectedListener {
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setOnDrawerListener(new CustomDrawerLayout.OnDrawerListener() {
             @Override
             public void onAdapterDialogClick() {
-                MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken() , InputMethodManager.HIDE_NOT_ALWAYS);
+                MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
         toggle.syncState();
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity
         CustomNavigationView navigationView = (CustomNavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setHeaderItemSelectedListener(this);
+//        NavigationHeaderView headerView = (NavigationHeaderView)findViewById(R.id.nav_header_main)
 //        imageView = (ImageView)findViewById(R.id.imageView_nav_header);
 //        imageView.setOnClickListener(new View.OnClickListener() {
 //            @Override

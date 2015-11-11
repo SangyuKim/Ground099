@@ -5,10 +5,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.person.main.CheckMatchListData;
-import com.android.ground.ground.model.person.main.CheckMatchListGroupItem;
-import com.android.ground.ground.view.person.main.SearchMatchGroupItemView;
-import com.android.ground.ground.view.person.main.SearchMatchTestItemView;
+import com.android.ground.ground.model.person.main.matchinfo.CheckMatchListData;
+import com.android.ground.ground.model.person.main.matchinfo.CheckMatchListGroupItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.List;
 /**
  * Created by dongja94 on 2015-10-19.
  */
-public class SearchMatchAdapter extends BaseAdapter implements SearchMatchTestItemView.OnExtraButtonClickListener{
+public class SearchMatchAdapter extends BaseAdapter {
 
     List<CheckMatchListData> items = new ArrayList<CheckMatchListData>();
 
@@ -31,6 +29,7 @@ public class SearchMatchAdapter extends BaseAdapter implements SearchMatchTestIt
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
+
     public String getKeyword() {
         return keyword;
     }
@@ -38,6 +37,7 @@ public class SearchMatchAdapter extends BaseAdapter implements SearchMatchTestIt
     public void setTotalCount(int totalCount) {
         this.totalCount = totalCount;
     }
+
     public int getTotalCount() {
         return totalCount;
     }
@@ -76,63 +76,45 @@ public class SearchMatchAdapter extends BaseAdapter implements SearchMatchTestIt
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        switch (getItemViewType(position)){
-            case TYPE_INDEX_CHILD: {
-                SearchMatchTestItemView view;
-                if (convertView != null && convertView instanceof SearchMatchTestItemView) {
-                    view = (SearchMatchTestItemView)convertView;
-                } else {
-                    view = new SearchMatchTestItemView(parent.getContext());
-                    view.setOnExtraButtonListener(this);
-                }
-
-                view.setMovieItem((MovieItem)items.get(position));
-                return view;
-
-            }
-            case TYPE_INDEX_GROUP:{
-                 SearchMatchGroupItemView view;
-
-                if (convertView != null && convertView instanceof SearchMatchGroupItemView) {
-                    view = (SearchMatchGroupItemView)convertView;
-                } else {
-                    view = new SearchMatchGroupItemView(parent.getContext());
-                }
-
-                view.setGroupItem((CheckMatchListGroupItem) items.get(position));
-                return view;
-
-            }
-        }//switch
-        return null;
-    }
-
-
-
-    public interface OnAdapterExtraButtonListener {
-        public void onAdapterExtraButtonClick(SearchMatchAdapter adapter, SearchMatchTestItemView view, MovieItem data);
-    }
-    OnAdapterExtraButtonListener mListener;
-    public void setOnAdapterExtraButtonListener(OnAdapterExtraButtonListener listener) {
-        mListener = listener;
-    }
-
-    @Override
-    public void onExtraButtonClick(SearchMatchTestItemView view, MovieItem data) {
-        if (mListener != null) {
-            mListener.onAdapterExtraButtonClick(this, view, data);
-        }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        CheckMatchListData d = items.get(position);
-        if (d instanceof CheckMatchListGroupItem) {
-            return TYPE_INDEX_GROUP;
-        } else if(d instanceof  MovieItem){
-            return TYPE_INDEX_CHILD;
+//        switch (getItemViewType(position)) {
+//            case TYPE_INDEX_CHILD: {
+//                SearchMatchItemView view;
+//                if (convertView != null && convertView instanceof SearchMatchItemView) {
+//                    view = (SearchMatchItemView)convertView;
+//                } else {
+//                    view = new SearchMatchItemView(parent.getContext());
+//                 }
+//
+//                view.setMovieItem((MovieItem)items.get(position));
+//                return null;
+//
+//            }
+//            case TYPE_INDEX_GROUP:{
+//                 SearchMatchGroupItemView view;
+//
+//                if (convertView != null && convertView instanceof SearchMatchGroupItemView) {
+//                    view = (SearchMatchGroupItemView)convertView;
+//                } else {
+//                    view = new SearchMatchGroupItemView(parent.getContext());
+//                }
+//
+//                view.setGroupItem((CheckMatchListGroupItem) items.get(position));
+//                return view;
+//
+//            }
+//        }//switch
+            return null;
         }
 
-        return super.getItemViewType(position);
+        @Override
+        public int getItemViewType ( int position){
+            CheckMatchListData d = items.get(position);
+            if (d instanceof CheckMatchListGroupItem) {
+                return TYPE_INDEX_GROUP;
+            } else if (d instanceof MovieItem) {
+                return TYPE_INDEX_CHILD;
+            }
+
+            return super.getItemViewType(position);
+        }
     }
-}

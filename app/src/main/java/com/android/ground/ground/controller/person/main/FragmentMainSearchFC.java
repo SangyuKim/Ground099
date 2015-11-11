@@ -236,7 +236,7 @@ public class FragmentMainSearchFC extends Fragment {
 
     private void setSpinner() {
         spinner = (Spinner)view.findViewById(R.id.spinner);
-        mySpinnerAdapter = new MySpinnerAdapter();
+        mySpinnerAdapter = new MySpinnerAdapter(getContext());
         spinner.setAdapter(mySpinnerAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

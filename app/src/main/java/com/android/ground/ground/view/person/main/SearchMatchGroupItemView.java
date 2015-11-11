@@ -1,19 +1,12 @@
 package com.android.ground.ground.view.person.main;
 
 import android.content.Context;
-import android.text.Html;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Checkable;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.person.main.CheckMatchListGroupItem;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.android.ground.ground.model.person.main.matchinfo.CheckMatchListGroupItem;
 
 public class SearchMatchGroupItemView extends RelativeLayout {
     public SearchMatchGroupItemView(Context context) {
@@ -40,4 +33,7 @@ public class SearchMatchGroupItemView extends RelativeLayout {
         mRelativeLayout.setBackgroundColor(item.color);
     }
 
+    public TextView getTextView() {
+        return textView;
+    }
 }

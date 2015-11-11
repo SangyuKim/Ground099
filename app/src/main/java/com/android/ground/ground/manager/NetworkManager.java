@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.naver.NaverMovies;
+import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
+import com.android.ground.ground.model.person.main.matchinfo.MatchInfo;
 import com.android.ground.ground.model.person.main.searchClub.SearchClub;
 import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.tmap.TmapItem;
@@ -43,6 +45,8 @@ import java.security.cert.CertificateException;
 
 
 public class NetworkManager {
+
+    public final static String GROND_SERVER_URL = "http://192.168.211.145:3000";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
         if (instance == null) {
@@ -156,7 +160,7 @@ public class NetworkManager {
         });
 
     }
-    public static final String SEARCH_CLUB_URL ="http://192.168.201.182:3000/searchClub";
+    public static final String SEARCH_CLUB_URL =GROND_SERVER_URL+"/club/search";
     public void getNetworkSearchClub(final Context context, String filter,String keyword, int page, int memberId, final OnResultListener<SearchClub> listener) {
 
 
@@ -184,7 +188,7 @@ public class NetworkManager {
 
     }
 
-    public static final String SEARCH_MEM_URL ="http://192.168.201.182:3000/searchMem";
+    public static final String SEARCH_MEM_URL =GROND_SERVER_URL+"/member/search";
     public void getNetworkSearchMem(final Context context, String filter,String keyword, int page, int memberId, final OnResultListener<SearchMem> listener) {
 
 
@@ -211,7 +215,59 @@ public class NetworkManager {
         });
 
     }
+    //MVP
+    public static final String SEARCH_MATCHINFO_MVP_URL =GROND_SERVER_URL+"/match/MVP";
+    public void getNetworkMatchInfoMVP(final Context context,  final OnResultListener<MVP> listener) {
 
+
+        final RequestParams params = new RequestParams();
+
+        client.get(context,SEARCH_MATCHINFO_MVP_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                MVP items = gson.fromJson(s, MVP.class);
+                if (items != null)
+                    listener.onSuccess(items);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //Match
+    public static final String SEARCH_MATCHINFO_URL =GROND_SERVER_URL+"/match/search";
+    public void getNetworkMatchInfo(final Context context,  String filter,String keyword, int page, int memberId, final OnResultListener<MatchInfo> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("sort", filter);
+        params.put("page", page);
+        params.put("member_id", memberId);
+        params.put("search", keyword);
+
+        client.get(context,SEARCH_MATCHINFO_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+
+                MatchInfo items = gson.fromJson(s, MatchInfo.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
      public void cancelAll(Context context) {
         client.cancelRequests(context, true);
     }

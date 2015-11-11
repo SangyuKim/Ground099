@@ -149,6 +149,8 @@ public class SplashActivity extends AppCompatActivity {
         };
         setUpIfNeeded();
 
+
+
     }
 
     private void resolveDeviceID() {
@@ -227,6 +229,7 @@ public class SplashActivity extends AppCompatActivity {
         if ( storedToken != null ) {
             registrationID = storedToken;
             registrationIDLabel.setText(registrationID);
+            Log.d("token: ", registrationID);
         }
     }
 

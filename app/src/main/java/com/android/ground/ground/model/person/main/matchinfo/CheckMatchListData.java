@@ -1,4 +1,4 @@
-package com.android.ground.ground.model.person.main;
+package com.android.ground.ground.model.person.main.matchinfo;
 
 /**
  * Created by Tacademy on 2015-11-06.

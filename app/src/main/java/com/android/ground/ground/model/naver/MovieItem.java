@@ -1,6 +1,6 @@
 package com.android.ground.ground.model.naver;
 
-import com.android.ground.ground.model.person.main.CheckMatchListData;
+import com.android.ground.ground.model.person.main.matchinfo.CheckMatchListData;
 
 /**
  * Created by dongja94 on 2015-10-19.

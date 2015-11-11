@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="11/03"
-        android:id="@+id/textView77"
+        android:id="@+id/matchDate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -17,8 +17,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="토요일 18:00"
-        android:id="@+id/textView8"
-        android:layout_below="@+id/textView77" />
+        android:id="@+id/matchDay"
+        android:layout_below="@+id/matchDate" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -28,8 +28,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/textView8"
-        android:layout_toEndOf="@+id/textView8">
+        android:layout_toRightOf="@+id/matchDay"
+        android:layout_toEndOf="@+id/matchDay">
 
         <LinearLayout
             android:orientation="vertical"
@@ -37,31 +37,64 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.92" >
 
-            <TextView
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/memNameCountScr"
-                android:layout_toLeftOf="@+id/button35"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/memImageMVP"
-                android:layout_toEndOf="@+id/memImageMVP"
-                android:layout_weight="1"
-                android:gravity="center" />
+                android:layout_height="match_parent">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/homeClubName" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text=" vs "
+                    android:id="@+id/text_director"
+                    android:layout_toLeftOf="@+id/button35"
+                    android:layout_below="@+id/memNameCountScr"
+                    android:layout_toRightOf="@+id/memImageMVP"
+                    android:layout_toEndOf="@+id/memImageMVP"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/awayClubName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/text_director"
-                android:layout_toLeftOf="@+id/button35"
-                android:layout_below="@+id/memNameCountScr"
-                android:layout_toRightOf="@+id/memImageMVP"
-                android:layout_toEndOf="@+id/memImageMVP"
-                android:layout_weight="1"
-                android:gravity="center" />
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/homeScore" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text=" : "
+                    android:id="@+id/textView22" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/awayScore" />
+            </LinearLayout>
 
         </LinearLayout>
 

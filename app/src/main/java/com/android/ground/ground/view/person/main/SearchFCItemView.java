@@ -34,9 +34,6 @@ public class SearchFCItemView extends RelativeLayout {
     CheckBox clubMainDay_Mon,clubMainDay_Tue,clubMainDay_Wed,
             clubMainDay_Thu,clubMainDay_Fri,clubMainDay_Sat,clubMainDay_Sun;
 
-    LinearLayout mLinearLayout;
-
-
     DisplayImageOptions options;
 
     private void init() {
@@ -210,9 +207,6 @@ public class SearchFCItemView extends RelativeLayout {
         return clubMainDay_Sun;
     }
 
-    public LinearLayout getmLinearLayout() {
-        return mLinearLayout;
-    }
 
     public DisplayImageOptions getOptions() {
         return options;

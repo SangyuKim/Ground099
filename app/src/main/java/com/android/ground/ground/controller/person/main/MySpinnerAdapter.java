@@ -1,12 +1,16 @@
 package com.android.ground.ground.controller.person.main;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.android.ground.ground.controller.person.login.MySpinnerSignupAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +20,16 @@ import java.util.List;
  */
 public class MySpinnerAdapter extends BaseAdapter {
     List<String> items = new ArrayList<String>();
+    AbsListView.LayoutParams lp;
     public void add(String s) {
         items.add(s);
         notifyDataSetChanged();
     }
 
+    public MySpinnerAdapter(Context context){
+        lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT);
+
+    }
     @Override
     public int getCount() {
         return items.size();
@@ -45,6 +54,7 @@ public class MySpinnerAdapter extends BaseAdapter {
             tv = (TextView)LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, null);
         }
         tv.setText(items.get(position));
+        tv.setLayoutParams(lp);
         return tv;
     }
 
@@ -59,6 +69,7 @@ public class MySpinnerAdapter extends BaseAdapter {
 //            tv.setBackgroundColor(Color.YELLOW);
         }
         tv.setText(items.get(position));
+        tv.setLayoutParams(lp);
         return tv;
     }
 }
