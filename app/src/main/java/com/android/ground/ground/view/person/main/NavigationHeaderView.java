@@ -2,6 +2,7 @@ package com.android.ground.ground.view.person.main;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -29,7 +30,8 @@ public class NavigationHeaderView extends FrameLayout {
         imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.OnCustomImageClick(NavigationHeaderView.this);
+                if(mListener!=null)
+                      mListener.OnCustomImageClick(NavigationHeaderView.this);
             }
         });
 
@@ -38,9 +40,7 @@ public class NavigationHeaderView extends FrameLayout {
 
     OnCustomImageClickListener mListener;
     public void setOnCustomImageClickListener(OnCustomImageClickListener listener){
-        if(mListener!= null){
             mListener = listener;
-        }
 
     }
 }

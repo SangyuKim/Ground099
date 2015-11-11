@@ -36,7 +36,11 @@ import com.android.ground.ground.view.OnAlarmClickListener;
 import com.android.ground.ground.view.person.main.NavigationHeaderView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CustomNavigationView.OnHeaderItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CustomNavigationView.OnHeaderItemSelectedListener,
+        CustomNavigationView.OnHeaderImageClickedListener
+
+{
+    CustomDrawerLayout drawer;
     private boolean isBackPressed = false;
     ListPopupWindow listPopup;
     MainAlarmAdapter mAlarmAdapter;
@@ -60,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        CustomDrawerLayout drawer = (CustomDrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (CustomDrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -75,16 +79,8 @@ public class MainActivity extends AppCompatActivity
 
         CustomNavigationView navigationView = (CustomNavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setHeaderItemSelectedListener(this);
-//        NavigationHeaderView headerView = (NavigationHeaderView)findViewById(R.id.nav_header_main)
-//        imageView = (ImageView)findViewById(R.id.imageView_nav_header);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, "hello " , Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
+//        navigationView.setHeaderItemSelectedListener(this);
+        navigationView.setHeaderImageClickedListener(this);
 
 
         if (savedInstanceState == null) {
@@ -242,15 +238,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_myprofile) {
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            if(alarmItem != null){
-                alarmItem.setIcon(R.drawable.ground_alarm);
-                isAlarmOpened = false;
-            }
 
-            Intent intent = new Intent(MainActivity.this, MyProfileActivity.class);
-            startActivity(intent);
-            isBackPressed = false;
 
         } else if (id == R.id.nav_fc) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -351,5 +339,21 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken() , InputMethodManager.HIDE_NOT_ALWAYS);
         super.onPause();
+    }
+
+    @Override
+    public void onHeaderImageClicked(View view) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if(alarmItem != null){
+            alarmItem.setIcon(R.drawable.ground_alarm);
+            isAlarmOpened = false;
+        }
+
+        Intent intent = new Intent(MainActivity.this, MyProfileActivity.class);
+        startActivity(intent);
+        isBackPressed = false;
     }
 }
