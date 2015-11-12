@@ -37,6 +37,7 @@ import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.person.profile.MyPageTrans;
 
 import java.io.File;
 
@@ -123,6 +124,7 @@ public class SignupFragment extends Fragment {
                 //선수 등록이 끝났을 경우 -> 서버에게 데이터 전달
                 //선수 아이디 발급 받음
                 searchMyPage(1);
+                searchMyPageTrans(1);
 
 
                 Intent intent = new Intent(getContext(), MainActivity.class);
@@ -300,6 +302,21 @@ public class SignupFragment extends Fragment {
             }
         });
     }
+    private void searchMyPageTrans(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPageTrans(getContext(), memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
+            @Override
+            public void onSuccess(MyPageTrans result) {
+                PropertyManager.getInstance().setMyPageTransResult(result.items);
+
+            }
+
+            @Override
+            public void onFail(int code) {
+                Toast.makeText(getContext(), "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 
 }

@@ -51,4 +51,5 @@
     <string name="title_activity_area_search">AreaSearchActivity</string>
 
     <string name="GCM_SenderId">155174750894</string>
+    <string name="title_activity_your_profile">YourProfileActivity</string>
 </resources>

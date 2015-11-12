@@ -35,6 +35,8 @@ import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.person.profile.MyPageTrans;
+import com.android.ground.ground.model.person.profile.MyPageTransResult;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -158,6 +160,7 @@ public class SplashActivity extends AppCompatActivity {
         //sharedPreference에 아이디값이 있을 경우 ->
 
         searchMyPage(1);
+        searchMyPageTrans(1);
 
     }
 
@@ -360,20 +363,35 @@ public class SplashActivity extends AppCompatActivity {
         return true;
     }
     private void searchMyPage(final int memberId) {
-         NetworkManager.getInstance().getNetworkMyPage(SplashActivity.this, memberId, new NetworkManager.OnResultListener<MyPage>() {
-                @Override
-                public void onSuccess(MyPage result) {
-                   for (MyPageResult item : result.items) {
-                       PropertyManager.getInstance().setMyPageResult(item);
-                    }
+        NetworkManager.getInstance().getNetworkMyPage(SplashActivity.this, memberId, new NetworkManager.OnResultListener<MyPage>() {
+            @Override
+            public void onSuccess(MyPage result) {
+                for (MyPageResult item : result.items) {
+                    PropertyManager.getInstance().setMyPageResult(item);
                 }
+            }
 
-                @Override
-                public void onFail(int code) {
-                    Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            @Override
+            public void onFail(int code) {
+                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void searchMyPageTrans(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPageTrans(SplashActivity.this, memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
+            @Override
+            public void onSuccess(MyPageTrans result) {
+                PropertyManager.getInstance().setMyPageTransResult(result.items);
+
+            }
+
+            @Override
+            public void onFail(int code) {
+                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 
 

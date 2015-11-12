@@ -6,33 +6,37 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
-import com.android.ground.ground.controller.person.message.MyMessageActivity;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.Profile;
+import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.person.profile.MyPageTransResult;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
-public class MyProfileActivity extends AppCompatActivity implements Profile {
+public class YourProfileActivity extends AppCompatActivity implements Profile {
 
     TextView memNameGender, memIntro, winLoseDraw, score, mvp, skill, clubName
-    ,age, memLocationName;
+            ,age, memLocationName;
     ImageView memImage, oldClubImage1, oldClubImage2, oldClubImage3, clubImage
             , position, managerYN;
-    Button btnFc, btnMsgCollection, btnProfileManagement;
+    Button btnFc, btnRequest, btnMsg;
     CheckBox memMainDay_Mon,memMainDay_Tue,memMainDay_Wed,memMainDay_Thu,memMainDay_Fri
             ,memMainDay_Sat,memMainDay_Sun;
 
@@ -44,7 +48,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_profile);
+        setContentView(R.layout.activity_your_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,41 +80,60 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         memMainDay_Sun= (CheckBox)findViewById(R.id.memMainDay_Sun);
 
 
-
-
-        btnFc =  (Button)findViewById(R.id.custom_search_bar_button_cancel);
+        btnFc =  (Button)findViewById(R.id.btnFc);
         btnFc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyProfileActivity.this, FCActivity.class);
+                Intent intent = new Intent(YourProfileActivity.this, FCActivity.class);
                 startActivity(intent);
             }
         });
-        btnMsgCollection =  (Button)findViewById(R.id.button8);
-        btnMsgCollection.setOnClickListener(new View.OnClickListener() {
+        //메시지 보내기
+        btnMsg = (Button)findViewById(R.id.btnMsg);
+        btnMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyProfileActivity.this, MyMessageActivity.class);
-                startActivity(intent);
-
+                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                dialog.show(getSupportFragmentManager(), "dialog");
             }
         });
-        btnProfileManagement =  (Button)findViewById(R.id.button9);
-        btnProfileManagement.setOnClickListener(new View.OnClickListener() {
+
+        btnRequest =  (Button)findViewById(R.id.btnRequest);
+        btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyProfileActivity.this, MyProfileManagementActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(YourProfileActivity.this);
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setTitle("영입하기");
+                builder.setMessage("영입 신청하시겠습니까? ");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
+                    }
+                });
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setCancelable(true);
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
-
-
 
         oldClubImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyProfileActivity.this, FCActivity.class);
+                Intent intent = new Intent(YourProfileActivity.this, FCActivity.class);
                 startActivity(intent);
             }
         });
@@ -118,7 +141,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         oldClubImage2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyProfileActivity.this, FCActivity.class);
+                Intent intent = new Intent(YourProfileActivity.this, FCActivity.class);
                 startActivity(intent);
             }
         });
@@ -126,16 +149,22 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         oldClubImage3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyProfileActivity.this, FCActivity.class);
+                Intent intent = new Intent(YourProfileActivity.this, FCActivity.class);
                 startActivity(intent);
             }
         });
-        setTitle("프로필");
-        myPageResult = PropertyManager.getInstance().getMyPageResult();
-        setMyPageResult(myPageResult);
 
-        mTransList =PropertyManager.getInstance().getMyPageTransResult();
-        setMyPageTransResults(mTransList);
+
+        setTitle("프로필");
+        int id = getIntent().getIntExtra("memberId",-1);
+        Log.d("hello", "id : " + id);
+        if(id==-1){
+            finish();
+        }
+        //서치
+        searchYourPage(id);
+        searchYourPageTrans(id);
+
 
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_stub)
@@ -150,6 +179,14 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
 
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void setMyPageTransResults(List<MyPageTransResult> mList) {
         mTransList = mList;
@@ -161,16 +198,6 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
             ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(2).clubImage), oldClubImage3, options);
 
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void setMyPageResult(MyPageResult mResult){
         myPageResult = mResult;
         memNameGender.setText(mResult.memName + " (" +mResult.age +")");
@@ -182,8 +209,6 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         clubName.setText(mResult.clubName);
         age.setText(Integer.toString(mResult.age));
         memLocationName.setText(mResult.memLocationName);
-
-
 
         ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mResult.memImage), memImage, options);
         ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mResult.clubImage), clubImage, options);
@@ -233,12 +258,50 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         }else{
             memMainDay_Sun.setChecked(true);
         }
-        if(mResult.clubYN==0){
+        if(mResult.clubYN == 0){
             btnFc.setVisibility(View.GONE);
+            btnRequest.setVisibility(View.VISIBLE);
         }else{
             btnFc.setVisibility(View.VISIBLE);
+            btnRequest.setVisibility(View.GONE);
         }
 
+    }
+
+    private void searchYourPage(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPage(YourProfileActivity.this, memberId, new NetworkManager.OnResultListener<MyPage>() {
+            @Override
+            public void onSuccess(MyPage result) {
+                for (MyPageResult item : result.items) {
+                    myPageResult = item;
+                }
+                if(myPageResult != null)
+                    setMyPageResult(myPageResult);
+            }
+
+            @Override
+            public void onFail(int code) {
+                Toast.makeText(YourProfileActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void searchYourPageTrans(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPageTrans(YourProfileActivity.this, memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
+            @Override
+            public void onSuccess(MyPageTrans result) {
+
+                mTransList = result.items;
+                setMyPageTransResults(mTransList);
+
+            }
+
+            @Override
+            public void onFail(int code) {
+                Toast.makeText(YourProfileActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

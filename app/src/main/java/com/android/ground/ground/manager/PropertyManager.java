@@ -6,6 +6,11 @@ import android.preference.PreferenceManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.person.profile.MyPageTrans;
+import com.android.ground.ground.model.person.profile.MyPageTransResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PropertyManager {
 
@@ -25,6 +30,7 @@ public class PropertyManager {
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
 		mEditor = mPrefs.edit();
 		myPageResult = new MyPageResult();
+		listPageTransResult = new ArrayList<MyPageTransResult>();
 	}
 
 	private static final String REG_ID = "regToken";
@@ -45,6 +51,14 @@ public class PropertyManager {
 	public MyPageResult getMyPageResult(){
 		return myPageResult;
 	}
+	List<MyPageTransResult> listPageTransResult;
+	public void setMyPageTransResult(List<MyPageTransResult> mResult){
+		listPageTransResult = mResult;
+	}
+	public List<MyPageTransResult> getMyPageTransResult(){
+		return listPageTransResult;
+	}
+
 
 	
 }

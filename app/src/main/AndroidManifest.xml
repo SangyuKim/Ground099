@@ -137,6 +137,11 @@
             android:label="@string/title_activity_my_message"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".controller.person.profile.YourProfileActivity"
+            android:label="@string/title_activity_your_profile"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

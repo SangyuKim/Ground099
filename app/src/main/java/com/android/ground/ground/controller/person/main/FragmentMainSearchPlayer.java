@@ -32,7 +32,9 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
+import com.android.ground.ground.controller.person.profile.YourProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.naver.MovieItem;
 import com.android.ground.ground.model.naver.NaverMovies;
@@ -145,8 +147,16 @@ public class FragmentMainSearchPlayer extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                Intent intent = new Intent(getContext(), MyProfileActivity.class);
+
+                int memberId = ((SearchPlayerItemView)view).getmItem().member_id;
+                if(memberId == PropertyManager.getInstance().getMyPageResult().member_id){
+                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                    startActivity(intent);
+                }else{
+                Intent intent = new Intent(getContext(), YourProfileActivity.class);
+                intent.putExtra("memberId",memberId);
                 startActivity(intent);
+                }
             }
         });
 

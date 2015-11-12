@@ -7,12 +7,15 @@ import android.widget.Toast;
 
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Utils;
+import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
+import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
 import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfo;
 import com.android.ground.ground.model.person.main.searchClub.SearchClub;
 import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.person.profile.MyPage;
+import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.tmap.TmapItem;
 import com.begentgroup.xmlparser.XMLParser;
 import com.google.gson.Gson;
@@ -283,6 +286,83 @@ public class NetworkManager {
                 String s = new String(responseBody, Charset.forName("UTF-8"));
 
                 MyPage items = gson.fromJson(s, MyPage.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //ProfileTrans
+    public static final String SEARCH_MY_PAGE_TRANS_URL =GROND_SERVER_URL+"/member/myPage/trans";
+    public void getNetworkMyPageTrans(final Context context,  int memberId, final OnResultListener<MyPageTrans> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("member_id", memberId);
+
+        client.get(context,SEARCH_MY_PAGE_TRANS_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                MyPageTrans items = gson.fromJson(s, MyPageTrans.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //ClubMain
+    public static final String SEARCH_CLUB_PAGE_URL =GROND_SERVER_URL+"/club";
+    public void getNetworkClubMain(final Context context,  int clubId, final OnResultListener<ClubMain> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("club_id", clubId);
+
+        client.get(context,SEARCH_CLUB_PAGE_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+
+                ClubMain items = gson.fromJson(s, ClubMain.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //ClubAndMember
+    public static final String SEARCH_CLUB_AND_MEMBER_PAGE_URL =GROND_SERVER_URL+"/club/member";
+    public void getNetworkClubAndMember(final Context context,  int clubId, final OnResultListener<ClubAndMember> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("club_id", clubId);
+
+        client.get(context,SEARCH_CLUB_AND_MEMBER_PAGE_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+
+                ClubAndMember items = gson.fromJson(s, ClubAndMember.class);
                 if (items != null){
                     listener.onSuccess(items);
                 }
