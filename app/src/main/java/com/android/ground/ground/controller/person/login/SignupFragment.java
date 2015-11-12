@@ -27,11 +27,16 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
 import com.android.ground.ground.controller.person.main.MainActivity;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.person.profile.MyPage;
+import com.android.ground.ground.model.person.profile.MyPageResult;
 
 import java.io.File;
 
@@ -115,6 +120,11 @@ public class SignupFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //선수 등록이 끝났을 경우 -> 서버에게 데이터 전달
+                //선수 아이디 발급 받음
+                searchMyPage(1);
+
+
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -139,7 +149,7 @@ public class SignupFragment extends Fragment {
                 return true;
             }
         });
-        imageView = (ImageView)view.findViewById(R.id.imageView_my_profile);
+        imageView = (ImageView)view.findViewById(R.id.memImage);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -275,5 +285,21 @@ public class SignupFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+    private void searchMyPage(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPage(getContext(), memberId, new NetworkManager.OnResultListener<MyPage>() {
+            @Override
+            public void onSuccess(MyPage result) {
+                for (MyPageResult item : result.items) {
+                    PropertyManager.getInstance().setMyPageResult(item);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+                Toast.makeText(getContext(), "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 }

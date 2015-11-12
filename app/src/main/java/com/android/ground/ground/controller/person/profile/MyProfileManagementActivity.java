@@ -15,7 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
@@ -24,7 +27,12 @@ import com.android.ground.ground.controller.person.main.MainActivity;
 import java.io.File;
 
 public class MyProfileManagementActivity extends AppCompatActivity {
-    ImageView imageView;
+    ImageView memImage;
+    TextView age, memIntro, position, skill, memLocationName;
+    CheckBox memMainDay_Mon,memMainDay_Tue,memMainDay_Wed,memMainDay_Thu
+             ,memMainDay_Fri,memMainDay_Sat,memMainDay_Sun;
+    RadioGroup gender;
+
     public static final int REQUEST_CODE_CROP = 0;
     File mSavedFile;
     public static final int REQ_AREA_SEARCH = 1;
@@ -86,8 +94,8 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-        imageView = (ImageView)findViewById(R.id.imageView_my_profile);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        memImage = (ImageView)findViewById(R.id.memImage);
+        memImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MyProfileManagementActivity.this);
@@ -144,7 +152,7 @@ public class MyProfileManagementActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
             if (requestCode == REQUEST_CODE_CROP && resultCode == Activity.RESULT_OK) {
                 Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
-                imageView.setImageBitmap(bm);
+                memImage.setImageBitmap(bm);
             }
         }
         private Uri getTempUri() {

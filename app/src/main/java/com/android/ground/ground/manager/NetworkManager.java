@@ -12,6 +12,7 @@ import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfo;
 import com.android.ground.ground.model.person.main.searchClub.SearchClub;
 import com.android.ground.ground.model.person.main.searchMem.SearchMem;
+import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.tmap.TmapItem;
 import com.begentgroup.xmlparser.XMLParser;
 import com.google.gson.Gson;
@@ -46,7 +47,7 @@ import java.security.cert.CertificateException;
 
 public class NetworkManager {
 
-    public final static String GROND_SERVER_URL = "http://192.168.211.145:3000";
+    public final static String GROND_SERVER_URL = "http://192.168.201.154:3000";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
         if (instance == null) {
@@ -268,7 +269,33 @@ public class NetworkManager {
         });
 
     }
-     public void cancelAll(Context context) {
+    //MyProfile
+    public static final String SEARCH_MY_PAGE_URL =GROND_SERVER_URL+"/member/myPage";
+    public void getNetworkMyPage(final Context context,  int memberId, final OnResultListener<MyPage> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("member_id", memberId);
+
+        client.get(context,SEARCH_MY_PAGE_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+
+                MyPage items = gson.fromJson(s, MyPage.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    public void cancelAll(Context context) {
         client.cancelRequests(context, true);
     }
 

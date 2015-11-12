@@ -21,7 +21,7 @@ public class ListItemView extends FrameLayout{
     }
     public void init(){
         inflate(getContext(), R.layout.list_layout, this);
-        textView = (TextView)findViewById(R.id.textView);
+        textView = (TextView)findViewById(R.id.memIntro);
         imageView = (ImageView)findViewById(R.id.imageView);
     }
 

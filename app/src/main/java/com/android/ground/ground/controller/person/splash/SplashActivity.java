@@ -17,6 +17,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +28,13 @@ import com.android.ground.ground.R;
 import com.android.ground.ground.RegistrationIntentService;
 import com.android.ground.ground.controller.person.login.LoginActivity;
 import com.android.ground.ground.controller.person.main.MainActivity;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.manager.ServerUtilities;
+import com.android.ground.ground.model.person.main.searchMem.SearchMem;
+import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
+import com.android.ground.ground.model.person.profile.MyPage;
+import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -149,7 +155,9 @@ public class SplashActivity extends AppCompatActivity {
         };
         setUpIfNeeded();
 
+        //sharedPreference에 아이디값이 있을 경우 ->
 
+        searchMyPage(1);
 
     }
 
@@ -351,4 +359,23 @@ public class SplashActivity extends AppCompatActivity {
         }
         return true;
     }
+    private void searchMyPage(final int memberId) {
+         NetworkManager.getInstance().getNetworkMyPage(SplashActivity.this, memberId, new NetworkManager.OnResultListener<MyPage>() {
+                @Override
+                public void onSuccess(MyPage result) {
+                   for (MyPageResult item : result.items) {
+                       PropertyManager.getInstance().setMyPageResult(item);
+                    }
+                }
+
+                @Override
+                public void onFail(int code) {
+                    Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+
+
+
 }

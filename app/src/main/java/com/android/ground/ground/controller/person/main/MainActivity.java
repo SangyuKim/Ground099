@@ -36,7 +36,7 @@ import com.android.ground.ground.view.OnAlarmClickListener;
 import com.android.ground.ground.view.person.main.NavigationHeaderView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CustomNavigationView.OnHeaderItemSelectedListener,
+        implements CustomNavigationView.OnNavigationItemSelectedListener,
         CustomNavigationView.OnHeaderImageClickedListener
 
 {
@@ -236,11 +236,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.nav_myprofile) {
-
-
-        } else if (id == R.id.nav_fc) {
+         if (id == R.id.nav_fc) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             if(alarmItem != null){
                 alarmItem.setIcon(R.drawable.ground_alarm);
@@ -322,12 +318,6 @@ public class MainActivity extends AppCompatActivity
 //        return maxWidth;
 //    }
 
-
-    @Override
-    public boolean onHeaderItemSelected() {
-        Toast.makeText(MainActivity.this, "hello " , Toast.LENGTH_SHORT).show();
-        return true;
-    }
 
     @Override
     protected void onDestroy() {
