@@ -44,6 +44,17 @@ public class PropertyManager {
 		return mPrefs.getString(REG_ID, "");
 	}
 
+
+	private static final String FIELD_FACEBOOK_ID = "facebookId";
+	public void setFacebookId(String id) {
+		mEditor.putString(FIELD_FACEBOOK_ID, id);
+		mEditor.commit();
+	}
+	public String getFaceBookId() {
+		return mPrefs.getString(FIELD_FACEBOOK_ID, "");
+	}
+
+
 	MyPageResult myPageResult;
 	public void setMyPageResult(MyPageResult mResult){
 		myPageResult = mResult;

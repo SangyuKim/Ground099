@@ -45,5 +45,34 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/facebook" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="페이스북로그인"
+        android:id="@+id/button10"
+        android:layout_above="@+id/button4"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="카카오톡로그인"
+        android:id="@+id/button41"
+        android:layout_above="@+id/button10"
+        android:layout_alignLeft="@+id/button10"
+        android:layout_alignStart="@+id/button10" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구글+"
+        android:id="@+id/button47"
+        android:layout_above="@+id/imageView2_facebook"
+        android:layout_toRightOf="@+id/button10"
+        android:layout_toEndOf="@+id/button10" />
+
 
 </RelativeLayout>

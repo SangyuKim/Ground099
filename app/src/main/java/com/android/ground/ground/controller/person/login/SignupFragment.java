@@ -35,11 +35,25 @@ import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.log.Logger;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
+import com.android.ground.ground.model.usermgmt.ExtraUserPropertyLayout;
+import com.android.ground.ground.model.widget.KakaoToast;
+import com.android.ground.ground.model.widget.WaitingDialog;
+import com.facebook.AccessToken;
+import com.kakao.auth.ApiResponseCallback;
+import com.kakao.auth.ErrorCode;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.callback.UnLinkResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,7 +63,42 @@ import java.io.File;
  * Use the {@link SignupFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+
+/**
+ * 유효한 세션이 있다는 검증 후
+ * me를 호출하여 가입 여부에 따라 가입 페이지를 그리던지 Main 페이지로 이동 시킨다.
+ */
 public class SignupFragment extends Fragment {
+
+    protected static Activity self;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MyApplication.setCurrentActivity(getActivity());
+        self = getActivity();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        clearReferences();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        clearReferences();
+    }
+    private void clearReferences() {
+        Activity currActivity = MyApplication.getCurrentActivity();
+        if (currActivity != null && currActivity.equals(this)) {
+            MyApplication.setCurrentActivity(null);
+        }
+    }
+
+
     ImageView imageView;
     public static final int REQUEST_CODE_CROP = 0;
     File mSavedFile;
@@ -95,6 +144,11 @@ public class SignupFragment extends Fragment {
         // Required empty public constructor
     }
 
+
+    /**
+     * Main으로 넘길지 가입 페이지를 그릴지 판단하기 위해 me를 호출한다.
+     * @param savedInstanceState 기존 session 정보가 저장된 객체
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +156,7 @@ public class SignupFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+//        requestMe();
     }
 
     @Override
@@ -122,6 +177,20 @@ public class SignupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //선수 등록이 끝났을 경우 -> 서버에게 데이터 전달
+                NetworkManager.getInstance().signupFacebook(getContext(), "message", new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        AccessToken token = AccessToken.getCurrentAccessToken();
+                        PropertyManager.getInstance().setFacebookId(token.getUserId());
+                        startActivity(new Intent(getContext(), MainActivity.class));
+                        getActivity().finish();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
                 //선수 아이디 발급 받음
                 searchMyPage(1);
                 searchMyPageTrans(1);
@@ -298,7 +367,7 @@ public class SignupFragment extends Fragment {
 
             @Override
             public void onFail(int code) {
-                Toast.makeText(getContext(), "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -317,6 +386,158 @@ public class SignupFragment extends Fragment {
         });
     }
 
+
+    /**
+     * 사용자의 상태를 알아 보기 위해 me API 호출을 한다.
+     */
+//    protected void requestMe() {
+//        UserManagement.requestMe(new MeResponseCallback() {
+//            @Override
+//            public void onFailure(ErrorResult errorResult) {
+//                String message = "failed to get user info. msg=" + errorResult;
+//                Logger.d(message);
+//
+//                ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
+//                if (result == ErrorCode.CLIENT_ERROR_CODE) {
+//                    KakaoToast.makeToast(MyApplication.getContext(), getString(R.string.error_message_for_service_unavailable), Toast.LENGTH_SHORT).show();
+//                    getActivity().finish();
+//                } else {
+//                    redirectLoginActivity();
+//                }
+//            }
+//
+//            @Override
+//            public void onSessionClosed(ErrorResult errorResult) {
+//                redirectLoginActivity();
+//            }
+//
+//            @Override
+//            public void onSuccess(UserProfile userProfile) {
+//                Logger.d("UserProfile : " + userProfile);
+//                redirectMainActivity();
+//            }
+//
+//            @Override
+//            public void onNotSignedUp() {
+////                showSignup();
+//            }
+//        });
+//    }
+
+    private void redirectMainActivity() {
+        startActivity(new Intent(getContext(), MainActivity.class));
+        getActivity().finish();
+    }
+
+    protected static void showWaitingDialog() {
+        WaitingDialog.showWaitingDialog(self);
+    }
+
+    protected static void cancelWaitingDialog() {
+        WaitingDialog.cancelWaitingDialog();
+    }
+
+    protected void redirectLoginActivity() {
+        final Intent intent = new Intent(getContext(), SampleLoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    protected void redirectSignupActivity() {
+        final Intent intent = new Intent(getContext(), SampleSignupActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+
+    //logout
+    private void onClickLogout() {
+        UserManagement.requestLogout(new LogoutResponseCallback() {
+            @Override
+            public void onCompleteLogout() {
+                redirectLoginActivity();
+            }
+        });
+    }
+    //unlink
+    private void onClickUnlink() {
+        final String appendMessage = getString(R.string.com_kakao_confirm_unlink);
+        new AlertDialog.Builder(getContext())
+                .setMessage(appendMessage)
+                .setPositiveButton(getString(R.string.com_kakao_ok_button),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                UserManagement.requestUnlink(new UnLinkResponseCallback() {
+                                    @Override
+                                    public void onFailure(ErrorResult errorResult) {
+                                    }
+
+                                    @Override
+                                    public void onSessionClosed(ErrorResult errorResult) {
+                                        redirectLoginActivity();
+                                    }
+
+                                    @Override
+                                    public void onNotSignedUp() {
+                                        redirectSignupActivity();
+                                    }
+
+                                    @Override
+                                    public void onSuccess(Long result) {
+                                        redirectLoginActivity();
+                                    }
+                                });
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton(getString(R.string.com_kakao_cancel_button),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).show();
+
+    }
+
+//    protected void showSignup() {
+//
+//        final ExtraUserPropertyLayout extraUserPropertyLayout = (ExtraUserPropertyLayout) findViewById(R.id.extra_user_property);
+//        Button signupButton = (Button) findViewById(R.id.buttonSignup);
+//        signupButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                requestSignUp(extraUserPropertyLayout.getProperties());
+//            }
+//        });
+//    }
+
+//    private void requestSignUp(final Map<String, String> properties) {
+//        UserManagement.requestSignup(new ApiResponseCallback<Long>() {
+//            @Override
+//            public void onNotSignedUp() {
+//            }
+//
+//            @Override
+//            public void onSuccess(Long result) {
+//                requestMe();
+//            }
+//
+//            @Override
+//            public void onFailure(ErrorResult errorResult) {
+//                final String message = "UsermgmtResponseCallback : failure : " + errorResult;
+//                com.kakao.util.helper.log.Logger.w(message);
+//                KakaoToast.makeToast(self, message, Toast.LENGTH_LONG).show();
+//                getActivity().finish();
+//            }
+//
+//            @Override
+//            public void onSessionClosed(ErrorResult errorResult) {
+//            }
+//        }, properties);
+//    }
 
 
 }

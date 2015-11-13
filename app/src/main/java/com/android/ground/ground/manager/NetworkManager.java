@@ -2,6 +2,8 @@ package com.android.ground.ground.manager;
 
 import android.content.Context;
 import android.net.http.Headers;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -108,6 +110,27 @@ public class NetworkManager {
     private static final String KEY = "dbe85dae5e1192a42aae51ea5b61cb2b";
     private static final String TARGET = "movie";
 
+    Handler mHandler = new Handler(Looper.getMainLooper());
+    public void loginFacebookToken(Context context, String accessToken, final String result , final OnResultListener<String> listener) {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listener.onSuccess(result);
+            }
+        }, 1000);
+    }
+
+    public void signupFacebook(Context context, String message, final OnResultListener<String> listener) {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listener.onSuccess("OK");
+            }
+        }, 1000);
+    }
+
+
+
     public void getNetworkMelon(Context context, String keyword, int start, int display, final OnResultListener<NaverMovies> listener) {
         final RequestParams params = new RequestParams();
         params.put("key", KEY);
@@ -131,6 +154,7 @@ public class NetworkManager {
         });
     }
     public static final String TMAP_URL = "https://apis.skplanetx.com/tmap/poi/findPoiAreaDataByName";
+    public static final String TMAP_POI_URL ="https://apis.skplanetx.com/tmap/pois";
 //    private static final String SERVER = "http://openapi.naver.com";
 
 //    private static final String MOVIE_URL = SERVER + "/search";
@@ -143,6 +167,7 @@ public class NetworkManager {
         params.put("count", count);
         params.put("page", page);
         params.put("version",1);
+//        params.put("searchKeyword",keyword);
         Header[] headers =new Header[2];
         headers[0] = new BasicHeader("Accept", "application/json" );
         headers[1] = new BasicHeader("appKey",TMAP_API_KEY);
@@ -378,6 +403,8 @@ public class NetworkManager {
     public void cancelAll(Context context) {
         client.cancelRequests(context, true);
     }
+
+
 
 }
 

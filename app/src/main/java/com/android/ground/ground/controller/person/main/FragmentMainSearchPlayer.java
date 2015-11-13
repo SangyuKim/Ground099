@@ -414,7 +414,7 @@ public class FragmentMainSearchPlayer extends Fragment {
 
                 @Override
                 public void onFail(int code) {
-                    Toast.makeText(getContext(), "선수 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getContext(), "선수 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {

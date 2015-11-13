@@ -2,33 +2,5 @@
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\refresh\\build\\intermediates\\res\\merged\\release\\xml\\pulltorefresh.xml",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\refresh\\src\\main\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\refresh\\build\\intermediates\\res\\merged\\release\\xml\\pulltorefresh.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\refresh\\src\\main\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\work_android\\Ground2\\refresh\\build\\intermediates\\res\\merged\\release\\xml\\pulltorefresh.xml",
-        "source": "C:\\work_android\\Ground2\\refresh\\src\\main\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\work_android\\Ground5\\refresh\\build\\intermediates\\res\\merged\\release\\xml\\pulltorefresh.xml",
-        "source": "C:\\work_android\\Ground5\\refresh\\src\\main\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\res\\merged\\release\\xml\\pulltorefresh.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\build\\intermediates\\bundles\\release\\res\\xml\\pulltorefresh.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\refresh\\src\\main\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\build\\intermediates\\res\\merged\\release\\xml\\pulltorefresh.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\refresh\\src\\main\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\work_android\\Ground3\\refresh\\build\\intermediates\\res\\merged\\release\\xml\\pulltorefresh.xml",
-        "source": "C:\\work_android\\Ground3\\refresh\\src\\main\\res\\xml\\pulltorefresh.xml"
     }
 ]

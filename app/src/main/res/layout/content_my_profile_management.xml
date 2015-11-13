@@ -96,13 +96,15 @@
                 android:layout_toLeftOf="@+id/memImage"
                 android:layout_toStartOf="@+id/memImage" />
 
-            <ImageView
+            <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/memImage"
                 android:src="@mipmap/ic_launcher"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                app:siBorderWidth="6dp"
+                app:siBorderColor="@color/colorPrimary"/>
 
             <TextView
                 android:layout_width="wrap_content"

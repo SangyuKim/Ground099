@@ -409,7 +409,7 @@ public class FragmentMainSearchFC extends Fragment {
                 }
                 @Override
                 public void onFail(int code) {
-                    Toast.makeText(getContext(), "Search FC error code :  " + code, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getContext(), "Search FC error code :  " + code, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {

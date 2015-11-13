@@ -15,11 +15,19 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
-
+        boolean kakaoSession = getIntent().getBooleanExtra("kakaoSession", false);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, LoginFragment.newInstance("", "")).commit();
         }
+        if(kakaoSession){
+             getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, TutorialFragment.newInstance("", ""))
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+
 
     }
 

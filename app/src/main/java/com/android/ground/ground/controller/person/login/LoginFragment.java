@@ -6,14 +6,31 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.main.MainActivity;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.widget.WaitingDialog;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.util.exception.KakaoException;
+import com.kakao.util.helper.log.Logger;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +40,29 @@ import com.android.ground.ground.controller.person.main.MainActivity;
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+
+/**
+ * 샘플에서 사용하게 될 로그인 페이지
+ * 세션을 오픈한 후 action을 override해서 사용한다.
+ *
+ * @author MJ
+ */
 public class LoginFragment extends Fragment {
+    protected static Activity self;
+    private SessionCallback callback;
+
+    /**
+     * 로그인 버튼을 클릭 했을시 access token을 요청하도록 설정한다.
+     *
+     * @param savedInstanceState 기존 session 정보가 저장된 객체
+     */
+
+
+    Button btn, btnFacebook , btnKakao;
+    CallbackManager mCallbackManager;
+    LoginManager mLoginManager;
+    AccessTokenTracker tracker;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,41 +108,107 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+//        self = getActivity();
+//        callback = new SessionCallback();
+//        Session.getCurrentSession().addCallback(callback);
+//        if (!Session.getCurrentSession().checkAndImplicitOpen()) {
+            View view =  inflater.inflate(R.layout.fragment_login, container, false);
+            ((Activity)getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            ((Activity)getActivity()).getWindow().setBackgroundDrawableResource(R.drawable.xxdpi_bg);
+            btnKakao = (Button)view.findViewById(R.id.button41);
+            btnKakao.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), SampleLoginActivity.class);
+                    startActivity(intent);
+                }
+            });
 
-        View view =  inflater.inflate(R.layout.fragment_login, container, false);
-        ((Activity)getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ((Activity)getActivity()).getWindow().setBackgroundDrawableResource(R.drawable.xxdpi_bg);
-        //// TODO: 2015-10-29
-        //연동 로그인 후, 토큰 값 받기
-        //토큰 값 서버에 전달
-        //서버에서 가입 유무 확인
 
-        Button btn = (Button)view.findViewById(R.id.button3);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            //// TODO: 2015-10-29
+            //연동 로그인 후, 토큰 값 받기
+            //토큰 값 서버에 전달
+            //서버에서 가입 유무 확인
+            mCallbackManager = CallbackManager.Factory.create();
+            mLoginManager = LoginManager.getInstance();
+            btnFacebook = (Button)view.findViewById(R.id.button10);
+            setLabel();
+            btnFacebook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                Fragment mFragment = (Fragment) TutorialFragment.newInstance("", "");
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
-                        .addToBackStack(null)
-                        .commit();
+                    if (!isLogin()) {
+                        mLoginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                            @Override
+                            public void onSuccess(LoginResult loginResult) {
+                                final AccessToken token = AccessToken.getCurrentAccessToken();
+                                Toast.makeText(getContext(), "id : " + token.getUserId(), Toast.LENGTH_SHORT).show();
+                                NetworkManager.getInstance().loginFacebookToken(getContext(), token.getToken(), "NOTREGISTER", new NetworkManager.OnResultListener<String>() {
+                                    @Override
+                                    public void onSuccess(String result) {
+                                        if (result.equals("OK")) {
+                                            PropertyManager.getInstance().setFacebookId(token.getUserId());
+                                            startActivity(new Intent(getContext(), MainActivity.class));
+                                            getActivity().finish();
+                                        }else if (result.equals("NOTREGISTER")) {
+//                                        startActivity(new Intent(getContext(), SignupActivity.class));
+//                                        getActivity().finish();
+                                        }
+                                    }
 
-            }
-        });
+                                    @Override
+                                    public void onFail(int code) {
 
-        btn = (Button)view.findViewById(R.id.button4);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
+                                    }
+                                });
+                            }
 
-        return view;
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onError(FacebookException error) {
+
+                            }
+                        });
+                        mLoginManager.logInWithReadPermissions(LoginFragment.this, null);
+                    } else {
+                        mLoginManager.logOut();
+                    }
+                }
+            });
+
+            btn = (Button)view.findViewById(R.id.button3);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Fragment mFragment = (Fragment) TutorialFragment.newInstance("", "");
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.container, mFragment)
+                            .addToBackStack(null)
+                            .commit();
+
+                }
+            });
+
+            btn = (Button)view.findViewById(R.id.button4);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            });
+
+            return view;
+//        }//카톡 세션
+
+//        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -143,6 +248,81 @@ public class LoginFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+    private void setLabel() {
+        if (!isLogin()) {
+            btnFacebook.setText("login");
+        } else {
+            btnFacebook.setText("logout");
+        }
+    }
+    private boolean isLogin() {
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        return token==null?false:true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+    }
+
+    private class SessionCallback implements ISessionCallback {
+
+        @Override
+        public void onSessionOpened() {
+            Activity activity = getActivity();
+            if(activity != null){
+                Intent intent = new Intent(activity, LoginActivity.class);
+                intent.putExtra("kakaoSession", true);
+                startActivity(intent);
+                activity.finish();
+            }
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            if(exception != null) {
+                Logger.e(exception);
+            }
+            getActivity().setContentView(R.layout.activity_login);
+
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Session.getCurrentSession().removeCallback(callback);
+        clearReferences();
+    }
+    private void clearReferences() {
+        Activity currActivity = MyApplication.getCurrentActivity();
+        if (currActivity != null && currActivity.equals(this)) {
+            MyApplication.setCurrentActivity(null);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MyApplication.setCurrentActivity(getActivity());
+        self = getActivity();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        clearReferences();
+    }
+    protected static void showWaitingDialog() {
+        WaitingDialog.showWaitingDialog(self);
+    }
+
+    protected static void cancelWaitingDialog() {
+        WaitingDialog.cancelWaitingDialog();
     }
 
 }

@@ -34,6 +34,7 @@ import com.android.ground.ground.custom.CustomNavigationView;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.view.OnAlarmClickListener;
 import com.android.ground.ground.view.person.main.NavigationHeaderView;
+import com.facebook.appevents.AppEventsLogger;
 
 public class MainActivity extends AppCompatActivity
         implements CustomNavigationView.OnNavigationItemSelectedListener,
@@ -329,6 +330,13 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken() , InputMethodManager.HIDE_NOT_ALWAYS);
         super.onPause();
+        AppEventsLogger.deactivateApp(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppEventsLogger.activateApp(this);
     }
 
     @Override

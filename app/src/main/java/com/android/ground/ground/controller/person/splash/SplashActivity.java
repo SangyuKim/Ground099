@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,16 +28,20 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.RegistrationIntentService;
 import com.android.ground.ground.controller.person.login.LoginActivity;
+import com.android.ground.ground.controller.person.login.SampleLoginActivity;
+import com.android.ground.ground.controller.person.login.SampleSignupActivity;
 import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.manager.ServerUtilities;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.person.profile.MyPageTransResult;
+import com.android.ground.ground.model.widget.WaitingDialog;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -45,17 +50,36 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.kakao.auth.Session;
+import com.kakao.util.exception.KakaoException;
+import com.kakao.util.helper.log.Logger;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import com.kakao.auth.ISessionCallback;
 
+/**
+ * 샘플에서 사용하게 될 로그인 페이지
+ * 세션을 오픈한 후 action을 override해서 사용한다.
+ *
+ * @author MJ
+ */
 public class SplashActivity extends AppCompatActivity {
+
+    protected static Activity self;
 
     static final private String TAG = "GCM_Example";
     static final private String serverAddress = "http://192.168.0.105:3000";
@@ -72,6 +96,19 @@ public class SplashActivity extends AppCompatActivity {
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+
+    Handler mHandler = new Handler(Looper.getMainLooper());
+    CallbackManager callbackManager = CallbackManager.Factory.create();
+    LoginManager mLoginManager = LoginManager.getInstance();
+    AccessTokenTracker mTokenTracker;
+
+    private SessionCallback callback;
+
+    /**
+     * 로그인 버튼을 클릭 했을시 access token을 요청하도록 설정한다.
+     *
+     * @param savedInstanceState 기존 session 정보가 저장된 객체
+     */
 
 
     @Override
@@ -98,69 +135,139 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
+//---------------------------------------KakaoTalk---------------------------------------------------
+//        callback = new SessionCallback();
+//        Session.getCurrentSession().addCallback(callback);
+//
+//        if (!Session.getCurrentSession().checkAndImplicitOpen()) {
+//            Log.d("hello", "in if");
+            setContentView(R.layout.activity_splash);
+//---------------------------------------Facebook----------------------------------------------------
+            final String id = PropertyManager.getInstance().getFaceBookId();
+            if (!TextUtils.isEmpty(id)) {
+                // facebook login
+                mTokenTracker = new AccessTokenTracker() {
+                    @Override
+                    protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                        AccessToken token = AccessToken.getCurrentAccessToken();
+                        if (token != null) {
+                            if (token.getUserId().equals(id)) {
+                                NetworkManager.getInstance().loginFacebookToken(SplashActivity.this, token.getToken(),"OK", new NetworkManager.OnResultListener<String>() {
+                                    @Override
+                                    public void onSuccess(String result) {
+                                        if (result.equals("OK")) {
+                                            goMainActivity();
+                                        }
+                                    }
 
+                                    @Override
+                                    public void onFail(int code) {
 
-        registrationIDLabel = (TextView) findViewById(R.id.tokenLabel);
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(SplashActivity.this, "facebook id change", Toast.LENGTH_SHORT).show();
+                                mLoginManager.logOut();
+                                goLoginActivity();
+                            }
+                        }
+                    }
+                };
+                mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
 
-        mQueue = Volley.newRequestQueue(this);
-        handler = new Handler();
+                    }
 
-        Button checkButton = (Button)findViewById(R.id.checkPlayServiceButton);
-        checkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkPlayService();
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Toast.makeText(SplashActivity.this, "facebook login fail...",Toast.LENGTH_SHORT).show();
+                        goLoginActivity();
+                    }
+                });
+
+                mLoginManager.logInWithReadPermissions(this, null);
+            } else {
+                //sharedPreference에 저장된 페북 값이 없음
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        goLoginActivity();
+                    }
+                }, 1000);
             }
-        });
 
-        // 토큰 발급 버튼과 이벤트
-        Button requestTokenButton = (Button)findViewById(R.id.requestDeviceTokenButton);
-        requestTokenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // API19 에서 에러
+
+//----------------------------------------GCM--------------------------------------------------------
+            registrationIDLabel = (TextView) findViewById(R.id.tokenLabel);
+
+            mQueue = Volley.newRequestQueue(this);
+            handler = new Handler();
+
+            Button checkButton = (Button)findViewById(R.id.checkPlayServiceButton);
+            checkButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    checkPlayService();
+                }
+            });
+
+            // 토큰 발급 버튼과 이벤트
+            Button requestTokenButton = (Button)findViewById(R.id.requestDeviceTokenButton);
+            requestTokenButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // API19 에서 에러
 //            requestDeviceToken();
-                new RequestTokenThread().start();
-            }
-        });
+                    new RequestTokenThread().start();
+                }
+            });
 
-        Button deviceIDButton = (Button)findViewById(R.id.getDeviceIDButton);
-        deviceIDLabel = (TextView)findViewById(R.id.deviceIdLabel);
-        deviceIDButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resolveDeviceID();
-            }
-        });
+            Button deviceIDButton = (Button)findViewById(R.id.getDeviceIDButton);
+            deviceIDLabel = (TextView)findViewById(R.id.deviceIdLabel);
+            deviceIDButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    resolveDeviceID();
+                }
+            });
 
-        // 토큰 등록 버튼과 이벤트
-        Button registTokenButton = (Button)findViewById(R.id.registTokenButton);
-        registTokenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Register Device Token to App Server");
-                registerToken();
-            }
-        });
+            // 토큰 등록 버튼과 이벤트
+            Button registTokenButton = (Button)findViewById(R.id.registTokenButton);
+            registTokenButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "Register Device Token to App Server");
+                    registerToken();
+                }
+            });
 
-        TextView addressView = (TextView)findViewById(R.id.serverAddress);
-        addressView.setText("Server Address : " + serverAddress);
+            TextView addressView = (TextView)findViewById(R.id.serverAddress);
+            addressView.setText("Server Address : " + serverAddress);
 
-        showStoredToken();
+            showStoredToken();
 
 
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                doRealStart();
-            }
-        };
-        setUpIfNeeded();
+            mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    doRealStart();
+                }
+            };
+            setUpIfNeeded();
 
-        //sharedPreference에 아이디값이 있을 경우 ->
-
+            //sharedPreference에 아이디값이 있을 경우 ->
         searchMyPage(1);
         searchMyPageTrans(1);
+
+//        }//카톡 세션 확인
+
+
 
     }
 
@@ -299,22 +406,29 @@ public class SplashActivity extends AppCompatActivity {
         super.onResume();
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(RegistrationIntentService.REGISTRATION_COMPLETE));
+        MyApplication.setCurrentActivity(this);
+        self = SplashActivity.this;
     }
 
     @Override
     protected void onPause() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
+        clearReferences();
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PLAY_SERVICES_RESOLUTION_REQUEST &&
                 resultCode == Activity.RESULT_OK) {
             setUpIfNeeded();
         }
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void setUpIfNeeded() {
@@ -382,7 +496,6 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MyPageTrans result) {
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
-
             }
 
             @Override
@@ -393,7 +506,59 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
+    private void goMainActivity() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
+
+    private void goLoginActivity() {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        clearReferences();
+        super.onDestroy();
+        if (mTokenTracker != null) {
+            mTokenTracker.stopTracking();
+        }
+        Session.getCurrentSession().removeCallback(callback);
+
+    }
+
+    private class SessionCallback implements ISessionCallback {
+
+        @Override
+        public void onSessionOpened() {
+            Log.d("hello", "in if  onSessionOpened");
+            redirectSignupFragment();
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+
+            Log.d("hello", "in if  onSessionOpenFailed");
+            if(exception != null) {
+                Logger.e(exception);
+            }
+            setContentView(R.layout.layout_common_kakao_login);
+        }
+    }
 
 
+       private void clearReferences() {
+        Activity currActivity = MyApplication.getCurrentActivity();
+        if (currActivity != null && currActivity.equals(this)) {
+            MyApplication.setCurrentActivity(null);
+        }
+    }
+
+    private void redirectSignupFragment() {
+        Intent intent =new Intent(SplashActivity.this, LoginActivity.class);
+        intent.putExtra("kakaoSession", true);
+        startActivity(intent);
+        finish();
+    }
 
 }

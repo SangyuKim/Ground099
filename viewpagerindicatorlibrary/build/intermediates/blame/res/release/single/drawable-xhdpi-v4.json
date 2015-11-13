@@ -1,194 +1,26 @@
 [
     {
-        "merged": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
-        "source": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png",
-        "source": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
-        "source": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\bundles\\release\\res\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
-        "source": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
-        "source": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
-        "source": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png",
-        "source": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
-        "source": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\bundles\\release\\res\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\bundles\\release\\res\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
-        "source": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\bundles\\release\\res\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png",
-        "source": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
-        "source": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_holo.9.png"
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_pressed_holo.9.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_pressed_holo.9.png"
     },
     {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
-        "source": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png",
-        "source": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
-        "source": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
-        "source": "C:\\work_android\\Ground2\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_focused_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
-        "source": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\bundles\\release\\res\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png",
-        "source": "C:\\work_android\\Ground5\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\bundles\\release\\res\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png",
-        "source": "C:\\work_android\\Ground3\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_holo.9.png"
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_focused_holo.9.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_holo.9.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_holo.9.png"
     },
     {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_selected_focused_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground12\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_selected_focused_holo.9.png"
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_holo.9.png",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_holo.9.png"
     },
     {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground4\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_pressed_holo.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_focused_holo.9.png"
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-xhdpi\\vpi__tab_unselected_focused_holo.9.png"
     }
 ]
