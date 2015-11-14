@@ -100,6 +100,7 @@ public class SampleSignupActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 requestSignUp(extraUserPropertyLayout.getProperties());
+//                requestSignUp(null);
             }
         });
     }
@@ -155,6 +156,9 @@ public class SampleSignupActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(UserProfile userProfile) {
+                //user 정보 저장 -> shared preference
+                Long userId = userProfile.getId();
+
                 Logger.d("UserProfile : " + userProfile);
                 redirectMainActivity();
             }

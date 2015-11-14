@@ -154,6 +154,11 @@ public class LoginFragment extends Fragment {
                                         }else if (result.equals("NOTREGISTER")) {
 //                                        startActivity(new Intent(getContext(), SignupActivity.class));
 //                                        getActivity().finish();
+                                            Fragment mFragment = (Fragment) TutorialFragment.newInstance("", "");
+                                            getFragmentManager().beginTransaction()
+                                                    .replace(R.id.container, mFragment)
+                                                    .addToBackStack(null)
+                                                    .commit();
                                         }
                                     }
 

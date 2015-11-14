@@ -55,6 +55,17 @@ public class PropertyManager {
 	}
 
 
+	private static final String FIELD_KAKAO_ID = "kakaoId";
+	public void setKakaoId(String id) {
+		mEditor.putString(FIELD_KAKAO_ID, id);
+		mEditor.commit();
+	}
+	public String getKakaoId() {
+		return mPrefs.getString(FIELD_KAKAO_ID, "");
+	}
+
+
+
 	MyPageResult myPageResult;
 	public void setMyPageResult(MyPageResult mResult){
 		myPageResult = mResult;

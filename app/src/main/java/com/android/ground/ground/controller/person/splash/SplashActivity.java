@@ -16,6 +16,7 @@ import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -62,6 +63,11 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.network.response.ResponseBody;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.UnLinkResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 import com.loopj.android.http.AsyncHttpClient;
@@ -116,7 +122,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Button btn = (Button)findViewById(R.id.button);
+        Button btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +131,7 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         });
-        btn = (Button)findViewById(R.id.button2);
+        btn = (Button) findViewById(R.id.button2);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,12 +142,23 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 //---------------------------------------KakaoTalk---------------------------------------------------
+        //카톡 토큰 얻기 -> 서버에서 확인 작업 -> 선수 아이디 얻기
+        final String kakaoId = PropertyManager.getInstance().getKakaoId();
+        UserProfile.loadFromCache().getId();
+
+         if (!TextUtils.isEmpty(kakaoId)) {
+
+        }
+
+        String kakaoToken = Session.getCurrentSession().getAccessToken();
+
+        Log.d("hello", kakaoToken);
+
 //        callback = new SessionCallback();
 //        Session.getCurrentSession().addCallback(callback);
-//
 //        if (!Session.getCurrentSession().checkAndImplicitOpen()) {
 //            Log.d("hello", "in if");
-            setContentView(R.layout.activity_splash);
+//            setContentView(R.layout.activity_splash);
 //---------------------------------------Facebook----------------------------------------------------
             final String id = PropertyManager.getInstance().getFaceBookId();
             if (!TextUtils.isEmpty(id)) {
@@ -190,10 +207,12 @@ public class SplashActivity extends AppCompatActivity {
                         goLoginActivity();
                     }
                 });
-
                 mLoginManager.logInWithReadPermissions(this, null);
             } else {
+
+                //todo
                 //sharedPreference에 저장된 페북 값이 없음
+
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -531,14 +550,12 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void onSessionOpened() {
-            Log.d("hello", "in if  onSessionOpened");
-            redirectSignupFragment();
+//            redirectSignupFragment();
         }
 
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
 
-            Log.d("hello", "in if  onSessionOpenFailed");
             if(exception != null) {
                 Logger.e(exception);
             }
@@ -555,8 +572,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void redirectSignupFragment() {
-        Intent intent =new Intent(SplashActivity.this, LoginActivity.class);
-        intent.putExtra("kakaoSession", true);
+        Intent intent =new Intent(SplashActivity.this, SampleLoginActivity.class);
+//        intent.putExtra("kakaoSession", true);
         startActivity(intent);
         finish();
     }
