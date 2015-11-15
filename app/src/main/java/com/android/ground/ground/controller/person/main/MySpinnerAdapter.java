@@ -2,22 +2,22 @@ package com.android.ground.ground.controller.person.main;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.login.MySpinnerSignupAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dongja94 on 2015-10-06.
- */
 public class MySpinnerAdapter extends BaseAdapter {
     List<String> items = new ArrayList<String>();
     AbsListView.LayoutParams lp;
@@ -48,28 +48,49 @@ public class MySpinnerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView tv;
+        ImageView imageView;
+        View view;
         if (convertView != null) {
-            tv = (TextView)convertView;
+            view = convertView;
+            tv = (TextView)view.findViewById(R.id.textView23);
+            imageView =(ImageView)view.findViewById(R.id.imageView4);
         } else {
-            tv = (TextView)LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, null);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_simple_spinner_layout, null);
+            tv = (TextView)view.findViewById(R.id.textView23);
+            imageView =(ImageView)view.findViewById(R.id.imageView4);
         }
+
         tv.setText(items.get(position));
-        tv.setLayoutParams(lp);
-        return tv;
+        tv.setTextColor(Color.WHITE);
+        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+        view.setLayoutParams(lp);
+        return view;
     }
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         TextView tv;
+        View view;
+        ImageView imageView;
         if (convertView != null) {
-            tv = (TextView)convertView;
+//            tv = (TextView)convertView;
+            view = convertView;
+            tv = (TextView)view.findViewById(R.id.textView23);
+            imageView =(ImageView)view.findViewById(R.id.imageView4);
+
         } else {
-            tv = (TextView)LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, null);
-            tv.setLayoutParams(new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_simple_spinner_layout, null);
+            tv = (TextView)view.findViewById(R.id.textView23);
+//            tv = (TextView)LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_simple_list_item_spinner, null);
+            view.setLayoutParams(new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            imageView =(ImageView)view.findViewById(R.id.imageView4);
 //            tv.setBackgroundColor(Color.YELLOW);
         }
+        imageView.setVisibility(View.INVISIBLE);
         tv.setText(items.get(position));
-        tv.setLayoutParams(lp);
-        return tv;
+        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+        view.setLayoutParams(lp);
+        return view;
     }
 }

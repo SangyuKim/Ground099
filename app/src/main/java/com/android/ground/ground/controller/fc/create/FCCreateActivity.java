@@ -114,6 +114,10 @@ public class FCCreateActivity extends AppCompatActivity {
             Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
             imageView.setImageBitmap(bm);
         }
+        if(requestCode == REQ_AREA_SEARCH && requestCode == Activity.RESULT_OK){
+            String userArea = data.getExtras().getString("userArea");
+//            textViewUserArea.setText(userArea);
+        }
     }
     private Uri getTempUri() {
         mSavedFile = new File(Environment.getExternalStorageDirectory(),"temp_" + System.currentTimeMillis()/1000);

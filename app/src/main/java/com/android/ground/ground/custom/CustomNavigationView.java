@@ -25,12 +25,15 @@ import android.support.v7.internal.view.SupportMenuInflater;
 import android.support.v7.internal.view.menu.MenuBuilder;
 import android.support.v7.internal.view.menu.MenuItemImpl;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.android.ground.ground.R;
@@ -156,12 +159,26 @@ public class CustomNavigationView  extends ScrimInsetsFrameLayout {
         addHeaderView(headerView);
         headerView.setOnCustomImageClickListener(new OnCustomImageClickListener() {
             @Override
-            public void OnCustomImageClick(View view) {
+            public void onCustomImageClick(View view) {
                 mImageListener.onHeaderImageClicked(view);
             }
         });
-        MVPview headerView2 = new MVPview(getContext());
-        addFooterView(headerView2);
+
+        //footer
+        CustomNavigationFooter footerView = new CustomNavigationFooter(getContext());
+
+        footerView.setOnCustomImageClickListener(new OnCustomImageClickListener() {
+            @Override
+            public void onCustomImageClick(View view) {
+                if (mFooterItemSelectedListener != null) {
+                    mFooterItemSelectedListener.onNavigationFooterItemSelected(CustomNavigationView.this);
+                }
+            }
+        });
+
+        addFooterView(footerView);
+
+
         a.recycle();
 
 
@@ -477,6 +494,19 @@ public class CustomNavigationView  extends ScrimInsetsFrameLayout {
             }
         });
     }
+
+    /**
+     * Listener for handling events on navigation items.
+     */
+    public interface OnNavigationFooterItemSelectedListener {
+
+        public boolean onNavigationFooterItemSelected(View view);
+    }
+    OnNavigationFooterItemSelectedListener mFooterItemSelectedListener;
+    public void setOnNavigationFooterItemSelectedListener(OnNavigationFooterItemSelectedListener listener){
+        mFooterItemSelectedListener =listener;
+    }
+
 
 }
 class ThemeUtils2 {

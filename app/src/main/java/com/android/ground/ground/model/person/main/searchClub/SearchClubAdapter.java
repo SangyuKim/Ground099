@@ -13,9 +13,6 @@ import com.android.ground.ground.view.person.main.SearchFCItemView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dongja94 on 2015-10-19.
- */
 public class SearchClubAdapter extends BaseAdapter implements OnSpecificDialogClickListener {
 
     List<SearchClubResult> items = new ArrayList<SearchClubResult>();
@@ -25,6 +22,7 @@ public class SearchClubAdapter extends BaseAdapter implements OnSpecificDialogCl
     int page;
 
     String filter;
+
 
     public void setFilter(String filter){this.filter =filter;}
     public String getFilter(){return filter;}

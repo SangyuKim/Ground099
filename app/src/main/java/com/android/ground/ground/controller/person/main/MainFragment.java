@@ -1,6 +1,7 @@
 package com.android.ground.ground.controller.person.main;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.model.MyApplication;
@@ -25,6 +27,9 @@ import com.android.ground.ground.model.MyApplication;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment {
+
+    TextView tabHostTextView;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -102,20 +107,35 @@ public class MainFragment extends Fragment {
         mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("선수 찾기"), FragmentMainSearchPlayer.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("FC 찾기"), FragmentMainSearchFC.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab3").setIndicator("매치 확인"), FragmentMainCheckMatch.class, null);
+
         tabHost.setCurrentTab(1);
+
         if(tabHost.getCurrentTab()==1){
             getActivity().setTitle("FC 찾기");
+            tabHostTextView = (TextView)tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
+            tabHostTextView.setTextColor(Color.WHITE);
+
         }
         mAdapter.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-
+                for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+//                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLACK); // unselected
+                    tabHostTextView = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
+                    tabHostTextView.setTextColor(Color.BLACK);
+                }
                 if (tabId.equals("tab1")) {
                     getActivity().setTitle("선수 찾기");
+                    tabHostTextView = (TextView)tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+                    tabHostTextView.setTextColor(Color.WHITE);
                 } else if (tabId.equals("tab2")) {
                     getActivity().setTitle("FC 찾기");
+                    tabHostTextView = (TextView)tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
+                    tabHostTextView.setTextColor(Color.WHITE);
                 } else if (tabId.equals("tab3")) {
                     getActivity().setTitle("매치 확인");
+                    tabHostTextView = (TextView)tabHost.getTabWidget().getChildAt(2).findViewById(android.R.id.title);
+                    tabHostTextView.setTextColor(Color.WHITE);
                 }
 
             }

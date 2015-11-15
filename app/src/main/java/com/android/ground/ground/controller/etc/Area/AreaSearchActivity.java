@@ -1,5 +1,6 @@
 package com.android.ground.ground.controller.etc.Area;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,7 +10,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -22,6 +25,7 @@ import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.model.tmap.DongInfo;
 import com.android.ground.ground.model.tmap.TmapAdapter;
 import com.android.ground.ground.model.tmap.TmapItem;
+import com.android.ground.ground.model.tmap.TmapItemView;
 
 import java.util.List;
 
@@ -73,6 +77,17 @@ public class AreaSearchActivity extends AppCompatActivity {
         if(editText.getText().toString().equals("")){
             mAdapter.clear();
         }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String userArea = ((TmapItemView)view).getTextView().getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra("userArea", userArea);
+                //경도랑 위도도 보내기
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
 
 
 
@@ -105,6 +120,7 @@ public class AreaSearchActivity extends AppCompatActivity {
         }
 
     }
+
 
 
 }

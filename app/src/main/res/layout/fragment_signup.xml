@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+        <com.github.siyamed.shapeimageview.CircularImageView
                 android:id="@+id/memImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -63,8 +63,8 @@
                 android:text="지역 검색"
                 android:focusable="false"
                 android:layout_below="@+id/linearLayout52"
-                android:layout_toRightOf="@+id/textView6"
-                android:layout_toEndOf="@+id/textView6" />
+                android:layout_toRightOf="@+id/textViewArea"
+                android:layout_toEndOf="@+id/textViewArea" />
 
             <RadioGroup
                 android:id="@+id/gender"
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/textView6"
+                android:id="@+id/textViewArea"
                 android:layout_below="@+id/linearLayout52"
                 android:layout_toRightOf="@+id/textView47"
                 android:layout_toEndOf="@+id/textView47" />

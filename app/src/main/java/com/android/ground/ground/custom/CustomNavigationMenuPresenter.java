@@ -93,6 +93,7 @@ public class CustomNavigationMenuPresenter  implements MenuPresenter {
                     .inflate(android.support.design.R.layout.design_navigation_item_header,
                             mMenuView, false);
             mFooterLayout = (LinearLayout) mLayoutInflater.inflate(R.layout.custom_design_navigation_item_footer, mMenuView, false);
+
             mMenuView.setAdapter(mAdapter);
         }
         return mMenuView;
@@ -188,7 +189,9 @@ public class CustomNavigationMenuPresenter  implements MenuPresenter {
         return view;
     }
     public void addFooterView(@NonNull View view){
-        mFooterLayout.addView(view);
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT, 1);
+        mFooterLayout.addView(view, param);
+
         // The padding on top should be cleared.
         mMenuView.setPadding(0, mMenuView.getPaddingTop(), 0, 0);
     }
@@ -423,6 +426,12 @@ public class CustomNavigationMenuPresenter  implements MenuPresenter {
                     break;
                 }
                 case VIEW_TYPE_FOOTER: {
+//                    NavigationFooterItem item =
+//                            (NavigationFooterItem) mItems.get(position);
+//                    LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+//                    holder.itemView.setLayoutParams(param);
+//                    holder.itemView.setPadding(0, item.getPaddingTop(), 0,
+//                            item.getPaddingBottom());
                     break;
                 }
             }

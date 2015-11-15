@@ -6,5 +6,5 @@ import android.view.View;
  * Created by Tacademy on 2015-11-11.
  */
 public interface OnCustomImageClickListener {
-    public void OnCustomImageClick(View view);
+    public void onCustomImageClick(View view);
 }

@@ -32,6 +32,18 @@
         "source": "C:\\work_android\\Ground43\\refresh\\src\\main\\res\\anim\\slide_in_from_bottom.xml"
     },
     {
+        "merged": "C:\\work_android\\Ground432\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_from_top.xml",
+        "source": "C:\\work_android\\Ground432\\refresh\\src\\main\\res\\anim\\slide_in_from_top.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground432\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_out_to_top.xml",
+        "source": "C:\\work_android\\Ground432\\refresh\\src\\main\\res\\anim\\slide_out_to_top.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground432\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_from_bottom.xml",
+        "source": "C:\\work_android\\Ground432\\refresh\\src\\main\\res\\anim\\slide_in_from_bottom.xml"
+    },
+    {
         "merged": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_out_to_top.xml",
         "source": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\refresh\\src\\main\\res\\anim\\slide_out_to_top.xml"
     },
@@ -46,5 +58,9 @@
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_from_top.xml",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\refresh\\src\\main\\res\\anim\\slide_in_from_top.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground432\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_out_to_bottom.xml",
+        "source": "C:\\work_android\\Ground432\\refresh\\src\\main\\res\\anim\\slide_out_to_bottom.xml"
     }
 ]

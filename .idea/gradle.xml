@@ -14,7 +14,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/imageloader" />
             <option value="$PROJECT_DIR$/refresh" />
-            <option value="$PROJECT_DIR$/viewpagerindicatorlibrary" />
           </set>
         </option>
       </GradleProjectSettings>

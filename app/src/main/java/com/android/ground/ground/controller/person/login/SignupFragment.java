@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,25 +36,17 @@ import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.log.Logger;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
-import com.android.ground.ground.model.usermgmt.ExtraUserPropertyLayout;
-import com.android.ground.ground.model.widget.KakaoToast;
 import com.android.ground.ground.model.widget.WaitingDialog;
 import com.facebook.AccessToken;
-import com.kakao.auth.ApiResponseCallback;
-import com.kakao.auth.ErrorCode;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
-import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.callback.UnLinkResponseCallback;
-import com.kakao.usermgmt.response.model.UserProfile;
 
 import java.io.File;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,7 +64,9 @@ import java.util.Map;
  */
 public class SignupFragment extends Fragment {
 
+
     protected static Activity self;
+    TextView textViewUserArea;
 
     @Override
     public void onResume() {
@@ -169,6 +164,7 @@ public class SignupFragment extends Fragment {
 //        setSpinner(R.id.spinner_age, R.array.items_search_player);
         setSpinner(R.id.spinner_ability, R.array.items_player_ability);
         setSpinner(R.id.spinner_position, R.array.items_player_position);
+        textViewUserArea = (TextView)view.findViewById(R.id.textViewArea);
         DatePicker mDatePicker;
 
 
@@ -181,7 +177,7 @@ public class SignupFragment extends Fragment {
                     @Override
                     public void onSuccess(String result) {
                         AccessToken token = AccessToken.getCurrentAccessToken();
-                        PropertyManager.getInstance().setFacebookId(token.getUserId());
+//                        PropertyManager.getInstance().setFacebookId(token.getUserId());
                         startActivity(new Intent(getContext(), MainActivity.class));
                         getActivity().finish();
                     }
@@ -298,10 +294,16 @@ public class SignupFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQUEST_CODE_CROP && resultCode == Activity.RESULT_OK) {
             Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
             imageView.setImageBitmap(bm);
         }
+        if(requestCode == REQ_AREA_SEARCH && resultCode == Activity.RESULT_OK){
+            String userArea = data.getExtras().getString("userArea");
+            textViewUserArea.setText(userArea);
+        }
+
     }
     private Uri getTempUri() {
         mSavedFile = new File(Environment.getExternalStorageDirectory(),"temp_" + System.currentTimeMillis()/1000);
@@ -538,6 +540,7 @@ public class SignupFragment extends Fragment {
 //            }
 //        }, properties);
 //    }
+
 
 
 }

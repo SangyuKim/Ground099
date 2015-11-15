@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\work_android\\Ground432\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\debug\\drawable\\vpi__tab_indicator.xml",
+        "source": "C:\\work_android\\Ground432\\viewpagerindicatorlibrary\\src\\main\\res\\drawable\\vpi__tab_indicator.xml"
+    },
+    {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\debug\\drawable\\vpi__tab_indicator.xml",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable\\vpi__tab_indicator.xml"
     }

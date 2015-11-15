@@ -1,7 +1,15 @@
 [
     {
+        "merged": "C:\\work_android\\Ground432\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\debug\\color\\vpi__light_theme.xml",
+        "source": "C:\\work_android\\Ground432\\viewpagerindicatorlibrary\\src\\main\\res\\color\\vpi__light_theme.xml"
+    },
+    {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\debug\\color\\vpi__light_theme.xml",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\color\\vpi__light_theme.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground432\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\debug\\color\\vpi__dark_theme.xml",
+        "source": "C:\\work_android\\Ground432\\viewpagerindicatorlibrary\\src\\main\\res\\color\\vpi__dark_theme.xml"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\debug\\color\\vpi__dark_theme.xml",

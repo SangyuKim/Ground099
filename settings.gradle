@@ -1,1 +1,1 @@
-include ':app', ':androidAsyncHttp', ':imageloader', ':refresh', ':viewpagerindicatorlibrary'
+include ':app', ':androidAsyncHttp', ':imageloader', ':refresh'

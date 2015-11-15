@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +33,7 @@ import com.android.ground.ground.controller.person.message.MyMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.custom.CustomDrawerLayout;
 import com.android.ground.ground.custom.CustomNavigationView;
+import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.view.OnAlarmClickListener;
 import com.android.ground.ground.view.person.main.NavigationHeaderView;
@@ -38,9 +41,11 @@ import com.facebook.appevents.AppEventsLogger;
 
 public class MainActivity extends AppCompatActivity
         implements CustomNavigationView.OnNavigationItemSelectedListener,
-        CustomNavigationView.OnHeaderImageClickedListener
+        CustomNavigationView.OnHeaderImageClickedListener,
+        CustomNavigationView.OnNavigationFooterItemSelectedListener
 
 {
+    CustomToolbar customToolbar;
     CustomDrawerLayout drawer;
     private boolean isBackPressed = false;
     ListPopupWindow listPopup;
@@ -64,10 +69,22 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                                                                    ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+        customToolbar = new CustomToolbar(MainActivity.this);
+        getSupportActionBar().setCustomView(customToolbar, params);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_003);
+        toolbar.setNavigationIcon(R.drawable.icon_003);
+
 
         drawer = (CustomDrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        toggle.setHomeAsUpIndicator(R.drawable.icon_003);
+        toggle.setDrawerIndicatorEnabled(true);
+
         drawer.setDrawerListener(toggle);
         drawer.setOnDrawerListener(new CustomDrawerLayout.OnDrawerListener() {
             @Override
@@ -82,6 +99,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 //        navigationView.setHeaderItemSelectedListener(this);
         navigationView.setHeaderImageClickedListener(this);
+        navigationView.setOnNavigationFooterItemSelectedListener(this);
 
 
         if (savedInstanceState == null) {
@@ -267,19 +285,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, FCCreateActivity.class);
             startActivity(intent);
             isBackPressed = false;
-         } else if (id == R.id.nav_setting) {
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            if(alarmItem != null){
-                alarmItem.setIcon(R.drawable.ground_alarm);
-                isAlarmOpened = false;
-            }
-            Fragment mFragment = (Fragment) SettingFragment.newInstance("", "");
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, mFragment)
-                    .addToBackStack(null)
-                    .commit();
-            isBackPressed = false;
-        }
+         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -322,7 +328,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
-        MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken() , InputMethodManager.HIDE_NOT_ALWAYS);
+        MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         super.onDestroy();
     }
 
@@ -353,5 +359,37 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this, MyProfileActivity.class);
         startActivity(intent);
         isBackPressed = false;
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+//        super.setTitle(title);
+        customToolbar.setTitle(title.toString());
+    }
+
+    @Override
+    public void setTitle(int titleId) {
+        super.setTitle(titleId);
+    }
+
+    @Override
+    public boolean onNavigationFooterItemSelected(View view) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if(alarmItem != null){
+            alarmItem.setIcon(R.drawable.ground_alarm);
+            isAlarmOpened = false;
+        }
+        Fragment mFragment = (Fragment) SettingFragment.newInstance("", "");
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, mFragment)
+                .addToBackStack(null)
+                .commit();
+        isBackPressed = false;
+
+
+        return true;
     }
 }

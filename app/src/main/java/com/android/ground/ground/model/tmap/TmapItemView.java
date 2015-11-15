@@ -25,7 +25,6 @@ public class TmapItemView extends RelativeLayout {
         inflate(getContext(), R.layout.view_tmap_item, this);
         textView = (TextView)findViewById(R.id.textView81);
 
-
     }
 
     public void setTmapItem(DongInfo item) {
@@ -33,4 +32,7 @@ public class TmapItemView extends RelativeLayout {
 
     }
 
+    public TextView getTextView() {
+        return textView;
+    }
 }

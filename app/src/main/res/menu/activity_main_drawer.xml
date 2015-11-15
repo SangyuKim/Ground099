@@ -12,11 +12,5 @@
             android:title="FC 창단하기" />
     </group>
 
-    <item android:title="Setting">
-        <menu>
-            <item android:id="@+id/nav_setting" android:icon="@android:drawable/ic_menu_manage"
-                android:title="Setting" />
-        </menu>
-    </item>
 
 </menu>

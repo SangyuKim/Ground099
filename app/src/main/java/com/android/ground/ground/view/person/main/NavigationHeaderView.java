@@ -46,7 +46,7 @@ public class NavigationHeaderView extends FrameLayout {
             @Override
             public void onClick(View v) {
                 if(mListener!=null)
-                      mListener.OnCustomImageClick(NavigationHeaderView.this);
+                      mListener.onCustomImageClick(NavigationHeaderView.this);
             }
         });
 
