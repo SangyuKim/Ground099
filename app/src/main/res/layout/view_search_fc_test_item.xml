@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:id="@+id/memImageMVP"
@@ -30,26 +30,26 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="월"
                 android:id="@+id/clubMainDay_Mon"
                 android:layout_below="@+id/memImageMVP"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:checked="false"
                 android:clickable="false"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:button="@drawable/check_box_mon" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="화"
                 android:id="@+id/clubMainDay_Tue"
                 android:checked="false"
                 android:layout_below="@+id/clubMainDay_Mon"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:clickable="false"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:button="@drawable/check_box_tue" />
 
         </RelativeLayout>
 
@@ -81,13 +81,13 @@
                     android:layout_height="20dp"
                     android:id="@+id/memYN"
                     android:layout_gravity="center_horizontal"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/match_002" />
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="20dp"
                     android:id="@+id/matchYN"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/match_001" />
             </LinearLayout>
 
             <TextView
@@ -155,50 +155,53 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="수"
         android:id="@+id/clubMainDay_Wed"
         android:checked="false"
         android:layout_below="@+id/linearLayout5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:clickable="false"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:button="@drawable/check_box_wed" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="목"
         android:id="@+id/clubMainDay_Thu"
         android:layout_below="@+id/clubMainDay_Wed"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:checked="false"
         android:clickable="false"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:button="@drawable/check_box_thu"
+        android:text="목" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="금"
         android:id="@+id/clubMainDay_Fri"
         android:layout_below="@+id/clubMainDay_Thu"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:checked="false"
         android:clickable="false"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:button="@drawable/check_box_fri"
+        android:text="금" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="토"
         android:id="@+id/clubMainDay_Sat"
         android:layout_below="@+id/clubMainDay_Fri"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:checked="false"
         android:clickable="false"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:button="@drawable/check_box_sat"
+        android:text="토" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -210,6 +213,17 @@
         android:layout_alignParentStart="true"
         android:checked="false"
         android:clickable="false"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:button="@drawable/check_box_sun" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:layout_below="@+id/linearLayout5"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/uniform_001"
+        android:background="#00000000" />
 
 </RelativeLayout>

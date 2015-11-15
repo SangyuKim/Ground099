@@ -4,8 +4,16 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-mdpi\\vpi__tab_unselected_holo.9.png"
     },
     {
+        "merged": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
+        "source": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-mdpi\\vpi__tab_unselected_pressed_holo.9.png"
+    },
+    {
         "merged": "C:\\work_android\\Ground43\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_selected_holo.9.png",
         "source": "C:\\work_android\\Ground43\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-mdpi\\vpi__tab_selected_holo.9.png"
+    },
+    {
+        "merged": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
+        "source": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-mdpi\\vpi__tab_unselected_focused_holo.9.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
@@ -18,6 +26,10 @@
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-mdpi\\vpi__tab_selected_pressed_holo.9.png"
+    },
+    {
+        "merged": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_selected_holo.9.png",
+        "source": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-mdpi\\vpi__tab_selected_holo.9.png"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_selected_focused_holo.9.png",
@@ -42,6 +54,18 @@
     {
         "merged": "C:\\work_android\\Ground43\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_selected_focused_holo.9.png",
         "source": "C:\\work_android\\Ground43\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-mdpi\\vpi__tab_selected_focused_holo.9.png"
+    },
+    {
+        "merged": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_selected_focused_holo.9.png",
+        "source": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-mdpi\\vpi__tab_selected_focused_holo.9.png"
+    },
+    {
+        "merged": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
+        "source": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-mdpi\\vpi__tab_selected_pressed_holo.9.png"
+    },
+    {
+        "merged": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_unselected_holo.9.png",
+        "source": "C:\\Users\\local_admin\\AndroidStudioProjects\\Ground32\\viewpagerindicatorlibrary\\src\\main\\res\\drawable-mdpi\\vpi__tab_unselected_holo.9.png"
     },
     {
         "merged": "C:\\work_android\\Ground43\\viewpagerindicatorlibrary\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",

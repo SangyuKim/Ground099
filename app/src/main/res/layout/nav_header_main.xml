@@ -21,8 +21,7 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@android:drawable/sym_def_app_icon"
-        app:siBorderWidth="6dp"
-        app:siBorderColor="@color/colorPrimary"/>
+    />
 
     <TextView
         android:id="@+id/memName"
