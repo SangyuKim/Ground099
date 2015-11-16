@@ -111,4 +111,5 @@
         <item>초대 메세지</item>
         <item>하트 메세지</item>
     </string-array>
+    <string name="title_activity_your_fc">YourFCActivity</string>
 </resources>

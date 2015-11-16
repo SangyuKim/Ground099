@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
+import com.android.ground.ground.model.fc.fcmain.ClubMatchList.ClubMatchList;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
 import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
@@ -52,7 +53,7 @@ import java.security.cert.CertificateException;
 
 public class NetworkManager {
 
-    public final static String GROND_SERVER_URL = "http://192.168.201.154:3000";
+    public final static String GROND_SERVER_URL = "http://192.168.201.89:3000";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
         if (instance == null) {
@@ -129,37 +130,8 @@ public class NetworkManager {
         }, 1000);
     }
 
-
-
-    public void getNetworkMelon(Context context, String keyword, int start, int display, final OnResultListener<NaverMovies> listener) {
-        final RequestParams params = new RequestParams();
-        params.put("key", KEY);
-        params.put("query", keyword);
-        params.put("display", display);
-        params.put("start", start);
-        params.put("target", TARGET);
-
-        client.get(context, MOVIE_URL, params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
-                NaverMovies movies = parser.fromXml(bais, "channel", NaverMovies.class);
-                listener.onSuccess(movies);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                listener.onFail(statusCode);
-            }
-        });
-    }
     public static final String TMAP_URL = "https://apis.skplanetx.com/tmap/poi/findPoiAreaDataByName";
-    public static final String TMAP_POI_URL ="https://apis.skplanetx.com/tmap/pois";
-//    private static final String SERVER = "http://openapi.naver.com";
-
-//    private static final String MOVIE_URL = SERVER + "/search";
     private static final String TMAP_API_KEY = "ed4139de-5d31-31a3-aa1d-92a502350a6f";
-//    private static final String TARGET = "movie";
     public void getNetworkTMAP(final Context context, String keyword, int count, int page, final OnResultListener<TmapItem> listener) {
         final RequestParams params = new RequestParams();
 
@@ -194,12 +166,21 @@ public class NetworkManager {
 
 
         final RequestParams params = new RequestParams();
-        params.put("sort", filter);
+
+        String url;
+        if(keyword.equals("")){
+            url = SEARCH_CLUB_URL + "/"+ filter;
+        }else{
+            url =   SEARCH_CLUB_URL + "/search";
+            params.put("search", keyword);
+        }
+
+//        params.put("sort", filter);
         params.put("page", page);
         params.put("member_id", memberId);
-        params.put("search", keyword);
 
-        client.get(context, SEARCH_CLUB_URL, params, new AsyncHttpResponseHandler() {
+
+        client.get(context, url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
@@ -221,13 +202,22 @@ public class NetworkManager {
     public void getNetworkSearchMem(final Context context, String filter,String keyword, int page, int memberId, final OnResultListener<SearchMem> listener) {
 
 
+
         final RequestParams params = new RequestParams();
-        params.put("sort", filter);
+
+        String url;
+        if(keyword.equals("")){
+            url = SEARCH_MEM_URL + "/"+ filter;
+        }else{
+            url =   SEARCH_MEM_URL + "/search";
+            params.put("search", keyword);
+        }
+//        params.put("sort", filter);
         params.put("page", page);
         params.put("member_id", memberId);
-        params.put("search", keyword);
 
-        client.get(context, SEARCH_MEM_URL, params, new AsyncHttpResponseHandler() {
+
+        client.get(context, url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
@@ -273,12 +263,21 @@ public class NetworkManager {
     public void getNetworkMatchInfo(final Context context,  String filter,String keyword, int page, int memberId, final OnResultListener<MatchInfo> listener) {
 
         final RequestParams params = new RequestParams();
-        params.put("sort", filter);
+
+        String url;
+        if(keyword.equals("")){
+            url = SEARCH_MATCHINFO_URL + "/"+ filter;
+        }else{
+            url =   SEARCH_MATCHINFO_URL + "/search";
+            params.put("search", keyword);
+        }
+
+//        params.put("sort", filter);
         params.put("page", page);
         params.put("member_id", memberId);
-        params.put("search", keyword);
+//        params.put("search", keyword);
 
-        client.get(context,SEARCH_MATCHINFO_URL , params, new AsyncHttpResponseHandler() {
+        client.get(context,url , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
@@ -386,7 +385,6 @@ public class NetworkManager {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
-
                 ClubAndMember items = gson.fromJson(s, ClubAndMember.class);
                 if (items != null){
                     listener.onSuccess(items);
@@ -400,6 +398,35 @@ public class NetworkManager {
         });
 
     }
+    //ClubMatchList
+    public static final String SEARCH_CLUB_AND_MATCHLSIT_PAGE_URL =GROND_SERVER_URL+"/club/matchList";
+    public void getNetworkClubMatchList(final Context context,  int clubId, int page, final OnResultListener<ClubMatchList> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("club_id", clubId);
+        params.put("page",page);
+
+        client.get(context,SEARCH_CLUB_AND_MATCHLSIT_PAGE_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+
+                ClubMatchList items = gson.fromJson(s, ClubMatchList.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+
+
     public void cancelAll(Context context) {
         client.cancelRequests(context, true);
     }

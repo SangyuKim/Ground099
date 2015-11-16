@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,6 +34,8 @@ public class SearchFCItemView extends RelativeLayout {
     SearchClubResult mItem;
     CheckBox clubMainDay_Mon,clubMainDay_Tue,clubMainDay_Wed,
             clubMainDay_Thu,clubMainDay_Fri,clubMainDay_Sat,clubMainDay_Sun;
+    ImageView btnJoin;
+    Button btn;
 
     DisplayImageOptions options;
 
@@ -45,18 +48,26 @@ public class SearchFCItemView extends RelativeLayout {
         clubSkill = (TextView)findViewById(R.id.clubSkill);
         clubManner= (TextView)findViewById(R.id.clubManner);
         clubMainDay_Mon =(CheckBox)findViewById(R.id.clubMainDay_Mon);
+        clubMainDay_Mon.setFocusable(false);
         clubMainDay_Tue =(CheckBox)findViewById(R.id.clubMainDay_Tue);
+        clubMainDay_Tue.setFocusable(false);
         clubMainDay_Wed =(CheckBox)findViewById(R.id.clubMainDay_Wed);
+        clubMainDay_Wed.setFocusable(false);
         clubMainDay_Thu =(CheckBox)findViewById(R.id.clubMainDay_Thu);
+        clubMainDay_Thu.setFocusable(false);
         clubMainDay_Fri =(CheckBox)findViewById(R.id.clubMainDay_Fri);
+        clubMainDay_Fri.setFocusable(false);
         clubMainDay_Sat =(CheckBox)findViewById(R.id.clubMainDay_Sat);
+        clubMainDay_Sat.setFocusable(false);
         clubMainDay_Sun =(CheckBox)findViewById(R.id.clubMainDay_Sun);
+        clubMainDay_Sun.setFocusable(false);
         memYN = (ImageView)findViewById(R.id.memYN);
         matchYN = (ImageView)findViewById(R.id.matchYN);
-        Button btn;
 
-        btn = (Button)findViewById(R.id.button21);
-        btn.setOnClickListener(new OnClickListener() {
+
+        btnJoin = (ImageView)findViewById(R.id.button21);
+        btnJoin.setFocusable(false);
+        btnJoin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                    if (mRequestListener != null) {
@@ -90,8 +101,10 @@ public class SearchFCItemView extends RelativeLayout {
         clubName.setText(item.clubName);
         clubLocationName.setText(item.clubLocationName);
         clubField.setText(item.clubField);
-        clubSkill.setText(Double.toString(item.clubSkill));
-        clubManner.setText(Double.toString(item.clubManner));
+        if(item.clubSkill != null )
+            clubSkill.setText(Double.toString(item.clubSkill));
+       if(item.clubManner != null)
+       clubManner.setText(Double.toString(item.clubManner));
         if(item.clubMainDay_Mon ==0)
             clubMainDay_Mon.setChecked(false);
         else

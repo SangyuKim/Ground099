@@ -5,9 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.android.ground.ground.model.Profile;
-import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
-import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.naver.MovieItemView;
+import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.OnProfileClickListener;
@@ -17,39 +15,13 @@ import com.android.ground.ground.view.fc.fcmain.FCMemberItemView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dongja94 on 2015-10-19.
- */
+
 public class FCMemberAdapter extends BaseAdapter
         implements OnReplyClickListener, OnProfileClickListener {
 
-    List<FCMemberListItem> items = new ArrayList<FCMemberListItem>();
+    List<ClubAndMemberResult> items = new ArrayList<ClubAndMemberResult>();
 
-//    String keyword;
-//    int totalCount;
-//
-//    public void setKeyword(String keyword) {
-//        this.keyword = keyword;
-//    }
-//    public String getKeyword() {
-//        return keyword;
-//    }
-//
-//    public void setTotalCount(int totalCount) {
-//        this.totalCount = totalCount;
-//    }
-//    public int getTotalCount() {
-//        return totalCount;
-//    }
-//
-//    public int getStartIndex() {
-//        if (items.size() < totalCount) {
-//            return items.size() + 1;
-//        }
-//        return -1;
-//    }
-
-    public void add(FCMemberListItem item) {
+    public void add(ClubAndMemberResult item){
         items.add(item);
         notifyDataSetChanged();
     }

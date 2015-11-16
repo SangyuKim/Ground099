@@ -1,6 +1,5 @@
 package com.android.ground.ground.controller.fc.management;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,15 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
-import com.android.ground.ground.controller.person.message.MyMessageAdapter;
-import com.android.ground.ground.model.fc.management.ManagementMemberItem;
-import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
+import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +34,11 @@ import java.util.List;
  */
 public class FragmentManagementMember extends Fragment {
 
+    int clubId;
+
     ListView listView;
     ManagemnetMemberAdapter mAdapter;
-    List<ManagementMemberItem> items = new ArrayList<ManagementMemberItem>();
+    List<ClubAndMemberResult> items = new ArrayList<ClubAndMemberResult>();
     Button btn, btn2;
     boolean isAllchecked= false;
     // TODO: Rename parameter arguments, choose names that match
@@ -85,15 +87,15 @@ public class FragmentManagementMember extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_management_member, container, false);
+
+        clubId = PropertyManager.getInstance().getMyPageResult().club_id;
+
         listView = (ListView)view.findViewById(R.id.listView_management_member);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        initData();
+        searchClubAndMember();
 
-        mAdapter = new ManagemnetMemberAdapter(getContext(), items);
-        listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(mItemClickListener);
-
         btn2 = (Button)view.findViewById(R.id.button13);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,13 +173,6 @@ public class FragmentManagementMember extends Fragment {
 
     }
 
-    public void initData(){
-        for(int i=0; i< 20; i++){
-            ManagementMemberItem item = new ManagementMemberItem();
-            items.add(item);
-        }
-    }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -236,5 +231,32 @@ public class FragmentManagementMember extends Fragment {
 //            getActivity().setTitle("멤버 관리");
 //        }
 //    }
+
+    private void searchClubAndMember() {
+
+        NetworkManager.getInstance().getNetworkClubAndMember(getContext(),clubId, new NetworkManager.OnResultListener<ClubAndMember>() {
+            @Override
+            public void onSuccess(ClubAndMember result) {
+                if(!mAdapter.checkIsNullItems())
+                    mAdapter.clear();
+                for (ClubAndMemberResult item : result.items) {
+                    items.add(item);
+                }
+                mAdapter = new ManagemnetMemberAdapter(getContext(), items);
+                listView.setAdapter(mAdapter);
+
+            }
+            @Override
+            public void onFail(int code) {
+            }
+        });
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+    }
 
 }

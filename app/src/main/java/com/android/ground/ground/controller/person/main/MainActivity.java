@@ -34,6 +34,7 @@ import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.custom.CustomDrawerLayout;
 import com.android.ground.ground.custom.CustomNavigationView;
 import com.android.ground.ground.custom.CustomToolbar;
+import com.android.ground.ground.manager.ActivityManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.view.OnAlarmClickListener;
 import com.android.ground.ground.view.person.main.NavigationHeaderView;

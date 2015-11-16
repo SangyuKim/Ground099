@@ -85,6 +85,8 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(YourProfileActivity.this, FCActivity.class);
+                if(myPageResult.club_id != 0)
+                    intent.putExtra("clubId",myPageResult.club_id);
                 startActivity(intent);
             }
         });
@@ -130,10 +132,12 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
             }
         });
 
+
         oldClubImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(YourProfileActivity.this, FCActivity.class);
+                intent.putExtra("clubId", mTransList.get(0).club_id);
                 startActivity(intent);
             }
         });
@@ -142,6 +146,7 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(YourProfileActivity.this, FCActivity.class);
+                intent.putExtra("clubId", mTransList.get(1).club_id);
                 startActivity(intent);
             }
         });
@@ -150,6 +155,7 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(YourProfileActivity.this, FCActivity.class);
+                intent.putExtra("clubId", mTransList.get(2).club_id);
                 startActivity(intent);
             }
         });
@@ -190,12 +196,24 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
 
     private void setMyPageTransResults(List<MyPageTransResult> mList) {
         mTransList = mList;
-        if(mList.get(0)!= null)
-            ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(0).clubImage), oldClubImage1, options);
-        if(mList.get(1)!= null)
-            ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(1).clubImage), oldClubImage2, options);
-        if(mList.get(2)!= null)
-            ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(2).clubImage), oldClubImage3, options);
+        if(mList.size()>=1){
+            if(mList.get(0)!= null){
+                ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(0).clubImage), oldClubImage1, options);
+                oldClubImage1.setVisibility(View.VISIBLE);
+            }
+        }
+        if(mList.size()>=2){
+            if(mList.get(1)!= null){
+                ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(1).clubImage), oldClubImage2, options);
+                oldClubImage2.setVisibility(View.VISIBLE);
+            }
+        }
+        if(mList.size()>=3){
+            if(mList.get(2)!= null){
+                ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(2).clubImage), oldClubImage3, options);
+                oldClubImage3.setVisibility(View.VISIBLE);
+            }
+        }
 
     }
     public void setMyPageResult(MyPageResult mResult){

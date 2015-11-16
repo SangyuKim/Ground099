@@ -106,7 +106,8 @@
             android:layout_weight="1"
             android:src="@mipmap/ic_launcher"
             app:siBorderWidth="6dp"
-            app:siBorderColor="@color/colorPrimary"/>
+            app:siBorderColor="@color/colorPrimary"
+            android:visibility="invisible" />
 
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="50dp"
@@ -115,7 +116,8 @@
             android:layout_weight="1"
             android:src="@mipmap/ic_launcher"
             app:siBorderWidth="6dp"
-            app:siBorderColor="@color/colorPrimary"/>
+            app:siBorderColor="@color/colorPrimary"
+            android:visibility="invisible" />
 
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="50dp"
@@ -124,7 +126,8 @@
             android:layout_weight="1"
             android:src="@mipmap/ic_launcher"
             app:siBorderWidth="6dp"
-            app:siBorderColor="@color/colorPrimary"/>
+            app:siBorderColor="@color/colorPrimary"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <RelativeLayout

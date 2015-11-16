@@ -7,14 +7,22 @@ import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.model.fc.fcmain.FCMatchHistoryListItem;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.fc.fcmain.ClubMatchList.ClubMatchList;
+import com.android.ground.ground.model.fc.fcmain.ClubMatchList.ClubMatchListResult;
+import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
+import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMainResult;
 import com.android.ground.ground.view.OnExpandableAdapterDialogListener;
 import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryHeaderItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryHeaderItemView2;
@@ -33,11 +41,18 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class FragmentFCMatchHistory extends Fragment {
+    int clubId;
+
+    FCMatchHistoryHeaderItemView mFCMatchHistoryHeaderItemView;
 
     ExpandableListView listView;
     FCMatchHistoryAdapter mAdapter;
     PullToRefreshExpandableListView refreshView;
-    List<FCMatchHistoryListItem> children = new ArrayList<FCMatchHistoryListItem>();
+    List<ClubMatchListResult> totalChildren = new ArrayList<ClubMatchListResult>();
+
+    List<ClubMatchListResult> readyChildren = new ArrayList<ClubMatchListResult>();
+    List<ClubMatchListResult> ingChildren = new ArrayList<ClubMatchListResult>();
+    List<ClubMatchListResult> finishedChildren = new ArrayList<ClubMatchListResult>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,18 +100,24 @@ public class FragmentFCMatchHistory extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_fragment_fcmatch_history, container, false);
-        refreshView = (PullToRefreshExpandableListView)view.findViewById(R.id.view_fcmatch_history);
-        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ExpandableListView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
 
-            }
-        });
+        clubId = getActivity().getIntent().getIntExtra("clubId", -1);
+        if(clubId == -1)
+            clubId = PropertyManager.getInstance().getMyPageResult().club_id;
+
+        refreshView = (PullToRefreshExpandableListView)view.findViewById(R.id.view_fcmatch_history);
+//        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ExpandableListView>() {
+//            @Override
+//            public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
+//                searchFCMatchList();
+//            }
+//        });
 
         listView = refreshView.getRefreshableView();
-//        listView = (ExpandableListView)view.findViewById(R.id.expandableListView);
         mAdapter = new FCMatchHistoryAdapter();
-        listView.addHeaderView(new FCMatchHistoryHeaderItemView(getContext()));
+        mFCMatchHistoryHeaderItemView = new FCMatchHistoryHeaderItemView(getContext());
+        searchHeaderFCMatchList();
+        listView.addHeaderView(mFCMatchHistoryHeaderItemView);
         listView.addHeaderView(new FCMatchHistoryHeaderItemView2(getContext()));
         listView.setAdapter(mAdapter);
         listView.setGroupIndicator(null);
@@ -110,11 +131,13 @@ public class FragmentFCMatchHistory extends Fragment {
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                if(groupPosition==0){
+                if (groupPosition == 0) {
                     Intent intent = new Intent(getContext(), ReadyMatchResultActivity.class);
                     startActivity(intent);
-                }
-                else if(groupPosition ==1){
+                } else if (groupPosition == 1) {
+                    Intent intent = new Intent(getContext(), MatchResultActivity.class);
+                    startActivity(intent);
+                } else if (groupPosition == 2) {
                     Intent intent = new Intent(getContext(), MatchResultActivity.class);
                     startActivity(intent);
                 }
@@ -122,8 +145,8 @@ public class FragmentFCMatchHistory extends Fragment {
                 return true;
             }
         });
-        initData();
-        expandGroup();
+        searchFCMatchList();
+
 
         mAdapter.setOnExpandableAdapterProfileListener(new OnExpandableAdapterDialogListener() {
             @Override
@@ -164,16 +187,7 @@ public class FragmentFCMatchHistory extends Fragment {
             listView.expandGroup(i);
         }
     }
-    public void initData(){
-        for(int i=0; i< 20; i ++){
-            FCMatchHistoryListItem data = new FCMatchHistoryListItem();
 
-           children.add(data);
-        }
-        mAdapter.add("예정된 매치", children);
-        mAdapter.add("마무리된 매치", children);
-
-    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -222,4 +236,92 @@ public class FragmentFCMatchHistory extends Fragment {
 //            getActivity().setTitle("경기 기록");
 //        }
 //    }
+
+    private void searchFCMatchList() {
+
+    NetworkManager.getInstance().getNetworkClubMatchList(getContext(), clubId, 1
+                , new NetworkManager.OnResultListener<ClubMatchList>() {
+            @Override
+            public void onSuccess(ClubMatchList result) {
+                int maxPage = result.maxPage;
+                totalChildren.clear();
+                readyChildren.clear();
+                ingChildren.clear();
+                finishedChildren.clear();
+
+                mAdapter.setTotalCount(result.itemCount);
+                mAdapter.setPgae(1);
+                mAdapter.clear();
+//                    for (ClubMatchListResult item : result.items) {
+//                        mAdapter.add(item);
+//                    }
+                totalChildren = result.items;
+                if(maxPage > 1){
+                    for(int i=1; i<maxPage; i++){
+                        NetworkManager.getInstance().getNetworkClubMatchList(getContext(),clubId, (i+1)
+                                , new NetworkManager.OnResultListener<ClubMatchList>(){
+                            @Override
+                            public void onSuccess(ClubMatchList result) {
+                                int oldPage = mAdapter.getPage();
+                                 mAdapter.setPgae(oldPage++);
+                                 totalChildren.addAll(result.items);
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+
+                            }
+                        });
+                    }//for
+                }//if
+                divideTotalList(totalChildren);
+
+                mAdapter.add("예정된 매치", readyChildren);
+                mAdapter.add("결과 입력중 매치", ingChildren);
+                mAdapter.add("마무리된 매치", finishedChildren);
+                expandGroup();
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
+    }
+
+    private void divideTotalList(List<ClubMatchListResult> totalChildren) {
+        for(ClubMatchListResult item : totalChildren){
+            if(item.insertResultYN==4){
+                readyChildren.add(item); ;
+            }else if(item.insertResultYN==1){
+                finishedChildren.add(item);
+            }else{
+                ingChildren.add(item);
+            }
+
+        }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+
+    }
+
+    private void searchHeaderFCMatchList() {
+        NetworkManager.getInstance().getNetworkClubMain(getContext(),clubId,new NetworkManager.OnResultListener<ClubMain>() {
+            @Override
+            public void onSuccess(ClubMain result) {
+                for(ClubMainResult item : result.items){
+                    mFCMatchHistoryHeaderItemView.setFCMatchHeader(item);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
+    }
+
 }

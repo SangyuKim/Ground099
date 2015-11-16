@@ -8,15 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.model.Profile;
-import com.android.ground.ground.model.fc.management.ManagementMemberItem;
-import com.android.ground.ground.model.person.message.MyMessageItem;
-import com.android.ground.ground.view.OnAdapterProfileListener;
-import com.android.ground.ground.view.OnAdapterReplyListener;
-import com.android.ground.ground.view.OnProfileClickListener;
-import com.android.ground.ground.view.OnReplyClickListener;
+import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
 import com.android.ground.ground.view.fc.management.ManagementMemberItemView;
-import com.android.ground.ground.view.person.message.MyMessageItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +20,10 @@ import java.util.List;
 public class ManagemnetMemberAdapter extends BaseAdapter {
     private ViewHolder viewHolder = null;
     private LayoutInflater inflater = null;
-    List<ManagementMemberItem> items = new ArrayList<ManagementMemberItem>();
+    List<ClubAndMemberResult> items = new ArrayList<ClubAndMemberResult>();
     private boolean[] isCheckedConfrim;
 
-    public ManagemnetMemberAdapter(Context c, List<ManagementMemberItem> items){
+    public ManagemnetMemberAdapter(Context c, List<ClubAndMemberResult> items){
         inflater = LayoutInflater.from(c);
         this.items =items;
         this.isCheckedConfrim = new boolean[this.items.size()];
@@ -80,7 +73,6 @@ public class ManagemnetMemberAdapter extends BaseAdapter {
 
 
         if (convertView == null) {
-
             viewHolder = new ViewHolder();
             ManagementMemberItemView view = new ManagementMemberItemView(parent.getContext());
             convertView = view;
@@ -93,10 +85,25 @@ public class ManagemnetMemberAdapter extends BaseAdapter {
         viewHolder.chk.setFocusable(false);
         viewHolder.chk.setClickable(false);
         viewHolder.chk.setChecked(isCheckedConfrim[position]);
+        ((ManagementMemberItemView)convertView).setManagementMemberItem(items.get(position));
+
         return convertView;
     }
     class ViewHolder {
         public CheckBox chk = null;
+    }
+
+    public void clear() {
+        items.clear();
+        notifyDataSetChanged();
+    }
+    public boolean checkIsNullItems(){
+        if(items == null){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 }

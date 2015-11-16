@@ -1,20 +1,10 @@
 package com.android.ground.ground.model.person.main.matchinfo;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 
-import com.android.ground.ground.model.fc.fcmain.FCMatchGroupItem;
-import com.android.ground.ground.model.fc.fcmain.FCMatchHistoryListItem;
-import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.person.main.searchClub.SearchClubResult;
-import com.android.ground.ground.view.fc.fcmain.FCMatchGroupItemView;
-import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryItemView;
-import com.android.ground.ground.view.person.main.SearchFCItemView;
 import com.android.ground.ground.view.person.main.SearchMatchGroupItemView;
 import com.android.ground.ground.view.person.main.SearchMatchItemView;
 

@@ -1,12 +1,11 @@
 package com.android.ground.ground.controller.fc.fcmain;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +18,21 @@ import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.management.FCManagementFragment;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
+import com.android.ground.ground.controller.person.profile.YourProfileActivity;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Profile;
-import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
+import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
+import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
+import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
+import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMainResult;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.android.ground.ground.view.fc.fcmain.FCMemberItemView;
+import com.android.ground.ground.view.person.main.SearchPlayerItemView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,10 +43,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  * create an instance of this fragment.
  */
 public class FragmentFCMember extends Fragment {
-
+    FCMemberHeaderItemView mFCMemberHeaderItemView;
     ListView listView;
     FCMemberAdapter mAdapter;
-    PullToRefreshListView refreshView;
+    int clubId;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,17 +95,17 @@ public class FragmentFCMember extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_fcmember, container, false);
 //        this.setUserVisibleHint(true);
-        refreshView = (PullToRefreshListView)view.findViewById(R.id.view_fcmember);
-        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+        clubId = getActivity().getIntent().getIntExtra("clubId", -1);
+        if(clubId == -1)
+            clubId = PropertyManager.getInstance().getMyPageResult().club_id;
 
-            }
-        });
-        listView = refreshView.getRefreshableView();
+        listView =  (ListView)view.findViewById(R.id.view_fcmember);
         mAdapter = new FCMemberAdapter();
-        listView.addHeaderView(new FCMemberHeaderItemView(getContext()));
+        mFCMemberHeaderItemView = new FCMemberHeaderItemView(getContext());
+        searchHeaderFCMember();
+        listView.addHeaderView(mFCMemberHeaderItemView);
         listView.addHeaderView(new FCMemberHeaderItemView2(getContext()));
+
         Button btn = (Button)view.findViewById(R.id.button24);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,38 +118,7 @@ public class FragmentFCMember extends Fragment {
 
             }
         });
-        btn = (Button)view.findViewById(R.id.button22);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher);
-                builder.setTitle("가입신청");
-                builder.setMessage("가입 신청하시겠습니까? ");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.setCancelable(true);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
-            }
-        });
         btn = (Button)view.findViewById(R.id.button23);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,16 +127,18 @@ public class FragmentFCMember extends Fragment {
                 dialog.show(getChildFragmentManager(), "custom");
             }
         });
+
+
         listView.setAdapter(mAdapter);
+        searchClubAndMember();
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
             }
         });
 
-        initData();
 
         mAdapter.setOnAdapterReplyListener(new OnAdapterReplyListener() {
             @Override
@@ -177,20 +154,20 @@ public class FragmentFCMember extends Fragment {
                     Intent intent = new Intent(getContext(), FCActivity.class);
                     startActivity(intent);
                 }else if(data instanceof MyProfileActivity) {
-                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
-                    startActivity(intent);
+                    int memberId = ((FCMemberItemView)view).mItem.member_id;
+                    if(memberId == PropertyManager.getInstance().getMyPageResult().member_id){
+                        Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(getContext(), YourProfileActivity.class);
+                        intent.putExtra("memberId",memberId);
+                        startActivity(intent);
+                    }
                 }
             }
         });
 
         return view;
-    }
-    public void initData(){
-        for(int i=0; i< 20; i ++){
-            FCMemberListItem data = new FCMemberListItem();
-
-            mAdapter.add(data);
-        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -240,4 +217,43 @@ public class FragmentFCMember extends Fragment {
 //        }
 //    }
 
+
+    private void searchHeaderFCMember() {
+        NetworkManager.getInstance().getNetworkClubMain(getContext(), clubId,new NetworkManager.OnResultListener<ClubMain>() {
+            @Override
+            public void onSuccess(ClubMain result) {
+                for(ClubMainResult item : result.items){
+                     mFCMemberHeaderItemView.setFCMemberHeader(item);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
+
+    }
+    private void searchClubAndMember() {
+
+            NetworkManager.getInstance().getNetworkClubAndMember(getContext(),clubId, new NetworkManager.OnResultListener<ClubAndMember>() {
+                @Override
+                public void onSuccess(ClubAndMember result) {
+                    mAdapter.clear();
+                    for (ClubAndMemberResult item : result.items) {
+                        mAdapter.add(item);
+                    }
+
+                }
+                @Override
+                public void onFail(int code) {
+                }
+            });
+        }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+    }
 }

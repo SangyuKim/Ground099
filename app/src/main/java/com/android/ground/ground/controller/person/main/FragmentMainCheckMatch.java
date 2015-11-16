@@ -128,12 +128,16 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         setSearchFab();
         setSpinner();
 
+
         refreshView = (PullToRefreshExpandableListView)view.findViewById(R.id.pulltorefresh);
         refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ExpandableListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
                  String keyword = mAdapter.getKeyword();
-                 searchMatch(filter, keyword);
+                if(keyword ==null){
+                    keyword="";
+                }
+               searchMatch(filter, keyword);
             }
         });
 //        getMoreItem 부분 search에서 조절하기

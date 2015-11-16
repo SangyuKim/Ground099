@@ -5,7 +5,8 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/view_fcmember"

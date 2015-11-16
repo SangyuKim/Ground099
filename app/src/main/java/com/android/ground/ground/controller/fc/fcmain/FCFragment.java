@@ -159,8 +159,5 @@ public class FCFragment extends Fragment implements Profile {
         public void onFragmentInteraction(Uri uri);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
+
 }

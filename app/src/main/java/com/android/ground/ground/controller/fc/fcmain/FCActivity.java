@@ -18,6 +18,7 @@ import com.android.ground.ground.model.Profile;
 public class FCActivity extends AppCompatActivity  implements Profile {
 
     public static final String TAG_FC_ACTIVITY = "1";
+    int clubId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class FCActivity extends AppCompatActivity  implements Profile {
         setContentView(R.layout.activity_fc);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        clubId=  getIntent().getIntExtra("clubId", -1);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

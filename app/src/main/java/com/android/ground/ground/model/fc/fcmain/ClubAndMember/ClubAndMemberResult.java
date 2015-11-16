@@ -9,5 +9,6 @@ public class ClubAndMemberResult {
     public int position;
     public String memImage;
     public double skill;
+    public String memName;
 
 }

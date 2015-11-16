@@ -32,13 +32,17 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
+import com.android.ground.ground.controller.person.profile.MyProfileActivity;
+import com.android.ground.ground.controller.person.profile.YourProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.person.main.searchClub.SearchClub;
 import com.android.ground.ground.model.person.main.searchClub.SearchClubAdapter;
 import com.android.ground.ground.model.person.main.searchClub.SearchClubResult;
 import com.android.ground.ground.view.OnAdapterSpecificDialogListener;
 import com.android.ground.ground.view.person.main.SearchFCItemView;
+import com.android.ground.ground.view.person.main.SearchPlayerItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -124,6 +128,9 @@ public class FragmentMainSearchFC extends Fragment {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                 String keyword = mAdapter.getKeyword();
+                if(keyword==null){
+                    keyword="";
+                }
                 searchFCClub(filter,keyword);
             }
         });
@@ -139,7 +146,11 @@ public class FragmentMainSearchFC extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("hello", "fc item clicked");
+
+                int clubId = ((SearchFCItemView)view).getmItem().club_id;
                 Intent intent = new Intent(getContext(), FCActivity.class);
+                intent.putExtra("clubId", clubId);
                 startActivity(intent);
             }
         });

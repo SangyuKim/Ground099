@@ -49,6 +49,13 @@ public class NavigationHeaderView extends FrameLayout {
                       mListener.onCustomImageClick(NavigationHeaderView.this);
             }
         });
+        memName.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener!=null)
+                    mListener.onCustomImageClick(NavigationHeaderView.this);
+            }
+        });
 
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_stub)

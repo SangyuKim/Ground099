@@ -1,5 +1,7 @@
 package com.android.ground.ground.model.fc.fcmain;
 
+import com.android.ground.ground.model.fc.fcmain.ClubMatchList.ClubMatchListResult;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,5 +10,5 @@ import java.util.List;
  */
 public class FCMatchGroupItem {
     public String groupName;
-    public List<FCMatchHistoryListItem> children = new ArrayList<FCMatchHistoryListItem>();
+    public List<ClubMatchListResult> children = new ArrayList<ClubMatchListResult>();
 }

@@ -131,6 +131,9 @@ public class FragmentMainSearchPlayer extends Fragment {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                 String keyword = mAdapter.getKeyword();
+                if(keyword==null){
+                    keyword="";
+                }
                 searchMem(filter, keyword);
             }
         });

@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="FC 신림맨"
-        android:id="@+id/textView31"
+        android:id="@+id/clubName"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="(2015.10.19 ~ )"
-        android:id="@+id/textView32"
-        android:layout_below="@+id/textView31"
+        android:id="@+id/clubFound"
+        android:layout_below="@+id/clubName"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -25,8 +25,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="실력"
-        android:id="@+id/textView33"
-        android:layout_below="@+id/textView32"
+        android:id="@+id/clubSkill"
+        android:layout_below="@+id/clubFound"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="매너"
-        android:id="@+id/textView34"
-        android:layout_below="@+id/textView33"
+        android:id="@+id/clubManner"
+        android:layout_below="@+id/clubSkill"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -44,8 +44,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="경기수 : "
         android:id="@+id/textView35"
-        android:layout_below="@+id/textView34"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/clubManner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,7 +55,8 @@
         android:text="전적 : "
         android:id="@+id/textView36"
         android:layout_below="@+id/textView35"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,6 +65,37 @@
         android:text="골득실: "
         android:id="@+id/textView37"
         android:layout_below="@+id/textView36"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/clubAllMatchCnt"
+        android:layout_alignBottom="@+id/textView35"
+        android:layout_toRightOf="@+id/textView35"
+        android:layout_toEndOf="@+id/textView35" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/winDrawLoseNullity"
+        android:layout_alignTop="@+id/textView36"
+        android:layout_toRightOf="@+id/textView36"
+        android:layout_toEndOf="@+id/textView36" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/scoreSumDescore"
+        android:layout_alignTop="@+id/textView37"
+        android:layout_toRightOf="@+id/textView37"
+        android:layout_toEndOf="@+id/textView37" />
 
 </RelativeLayout>

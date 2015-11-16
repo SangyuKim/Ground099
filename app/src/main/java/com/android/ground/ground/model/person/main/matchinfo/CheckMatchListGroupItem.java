@@ -1,7 +1,5 @@
 package com.android.ground.ground.model.person.main.matchinfo;
 
-import com.android.ground.ground.model.fc.fcmain.FCMatchHistoryListItem;
-
 import java.util.ArrayList;
 import java.util.List;
 

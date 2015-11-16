@@ -1,32 +1,58 @@
 package com.android.ground.ground.controller.fc.fcmain;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 
+import com.android.ground.ground.model.fc.fcmain.ClubMatchList.ClubMatchListResult;
 import com.android.ground.ground.model.fc.fcmain.FCMatchGroupItem;
-import com.android.ground.ground.model.fc.fcmain.FCMatchHistoryListItem;
-import com.android.ground.ground.model.fc.fcmain.FCMemberListItem;
-import com.android.ground.ground.view.OnAdapterDialogListener;
-import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnDialogClickListener;
 import com.android.ground.ground.view.OnExpandableAdapterDialogListener;
 import com.android.ground.ground.view.fc.fcmain.FCMatchGroupItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryItemView;
-import com.android.ground.ground.view.fc.fcmain.FCMemberItemView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dongja94 on 2015-10-19.
- */
 public class FCMatchHistoryAdapter extends BaseExpandableListAdapter implements OnDialogClickListener {
     List<FCMatchGroupItem> items = new ArrayList<FCMatchGroupItem>();
 
-    public void add(String groupName, List<FCMatchHistoryListItem> child) {
+
+    int totalCount;
+    int page;
+
+    public int getPage(){return page;}
+    public void setPgae(int page){this.page = page;}
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public int getStartIndex() {
+        if (items.size() < totalCount) {
+            return items.size() + 1;
+        }
+        return -1;
+    }
+    public int getNextPage(){
+        if(totalCount-items.size()>0){
+            page ++;
+            return page;
+        }
+        return -1;
+    }
+
+    public void clear() {
+        items.clear();
+        notifyDataSetChanged();
+    }
+
+
+
+    public void add(String groupName, List<ClubMatchListResult> child) {
         FCMatchGroupItem g = null;
         for (FCMatchGroupItem item : items) {
             if (item.groupName.equals(groupName)) {
@@ -41,11 +67,8 @@ public class FCMatchHistoryAdapter extends BaseExpandableListAdapter implements 
         }
 
         if (child != null) {
-            FCMatchHistoryListItem pItem;
             for(int i=0; i<child.size(); i++) {
-
-                pItem = new FCMatchHistoryListItem();
-                g.children.add(pItem);
+                g.children.add(child.get(i));
             }//for
         }//if
         notifyDataSetChanged();

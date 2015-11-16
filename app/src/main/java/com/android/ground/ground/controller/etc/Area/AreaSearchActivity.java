@@ -46,26 +46,7 @@ public class AreaSearchActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.listView_area);
         mAdapter = new TmapAdapter();
         listView.setAdapter(mAdapter);
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if(s.equals("")){
-//                    mAdapter.clear();
-//                }else{
-//                    searchTmaps(s.toString());
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
+
         Button btn = (Button)findViewById(R.id.button44);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,14 +80,10 @@ public class AreaSearchActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(TmapItem result) {
                     mAdapter.setKeyword(s);
-//                    mAdapter.setTotalCount(result.totalCnt);
                     mAdapter.clear();
                     for (DongInfo item : result.findPoiAreaDataByNameInfo.items) {
                         mAdapter.add(item);
                     }
-
-//                    refreshView.onRefreshComplete();
-
                 }
 
                 @Override
@@ -120,7 +97,4 @@ public class AreaSearchActivity extends AppCompatActivity {
         }
 
     }
-
-
-
 }

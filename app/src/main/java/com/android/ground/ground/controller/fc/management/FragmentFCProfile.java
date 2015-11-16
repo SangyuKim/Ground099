@@ -18,9 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
+import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMainResult;
 
 import java.io.File;
 
@@ -33,11 +38,14 @@ import java.io.File;
  * create an instance of this fragment.
  */
 public class FragmentFCProfile extends Fragment {
+
+    int clubId;
     public static final int REQUEST_CODE_CROP = 0;
     File mSavedFile;
     public static final int REQ_AREA_SEARCH = 1;
     final String[] items = new String[]{"사진 앨범 ",  "카메라"};
-    ImageView imageView;
+    ImageView clubImage;
+    TextView a;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,7 +92,9 @@ public class FragmentFCProfile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         View view =inflater.inflate(R.layout.fragment_fragment_fcprofile, container, false);
+        View view =inflater.inflate(R.layout.fragment_fragment_fcprofile, container, false);
+        clubId = PropertyManager.getInstance().getMyPageResult().club_id;
+
         Button btn = (Button)view.findViewById(R.id.button_area_search);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,8 +109,9 @@ public class FragmentFCProfile extends Fragment {
             public void onClick(View v) {
             }
         });
-        imageView = (ImageView)view.findViewById(R.id.imageView_fc_profile);
-        imageView.setOnClickListener(new View.OnClickListener() {
+
+        clubImage = (ImageView)view.findViewById(R.id.clubImage);
+        clubImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -188,7 +199,7 @@ public class FragmentFCProfile extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CROP && resultCode == Activity.RESULT_OK) {
             Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
-            imageView.setImageBitmap(bm);
+            clubImage.setImageBitmap(bm);
         }
     }
     private Uri getTempUri() {
@@ -252,4 +263,24 @@ public class FragmentFCProfile extends Fragment {
 //        }
 //    }
 
+
+    private void searchHeaderFCMember() {
+        NetworkManager.getInstance().getNetworkClubMain(getContext(), clubId,new NetworkManager.OnResultListener<ClubMain>() {
+            @Override
+            public void onSuccess(ClubMain result) {
+                for(ClubMainResult item : result.items){
+//                    mFCMemberHeaderItemView.setFCMemberHeader(item);
+                    setDefaultInfo(item);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
+
+    }
+    public void setDefaultInfo(ClubMainResult item){
+
+    }
 }

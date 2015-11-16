@@ -10,5 +10,6 @@
         android:text="Small Text"
         android:id="@+id/textView83"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 </RelativeLayout>

@@ -59,14 +59,16 @@
                     android:layout_toLeftOf="@+id/button21"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/memImageMVP"
-                    android:layout_toEndOf="@+id/memImageMVP" />
+                    android:layout_toEndOf="@+id/memImageMVP"
+                    android:textColor="#ffffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="나이"
-                    android:id="@+id/age" />
+                    android:id="@+id/age"
+                    android:textColor="#ffffffff" />
 
             </LinearLayout>
 
@@ -86,7 +88,8 @@
                 android:layout_below="@+id/memNameCountScr"
                 android:layout_toRightOf="@+id/memImageMVP"
                 android:layout_toEndOf="@+id/memImageMVP"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#ffffffff" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -110,7 +113,8 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="선호"
-                    android:id="@+id/text_actor" />
+                    android:id="@+id/text_actor"
+                    android:textColor="#ffffffff" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -191,7 +195,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="memIntro"
-                android:id="@+id/memIntro" />
+                android:id="@+id/memIntro"
+                android:textColor="#ffffffff" />
 
         </LinearLayout>
 

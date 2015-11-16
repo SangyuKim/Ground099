@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="신림의 전설을 우리가 만든다"
-        android:id="@+id/textView26"
+        android:id="@+id/clubIntro"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -17,8 +17,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="FC 신림맨"
-        android:id="@+id/textView27"
-        android:layout_below="@+id/textView26"
+        android:id="@+id/clubName"
+        android:layout_below="@+id/clubIntro"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -27,30 +27,30 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="서울시 신림동"
-        android:id="@+id/textView28"
-        android:layout_below="@+id/textView27"
-        android:layout_alignRight="@+id/textView27"
-        android:layout_alignEnd="@+id/textView27" />
+        android:id="@+id/clubLocationName"
+        android:layout_below="@+id/clubName"
+        android:layout_alignRight="@+id/clubName"
+        android:layout_alignEnd="@+id/clubName" />
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/imageView5"
-        android:layout_alignTop="@+id/textView27"
+        android:id="@+id/clubImage"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="가입신청"
-        android:id="@+id/button22"
-        android:layout_below="@+id/imageView5"
+        android:id="@+id/memYN"
+        android:focusable="false"
+        android:layout_below="@+id/button23"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:focusable="false" />
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -58,8 +58,8 @@
         android:layout_height="wrap_content"
         android:text="메시지"
         android:id="@+id/button23"
-        android:layout_below="@+id/button22"
+        android:focusable="false"
+        android:layout_below="@+id/clubImage"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:focusable="false" />
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

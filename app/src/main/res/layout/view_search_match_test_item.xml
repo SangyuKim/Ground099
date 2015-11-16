@@ -10,7 +10,8 @@
         android:text="11/03"
         android:id="@+id/matchDate"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,7 +19,8 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="토요일 18:00"
         android:id="@+id/matchDay"
-        android:layout_below="@+id/matchDate" />
+        android:layout_below="@+id/matchDate"
+        android:textColor="#ffffffff" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -39,7 +41,7 @@
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -47,7 +49,8 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
-                    android:id="@+id/homeClubName" />
+                    android:id="@+id/homeClubName"
+                    android:textColor="#ffffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -59,14 +62,16 @@
                     android:layout_below="@+id/memNameCountScr"
                     android:layout_toRightOf="@+id/memImageMVP"
                     android:layout_toEndOf="@+id/memImageMVP"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:textColor="#ffffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
-                    android:id="@+id/awayClubName" />
+                    android:id="@+id/awayClubName"
+                    android:textColor="#ffffffff" />
             </LinearLayout>
 
             <LinearLayout
@@ -79,21 +84,24 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
-                    android:id="@+id/homeScore" />
+                    android:id="@+id/homeScore"
+                    android:textColor="#ffffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text=" : "
-                    android:id="@+id/textView22" />
+                    android:id="@+id/textView22"
+                    android:textColor="#ffffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
-                    android:id="@+id/awayScore" />
+                    android:id="@+id/awayScore"
+                    android:textColor="#ffffffff" />
             </LinearLayout>
 
         </LinearLayout>

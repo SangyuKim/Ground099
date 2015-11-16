@@ -16,4 +16,11 @@ public class ClubMatchListResult {
     public int homeScore;
     public int awayScore;
 
+
+//   예정된 매치는 insertResultYN = 4
+//   결과 입력중인건 2나 3이예요
+//   마무리된건 1
+
+
+
 }

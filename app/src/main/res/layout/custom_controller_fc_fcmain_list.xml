@@ -5,7 +5,7 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:id="@+id/imageView6"
+        android:id="@+id/position"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -14,19 +14,19 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:id="@+id/imageView7"
+        android:id="@+id/managerYN"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView6"
-        android:layout_toEndOf="@+id/imageView6"
+        android:layout_toRightOf="@+id/position"
+        android:layout_toEndOf="@+id/position"
         android:src="@mipmap/ic_launcher" />
 
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:id="@+id/imageView8"
+        android:id="@+id/memImage"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView7"
-        android:layout_toEndOf="@+id/imageView7"
+        android:layout_toRightOf="@+id/managerYN"
+        android:layout_toEndOf="@+id/managerYN"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
@@ -34,10 +34,10 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="김상철"
-        android:id="@+id/textView30"
+        android:id="@+id/memName"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView8"
-        android:layout_toEndOf="@+id/imageView8" />
+        android:layout_toRightOf="@+id/memImage"
+        android:layout_toEndOf="@+id/memImage" />
 
 
     <Button
@@ -61,4 +61,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/skill"
+        android:layout_alignParentBottom="false"
+        android:layout_toRightOf="@+id/memName"
+        android:layout_toEndOf="@+id/memName" />
 </RelativeLayout>

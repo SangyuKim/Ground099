@@ -41,11 +41,11 @@
                 android:id="@+id/textView53"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:text="FC 이름:"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_below="@+id/clubImage"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <EditText
                 android:id="@+id/editText2"
@@ -68,7 +68,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/clubIntro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/editText2"
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/editText3"
+                android:layout_below="@+id/clubIntro"
                 android:text="활동 지역"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -92,7 +92,7 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/editText3"
+                android:layout_below="@+id/clubIntro"
                 android:layout_toEndOf="@+id/textView55"
                 android:layout_toRightOf="@+id/textView55"
                 android:text="지역 검색" />
@@ -108,7 +108,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <CheckBox
-                android:id="@+id/checkBox8"
+                android:id="@+id/clubMainDay_Mon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -118,83 +118,64 @@
                 android:text="월" />
 
             <CheckBox
-                android:id="@+id/checkBox9"
+                android:id="@+id/clubMainDay_Tue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/checkBox8"
-                android:layout_toEndOf="@+id/checkBox8"
-                android:layout_toRightOf="@+id/checkBox8"
+                android:layout_alignTop="@+id/clubMainDay_Mon"
+                android:layout_toEndOf="@+id/clubMainDay_Mon"
+                android:layout_toRightOf="@+id/clubMainDay_Mon"
                 android:checked="false"
                 android:text="화" />
 
             <CheckBox
-                android:id="@+id/checkBox10"
+                android:id="@+id/clubMainDay_Wed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/button_area_search"
                 android:layout_alignRight="@+id/button_area_search"
-                android:layout_alignTop="@+id/checkBox9"
+                android:layout_alignTop="@+id/clubMainDay_Tue"
                 android:checked="false"
                 android:text="수" />
 
             <CheckBox
-                android:id="@+id/checkBox11"
+                android:id="@+id/clubMainDay_Thu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/checkBox10"
-                android:layout_toEndOf="@+id/checkBox10"
-                android:layout_toRightOf="@+id/checkBox10"
+                android:layout_alignTop="@+id/clubMainDay_Wed"
+                android:layout_toEndOf="@+id/clubMainDay_Wed"
+                android:layout_toRightOf="@+id/clubMainDay_Wed"
                 android:checked="false"
                 android:text="목" />
 
             <CheckBox
-                android:id="@+id/checkBox12"
+                android:id="@+id/clubMainDay_Fri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/checkBox11"
-                android:layout_toEndOf="@+id/checkBox11"
-                android:layout_toRightOf="@+id/checkBox11"
+                android:layout_alignTop="@+id/clubMainDay_Thu"
+                android:layout_toEndOf="@+id/clubMainDay_Thu"
+                android:layout_toRightOf="@+id/clubMainDay_Thu"
                 android:checked="false"
                 android:text="금" />
 
             <CheckBox
-                android:id="@+id/checkBox13"
+                android:id="@+id/clubMainDay_Sat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/checkBox12"
-                android:layout_toEndOf="@+id/checkBox12"
-                android:layout_toRightOf="@+id/checkBox12"
+                android:layout_alignTop="@+id/clubMainDay_Fri"
+                android:layout_toEndOf="@+id/clubMainDay_Fri"
+                android:layout_toRightOf="@+id/clubMainDay_Fri"
                 android:checked="false"
                 android:text="토" />
 
             <CheckBox
-                android:id="@+id/checkBox14"
+                android:id="@+id/clubMainDay_Sun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/checkBox13"
-                android:layout_toEndOf="@+id/checkBox13"
-                android:layout_toRightOf="@+id/checkBox13"
                 android:checked="false"
-                android:text="일" />
-
-            <TextView
-                android:id="@+id/textView57"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/checkBox8"
-                android:text="대표사진:"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <ImageView
-                android:id="@+id/imageView_fc_profile"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView57"
-                android:src="@mipmap/ic_launcher" />
+                android:text="일"
+                android:layout_above="@+id/clubField"
+                android:layout_toRightOf="@+id/clubMainDay_Sat"
+                android:layout_toEndOf="@+id/clubMainDay_Sat" />
 
             <TextView
                 android:id="@+id/textView58"
@@ -202,27 +183,27 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/imageView_fc_profile"
                 android:text="제휴구장"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_below="@+id/clubMainDay_Mon" />
 
             <Switch
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageView_fc_profile"
                 android:layout_toEndOf="@+id/textView53"
                 android:layout_toRightOf="@+id/textView53"
-                android:checked="false" />
+                android:checked="false"
+                android:layout_below="@+id/clubMainDay_Mon" />
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/clubField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/editText3"
-                android:layout_alignRight="@+id/editText3"
-                android:layout_below="@+id/imageView_fc_profile"
-                android:layout_toRightOf="@+id/switch1" />
+                android:layout_alignEnd="@+id/clubIntro"
+                android:layout_alignRight="@+id/clubIntro"
+                android:layout_toRightOf="@+id/switch1"
+                android:layout_below="@+id/clubMainDay_Mon" />
 
             <TextView
                 android:id="@+id/textView59"
@@ -230,7 +211,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/editText4"
+                android:layout_below="@+id/clubField"
                 android:text="맴버모집"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -240,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/button_area_search"
                 android:layout_alignStart="@+id/button_area_search"
-                android:layout_below="@+id/editText4"
+                android:layout_below="@+id/clubField"
                 android:checked="false" />
 
             <TextView
@@ -257,10 +238,10 @@
                 android:id="@+id/switch3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/switch2"
-                android:layout_toEndOf="@+id/imageView_fc_profile"
-                android:layout_toRightOf="@+id/imageView_fc_profile"
-                android:checked="false" />
+                android:checked="false"
+                android:layout_alignTop="@+id/textView60"
+                android:layout_alignLeft="@+id/clubField"
+                android:layout_alignStart="@+id/clubField" />
 
             <TextView
                 android:id="@+id/textView61"
@@ -280,6 +261,32 @@
                 android:layout_toEndOf="@+id/textView61"
                 android:layout_toRightOf="@+id/textView61"
                 android:checked="false" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/clubImage"
+                android:src="@mipmap/ic_launcher"
+                android:layout_below="@+id/textView26"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="대표 사진"
+                android:id="@+id/textView26"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/clubLocationName"
+                android:layout_alignTop="@+id/button_area_search"
+                android:layout_centerHorizontal="true" />
 
 
         </RelativeLayout>
