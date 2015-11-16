@@ -33,7 +33,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/clubName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/editText2"
+                android:layout_below="@+id/clubName"
                 android:text="소개 글:"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -56,11 +56,11 @@
                 android:id="@+id/clubIntro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/editText2"
+                android:layout_alignLeft="@+id/clubName"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignStart="@+id/editText2"
-                android:layout_below="@+id/editText2"
+                android:layout_alignStart="@+id/clubName"
+                android:layout_below="@+id/clubName"
                 />
 
             <TextView
@@ -192,7 +192,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Switch
-                android:id="@+id/switch1"
+                android:id="@+id/fieldYN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageView_fc_profile"
@@ -207,7 +207,7 @@
                 android:layout_alignEnd="@+id/clubIntro"
                 android:layout_alignRight="@+id/clubIntro"
                 android:layout_below="@+id/imageView_fc_profile"
-                android:layout_toRightOf="@+id/switch1"
+                android:layout_toRightOf="@+id/fieldYN"
                 />
 
             <TextView
@@ -221,7 +221,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Switch
-                android:id="@+id/switch2"
+                android:id="@+id/memYN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/button_area_search"
@@ -235,12 +235,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/switch2"
+                android:layout_below="@+id/memYN"
                 android:text="매치신청 받기"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Switch
-                android:id="@+id/switch3"
+                android:id="@+id/matchYN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"

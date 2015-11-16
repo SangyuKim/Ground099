@@ -35,4 +35,5 @@ public class ClubMainResult {
     //총 실점
     public int deScoreSum;
     public String clubFound;
+    public int matchYN;
 }

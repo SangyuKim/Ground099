@@ -237,8 +237,6 @@ public class FragmentManagementMember extends Fragment {
         NetworkManager.getInstance().getNetworkClubAndMember(getContext(),clubId, new NetworkManager.OnResultListener<ClubAndMember>() {
             @Override
             public void onSuccess(ClubAndMember result) {
-                if(!mAdapter.checkIsNullItems())
-                    mAdapter.clear();
                 for (ClubAndMemberResult item : result.items) {
                     items.add(item);
                 }

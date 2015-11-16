@@ -17,7 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
@@ -26,6 +29,8 @@ import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMainResult;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 
@@ -39,12 +44,24 @@ import java.io.File;
  */
 public class FragmentFCProfile extends Fragment {
 
+    public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
+    DisplayImageOptions options;
+    EditText clubName, clubIntro, clubField;
+    TextView clubLocationName;
+    CheckBox clubMainDay_Mon, clubMainDay_Tue, clubMainDay_Wed,clubMainDay_Thu ,clubMainDay_Fri,
+            clubMainDay_Sat,clubMainDay_Sun;
+    Switch memYN, matchYN, fieldYN;
+    ImageView clubImage;
+
+    ClubMainResult mItem;
+
+
     int clubId;
     public static final int REQUEST_CODE_CROP = 0;
     File mSavedFile;
     public static final int REQ_AREA_SEARCH = 1;
     final String[] items = new String[]{"사진 앨범 ",  "카메라"};
-    ImageView clubImage;
+
     TextView a;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -94,6 +111,27 @@ public class FragmentFCProfile extends Fragment {
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_fragment_fcprofile, container, false);
         clubId = PropertyManager.getInstance().getMyPageResult().club_id;
+        clubImage = (ImageView)view.findViewById(R.id.clubImage);
+
+        clubName = (EditText)view.findViewById(R.id.clubName);
+        clubIntro = (EditText)view.findViewById(R.id.clubIntro);
+        clubField = (EditText)view.findViewById(R.id.clubField);
+
+        clubLocationName = (TextView)view.findViewById(R.id.clubLocationName);
+
+        clubMainDay_Mon= (CheckBox)view.findViewById(R.id.clubMainDay_Mon);
+        clubMainDay_Tue= (CheckBox)view.findViewById(R.id.clubMainDay_Tue);
+        clubMainDay_Wed= (CheckBox)view.findViewById(R.id.clubMainDay_Wed);
+        clubMainDay_Thu= (CheckBox)view.findViewById(R.id.clubMainDay_Thu);
+        clubMainDay_Fri= (CheckBox)view.findViewById(R.id.clubMainDay_Fri);
+        clubMainDay_Sat= (CheckBox)view.findViewById(R.id.clubMainDay_Sat);
+        clubMainDay_Sun= (CheckBox)view.findViewById(R.id.clubMainDay_Sun);
+
+        memYN= (Switch)view.findViewById(R.id.memYN);
+        matchYN= (Switch)view.findViewById(R.id.matchYN);
+        fieldYN= (Switch)view.findViewById(R.id.fieldYN);
+
+        searchHeaderFCMember();
 
         Button btn = (Button)view.findViewById(R.id.button_area_search);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +148,7 @@ public class FragmentFCProfile extends Fragment {
             }
         });
 
-        clubImage = (ImageView)view.findViewById(R.id.clubImage);
+
         clubImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,6 +229,17 @@ public class FragmentFCProfile extends Fragment {
                 mSavedFile = new File(file);
             }
         }
+
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.ic_stub)
+                .showImageForEmptyUri(R.drawable.ic_empty)
+                .showImageOnFail(R.drawable.ic_error)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .considerExifParams(true)
+//                .displayer(new RoundedBitmapDisplayer(50))
+                .build();
         return view;
     }
 
@@ -269,7 +318,6 @@ public class FragmentFCProfile extends Fragment {
             @Override
             public void onSuccess(ClubMain result) {
                 for(ClubMainResult item : result.items){
-//                    mFCMemberHeaderItemView.setFCMemberHeader(item);
                     setDefaultInfo(item);
                 }
             }
@@ -281,6 +329,67 @@ public class FragmentFCProfile extends Fragment {
 
     }
     public void setDefaultInfo(ClubMainResult item){
+        mItem = item;
+        clubName.setText(item.clubName);
+        clubIntro.setText(item.clubIntro);
+        clubField.setText(item.clubField);
+
+        clubLocationName.setText(item.clubLocationName);
+
+        if(item.clubMainDay_Mon ==0){
+            clubMainDay_Mon.setChecked(false);
+        }else{
+            clubMainDay_Mon.setChecked(true);
+        }
+        if(item.clubMainDay_Tue ==0){
+            clubMainDay_Tue.setChecked(false);
+        }else{
+            clubMainDay_Tue.setChecked(true);
+        }
+        if(item.clubMainDay_Wed ==0){
+            clubMainDay_Wed.setChecked(false);
+        }else{
+            clubMainDay_Wed.setChecked(true);
+        }
+        if(item.clubMainDay_Thu ==0){
+            clubMainDay_Thu.setChecked(false);
+        }else{
+            clubMainDay_Thu.setChecked(true);
+        }
+        if(item.clubMainDay_Fri ==0){
+            clubMainDay_Fri.setChecked(false);
+        }else{
+            clubMainDay_Fri.setChecked(true);
+        }
+        if(item.clubMainDay_Sat ==0){
+            clubMainDay_Sat.setChecked(false);
+        }else{
+            clubMainDay_Sat.setChecked(true);
+        }
+        if(item.clubMainDay_Sun ==0){
+            clubMainDay_Sun.setChecked(false);
+        }else{
+            clubMainDay_Sun.setChecked(true);
+        }
+
+        if(item.memYN ==0){
+            memYN.setChecked(false);
+        }else{
+            memYN.setChecked(true);
+        }
+        if(item.matchYN ==0){
+            matchYN.setChecked(false);
+        }else{
+            matchYN.setChecked(true);
+        }
+
+        if(item.fieldYN ==0){
+            fieldYN.setChecked(false);
+        }else{
+            fieldYN.setChecked(true);
+        }
+
+        ImageLoader.getInstance().displayImage((ImageUrl + item.clubImage), clubImage, options);
 
     }
 }
