@@ -12,6 +12,13 @@ import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
 import com.android.ground.ground.model.fc.fcmain.ClubMatchList.ClubMatchList;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
+import com.android.ground.ground.model.lineup.info.LineupInfo;
+import com.android.ground.ground.model.lineup.match.LineupMatch;
+import com.android.ground.ground.model.lineup.planLoc.LineupPlanLoc;
+import com.android.ground.ground.model.lineup.result.LineupResult;
+import com.android.ground.ground.model.lineup.scorer.LineupScorer;
+import com.android.ground.ground.model.lineup.virtual.fomation.LineupVirtualFomation;
+import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualRes;
 import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfo;
@@ -53,7 +60,7 @@ import java.security.cert.CertificateException;
 
 public class NetworkManager {
 
-    public final static String GROND_SERVER_URL = "http://192.168.201.89:3000";
+    public final static String GROND_SERVER_URL = "http://192.168.210.173:3000";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
         if (instance == null) {
@@ -425,8 +432,229 @@ public class NetworkManager {
         });
 
     }
+    //Lineup info
+    public static final String SEARCH_LINEUP_INFO_URL =GROND_SERVER_URL+"/lineup/info";
+    public void getNetworkLineupInfo(final Context context,  int clubId, int matchId, final OnResultListener<LineupInfo> listener) {
 
+        final RequestParams params = new RequestParams();
+        params.put("club_id", clubId);
+        params.put("match_id",matchId);
 
+        client.get(context, SEARCH_LINEUP_INFO_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                LineupInfo items = gson.fromJson(s, LineupInfo.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //Lineup match
+    public static final String SEARCH_LINEUP_MATCH_URL =GROND_SERVER_URL+"/lineup/match";
+    public void getNetworkLineupMatch(final Context context,  int matchId, final OnResultListener<LineupMatch> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("match_id",matchId);
+
+        client.get(context,SEARCH_LINEUP_MATCH_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                LineupMatch items = gson.fromJson(s, LineupMatch.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //Lineup planLoc
+    public static final String SEARCH_LINEUP_PLANLOC_URL =GROND_SERVER_URL+"/lineup/planLoc";
+    public void getNetworkLineupPlanLoc(final Context context,  int matchId, final OnResultListener<LineupPlanLoc> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("match_id",matchId);
+
+        client.get(context,SEARCH_LINEUP_PLANLOC_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                LineupPlanLoc items = gson.fromJson(s, LineupPlanLoc.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //Lineup virtual res
+    public static final String SEARCH_LINEUP_VIRTUAL_RES_URL =GROND_SERVER_URL+"/lineup/virtual/res";
+    public void getNetworkLineupVirtualRes(final Context context,int clubId,  int matchId, final OnResultListener<LineupVirtualRes> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("match_id",matchId);
+        params.put("club_id",clubId);
+
+        client.get(context,SEARCH_LINEUP_VIRTUAL_RES_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                LineupVirtualRes items = gson.fromJson(s, LineupVirtualRes.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //Lineup virtual fomation
+    public static final String SEARCH_LINEUP_VIRTUAL_FOMATION_URL =GROND_SERVER_URL+"/lineup/virtual/fomation";
+    public void getNetworkLineupVirtualFomation(final Context context,int clubId,  int matchId, final OnResultListener<LineupVirtualFomation> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("match_id",matchId);
+        params.put("club_id",clubId);
+
+        client.get(context,SEARCH_LINEUP_VIRTUAL_FOMATION_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                LineupVirtualFomation items = gson.fromJson(s, LineupVirtualFomation.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //Lineup Result
+    public static final String SEARCH_LINEUP_RESULT_URL =GROND_SERVER_URL+"/lineup/result/result";
+    public void getNetworkLineupResult(final Context context,  int matchId, final OnResultListener<LineupResult> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("match_id",matchId);
+
+        client.get(context,SEARCH_LINEUP_RESULT_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                LineupResult items = gson.fromJson(s, LineupResult.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //Lineup Scorer
+    public static final String SEARCH_LINEUP_SCORER_URL =GROND_SERVER_URL+"/match/Scorer";
+    public void getNetworkLineupScorer(final Context context,int clubId,  int matchId, final OnResultListener<LineupScorer> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("match_id",matchId);
+        params.put("club_id",clubId);
+
+        client.get(context,SEARCH_LINEUP_SCORER_URL , params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                LineupScorer items = gson.fromJson(s, LineupScorer.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+    //facebook
+    public static final String SEND_FACEBOOK_URL =GROND_SERVER_URL+"/member/login";
+    public void postNetworkFacebook(final Context context,String accesstoken) {
+
+        final RequestParams params = new RequestParams();
+        params.put("access_token",accesstoken);
+        client.post(context, SEND_FACEBOOK_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+
+    }
+
+    //login local
+    public static final String SEND_LOGIN_URL =GROND_SERVER_URL+"/member/login";
+    public void postNetworkLogin(final Context context) {
+
+        final RequestParams params = new RequestParams();
+        params.put("member_id","1");
+        params.put("password","234");
+        client.post(context, SEND_LOGIN_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+
+    }
+//===================================================
     public void cancelAll(Context context) {
         client.cancelRequests(context, true);
     }

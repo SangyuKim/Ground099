@@ -18,5 +18,6 @@
         android:id="@+id/textView2"
         android:layout_below="@+id/memImageMVP"
         android:layout_centerHorizontal="true"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:textColor="#ffffffff" />
 </RelativeLayout>

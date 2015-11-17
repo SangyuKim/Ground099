@@ -14,9 +14,9 @@ import com.android.ground.ground.view.OnDialogClickListener;
  * Created by Tacademy on 2015-11-02.
  */
 public class FCMatchHistoryItemView extends FrameLayout {
-    TextView homeClubName, awayClubName, homeScore, awayScore
+    public TextView homeClubName, awayClubName, homeScore, awayScore
             , startTime,matchDate, matchDay;
-    ClubMatchListResult mItem;
+    public ClubMatchListResult mItem;
 
     public FCMatchHistoryItemView(Context context) {
         super(context);

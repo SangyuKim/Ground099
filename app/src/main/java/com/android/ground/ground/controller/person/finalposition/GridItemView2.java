@@ -39,9 +39,9 @@ public class GridItemView2 extends FrameLayout {
         return textView;
     }
 
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
+//    public void setImageView(ImageView imageView) {
+//        this.imageView = imageView;
+//    }
 
     public void setTextView(TextView textView) {
         this.textView = textView;

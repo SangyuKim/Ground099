@@ -1,9 +1,7 @@
 package com.android.ground.ground.view.person.main;
 
 import android.content.Context;
-import android.text.Html;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Checkable;
@@ -12,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.model.naver.MovieItem;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfoResult;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 

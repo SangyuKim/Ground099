@@ -25,65 +25,68 @@ public class Main24Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main24);
-        gridLayout = (GridLayout)findViewById(R.id.gridLayout);
-        listItemView= (ListItemView)findViewById(R.id.listItemView);
+//        gridLayout = (GridLayout)findViewById(R.id.gridLayout);
+//        listItemView= (ListItemView)findViewById(R.id.listItemView);
 //       final Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
 //        final Drawable normalShape = getResources().getDrawable(R.drawable.shape);
 
         int resID;
-        for(int i=0 ; i < 50 ; i ++) {
-            String linearLayoutID = "linearLayout" + Integer.toString(i + 1);
-            Log.d("hello", linearLayoutID);
-            resID = getResources().getIdentifier(linearLayoutID, "id", "com.android.ground.ground");
-            if(findViewById(resID)!= null) {
-                Log.d("hello", "ok");
-                findViewById(resID).setOnDragListener(new View.OnDragListener() {
-                    @Override
-                    public boolean onDrag(View v, DragEvent event) {
-                        switch (event.getAction()) {
-                            case DragEvent.ACTION_DRAG_STARTED:
-                                // do nothing
-                                break;
-                            case DragEvent.ACTION_DRAG_ENTERED:
-//                            v.setBackgroundDrawable(enterShape);
-                                break;
-                            case DragEvent.ACTION_DRAG_EXITED:
-//                            v.setBackgroundDrawable(normalShape);
-                                break;
-                            case DragEvent.ACTION_DROP:
-                                // Dropped, reassign View to ViewGroup
-                                View view = (View) event.getLocalState();
-                                String text = event.getClipData().getItemAt(0).getText().toString();
-                                Log.d("hello", " view : " + text);
-//                    ViewGroup owner = (ViewGroup) view.getParent();
-//                    owner.removeView(view);
-                                LinearLayout container = (LinearLayout) v;
-//                            gridItemView.setTextView(((ListItemView)view).getTextView());
-                                gridItemView = new GridItemView2(Main24Activity.this);
-                                container.addView(gridItemView);
-//                            view.setVisibility(View.VISIBLE);
-                                break;
-                            case DragEvent.ACTION_DRAG_ENDED:
-//                            v.setBackgroundDrawable(normalShape);
-                            default:
-                                break;
-                        }
-                        return true;
+//        for(int i=0 ; i < 50 ; i ++) {
+//            String linearLayoutID = "linearLayout" + Integer.toString(i + 1);
+//            Log.d("hello", linearLayoutID);
+//            resID = getResources().getIdentifier(linearLayoutID, "id", "com.android.ground.ground");
+//            if(findViewById(resID)!= null) {
+//                Log.d("hello", "ok");
+//                findViewById(resID).setOnDragListener(new View.OnDragListener() {
+//                    @Override
+//                    public boolean onDrag(View v, DragEvent event) {
+//                        switch (event.getAction()) {
+//                            case DragEvent.ACTION_DRAG_STARTED:
+//                                // do nothing
+//                                break;
+//                            case DragEvent.ACTION_DRAG_ENTERED:
+////                            v.setBackgroundDrawable(enterShape);
+//                                break;
+//                            case DragEvent.ACTION_DRAG_EXITED:
+////                            v.setBackgroundDrawable(normalShape);
+//                                break;
+//                            case DragEvent.ACTION_DROP:
+//                                // Dropped, reassign View to ViewGroup
+//                                View view = (View) event.getLocalState();
+//                                String text = event.getClipData().getItemAt(0).getText().toString();
+//                                Log.d("hello", " view : " + text);
+////                    ViewGroup owner = (ViewGroup) view.getParent();
+////                    owner.removeView(view);
+//                                LinearLayout container = (LinearLayout) v;
+////                            gridItemView.setTextView(((ListItemView)view).getTextView());
+//                                gridItemView = new GridItemView2(Main24Activity.this);
+//                                container.addView(gridItemView);
+////                            view.setVisibility(View.VISIBLE);
+//                                break;
+//                            case DragEvent.ACTION_DRAG_ENDED:
+////                            v.setBackgroundDrawable(normalShape);
+//                            default:
+//                                break;
+//                        }
+//                        return true;
+//
+//                    }
+//                });
+//            }
+//        }
+//        listItemView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                String text = ((ListItemView) v).getTextView().toString();
+//                ClipData.Item item = new ClipData.Item(text);
+//                ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+//                v.startDrag(data, new View.DragShadowBuilder(v), null, 0);
+//                return true;
+//            }
+//        });
 
-                    }
-                });
-            }
-        }
-        listItemView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                String text = ((ListItemView) v).getTextView().toString();
-                ClipData.Item item = new ClipData.Item(text);
-                ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
-                v.startDrag(data, new View.DragShadowBuilder(v), null, 0);
-                return true;
-            }
-        });
+        //====================================================리스너
+
 //        mAdapter= new ArrayAdapter<String>(this, android.R.layout.activity_list_item);
 //        gridLayout.setOnDragListener(new View.OnDragListener() {
 //            @Override

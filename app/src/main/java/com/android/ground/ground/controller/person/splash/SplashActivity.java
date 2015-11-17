@@ -122,6 +122,14 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+
+//        postLogin();
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        if(token != null) {
+            postLoginFacebook(token.getToken().toString());
+            Log.d("hello", "facebook token  from SplashActivity: " + token.getToken().toString());
+        }
+
         Button btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +181,9 @@ public class SplashActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(String result) {
                                         if (result.equals("OK")) {
+
+
+
                                             goMainActivity();
                                         }
                                     }
@@ -577,5 +588,12 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    private void postLogin() {
+        NetworkManager.getInstance().postNetworkLogin(SplashActivity.this);
+    }
+    private void postLoginFacebook(String token) {
+        NetworkManager.getInstance().postNetworkFacebook(SplashActivity.this, token);
+    }
+
 
 }

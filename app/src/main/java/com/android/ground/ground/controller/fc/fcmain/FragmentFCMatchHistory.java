@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMainResult;
 import com.android.ground.ground.view.OnExpandableAdapterDialogListener;
 import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryHeaderItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryHeaderItemView2;
+import com.android.ground.ground.view.fc.fcmain.FCMatchHistoryItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 
@@ -133,12 +135,24 @@ public class FragmentFCMatchHistory extends Fragment {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 if (groupPosition == 0) {
                     Intent intent = new Intent(getContext(), ReadyMatchResultActivity.class);
+                    int matchId = ((FCMatchHistoryItemView)v).mItem.match_id;
+                    intent.putExtra("matchId", matchId);
+                    intent.putExtra("clubId", clubId);
+                    intent.putExtra("groupPosition",groupPosition);
                     startActivity(intent);
                 } else if (groupPosition == 1) {
-                    Intent intent = new Intent(getContext(), MatchResultActivity.class);
+                    Intent intent = new Intent(getContext(), ReadyMatchResultActivity.class);
+                    int matchId = ((FCMatchHistoryItemView)v).mItem.match_id;
+                    intent.putExtra("matchId", matchId);
+                    intent.putExtra("clubId", clubId);
+                    intent.putExtra("groupPosition",groupPosition);
                     startActivity(intent);
                 } else if (groupPosition == 2) {
-                    Intent intent = new Intent(getContext(), MatchResultActivity.class);
+                    Intent intent = new Intent(getContext(), ReadyMatchResultActivity.class);
+                    int matchId = ((FCMatchHistoryItemView)v).mItem.match_id;
+                    intent.putExtra("matchId", matchId);
+                    intent.putExtra("clubId", clubId);
+                    intent.putExtra("groupPosition",groupPosition);
                     startActivity(intent);
                 }
 

@@ -25,12 +25,20 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,6 +66,11 @@ public class LoginFragment extends Fragment {
      * @param savedInstanceState 기존 session 정보가 저장된 객체
      */
 
+
+    public static final int MODE_NONE = -1;
+    public static final int MODE_PROFILE = 1;
+    public static final int MODE_POST = 2;
+    int mode = MODE_NONE;
 
     Button btn, btnFacebook , btnKakao;
     CallbackManager mCallbackManager;
@@ -139,47 +152,24 @@ public class LoginFragment extends Fragment {
                 public void onClick(View v) {
 
                     if (!isLogin()) {
-                        mLoginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-                            @Override
-                            public void onSuccess(LoginResult loginResult) {
-                                final AccessToken token = AccessToken.getCurrentAccessToken();
-                                Toast.makeText(getContext(), "id : " + token.getUserId(), Toast.LENGTH_SHORT).show();
-                                NetworkManager.getInstance().loginFacebookToken(getContext(), token.getToken(), "NOTREGISTER", new NetworkManager.OnResultListener<String>() {
-                                    @Override
-                                    public void onSuccess(String result) {
-                                        if (result.equals("OK")) {
-                                            PropertyManager.getInstance().setFacebookId(token.getUserId());
-                                            startActivity(new Intent(getContext(), MainActivity.class));
-                                            getActivity().finish();
-                                        }else if (result.equals("NOTREGISTER")) {
-//                                        startActivity(new Intent(getContext(), SignupActivity.class));
-//                                        getActivity().finish();
-                                            Fragment mFragment = (Fragment) TutorialFragment.newInstance("", "");
-                                            getFragmentManager().beginTransaction()
-                                                    .replace(R.id.container, mFragment)
-                                                    .addToBackStack(null)
-                                                    .commit();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFail(int code) {
-
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onCancel() {
-
-                            }
-
-                            @Override
-                            public void onError(FacebookException error) {
-
-                            }
-                        });
-                        mLoginManager.logInWithReadPermissions(LoginFragment.this, null);
+                        login(Arrays.asList("email"), true);
+//                        mLoginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+//                            @Override
+//                            public void onSuccess(LoginResult loginResult) {
+//
+//                            }//success
+//
+//                            @Override
+//                            public void onCancel() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onError(FacebookException error) {
+//
+//                            }
+//                        });
+//                        mLoginManager.logInWithReadPermissions(LoginFragment.this, null);
                     } else {
                         mLoginManager.logOut();
                     }
@@ -328,6 +318,107 @@ public class LoginFragment extends Fragment {
 
     protected static void cancelWaitingDialog() {
         WaitingDialog.cancelWaitingDialog();
+    }
+
+    private void postLoginFacebook(String token) {
+        NetworkManager.getInstance().postNetworkFacebook(getContext(), token);
+    }
+
+    private void login(List<String> permissions) {
+        login(permissions, true);
+    }
+
+    private void login(List<String> permissions, boolean isRead) {
+        mLoginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                final AccessToken token = AccessToken.getCurrentAccessToken();
+                //토큰 보내기
+                postLoginFacebook(token.getToken().toString());
+                Log.d("hello", "facebook token  from Login Fragment: "+ token.getToken().toString() );
+
+                Toast.makeText(getContext(), "id : " + token.getUserId(), Toast.LENGTH_SHORT).show();
+                NetworkManager.getInstance().loginFacebookToken(getContext(), token.getToken(), "NOTREGISTER", new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        if (result.equals("OK")) {
+                            PropertyManager.getInstance().setFacebookId(token.getUserId());
+                            startActivity(new Intent(getContext(), MainActivity.class));
+                            getActivity().finish();
+                        }else if (result.equals("NOTREGISTER")) {
+//                                        startActivity(new Intent(getContext(), SignupActivity.class));
+//                                        getActivity().finish();
+                            Fragment mFragment = (Fragment) TutorialFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment)
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+        if (isRead) {
+            mLoginManager.logInWithReadPermissions(LoginFragment.this, permissions);
+        } else {
+            mLoginManager.logInWithPublishPermissions(LoginFragment.this, permissions);
+        }
+    }
+    private void getProfile() {
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        GraphRequest request = new GraphRequest(token, "/me", null, HttpMethod.GET, new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+                JSONObject object = response.getJSONObject();
+                if (object == null) {
+                    String message = response.getError().getErrorMessage();
+                    Toast.makeText(getContext(), "error : " + message, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "profile : " + object.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        request.executeAsync();
+    }
+    private void postMessage() {
+        String message = "facebook test message";
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        String graphPath = "/me/feed";
+        Bundle parameters = new Bundle();
+        parameters.putString("message",message);
+        parameters.putString("link", "http://developers.facebook.com/docs/android");
+        parameters.putString("picture", "https://raw.github.com/fbsamples/.../iossdk_logo.png");
+        parameters.putString("name", "Hello Facebook");
+        parameters.putString("description", "The 'Hello Facebook' sample  showcases simple …");
+        GraphRequest request = new GraphRequest(accessToken, graphPath, parameters, HttpMethod.POST,
+                new GraphRequest.Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse response) {
+                        JSONObject data = response.getJSONObject();
+                        String id = (data == null)?null:data.optString("id");
+                        if (id == null) {
+                            Toast.makeText(getContext(), "error : " + response.getError().getErrorMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "post object id : " + id, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        request.executeAsync();
     }
 
 }
