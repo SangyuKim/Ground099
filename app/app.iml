@@ -80,7 +80,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.6.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.siyamed/android-shape-imageview/0.9.3/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.3.0/jars" />
@@ -107,8 +106,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/8.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services/8.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.kakao.sdk/auth/1.1.5/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.kakao.sdk/friends/1.1.5/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.kakao.sdk/kakaotalk/1.1.5/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.kakao.sdk/network/1.1.5/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.kakao.sdk/usermgmt/1.1.5/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.kakao.sdk/util/1.1.5/jars" />
@@ -154,7 +151,6 @@
     <orderEntry type="library" exported="" name="play-services-cast-8.3.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="multidex-instrumentation-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-ads-8.3.0" level="project" />
-    <orderEntry type="library" exported="" name="kakaotalk-1.1.5" level="project" />
     <orderEntry type="library" exported="" name="play-services-appinvite-8.3.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-appstate-8.3.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
@@ -163,15 +159,12 @@
     <orderEntry type="library" exported="" name="design-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-gcm-8.3.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-safetynet-8.3.0" level="project" />
-    <orderEntry type="library" exported="" name="kxml2-2.3.0" level="project" />
-    <orderEntry type="library" exported="" name="friends-1.1.5" level="project" />
     <orderEntry type="library" exported="" name="play-services-basement-8.3.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-maps-8.3.0" level="project" />
     <orderEntry type="library" exported="" name="facebook-android-sdk-4.6.0" level="project" />
     <orderEntry type="library" exported="" name="multidex-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-nearby-8.3.0" level="project" />
     <orderEntry type="library" exported="" name="network-1.1.5" level="project" />
-    <orderEntry type="library" exported="" name="android-shape-imageview-0.9.3" level="project" />
     <orderEntry type="library" exported="" name="play-services-fitness-8.3.0" level="project" />
     <orderEntry type="library" exported="" name="simplexmlparser_0.1.2" level="project" />
     <orderEntry type="library" exported="" name="play-services-panorama-8.3.0" level="project" />

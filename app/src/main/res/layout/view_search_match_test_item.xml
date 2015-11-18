@@ -60,8 +60,8 @@
                     android:id="@+id/text_director"
                     android:layout_toLeftOf="@+id/button35"
                     android:layout_below="@+id/memNameCountScr"
-                    android:layout_toRightOf="@+id/memImageMVP"
-                    android:layout_toEndOf="@+id/memImageMVP"
+                    android:layout_toRightOf="@+id/memImage"
+                    android:layout_toEndOf="@+id/memImage"
                     android:gravity="center"
                     android:textColor="#ffffffff" />
 

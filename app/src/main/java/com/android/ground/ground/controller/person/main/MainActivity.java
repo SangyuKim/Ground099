@@ -1,6 +1,10 @@
 package com.android.ground.ground.controller.person.main;
 
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,11 +21,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
@@ -46,6 +53,10 @@ public class MainActivity extends AppCompatActivity
         CustomNavigationView.OnNavigationFooterItemSelectedListener
 
 {
+
+    private static final String TYPEFACE_NAME = "NotoSansKR-Regular.otf";
+    private Typeface typeface = null;
+
     CustomToolbar customToolbar;
     CustomDrawerLayout drawer;
     private boolean isBackPressed = false;
@@ -67,6 +78,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadTypeface();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,6 +106,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
         toggle.syncState();
+
+        ActionBar mActionBar =  getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeAsUpIndicator(R.drawable.icon_003);
 
 
         CustomNavigationView navigationView = (CustomNavigationView) findViewById(R.id.nav_view);
@@ -144,6 +160,24 @@ public class MainActivity extends AppCompatActivity
 
     }//onCreate
 
+    private void loadTypeface() {
+        if(typeface==null)
+            typeface = Typeface.createFromAsset(getAssets(), TYPEFACE_NAME);
+    }
+    @Override
+    public void setContentView(int viewId) {
+        View view = LayoutInflater.from(this).inflate(viewId, null);
+        ViewGroup group = (ViewGroup)view;
+        int childCnt = group.getChildCount();
+        for(int i=0; i<childCnt; i++){
+            View v = group.getChildAt(i);
+            if(v instanceof TextView){
+                ((TextView)v).setTypeface(typeface);
+            }
+        }
+        super.setContentView(view);
+    }
+
 
 //    public Fragment getActiveFragment() {
 //        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
@@ -161,7 +195,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         if(isAlarmOpened){
-            alarmItem.setIcon(R.drawable.ground_alarm);
+            alarmItem.setIcon(R.drawable.icon_002);
             isAlarmOpened = false;
         }
 
@@ -220,7 +254,7 @@ public class MainActivity extends AppCompatActivity
                 ((AlarmFragment)mFragment).setOnAlarmClickListener(new OnAlarmClickListener() {
                     @Override
                     public void onDialogClick(boolean isClicked) {
-                        alarmItem.setIcon(R.drawable.ground_alarm);
+                        alarmItem.setIcon(R.drawable.icon_002);
                     }
                 });
 
@@ -233,7 +267,7 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }else{
                 getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                item.setIcon(R.drawable.ground_alarm);
+                item.setIcon(R.drawable.icon_002);
                 isAlarmOpened = false;
                 return true;
             }
@@ -259,7 +293,7 @@ public class MainActivity extends AppCompatActivity
          if (id == R.id.nav_fc) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             if(alarmItem != null){
-                alarmItem.setIcon(R.drawable.ground_alarm);
+                alarmItem.setIcon(R.drawable.icon_002);
                 isAlarmOpened = false;
             }
             Intent intent = new Intent(MainActivity.this, FCActivity.class);
@@ -268,7 +302,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_mymessage) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             if(alarmItem != null){
-                alarmItem.setIcon(R.drawable.ground_alarm);
+                alarmItem.setIcon(R.drawable.icon_002);
                 isAlarmOpened = false;
             }
             Intent intent = new Intent(MainActivity.this, MyMessageActivity.class);
@@ -277,7 +311,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_ground) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             if(alarmItem != null){
-                alarmItem.setIcon(R.drawable.ground_alarm);
+                alarmItem.setIcon(R.drawable.icon_002);
                 isAlarmOpened = false;
             }
             isBackPressed = false;
@@ -353,7 +387,7 @@ public class MainActivity extends AppCompatActivity
         }
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         if(alarmItem != null){
-            alarmItem.setIcon(R.drawable.ground_alarm);
+            alarmItem.setIcon(R.drawable.icon_002);
             isAlarmOpened = false;
         }
 
@@ -380,7 +414,7 @@ public class MainActivity extends AppCompatActivity
         }
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         if(alarmItem != null){
-            alarmItem.setIcon(R.drawable.ground_alarm);
+            alarmItem.setIcon(R.drawable.icon_002);
             isAlarmOpened = false;
         }
         Fragment mFragment = (Fragment) SettingFragment.newInstance("", "");

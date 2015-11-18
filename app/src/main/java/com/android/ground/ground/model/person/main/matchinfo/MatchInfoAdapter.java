@@ -54,7 +54,11 @@ public class MatchInfoAdapter extends BaseExpandableListAdapter implements Searc
         return -1;
     }
     public int getNextPage(){
-        if(totalCount-items.size()>0){
+        int totalChildrenCount =0;
+        for(int i=0; i<items.size(); i++){
+            totalChildrenCount += items.get(i).children.size();
+        }
+        if(totalCount-totalChildrenCount>0){
             page ++;
             return page;
         }

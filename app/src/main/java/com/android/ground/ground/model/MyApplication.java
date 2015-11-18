@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.util.LruCache;
 import android.view.inputmethod.InputMethodManager;
 
@@ -24,6 +25,8 @@ import com.nostra13.universalimageloader.core.download.HttpClientImageDownloader
 
 
 public class MyApplication extends Application {
+
+    private Activity currentTopActivity;
     private static Context mContext;
     private static InputMethodManager mIMM;
     private static volatile MyApplication instance = null;
@@ -53,6 +56,45 @@ public class MyApplication extends Application {
         instance = this;
 
         KakaoSDK.init(new KakaoSDKAdapter());
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                currentTopActivity = activity;
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+                if (currentTopActivity != null && currentTopActivity == activity) {
+                    currentTopActivity = null;
+                }
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
+
 
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
 

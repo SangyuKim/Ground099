@@ -6,19 +6,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.fc.fcmain.FCActivity;
-import com.android.ground.ground.controller.person.profile.MyProfileActivity;
-import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVPResult;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.ScrResult;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.WinResult;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 /**
  * Created by Tacademy on 2015-10-30.
@@ -58,7 +53,7 @@ public class MVPview extends FrameLayout {
 
 
 
-        memImageMVP = (ImageView)findViewById(R.id.memImageMVP);
+        memImageMVP = (ImageView)findViewById(R.id.memImage);
         memImageMVP.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

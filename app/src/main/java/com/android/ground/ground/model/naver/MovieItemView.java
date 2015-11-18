@@ -39,7 +39,7 @@ public class MovieItemView extends RelativeLayout {
 
     private void init() {
         inflate(getContext(), R.layout.view_movie_item, this);
-        iconView = (ImageView)findViewById(R.id.memImageMVP);
+        iconView = (ImageView)findViewById(R.id.memImage);
         titleView = (TextView)findViewById(R.id.memNameCountScr);
         directorView = (TextView)findViewById(R.id.text_director);
         mLinearLayout = (LinearLayout)findViewById(R.id.custom_extra);

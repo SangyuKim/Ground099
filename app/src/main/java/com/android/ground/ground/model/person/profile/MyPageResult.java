@@ -6,7 +6,7 @@ package com.android.ground.ground.model.person.profile;
 public class MyPageResult {
     public int deleteYN;
     public int virtualFlag;
-    public int member_id;
+    public int member_id = -1;
     public String memImage;
     public String memName;
     public String memIntro;
@@ -24,7 +24,7 @@ public class MyPageResult {
     public double skill;
     public int clubYN;
     public int managerYN;
-    public int club_id;
+    public int club_id= -1;
     public String clubName;
     public String clubImage;
     public int win;

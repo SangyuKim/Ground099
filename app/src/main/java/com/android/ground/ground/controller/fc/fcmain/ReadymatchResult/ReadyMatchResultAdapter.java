@@ -8,8 +8,11 @@ import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
 import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualRes;
 import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualResResult;
+import com.android.ground.ground.view.OnAdapterCustomTouchListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
+import com.android.ground.ground.view.OnAdapterSpecificDialogListener;
+import com.android.ground.ground.view.OnCustomTouchListener;
 import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
 import com.android.ground.ground.view.fc.fcmain.FCMemberItemView;
@@ -19,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReadyMatchResultAdapter extends BaseAdapter{
+public class ReadyMatchResultAdapter extends BaseAdapter implements OnCustomTouchListener{
 
     List<LineupVirtualResResult> items = new ArrayList<LineupVirtualResResult>();
 
@@ -53,13 +56,25 @@ public class ReadyMatchResultAdapter extends BaseAdapter{
         ReadyMatchResultListItemView view;
         if (convertView == null) {
             view = new ReadyMatchResultListItemView(parent.getContext());
+            view.setOnCustomTouchListener(this);
         } else {
             view = (ReadyMatchResultListItemView)convertView;
         }
+
         view.setReadyMatchResultListItem(items.get(position));
         return view;
     }
 
+    OnAdapterCustomTouchListener mListener;
+    public void setOnAdapterCustomTouchListener(OnAdapterCustomTouchListener listener){
+        mListener = listener;
+    }
 
 
+    @Override
+    public void onTouch(View view) {
+        if(mListener != null){
+            mListener.onTouch(view);
+        }
+    }
 }

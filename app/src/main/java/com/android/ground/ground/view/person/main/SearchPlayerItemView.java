@@ -35,12 +35,13 @@ public class SearchPlayerItemView extends RelativeLayout {
             memMainDay_Thu,memMainDay_Fri,memMainDay_Sat,memMainDay_Sun;
     LinearLayout mLinearLayout;
 
-
+    ImageView btnRequest;
+    Button btn;
     DisplayImageOptions options;
 
     private void init() {
         inflate(getContext(), R.layout.view_search_player_test_item, this);
-        memImage = (ImageView)findViewById(R.id.memImageMVP);
+        memImage = (ImageView)findViewById(R.id.memImage);
         clubImage = (ImageView)findViewById(R.id.clubImage);
         memName = (TextView)findViewById(R.id.memNameCountScr);
         age = (TextView)findViewById(R.id.age);
@@ -57,10 +58,10 @@ public class SearchPlayerItemView extends RelativeLayout {
         clubYN = (ImageView)findViewById(R.id.clubYN);
         managerYN = (ImageView)findViewById(R.id.managerYN);
 
-        Button btn;
 
-        btn = (Button)findViewById(R.id.button21);
-        btn.setOnClickListener(new OnClickListener() {
+
+        btnRequest = (ImageView)findViewById(R.id.button21);
+        btnRequest.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                    if (mRequestListener != null) {
@@ -123,14 +124,14 @@ public class SearchPlayerItemView extends RelativeLayout {
             memMainDay_Sun.setChecked(true);
         }
         if(item.clubYN==0){
-            clubYN.setVisibility(View.INVISIBLE);
+            clubYN.setImageResource(R.drawable.match_201);
         }else{
-            clubYN.setVisibility(View.VISIBLE);
+            clubYN.setImageResource(R.drawable.match_202);
         }
         if(item.managerYN==0){
-            managerYN.setVisibility(View.INVISIBLE);
+            managerYN.setImageResource(R.drawable.icon201);
         }else{
-            managerYN.setVisibility(View.VISIBLE);
+            managerYN.setImageResource(R.drawable.captain);
         }
 
 

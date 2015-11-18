@@ -39,6 +39,7 @@ import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
+import com.android.ground.ground.model.post.signup.UserProfile;
 import com.android.ground.ground.model.widget.WaitingDialog;
 import com.facebook.AccessToken;
 import com.kakao.network.ErrorResult;
@@ -64,6 +65,7 @@ import java.io.File;
  */
 public class SignupFragment extends Fragment {
 
+    UserProfile mUserProfile;
 
     protected static Activity self;
     TextView textViewUserArea;
@@ -172,6 +174,30 @@ public class SignupFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mUserProfile = new UserProfile();
+                //유저가 사진 입력하지 않았을 때 처리하기 !!
+
+                if(mSavedFile!=null)
+                    mUserProfile.mFile =mSavedFile;
+                mUserProfile.gender =0;
+                mUserProfile.age=25;
+                mUserProfile.memLocationName ="서울시 관악구 관악동";
+                mUserProfile.memMainDay_Mon=0;
+                mUserProfile.memMainDay_Tue=1;
+                mUserProfile.memMainDay_Wed=0;
+                mUserProfile.memMainDay_Thu=1;
+                mUserProfile.memMainDay_Fri=0;
+                mUserProfile.memMainDay_Sat=1;
+                mUserProfile.memMainDay_Sun=0;
+                mUserProfile.memIntro="안드로이드 테스트 1";
+                mUserProfile.position =1;
+                mUserProfile.skill=5;
+                mUserProfile.latitude =91.0;
+                mUserProfile.longitude=92.0;
+                NetworkManager.getInstance().postNetworkSignup(getContext(), mUserProfile);
+
+
+
                 //선수 등록이 끝났을 경우 -> 서버에게 데이터 전달
                 NetworkManager.getInstance().signupFacebook(getContext(), "message", new NetworkManager.OnResultListener<String>() {
                     @Override

@@ -5,9 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,7 +39,7 @@ public class SearchFCItemView extends RelativeLayout {
 
     private void init() {
         inflate(getContext(), R.layout.view_search_fc_test_item, this);
-        clubImage = (ImageView)findViewById(R.id.memImageMVP);
+        clubImage = (ImageView)findViewById(R.id.memImage);
         clubName = (TextView)findViewById(R.id.memNameCountScr);
         clubLocationName = (TextView)findViewById(R.id.clubLocationName);
         clubField = (TextView)findViewById(R.id.clubField);

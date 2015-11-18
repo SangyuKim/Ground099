@@ -26,6 +26,7 @@ import com.android.ground.ground.model.person.main.searchClub.SearchClub;
 import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
+import com.android.ground.ground.model.post.signup.UserProfile;
 import com.android.ground.ground.model.tmap.TmapItem;
 import com.begentgroup.xmlparser.XMLParser;
 import com.google.gson.Gson;
@@ -42,6 +43,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.message.BasicHeader;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -60,7 +62,7 @@ import java.security.cert.CertificateException;
 
 public class NetworkManager {
 
-    public final static String GROND_SERVER_URL = "http://192.168.210.173:3000";
+    public final static String GROND_SERVER_URL = "http://192.168.201.240:3000";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
         if (instance == null) {
@@ -111,12 +113,6 @@ public class NetworkManager {
         public void onFail(int code);
     }
 
-
-    private static final String SERVER = "http://openapi.naver.com";
-
-    private static final String MOVIE_URL = SERVER + "/search";
-    private static final String KEY = "dbe85dae5e1192a42aae51ea5b61cb2b";
-    private static final String TARGET = "movie";
 
     Handler mHandler = new Handler(Looper.getMainLooper());
     public void loginFacebookToken(Context context, String accessToken, final String result , final OnResultListener<String> listener) {
@@ -275,7 +271,7 @@ public class NetworkManager {
         if(keyword.equals("")){
             url = SEARCH_MATCHINFO_URL + "/"+ filter;
         }else{
-            url =   SEARCH_MATCHINFO_URL + "/search";
+            url =  SEARCH_MATCHINFO_URL + "/search";
             params.put("search", keyword);
         }
 
@@ -650,6 +646,49 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
+            }
+        });
+
+    }
+
+
+    //signup
+    public static final String SEND_SIGNUP_URL =GROND_SERVER_URL+"/member";
+    public void postNetworkSignup(final Context context , UserProfile mUserProfile) {
+
+        final RequestParams params = new RequestParams();
+        try {
+            params.put("file", mUserProfile.mFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        params.put("gender",mUserProfile.gender);
+        params.put("age",mUserProfile.age);
+        params.put("memLocationName",mUserProfile.memLocationName);
+        params.put("memMainDay_Mon",mUserProfile.memMainDay_Mon);
+        params.put("memMainDay_Tue",mUserProfile.memMainDay_Tue);
+        params.put("memMainDay_Wed",mUserProfile.memMainDay_Wed);
+        params.put("memMainDay_Thu",mUserProfile.memMainDay_Thu);
+        params.put("memMainDay_Fri",mUserProfile.memMainDay_Fri);
+        params.put("memMainDay_Sat",mUserProfile.memMainDay_Sat);
+        params.put("memMainDay_Sun",mUserProfile.memMainDay_Sun);
+        params.put("memIntro",mUserProfile.memIntro);
+        params.put("position",mUserProfile.position);
+        params.put("skill",mUserProfile.skill);
+        params.put("latitude",mUserProfile.latitude);
+        params.put("longitude",mUserProfile.longitude);
+
+        client.post(context, SEND_SIGNUP_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("hello", "status code : " + statusCode);
             }
         });
 

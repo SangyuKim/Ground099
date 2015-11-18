@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -125,8 +126,9 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_fragment_main_check_match, container, false);
-        setSearchFab();
         setSpinner();
+        setSearchFab();
+
 
 
         refreshView = (PullToRefreshExpandableListView)view.findViewById(R.id.pulltorefresh);
@@ -144,7 +146,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         refreshView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
             @Override
             public void onLastItemVisible() {
-//                getMoreMatches();
+                getMoreMatch(filter, keywordView.getText().toString());
             }
         });
 
@@ -236,9 +238,8 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                searchMatch(filter, s.toString());
-//                getMoreMatches();
-            }
+                searchMatch("", s.toString());
+           }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -258,103 +259,22 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
     private void searchMatchWithGroup(int position) {
         if(position ==0){
-//            mAdapter.clear();
-//            CheckMatchListGroupItem groupItem = new CheckMatchListGroupItem();
-//            groupItem.text ="예정된 매치";
-//            groupItem.color= 0xffc0c0c0;
             filter="date";
             searchMatch(filter, keywordView.getText().toString());
-//            mAdapter.add("예정된 매치",);
-//
-//            filter ="date";
-
-//                    groupItem = new CheckMatchListGroupItem();
-//                    groupItem.text ="기록 대기중인 매치";
-//                    groupItem.color= 0xffc0c0c0;
-//                    mAdapter.add(groupItem);
-//                    filter="ingMat";
-//                    searchMatch(filter, keywordView.getText().toString());
-
-//                    groupItem = new CheckMatchListGroupItem();
-//                    groupItem.text ="마무리된 매치";
-//                    groupItem.color= 0xffc0c0c0;
-//                    mAdapter.add(groupItem);
-//                    filter="endMat";
-//                    searchMatch(filter, keywordView.getText().toString());
-
         }else if(position ==1){
-//            mAdapter.clear();
-//            CheckMatchListGroupItem groupItem = new CheckMatchListGroupItem();
-//            groupItem.text ="내가 뛰었던 매치";
-//            groupItem.color= 0xffc0c0c0;
-//            mAdapter.add(groupItem);
             filter="myMat";
             searchMatch(filter, keywordView.getText().toString());
         }else if(position==2){
-//            mAdapter.clear();
-//            CheckMatchListGroupItem groupItem = new CheckMatchListGroupItem();
-//            groupItem.text ="예정된 매치";
-//            groupItem.color= 0xffc0c0c0;
-//            mAdapter.add(groupItem);
             filter="futureMat";
             searchMatch(filter, keywordView.getText().toString());
         }else if(position==3){
-//            mAdapter.clear();
-//            CheckMatchListGroupItem groupItem = new CheckMatchListGroupItem();
-//            groupItem.text ="마무리된 매치";
-//            groupItem.color= 0xffc0c0c0;
-//            mAdapter.add(groupItem);
             filter="endMat";
             searchMatch(filter, keywordView.getText().toString());
         }else if(position==4){
-//            mAdapter.clear();
-//            CheckMatchListGroupItem groupItem = new CheckMatchListGroupItem();
-//            groupItem.text ="기록 대기중인 매치";
-//            groupItem.color= 0xffc0c0c0;
-//            mAdapter.add(groupItem);
             filter="ingMat";
             searchMatch(filter, keywordView.getText().toString());
         }
     }
-
-//    private void getMoreMatches() {
-//        if(filter.equals("date")){
-//            if(isMoreFutureItem==true){
-//                isMoreFutureItem = getMoreItem("futureMat");
-//                if (!isMoreFutureItem) {
-//                    //마무리된 매치 추가
-//                    CheckMatchListGroupItem groupItem = new CheckMatchListGroupItem();
-//                    groupItem.text = "입력 대기중인 매치";
-//                    groupItem.color = 0xffc0c0c0;
-////                    mAdapter.add(groupItem);
-//                    searchMatch("ingMat", keywordView.getText().toString());
-//                }
-//            }
-//            if(isMoreIngItem==true&&isMoreFutureItem==false){
-//                isMoreIngItem = getMoreItem("ingMat");
-//                if (!isMoreIngItem) {
-//                    //마무리된 매치 추가
-//                    CheckMatchListGroupItem groupItem = new CheckMatchListGroupItem();
-//                    groupItem.text = "마무리된 매치";
-//                    groupItem.color = 0xffc0c0c0;
-////                    mAdapter.add(groupItem);
-//                    searchMatch("endMat", keywordView.getText().toString());
-//                }
-//                if(isMoreEndItem==true&&isMoreFutureItem==false&&isMoreIngItem==false){
-//                    isMoreIngItem = getMoreItem("endMat");
-//                }
-//            }
-//        }else if(filter.equals("myMat")){
-//            getMoreItem(filter);
-//        }else if(filter.equals("futureMat")){
-//            getMoreItem(filter);
-//        }else if(filter.equals("endMat")){
-//            getMoreItem(filter);
-//        }else if(filter.equals("ingMat")){
-//            getMoreItem(filter);
-//        }
-//    }
-
 
     private void searchMVP() {
        NetworkManager.getInstance().getNetworkMatchInfoMVP(getContext(), new NetworkManager.OnResultListener<MVP>() {
@@ -396,6 +316,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         for (String s : items) {
             mySpinnerAdapter.add(s);
         }
+        filter = "date";
     }
 
     private void setSearchFab() {
@@ -437,6 +358,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                 MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 mLinearLayout.setVisibility(View.GONE);
                 fab.setVisibility(View.VISIBLE);
+                searchMatch(filter, "");
             }
         });
         btn = (Button)view.findViewById(R.id.custom_search_bar_button_cancel);
@@ -444,6 +366,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             @Override
             public void onClick(View v) {
                 keywordView.setText("");
+                searchMatch(filter, "");
             }
         });
         keywordView.setText("");
@@ -509,15 +432,6 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         }
     }
 
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        Log.d("hello", "매치 찾기 힌트");
-//        super.setUserVisibleHint(isVisibleToUser);
-//        if (isVisibleToUser) {
-//            getActivity().setTitle("매치 확인");
-//        }
-//    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -525,116 +439,141 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
     }
 
     private void searchMatch(final String filter,final String keyword) {
-        //date일 경우만 따로 처리
-        flag1 = false;
-        flag2 = false;
-        if(filter.equals("date")){
-            NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "futureMat", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
-                @Override
-                public void onSuccess(MatchInfo result) {
 
-                    mAdapter.setKeyword(keyword);
-                    mAdapter.setFilter("futureMat");
-                    mAdapter.setTotalCount(result.itemCount);
-                    mAdapter.setFuturePage(1);
-                    mAdapter.setTotalFuturePage(result.matPage);
-//                    mAdapter.setTotalCount(result.total);
-                    mAdapter.clear();
+        if(!keyword.equals("")){
+          NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+              @Override
+              public void onSuccess(MatchInfo result) {
 
-                    mAdapter.add("futureMat", result.items);
+                  mAdapter.setKeyword(keyword);
+                  mAdapter.setTotalCount(result.itemCount);
+                  mAdapter.setTotalFuturePage(result.matPage);
+                  mAdapter.setPage(1);
+                  mAdapter.clear();
 
-                    mAdapter.add("더보기1", null);
-                    expandGroup();
-                    refreshView.onRefreshComplete();
-//                    if(result.matPage)
-                    flag1 = true;
-                    if (flag1) {
-                        NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "ingMat", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
-                            @Override
-                            public void onSuccess(MatchInfo result) {
-                                mAdapter.setKeyword(keyword);
-                                mAdapter.setFilter("ingMat");
-                                mAdapter.setTotalCount(result.itemCount);
-                                mAdapter.setIngPage(1);
-                                mAdapter.setTotalFuturePage(result.matPage);
-//                    mAdapter.setTotalCount(result.total);
-//                    mAdapter.clear();
+                  mAdapter.add("검색 결과", result.items);
+//                  Log.d("hello", "count  : " + result.itemCount);
+                  expandGroup();
+              }
 
-                                mAdapter.add("ingMat", result.items);
-                                mAdapter.add("더보기2", null);
-                                expandGroup();
-                                refreshView.onRefreshComplete();
-                                flag2 = true;
-                                if (flag2) {
-                                    NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "endMat", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
-                                        @Override
-                                        public void onSuccess(MatchInfo result) {
-                                            mAdapter.setKeyword(keyword);
-                                            mAdapter.setFilter("endMat");
-                                            mAdapter.setTotalCount(result.itemCount);
-                                            mAdapter.setEndPage(1);
-                                            mAdapter.setTotalEndPage(result.matPage);
-//                    mAdapter.setTotalCount(result.total);
-//                    mAdapter.clear();
-                                            mAdapter.add("endMat", result.items);
-                                            mAdapter.add("더보기3", null);
-                                            expandGroup();
-                                            refreshView.onRefreshComplete();
+              @Override
+              public void onFail(int code) {
 
-                                        }
-
-                                        @Override
-                                        public void onFail(int code) {
-                                            Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-
-                            }
-
-                            @Override
-                            public void onFail(int code) {
-                                Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                }
-
-                @Override
-                public void onFail(int code) {
-                    Toast.makeText(MyApplication.getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
-                }
-            });
-
+              }
+          });
         }else {
 
-            NetworkManager.getInstance().getNetworkMatchInfo(getContext(), filter, keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
-                @Override
-                public void onSuccess(MatchInfo result) {
-                    mAdapter.setKeyword(keyword);
-                    mAdapter.setFilter(filter);
-                    mAdapter.setTotalCount(result.itemCount);
-                    mAdapter.setPage(1);
+
+            //date일 경우만 따로 처리
+            flag1 = false;
+            flag2 = false;
+            if (filter.equals("date")) {
+                NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "futureMat", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+                    @Override
+                    public void onSuccess(MatchInfo result) {
+
+                        mAdapter.setKeyword(keyword);
+                        mAdapter.setFilter("futureMat");
+                        mAdapter.setTotalCount(result.itemCount);
+                        mAdapter.setFuturePage(1);
+                        mAdapter.setTotalFuturePage(result.matPage);
 //                    mAdapter.setTotalCount(result.total);
-                    mAdapter.clear();
-                    mAdapter.add(filter, result.items);
-                    expandGroup();
-                    refreshView.onRefreshComplete();
+                        mAdapter.clear();
 
-                }
+                        mAdapter.add("futureMat", result.items);
 
-                @Override
-                public void onFail(int code) {
-                    Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
-                }
-            });
+                        mAdapter.add("더보기1", null);
+                        expandGroup();
+                        refreshView.onRefreshComplete();
+//                    if(result.matPage)
+                        flag1 = true;
+                        if (flag1) {
+                            NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "ingMat", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+                                @Override
+                                public void onSuccess(MatchInfo result) {
+                                    mAdapter.setKeyword(keyword);
+                                    mAdapter.setFilter("ingMat");
+                                    mAdapter.setTotalCount(result.itemCount);
+                                    mAdapter.setIngPage(1);
+                                    mAdapter.setTotalFuturePage(result.matPage);
+//                    mAdapter.setTotalCount(result.total);
+//                    mAdapter.clear();
+
+                                    mAdapter.add("ingMat", result.items);
+                                    mAdapter.add("더보기2", null);
+                                    expandGroup();
+                                    refreshView.onRefreshComplete();
+                                    flag2 = true;
+                                    if (flag2) {
+                                        NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "endMat", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+                                            @Override
+                                            public void onSuccess(MatchInfo result) {
+                                                mAdapter.setKeyword(keyword);
+                                                mAdapter.setFilter("endMat");
+                                                mAdapter.setTotalCount(result.itemCount);
+                                                mAdapter.setEndPage(1);
+                                                mAdapter.setTotalEndPage(result.matPage);
+//                    mAdapter.setTotalCount(result.total);
+//                    mAdapter.clear();
+                                                mAdapter.add("endMat", result.items);
+                                                mAdapter.add("더보기3", null);
+                                                expandGroup();
+                                                refreshView.onRefreshComplete();
+
+                                            }
+
+                                            @Override
+                                            public void onFail(int code) {
+                                                Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+                                    Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(MyApplication.getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            } else {
+
+                NetworkManager.getInstance().getNetworkMatchInfo(getContext(), filter, keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+                    @Override
+                    public void onSuccess(MatchInfo result) {
+                        mAdapter.setKeyword(keyword);
+                        mAdapter.setFilter(filter);
+                        mAdapter.setTotalCount(result.itemCount);
+                        mAdapter.setPage(1);
+//                    mAdapter.setTotalCount(result.total);
+                        mAdapter.clear();
+                        mAdapter.add(filter, result.items);
+                        expandGroup();
+                        refreshView.onRefreshComplete();
+
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
      }
 
 
     private void getMoreMatch(final String filter,final String keyword) {
-
         if (!isUpdate) {
             final String oldKeyword = mAdapter.getKeyword();
 
@@ -643,88 +582,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                 flag1 = false;
                 flag2 = false;
                 if (filter.equals("date")) {
-                    NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "futureMat", oldKeyword, mAdapter.getFuturePage(), 1, new NetworkManager.OnResultListener<MatchInfo>() {
-                        @Override
-                        public void onSuccess(MatchInfo result) {
-
-                            mAdapter.setKeyword(oldKeyword);
-                            mAdapter.setFilter("futureMat");
-                            mAdapter.setTotalCount(result.itemCount);
-                            mAdapter.setFuturePage(mAdapter.getFuturePage() + 1);
-                            mAdapter.setTotalFuturePage(result.matPage);
-//                    mAdapter.setTotalCount(result.total);
-//                            mAdapter.clear();
-
-                            mAdapter.add("futureMat", result.items);
-
-                            mAdapter.add("더보기1", null);
-                            expandGroup();
-                            refreshView.onRefreshComplete();
-//                    if(result.matPage)
-                            flag1 = true;
-                            if (flag1) {
-                                NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "ingMat", oldKeyword, mAdapter.getIngPage(), 1, new NetworkManager.OnResultListener<MatchInfo>() {
-                                    @Override
-                                    public void onSuccess(MatchInfo result) {
-                                        mAdapter.setKeyword(oldKeyword);
-                                        mAdapter.setFilter("ingMat");
-                                        mAdapter.setTotalCount(result.itemCount);
-                                        mAdapter.setIngPage(mAdapter.getIngPage() + 1);
-                                        mAdapter.setTotalFuturePage(result.matPage);
-//                    mAdapter.setTotalCount(result.total);
-//                    mAdapter.clear();
-
-                                        mAdapter.add("ingMat", result.items);
-                                        mAdapter.add("더보기2", null);
-                                        expandGroup();
-                                        refreshView.onRefreshComplete();
-                                        flag2 = true;
-                                        if (flag2) {
-                                            NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "endMat", oldKeyword, mAdapter.getEndPage(), 1, new NetworkManager.OnResultListener<MatchInfo>() {
-                                                @Override
-                                                public void onSuccess(MatchInfo result) {
-                                                    mAdapter.setKeyword(oldKeyword);
-                                                    mAdapter.setFilter("endMat");
-                                                    mAdapter.setTotalCount(result.itemCount);
-                                                    mAdapter.setEndPage(mAdapter.getEndPage() + 1);
-                                                    mAdapter.setTotalEndPage(result.matPage);
-//                    mAdapter.setTotalCount(result.total);
-//                    mAdapter.clear();
-                                                    mAdapter.add("endMat", result.items);
-                                                    mAdapter.add("더보기3", null);
-                                                    expandGroup();
-                                                    refreshView.onRefreshComplete();
-                                                    isUpdate = false;
-
-                                                }
-
-                                                @Override
-                                                public void onFail(int code) {
-                                                    Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
-                                                    isUpdate = false;
-                                                }
-                                            });
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onFail(int code) {
-                                        Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
-                                        isUpdate = false;
-                                    }
-                                });
-                            }
-
-                        }
-
-                        @Override
-                        public void onFail(int code) {
-                            Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
-                            isUpdate = false;
-                        }
-                    });
-
+                    isUpdate = false;
                 } else {
                     int nextPage = mAdapter.getNextPage();
                     if (nextPage != -1) {
@@ -735,13 +593,11 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                             mAdapter.setKeyword(oldKeyword);
                             mAdapter.setFilter(filter);
                             mAdapter.setTotalCount(result.itemCount);
-   //                    mAdapter.setTotalCount(result.total);
                             mAdapter.clear();
                             mAdapter.add(filter, result.items);
                             expandGroup();
                             refreshView.onRefreshComplete();
                             isUpdate = false;
-
                         }
 
                         @Override
@@ -752,42 +608,11 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                     });
                 }
             }
-        }
+        }//update flag
 
     }
 
 
-
-
-//    private boolean getMoreItem(String tag) {
-//        if (!isUpdate) {
-//            String keyword = mAdapter.getKeyword();
-//            final String filter = mAdapter.getFilter();
-//            int nextPage = mAdapter.getNextPage(tag);
-//            if (nextPage != -1) {
-//                isUpdate = true;
-//                NetworkManager.getInstance().getNetworkMatchInfo(getContext(), filter, keyword, nextPage, 1, new NetworkManager.OnResultListener<MatchInfo>() {
-//                    @Override
-//                    public void onSuccess(MatchInfo result) {
-//                        mAdapter.add(filter, result.items);
-//                        isUpdate = false;
-//                    }
-//
-//                    @Override
-//                    public void onFail(int code) {
-//                        isUpdate = false;
-//                    }
-//                });
-//            }
-//        }
-//        if(mAdapter.getPage()==-1){
-//            return false;
-//        }
-//        else
-//            return true;
-//
-//
-//    }
     public void expandGroup(){
         for(int i=0; i <mAdapter.getGroupCount(); i++){
             listView.expandGroup(i);

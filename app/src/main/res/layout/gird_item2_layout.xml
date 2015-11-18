@@ -5,7 +5,7 @@
     <ImageView
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:id="@+id/memImageMVP"
+        android:id="@+id/memImage"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@mipmap/ic_launcher"/>
@@ -16,7 +16,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="하하하"
         android:id="@+id/textView2"
-        android:layout_below="@+id/memImageMVP"
+        android:layout_below="@+id/memImage"
         android:layout_centerHorizontal="true"
         android:textSize="10sp"
         android:textColor="#ffffffff" />

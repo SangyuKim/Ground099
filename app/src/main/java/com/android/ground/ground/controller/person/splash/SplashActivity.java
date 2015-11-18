@@ -123,6 +123,47 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
 
+        //unlink
+        final String appendMessage = getString(R.string.com_kakao_confirm_unlink);
+        new AlertDialog.Builder(this)
+                .setMessage(appendMessage)
+                .setPositiveButton(getString(R.string.com_kakao_ok_button),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                UserManagement.requestUnlink(new UnLinkResponseCallback() {
+                                    @Override
+                                    public void onFailure(ErrorResult errorResult) {
+                                    }
+
+                                    @Override
+                                    public void onSessionClosed(ErrorResult errorResult) {
+
+                                    }
+
+                                    @Override
+                                    public void onNotSignedUp() {
+
+                                    }
+
+                                    @Override
+                                    public void onSuccess(Long result) {
+
+                                    }
+                                });
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton(getString(R.string.com_kakao_cancel_button),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).show();
+
+
+
 //        postLogin();
         AccessToken token = AccessToken.getCurrentAccessToken();
         if(token != null) {
@@ -159,8 +200,10 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         String kakaoToken = Session.getCurrentSession().getAccessToken();
+        String refreshToken = Session.getCurrentSession().getRefreshToken();
 
-        Log.d("hello", kakaoToken);
+        Log.d("hello", "kakao : " + kakaoToken);
+        Log.d("hello", "kakao refresh : " + refreshToken);
 
 //        callback = new SessionCallback();
 //        Session.getCurrentSession().addCallback(callback);

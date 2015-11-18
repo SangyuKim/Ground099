@@ -39,6 +39,8 @@ import com.android.ground.ground.model.lineup.result.LineupResultResult;
 import com.android.ground.ground.model.lineup.scorer.LineupScorer;
 import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualRes;
 import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualResResult;
+import com.android.ground.ground.view.OnAdapterCustomTouchListener;
+import com.android.ground.ground.view.OnCustomTouchListener;
 import com.android.ground.ground.view.fc.fcmain.ReadyMatchResultListItemView;
 
 import java.io.File;
@@ -48,7 +50,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadyMatchResultActivity extends AppCompatActivity implements CustomDragDropListView.DragListener, CustomDragDropListView.DropListener {
+public class ReadyMatchResultActivity extends AppCompatActivity implements
+        CustomDragDropListView.DragListener, CustomDragDropListView.DropListener{
     TextView matchDate, matchDay, awayClubName, homeClubName
             , startTime, matchLocation, homeAwayPlan, homeScore, awayScore, memName
             , MVPmemName;
@@ -101,83 +104,97 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements Custo
 
 
         gridLayout = (GridLayout) findViewById(R.id.gridLayout);
+
         listItemView = (ListItemView) findViewById(R.id.listItemView);
 
         lineupVirtualRes = (CustomDragDropListView)findViewById(R.id.lineupVirtualRes);
         mReadyMatchResultAdapter = new ReadyMatchResultAdapter();
+
         lineupVirtualRes.setAdapter(mReadyMatchResultAdapter);
+        int w =gridLayout.getWidth()/7;
+        int h =gridLayout.getHeight()/7;
 
-//        final Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
-//        final Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+        Log.d("hello", "w : " + w + "  //  h : " +h);
 
-        int resID;
-        for (int i = 0; i < 50; i++) {
-            String linearLayoutID = "linearLayout" + Integer.toString(i + 1);
-            resID = getResources().getIdentifier(linearLayoutID, "id", "com.android.ground.ground");
-            if (findViewById(resID) != null) {
-                findViewById(resID).setOnDragListener(new View.OnDragListener() {
-                    @Override
-                    public boolean onDrag(View v, DragEvent event) {
-                        switch (event.getAction()) {
-                            case DragEvent.ACTION_DRAG_STARTED:
-                                // do nothing
-                                break;
-                            case DragEvent.ACTION_DRAG_ENTERED:
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w,h);
+
+        ArrayList<LinearLayout> mLinearLayouts = new ArrayList<LinearLayout>();
+
+        for(int i=0; i< 40; i++){
+            LinearLayout mLinearLayout = new LinearLayout(ReadyMatchResultActivity.this);
+            mLinearLayout.setLayoutParams(lp);
+            mLinearLayouts.add(mLinearLayout);
+            mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                @Override
+                public boolean onDrag(View v, DragEvent event) {
+                    switch (event.getAction()) {
+                        case DragEvent.ACTION_DRAG_STARTED:
+                            // do nothing
+                            break;
+                        case DragEvent.ACTION_DRAG_ENTERED:
 //                            v.setBackgroundDrawable(enterShape);
-                                break;
-                            case DragEvent.ACTION_DRAG_EXITED:
+                            break;
+                        case DragEvent.ACTION_DRAG_EXITED:
 //                            v.setBackgroundDrawable(normalShape);
-                                break;
-                            case DragEvent.ACTION_DROP:
-                                // Dropped, reassign View to ViewGroup
-                                View view = (View) event.getLocalState();
-                                String text = event.getClipData().getItemAt(0).getText().toString();
-//                    ViewGroup owner = (ViewGroup) view.getParent();
-//                    owner.removeView(view);
-                                LinearLayout container = (LinearLayout) v;
-//                            gridItemView.setTextView(((ListItemView)view).getTextView());
-                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
-                                container.addView(gridItemView);
+                            break;
+                        case DragEvent.ACTION_DROP:
+                            // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
 //                            view.setVisibility(View.VISIBLE);
-                                break;
-                            case DragEvent.ACTION_DRAG_ENDED:
+
+
+                            LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                            String text = event.getClipData().getItemAt(0).getText().toString();
+                            gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                            gridItemView.setText(text);
+                            container.addView(gridItemView);
+
+                            break;
+                        case DragEvent.ACTION_DRAG_ENDED:
 //                            v.setBackgroundDrawable(normalShape);
-                            default:
-                                break;
-                        }
-                        return true;
-
+                        default:
+                            break;
                     }
-                });
-            }
-
-
-            if(matchId != -1){
-                searchLineupMatch(matchId);
-                searchLineupPlanLoc(matchId);
-            }
-
-            if(clubId != -1 && matchId != -1){
-                Log.d("hello", "club id: " + clubId + "  //  " + "matchid: " + matchId);
-                searchLineupVirtualRes(clubId, matchId);
-            }
-            if(groupPosition==0 && clubId != -1 && matchId != -1){
-                setTitle("예정된 경기");
-
-            }
-
-            if(groupPosition !=0 &&clubId != -1 && matchId != -1){
-                searchLineupResult(matchId);
-                searchLineupScorer(clubId,matchId);
-                if(groupPosition==1){
-                    setTitle("입력 대기중인 경기");
-                }else if(groupPosition ==2){
-                    setTitle("마무리된 경기");
+                    return true;
                 }
+            });
+            gridLayout.addView(mLinearLayouts.get(i));
 
+        }//for
+
+
+
+
+        if(matchId != -1){
+            searchLineupMatch(matchId);
+            searchLineupPlanLoc(matchId);
+        }
+
+        if(clubId != -1 && matchId != -1){
+            Log.d("hello", "club id: " + clubId + "  //  " + "matchid: " + matchId);
+            searchLineupVirtualRes(clubId, matchId);
+        }
+        if(groupPosition==0 && clubId != -1 && matchId != -1){
+            setTitle("예정된 경기");
+
+        }
+
+        if(groupPosition !=0 &&clubId != -1 && matchId != -1){
+            searchLineupResult(matchId);
+            searchLineupScorer(clubId,matchId);
+            if(groupPosition==1){
+                setTitle("입력 대기중인 경기");
+            }else if(groupPosition ==2){
+                setTitle("마무리된 경기");
             }
 
         }
+
+
         listItemView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -189,29 +206,6 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements Custo
             }
         });
 
-//        lineupVirtualRes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String text = ((ReadyMatchResultListItemView) view).memName.getText().toString();
-//                ClipData.Item item = new ClipData.Item(text);
-//                ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
-//                view.startDrag(data, new View.DragShadowBuilder(view), null, 0);
-//            }
-//        });
-//        lineupVirtualRes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String text = ((ReadyMatchResultListItemView) view).memName.getText().toString();
-//                ClipData.Item item = new ClipData.Item(text);
-//                ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
-//                view.startDrag(data, new View.DragShadowBuilder(view), null, 2);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
         lineupVirtualRes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -222,29 +216,6 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements Custo
                 return true;
             }
         });
-        lineupVirtualRes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                view.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-
-                        String text = ((ReadyMatchResultListItemView) v).memName.getText().toString();
-                        Log.d("hello", text);
-                        ClipData.Item item = new ClipData.Item(text);
-                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
-                        v.startDrag(data, new View.DragShadowBuilder(v), null, 3);
-                        return true;
-                    }
-                });
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
 
     }
     @Override
@@ -319,6 +290,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements Custo
 
         return bitmap;
     }
+
     private void searchLineupMatch(final int matchId) {
         NetworkManager.getInstance().getNetworkLineupMatch(ReadyMatchResultActivity.this, matchId, new NetworkManager.OnResultListener<LineupMatch>() {
             @Override
@@ -368,7 +340,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements Custo
         matchLocation.setText(mLineupPlanLocResult.matchLocation);
         if(clubId == mLineupPlanLocResult.home_id){
             homeAwayPlan.setText(Integer.toString(mLineupPlanLocResult.homePlan));
-        }else if(clubId == mLineupPlanLocResult.away_id){
+        } else if (clubId == mLineupPlanLocResult.away_id) {
             homeAwayPlan.setText(Integer.toString(mLineupPlanLocResult.awayPlan));
         }
     }
@@ -448,4 +420,5 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements Custo
     public void drop(int from, int to) {
         Log.d("hello" , "drop from : " +from + "/ to  : " +to);
     }
+
 }
