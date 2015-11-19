@@ -159,15 +159,15 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             @Override
             public void onHeaderImageClick(MVPview view, String tag) {
                 if (tag.equals("MVP")) {
-                    Toast.makeText(getContext(), hView.getItemMVP().memName, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), hView.getItemMVP().memName, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getContext(), MyProfileActivity.class);
                     startActivity(intent);
                 } else if (tag.equals("SCR")) {
-                    Toast.makeText(getContext(), hView.getItemScr().memName, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), hView.getItemScr().memName, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getContext(), MyProfileActivity.class);
                     startActivity(intent);
                 } else if (tag.equals("CLUB")) {
-                    Toast.makeText(getContext(), hView.getItemWin().clubName, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), hView.getItemWin().clubName, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getContext(), FCActivity.class);
                     startActivity(intent);
                 }

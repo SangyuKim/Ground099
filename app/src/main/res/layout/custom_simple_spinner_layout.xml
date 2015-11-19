@@ -7,13 +7,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="center_vertical|center"
+        android:gravity="center_vertical|center|center_horizontal"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:text="asdf"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:id="@+id/textView23"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:textSize="12sp"
+        android:layout_alignParentTop="false"
+        android:foregroundGravity="center_vertical|center_horizontal"
+        android:layout_centerInParent="true" />
 
     <ImageView
         android:layout_width="21.75dp"
@@ -23,4 +25,5 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

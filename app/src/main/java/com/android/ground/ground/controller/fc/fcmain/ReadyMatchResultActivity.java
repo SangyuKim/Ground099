@@ -4,9 +4,11 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.RequiresPermission;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
@@ -17,12 +19,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.ReadymatchResult.ReadyMatchResultAdapter;
@@ -52,6 +57,11 @@ import java.util.List;
 
 public class ReadyMatchResultActivity extends AppCompatActivity implements
         CustomDragDropListView.DragListener, CustomDragDropListView.DropListener{
+
+    ArrayList<LinearLayout> mLinearLayouts = new ArrayList<LinearLayout>();
+
+    int w, h, countInField =0;
+
     TextView matchDate, matchDay, awayClubName, homeClubName
             , startTime, matchLocation, homeAwayPlan, homeScore, awayScore, memName
             , MVPmemName;
@@ -109,64 +119,19 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
         lineupVirtualRes = (CustomDragDropListView)findViewById(R.id.lineupVirtualRes);
         mReadyMatchResultAdapter = new ReadyMatchResultAdapter();
-
+//        mReadyMatchResultAdapter.setOnAdapterCustomTouchListener(new OnAdapterCustomTouchListener() {
+//            @Override
+//            public void onTouch(View view, LineupVirtualResResult mItem) {
+//                Log.d("hello", " list touched");
+//                String text = mItem.memName;
+//                ReadyMatchResultListItemView tempView = new ReadyMatchResultListItemView(ReadyMatchResultActivity.this);
+//                tempView.setReadyMatchResultListItem(mItem);
+//                ClipData.Item item = new ClipData.Item(text);
+//                ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+//                view.startDrag(data, new View.DragShadowBuilder(view), null, 3);
+//            }
+//        });
         lineupVirtualRes.setAdapter(mReadyMatchResultAdapter);
-        int w =gridLayout.getWidth()/7;
-        int h =gridLayout.getHeight()/7;
-
-        Log.d("hello", "w : " + w + "  //  h : " +h);
-
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w,h);
-
-        ArrayList<LinearLayout> mLinearLayouts = new ArrayList<LinearLayout>();
-
-        for(int i=0; i< 40; i++){
-            LinearLayout mLinearLayout = new LinearLayout(ReadyMatchResultActivity.this);
-            mLinearLayout.setLayoutParams(lp);
-            mLinearLayouts.add(mLinearLayout);
-            mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
-                @Override
-                public boolean onDrag(View v, DragEvent event) {
-                    switch (event.getAction()) {
-                        case DragEvent.ACTION_DRAG_STARTED:
-                            // do nothing
-                            break;
-                        case DragEvent.ACTION_DRAG_ENTERED:
-//                            v.setBackgroundDrawable(enterShape);
-                            break;
-                        case DragEvent.ACTION_DRAG_EXITED:
-//                            v.setBackgroundDrawable(normalShape);
-                            break;
-                        case DragEvent.ACTION_DROP:
-                            // Dropped, reassign View to ViewGroup
-//                            View view = (View) event.getLocalState();
-//                            ViewGroup owner = (ViewGroup) view.getParent();
-//                            owner.removeView(view);
-//                            view.setVisibility(View.VISIBLE);
-
-
-                            LinearLayout container = (LinearLayout) v;
-//                            GridItemView2 container = (GridItemView2)v;
-
-                            String text = event.getClipData().getItemAt(0).getText().toString();
-                            gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
-                            gridItemView.setText(text);
-                            container.addView(gridItemView);
-
-                            break;
-                        case DragEvent.ACTION_DRAG_ENDED:
-//                            v.setBackgroundDrawable(normalShape);
-                        default:
-                            break;
-                    }
-                    return true;
-                }
-            });
-            gridLayout.addView(mLinearLayouts.get(i));
-
-        }//for
-
-
 
 
         if(matchId != -1){
@@ -195,21 +160,22 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         }
 
 
-        listItemView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                String text = ((ListItemView) v).getTextView().toString();
-                ClipData.Item item = new ClipData.Item(text);
-                ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
-                v.startDrag(data, new View.DragShadowBuilder(v), null, 1);
-                return true;
-            }
-        });
+//        listItemView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                String text = ((ListItemView) v).getTextView().toString();
+//                ClipData.Item item = new ClipData.Item(text);
+//                ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+//                v.startDrag(data, new View.DragShadowBuilder(v), null, 1);
+//                return true;
+//            }
+//        });
 
         lineupVirtualRes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String text = ((ReadyMatchResultListItemView) view).memName.getText().toString();
+                Log.d("hello", text);
                 ClipData.Item item = new ClipData.Item(text);
                 ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                 view.startDrag(data, new View.DragShadowBuilder(view), null, 3);
@@ -413,12 +379,128 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
     @Override
     public void drag(int from, int to) {
-        Log.d("hello" , " drag from : " +from + "/ to  : " +to);
+        Log.d("hello", " drag from : " + from + "/ to  : " + to);
     }
 
     @Override
     public void drop(int from, int to) {
-        Log.d("hello" , "drop from : " +from + "/ to  : " +to);
+        Log.d("hello", "drop from : " + from + "/ to  : " + to);
     }
 
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+
+        w= gridLayout.getWidth()/7;
+        h= gridLayout.getHeight()/8;
+
+        Log.d("hello", "w : " + w + "  //  h : " + h);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w,h);
+
+        for(int i=0; i< 56; i++){
+            LinearLayout mLinearLayout = new LinearLayout(ReadyMatchResultActivity.this);
+            mLinearLayout.setLayoutParams(lp);
+            mLinearLayouts.add(mLinearLayout);
+            mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                @Override
+                public boolean onDrag(View v, DragEvent event) {
+                    Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                    Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                    switch (event.getAction()) {
+                        case DragEvent.ACTION_DRAG_STARTED:
+                            // do nothing
+                            break;
+                        case DragEvent.ACTION_DRAG_ENTERED:
+                            v.setBackgroundDrawable(enterShape);
+                            break;
+                        case DragEvent.ACTION_DRAG_EXITED:
+                            v.setBackgroundDrawable(normalShape);
+                            break;
+                        case DragEvent.ACTION_DROP:
+                            v.setBackgroundDrawable(normalShape);
+
+
+                            // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                            LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                            String text = event.getClipData().getItemAt(0).getText().toString();
+                            gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                            gridItemView.setText(text);
+                            gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event) {
+                                    String text = ((GridItemView2) v).getTextView().getText().toString();
+                                    ClipData.Item item = new ClipData.Item(text);
+                                    ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                    v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                    v.setVisibility(View.INVISIBLE);
+                                    return true;
+                                }
+                            });
+                            container.removeAllViews();
+                            container.addView(gridItemView);
+
+
+                            countInField = 0;
+                            for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                    if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                        countInField++;
+                                    }
+                                }
+
+                            }
+                            if (countInField >= 12) {
+                                Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                container.removeAllViews();
+                            }
+
+                            break;
+                        case DragEvent.ACTION_DRAG_ENDED:
+                            v.setBackgroundDrawable(normalShape);
+                        default:
+                            break;
+                    }
+                    return true;
+                }
+            });
+            ViewGroup parent = (ViewGroup)mLinearLayouts.get(i).getParent();
+            if(parent != null)
+                parent.removeAllViews();
+            parent = (ViewGroup)gridLayout.getParent();
+            if(parent != null){
+                parent.removeAllViews();
+            }
+            gridLayout.addView(mLinearLayouts.get(i));
+
+
+        }//for
+
+
+    }//windowfocus
+
+    @Override
+    protected void onPause() {
+        for(int i=0; i< mLinearLayouts.size(); i++){
+            mLinearLayouts.get(i).removeAllViews();
+            ViewGroup parent = (ViewGroup)mLinearLayouts.get(i).getParent();
+            if(parent != null)
+                parent.removeAllViews();
+        }
+        gridLayout.removeAllViews();
+        ViewGroup parent = (ViewGroup)gridLayout.getParent();
+        if(parent != null){
+            parent.removeAllViews();
+        }
+        super.onPause();
+    }
 }

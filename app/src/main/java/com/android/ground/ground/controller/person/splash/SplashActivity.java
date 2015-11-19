@@ -267,12 +267,14 @@ public class SplashActivity extends AppCompatActivity {
                 //todo
                 //sharedPreference에 저장된 페북 값이 없음
 
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        goLoginActivity();
-                    }
-                }, 1000);
+// =================================================== 실행하기
+
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        goLoginActivity();
+//                    }
+//                }, 1000);
             }
 
 

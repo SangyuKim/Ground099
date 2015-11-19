@@ -72,9 +72,9 @@ public class ReadyMatchResultAdapter extends BaseAdapter implements OnCustomTouc
 
 
     @Override
-    public void onTouch(View view) {
+    public void onTouch(View view, LineupVirtualResResult mItem) {
         if(mListener != null){
-            mListener.onTouch(view);
+            mListener.onTouch(view, mItem);
         }
     }
 }

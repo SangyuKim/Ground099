@@ -2,6 +2,7 @@ package com.android.ground.ground.controller.person.main;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.login.MySpinnerSignupAdapter;
+import com.android.ground.ground.model.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +63,7 @@ public class MySpinnerAdapter extends BaseAdapter {
         }
 
         tv.setText(items.get(position));
-        tv.setTextColor(Color.WHITE);
-        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+        tv.setGravity(Gravity.CENTER);
         view.setLayoutParams(lp);
         return view;
     }
@@ -73,24 +74,24 @@ public class MySpinnerAdapter extends BaseAdapter {
         View view;
         ImageView imageView;
         if (convertView != null) {
-//            tv = (TextView)convertView;
             view = convertView;
             tv = (TextView)view.findViewById(R.id.textView23);
             imageView =(ImageView)view.findViewById(R.id.imageView4);
 
         } else {
-
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_simple_spinner_layout, null);
             tv = (TextView)view.findViewById(R.id.textView23);
-//            tv = (TextView)LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_simple_list_item_spinner, null);
-            view.setLayoutParams(new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            view.setLayoutParams(new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+                    , (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
+                    MyApplication.getContext().getResources().getDisplayMetrics())));
             imageView =(ImageView)view.findViewById(R.id.imageView4);
-//            tv.setBackgroundColor(Color.YELLOW);
         }
         imageView.setVisibility(View.INVISIBLE);
         tv.setText(items.get(position));
-        tv.setGravity(Gravity.CENTER_HORIZONTAL);
-        view.setLayoutParams(lp);
+        tv.setGravity(Gravity.CENTER);
+        view.setLayoutParams((new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+                , (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
+                MyApplication.getContext().getResources().getDisplayMetrics()))));
         return view;
     }
 }

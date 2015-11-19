@@ -2,6 +2,7 @@ package com.android.ground.ground.view.person.main;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -137,6 +138,8 @@ public class SearchPlayerItemView extends RelativeLayout {
 
         ImageLoader.getInstance().displayImage(ImageUrl+item.memImage, memImage, options);
         ImageLoader.getInstance().displayImage(ImageUrl+item.clubImage, clubImage, options);
+        Log.d("hello", "image load : " );
+        Log.d("hello", "clubImage : " +item. clubImage);
     }
 
     OnSpecificDialogClickListener mRequestListener;

@@ -111,6 +111,11 @@ public class MainFragment extends Fragment {
         tabHost.setCurrentTab(1);
 
         if(tabHost.getCurrentTab()==1){
+            for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+//                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLACK); // unselected
+                tabHostTextView = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
+                tabHostTextView.setTextColor(getResources().getColor(R.color.tabwidget));
+            }
             getActivity().setTitle("FC 찾기");
             tabHostTextView = (TextView)tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
             tabHostTextView.setTextColor(Color.WHITE);
@@ -122,7 +127,7 @@ public class MainFragment extends Fragment {
                 for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
 //                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLACK); // unselected
                     tabHostTextView = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
-                    tabHostTextView.setTextColor(Color.BLACK);
+                    tabHostTextView.setTextColor(getResources().getColor(R.color.tabwidget));
                 }
                 if (tabId.equals("tab1")) {
                     getActivity().setTitle("선수 찾기");

@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-  >
+    android:paddingTop="25.5dp"
+    android:paddingLeft="23dp"
+    android:paddingRight="15.75dp"
+    android:paddingBottom="18dp">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -137,7 +140,7 @@
 
                 <ImageView
                     android:layout_width="22.75dp"
-                    android:layout_height="22.25dp"
+                    android:layout_height="25.25dp"
                     android:id="@+id/imageView2"
                     android:src="@drawable/icon_fc"
                     android:focusable="false"/>
@@ -163,16 +166,16 @@
                 android:paddingLeft="22.75dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="20dp"
+                    android:layout_width="47.75dp"
+                    android:layout_height="15dp"
                     android:id="@+id/memYN"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/match_002"
                     android:focusable="false"/>
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="20dp"
+                    android:layout_width="47.75dp"
+                    android:layout_height="15dp"
                     android:id="@+id/matchYN"
                     android:src="@drawable/match_001"
                     android:focusable="false"/>
@@ -225,6 +228,15 @@
                     android:text="Small Text"
                     android:id="@+id/clubSkill"
                     android:textColor="#ffffffff" />
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:id="@+id/progressBar"
+                    android:maxHeight="10dp"
+                    android:progress="50"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/progress_bar" />
 
             </LinearLayout>
 
@@ -248,6 +260,16 @@
                     android:text="Small Text"
                     android:id="@+id/clubManner"
                     android:textColor="#ffffffff" />
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:id="@+id/progressBar2"
+                    android:maxHeight="10dp"
+                    android:progress="50"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/progress_bar" />
             </LinearLayout>
 
             <LinearLayout

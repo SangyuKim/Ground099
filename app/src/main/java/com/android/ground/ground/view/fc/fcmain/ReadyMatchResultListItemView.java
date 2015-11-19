@@ -2,6 +2,7 @@ package com.android.ground.ground.view.fc.fcmain;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -17,8 +18,9 @@ import com.android.ground.ground.view.OnCustomTouchListener;
  * Created by Tacademy on 2015-11-17.
  */
 public class ReadyMatchResultListItemView extends FrameLayout {
-    public ImageView position;
+    public ImageView position , dragImage;
     public TextView memName;
+
 
     LineupVirtualResResult mItem;
 
@@ -35,16 +37,24 @@ public class ReadyMatchResultListItemView extends FrameLayout {
         View view = inflate(getContext(), R.layout.view_ready_match_result_list_item, this);
         memName = (TextView)findViewById(R.id.memName);
         position = (ImageView)findViewById(R.id.position);
-//        view.setOnTouchListener(new OnTouchListener() {
+//        dragImage.setOnTouchListener(new OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
-//                if(mtListener !=null){
-//                    mtListener.onTouch(v);
+//                if (mtListener != null) {
+//                    mtListener.onTouch(v, mItem);
 //                }
 //                return true;
 //            }
 //        });
-
+//        view.setOnTouchListener(new OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (mtListener != null) {
+//                    mtListener.onTouch(v, mItem);
+//                }
+//                return true;
+//            }
+//        });
 
     }
     public void setReadyMatchResultListItem(LineupVirtualResResult item){

@@ -62,7 +62,7 @@ import java.security.cert.CertificateException;
 
 public class NetworkManager {
 
-    public final static String GROND_SERVER_URL = "http://192.168.201.240:3000";
+    public final static String GROND_SERVER_URL = "http://192.168.201.240:3001";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
         if (instance == null) {
