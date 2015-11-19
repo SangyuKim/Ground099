@@ -10,296 +10,320 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="#c0c0c0"
-            android:id="@+id/linearLayout56"
-            android:layout_above="@+id/linearLayout57"></LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/matchDate"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/linearLayout56"
-            android:layout_toEndOf="@+id/linearLayout56" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Day / "
-            android:id="@+id/matchDay"
-            android:layout_below="@+id/matchDate"
-            android:layout_toRightOf="@+id/linearLayout56"
-            android:layout_toEndOf="@+id/linearLayout56" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/awayClubName"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="  vs  "
-            android:id="@+id/textView34"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/awayClubName"
-            android:layout_toStartOf="@+id/awayClubName" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/homeClubName"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/textView34"
-            android:layout_toStartOf="@+id/textView34" />
-
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="400dp"
-            android:background="@drawable/ground_background"
-            android:columnCount="7"
-            android:id="@+id/gridLayout"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/textView34"
-            android:layout_marginTop="37dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-
-        </GridLayout>
-
-        <com.android.ground.ground.custom.CustomDragDropListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lineupVirtualRes"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/gridLayout"
-            android:layout_toEndOf="@+id/gridLayout"
-            android:layout_below="@+id/linearLayout58"
-            android:layout_above="@+id/button22" />
-
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView3" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/relativeLayout3"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/gridLayout">
+            android:layout_alignParentStart="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeLayout4">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="10dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="#c0c0c0"
+                    android:id="@+id/linearLayout56"
+                    android:layout_above="@+id/linearLayout57"></LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/matchDate"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/linearLayout56"
+                    android:layout_toEndOf="@+id/linearLayout56" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Day / "
+                    android:id="@+id/matchDay"
+                    android:layout_below="@+id/matchDate"
+                    android:layout_toRightOf="@+id/linearLayout56"
+                    android:layout_toEndOf="@+id/linearLayout56" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/awayClubName"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="  vs  "
+                    android:id="@+id/textView34"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/awayClubName"
+                    android:layout_toStartOf="@+id/awayClubName" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/homeClubName"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/textView34"
+                    android:layout_toStartOf="@+id/textView34" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/startTime"
+                    android:layout_alignTop="@+id/matchDay"
+                    android:layout_toRightOf="@+id/matchDay"
+                    android:layout_toEndOf="@+id/matchDay" />
+            </RelativeLayout>
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lineupVirtualRes"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/gridLayout"
+                android:layout_toEndOf="@+id/gridLayout"
+                android:layout_below="@+id/linearLayout58"
+                android:layout_above="@+id/button22" />
+
+
+            <GridLayout
+                android:layout_width="fill_parent"
+                android:layout_height="400dp"
+                android:background="@drawable/ground_background"
+                android:columnCount="7"
+                android:id="@+id/gridLayout"
+                android:layout_below="@+id/relativeLayout4"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/listItemView"
+                android:layout_toStartOf="@+id/listItemView">
+
+
+            </GridLayout>
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView2"
+                android:layout_below="@+id/listItemView"
+                android:layout_alignRight="@+id/button22"
+                android:layout_alignEnd="@+id/button22">
+
+            </ScrollView>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/linearLayout59"
-                android:layout_below="@+id/textView65"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:id="@+id/linearLayout57"
+                android:layout_alignTop="@+id/gridLayout"
+                android:layout_toRightOf="@+id/gridLayout"
+                android:layout_toEndOf="@+id/gridLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="장소:  "
+                    android:id="@+id/textView40" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
-                    android:id="@+id/homeScore" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="   :   "
-                    android:id="@+id/textView32" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Small Text"
-                    android:id="@+id/awayScore" />
+                    android:id="@+id/matchLocation" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="득점자: "
-                android:id="@+id/textView67"
-                android:layout_below="@+id/linearLayout59"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:id="@+id/linearLayout58"
+                android:layout_below="@+id/linearLayout57"
+                android:layout_toRightOf="@+id/gridLayout"
+                android:layout_toEndOf="@+id/gridLayout">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="작전:  "
+                    android:id="@+id/textView61" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/homeAwayPlan" />
+            </LinearLayout>
+
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="MVP"
-                android:id="@+id/textView70"
-                android:layout_below="@+id/textView67"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:id="@+id/editText"
+                android:hint="기타선수"
+                android:layout_above="@+id/listItemView"
+                android:layout_toRightOf="@+id/gridLayout"
+                android:layout_toEndOf="@+id/gridLayout" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="완료"
-                android:id="@+id/button48"
-                android:layout_alignParentBottom="true"
+                android:text="생성"
+                android:id="@+id/button22"
+                android:layout_alignBottom="@+id/editText"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
-            <TextView
+            <com.android.ground.ground.controller.person.finalposition.ListItemView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="[경기결과]"
-                android:id="@+id/textView65"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:id="@+id/listItemView"
+                android:layout_alignBottom="@+id/gridLayout"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="그리드뷰"
-                android:id="@+id/textView31"
-                android:layout_alignTop="@+id/textView67"
-                android:layout_toRightOf="@+id/textView67"
-                android:layout_toEndOf="@+id/textView67" />
+                android:id="@+id/relativeLayout3"
+                android:visibility="visible"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/editText"
+                android:layout_alignEnd="@+id/editText"
+                android:layout_below="@+id/scrollView2">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/memName"
-                android:layout_below="@+id/linearLayout59"
-                android:layout_toRightOf="@+id/textView31"
-                android:layout_toEndOf="@+id/textView31" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout59"
+                    android:layout_below="@+id/textView65"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/MVPmemName"
-                android:layout_alignBottom="@+id/textView70"
-                android:layout_alignRight="@+id/textView31"
-                android:layout_alignEnd="@+id/textView31" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Small Text"
+                        android:id="@+id/homeScore" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="   :   "
+                        android:id="@+id/textView32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Small Text"
+                        android:id="@+id/awayScore" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="득점자: "
+                    android:id="@+id/textView67"
+                    android:layout_below="@+id/linearLayout59"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="MVP"
+                    android:id="@+id/textView70"
+                    android:layout_below="@+id/textView67"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="완료"
+                    android:id="@+id/button48"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="[경기결과]"
+                    android:id="@+id/textView65"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="그리드뷰"
+                    android:id="@+id/textView31"
+                    android:layout_alignTop="@+id/textView67"
+                    android:layout_toRightOf="@+id/textView67"
+                    android:layout_toEndOf="@+id/textView67" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/memName"
+                    android:layout_below="@+id/linearLayout59"
+                    android:layout_toRightOf="@+id/textView31"
+                    android:layout_toEndOf="@+id/textView31" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/MVPmemName"
+                    android:layout_alignBottom="@+id/textView70"
+                    android:layout_alignRight="@+id/textView31"
+                    android:layout_alignEnd="@+id/textView31" />
 
 
+            </RelativeLayout>
 
         </RelativeLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout57"
-            android:layout_alignTop="@+id/gridLayout"
-            android:layout_toRightOf="@+id/gridLayout"
-            android:layout_toEndOf="@+id/gridLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="장소:  "
-                android:id="@+id/textView40" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/matchLocation" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout58"
-            android:layout_below="@+id/linearLayout57"
-            android:layout_toRightOf="@+id/gridLayout"
-            android:layout_toEndOf="@+id/gridLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="작전:  "
-                android:id="@+id/textView61" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/homeAwayPlan" />
-        </LinearLayout>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:hint="기타선수"
-            android:layout_above="@+id/listItemView"
-            android:layout_toRightOf="@+id/gridLayout"
-            android:layout_toEndOf="@+id/gridLayout" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="생성"
-            android:id="@+id/button22"
-            android:layout_alignBottom="@+id/editText"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/startTime"
-            android:layout_alignTop="@+id/matchDay"
-            android:layout_toRightOf="@+id/matchDay"
-            android:layout_toEndOf="@+id/matchDay" />
-
-        <com.android.ground.ground.controller.person.finalposition.ListItemView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listItemView"
-            android:layout_alignBottom="@+id/gridLayout"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

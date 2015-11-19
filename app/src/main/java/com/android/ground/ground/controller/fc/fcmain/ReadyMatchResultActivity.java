@@ -21,11 +21,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +60,7 @@ import java.util.List;
 public class ReadyMatchResultActivity extends AppCompatActivity implements
         CustomDragDropListView.DragListener, CustomDragDropListView.DropListener{
 
-    ArrayList<LinearLayout> mLinearLayouts = new ArrayList<LinearLayout>();
+
 
     int w, h, countInField =0;
 
@@ -69,7 +71,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
     List<String> listScorer = new ArrayList<String>();
 
-    CustomDragDropListView lineupVirtualRes;
+    ListView lineupVirtualRes;
     ReadyMatchResultAdapter mReadyMatchResultAdapter;
 
     GridLayout gridLayout;
@@ -84,6 +86,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
     private ShareActionProvider mShareActionProvider;
     View captureView;
+    ScrollView mScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,13 +114,14 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         awayScore = (TextView)findViewById(R.id.awayScore);
         memName = (TextView)findViewById(R.id.memName);
         MVPmemName= (TextView)findViewById(R.id.MVPmemName);
+        mScrollView = (ScrollView)findViewById(R.id.scrollView3);
 
 
         gridLayout = (GridLayout) findViewById(R.id.gridLayout);
 
         listItemView = (ListItemView) findViewById(R.id.listItemView);
 
-        lineupVirtualRes = (CustomDragDropListView)findViewById(R.id.lineupVirtualRes);
+        lineupVirtualRes = (ListView)findViewById(R.id.lineupVirtualRes);
         mReadyMatchResultAdapter = new ReadyMatchResultAdapter();
 //        mReadyMatchResultAdapter.setOnAdapterCustomTouchListener(new OnAdapterCustomTouchListener() {
 //            @Override
@@ -132,6 +136,13 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 //            }
 //        });
         lineupVirtualRes.setAdapter(mReadyMatchResultAdapter);
+        lineupVirtualRes.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mScrollView.requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
 
         if(matchId != -1){
@@ -175,7 +186,6 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String text = ((ReadyMatchResultListItemView) view).memName.getText().toString();
-                Log.d("hello", text);
                 ClipData.Item item = new ClipData.Item(text);
                 ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                 view.startDrag(data, new View.DragShadowBuilder(view), null, 3);
@@ -373,7 +383,6 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
     private void setLineupScorer(List<String> listScorer) {
         for(String item : listScorer){
             memName.setText(item);
-            Log.d("hello", item);
         }
     }
 
@@ -388,9 +397,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
     }
 
 
+    ArrayList<LinearLayout> mLinearLayouts = new ArrayList<LinearLayout>();
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
+        super.onWindowFocusChanged(hasFocus);
 
         w= gridLayout.getWidth()/7;
         h= gridLayout.getHeight()/8;
@@ -398,6 +409,8 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         Log.d("hello", "w : " + w + "  //  h : " + h);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w,h);
+        mLinearLayouts.clear();
+        gridLayout.removeAllViews();
 
         for(int i=0; i< 56; i++){
             LinearLayout mLinearLayout = new LinearLayout(ReadyMatchResultActivity.this);
@@ -476,11 +489,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
             ViewGroup parent = (ViewGroup)mLinearLayouts.get(i).getParent();
             if(parent != null)
                 parent.removeAllViews();
-            parent = (ViewGroup)gridLayout.getParent();
-            if(parent != null){
-                parent.removeAllViews();
-            }
-            gridLayout.addView(mLinearLayouts.get(i));
+           gridLayout.addView(mLinearLayouts.get(i));
 
 
         }//for
