@@ -3,89 +3,125 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="11/03"
-        android:id="@+id/matchDate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColor="#ffffffff" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="토요일 18:00"
-        android:id="@+id/matchDay"
-        android:layout_below="@+id/matchDate"
-        android:textColor="#ffffffff" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout9"
+        android:id="@+id/linearLayout60"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/matchDay"
-        android:layout_toEndOf="@+id/matchDay">
+        android:layout_above="@+id/relativeLayout_extra"
+        android:layout_toRightOf="@+id/imageView6"
+        android:layout_toEndOf="@+id/imageView6">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageView6"
+            android:layout_toEndOf="@+id/imageView6"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="11/03"
+                android:id="@+id/matchDate"
+                android:textColor="#ffffffff"
+                android:textSize="12sp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="dd"
+                android:id="@+id/matchDD"
+                android:textSize="16sp"
+                android:layout_below="@+id/matchDate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="#ffffffff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="토요일"
+                android:id="@+id/matchDay"
+                android:textColor="#ffffffff"
+                android:textSize="12sp"
+                android:layout_alignBottom="@+id/matchDD"
+                android:layout_toRightOf="@+id/matchDD"
+                android:layout_toEndOf="@+id/matchDD" />
+        </RelativeLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.92" >
+            android:layout_weight="0.92"
+            android:layout_gravity="center_vertical">
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
+                    android:text="팀이름"
                     android:id="@+id/homeClubName"
-                    android:textColor="#ffffffff" />
+                    android:textColor="#ffffffff"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text=" vs "
+                    android:text="VS"
                     android:id="@+id/text_director"
                     android:layout_toLeftOf="@+id/button35"
                     android:layout_below="@+id/memNameCountScr"
                     android:layout_toRightOf="@+id/memImage"
                     android:layout_toEndOf="@+id/memImage"
                     android:gravity="center"
-                    android:textColor="#ffffffff" />
+                    android:textColor="#ffffffff"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
+                    android:text="팀이름"
                     android:id="@+id/awayClubName"
-                    android:textColor="#ffffffff" />
+                    android:textColor="#ffffffff"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal" />
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
+                    android:text="0"
                     android:id="@+id/homeScore"
-                    android:textColor="#ffffffff" />
+                    android:textColor="#ffffffff"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -99,42 +135,71 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
+                    android:text="0"
                     android:id="@+id/awayScore"
-                    android:textColor="#ffffffff" />
+                    android:textColor="#ffffffff"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal" />
             </LinearLayout>
 
         </LinearLayout>
-
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ImageView
+        android:layout_width="11dp"
+        android:layout_height="66dp"
+        android:id="@+id/imageView6"
+        android:background="@android:color/holo_green_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout_extra"
-        android:visibility="gone"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_below="@+id/linearLayout9"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView6"
+        android:id="@+id/relativeLayout_extra">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="내용 더보기"
-            android:id="@+id/textView82"
-            android:layout_gravity="center_horizontal" />
+            android:id="@+id/linearLayout_extra"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_alignBottom="@+id/imageView7"
+            android:layout_toRightOf="@+id/imageView7"
+            android:layout_toEndOf="@+id/imageView7">
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="라인업 보기"
-            android:id="@+id/button36"
-            android:layout_gravity="center_horizontal"
-            android:focusable="false" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="내용 더보기"
+                android:id="@+id/textView82"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#ffffffff" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="라인업 보기"
+                android:id="@+id/button36"
+                android:layout_gravity="center_horizontal"
+                android:focusable="false" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="66dp"
+            android:id="@+id/imageView7"
+            android:background="@android:color/holo_orange_dark"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 
 </RelativeLayout>

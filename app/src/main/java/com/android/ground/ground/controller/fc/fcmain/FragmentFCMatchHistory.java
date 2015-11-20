@@ -305,7 +305,7 @@ public class FragmentFCMatchHistory extends Fragment {
     private void divideTotalList(List<ClubMatchListResult> totalChildren) {
         for(ClubMatchListResult item : totalChildren){
             if(item.insertResultYN==4){
-                readyChildren.add(item); ;
+                readyChildren.add(item);
             }else if(item.insertResultYN==1){
                 finishedChildren.add(item);
             }else{

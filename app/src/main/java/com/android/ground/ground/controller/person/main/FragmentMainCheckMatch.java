@@ -34,6 +34,7 @@ import com.android.ground.ground.controller.person.finalposition.FinalPositionAc
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.person.main.matchinfo.CheckMatchListGroupItem;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfo;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfoAdapter;
@@ -190,8 +191,10 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 if (((SearchMatchItemView) v).getVisibilityLayout() == View.GONE) {
-                    ((SearchMatchItemView) v).setVisible();
-
+                    CheckMatchListGroupItem mGroupItem = (CheckMatchListGroupItem)mAdapter.getGroup(groupPosition);
+                    if(!mGroupItem.text.equals("futureMat")){
+                        ((SearchMatchItemView) v).setVisible();
+                    }
                 } else {
                     ((SearchMatchItemView) v).setInvisible();
 

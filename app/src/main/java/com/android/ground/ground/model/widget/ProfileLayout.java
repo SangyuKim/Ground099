@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.model.MyApplication;
-import com.android.volley.toolbox.NetworkImageView;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
@@ -40,8 +39,6 @@ public class ProfileLayout extends FrameLayout {
     private String userId;
     private String birthDay;
     private String countryIso;
-    private NetworkImageView profile;
-    private NetworkImageView background;
     private TextView profileDescription;
 
     public ProfileLayout(Context context) {
@@ -81,11 +78,12 @@ public class ProfileLayout extends FrameLayout {
      * @param profileImageURL 화면에 반영할 프로필 이미지
      */
     public void setProfileURL(final String profileImageURL) {
-        if (profile != null && profileImageURL != null) {
+//        if (profile != null && profileImageURL != null) {
+        if (profileImageURL != null) {
             Application app = MyApplication.getGlobalApplicationContext();
             if (app == null)
                 throw new UnsupportedOperationException("needs com.kakao.GlobalApplication in order to use ImageLoader");
-            profile.setImageUrl(profileImageURL, ((MyApplication) app).getImageLoader());
+//            profile.setImageUrl(profileImageURL, ((MyApplication) app).getImageLoader());
         }
     }
 
@@ -94,20 +92,20 @@ public class ProfileLayout extends FrameLayout {
             Application app = MyApplication.getGlobalApplicationContext();
             if (app == null)
                 throw new UnsupportedOperationException("needs com.kakao.GlobalApplication in order to use ImageLoader");
-            background.setImageUrl(bgImageURL, ((MyApplication) app).getImageLoader());
+//            background.setImageUrl(bgImageURL, ((MyApplication) app).getImageLoader());
         }
     }
 
     public void setDefaultBgImage(int imageResId) {
-        if (background != null) {
-            background.setBackgroundResource(imageResId);
-        }
+//        if (background != null) {
+//            background.setBackgroundResource(imageResId);
+//        }
     }
 
     public void setDefaultProfileImage(int imageResId) {
-        if (profile != null) {
-            profile.setBackgroundResource(imageResId);
-        }
+//        if (profile != null) {
+//            profile.setBackgroundResource(imageResId);
+//        }
     }
 
     public void setCountryIso(String countryIso) {

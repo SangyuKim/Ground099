@@ -5,16 +5,25 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Checkable;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfoResult;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class SearchMatchItemView extends RelativeLayout implements Checkable {
     public final static String ImageUrl = "https://s3-ap-northeast-1.amazonaws.com/";
+
+
+
 
     public SearchMatchItemView(Context context) {
         super(context);
@@ -26,10 +35,12 @@ public class SearchMatchItemView extends RelativeLayout implements Checkable {
         init();
     }
 
-    TextView matchDate, startTime, homeClubName, awayClubName, matchLocation, mvpName, matchDay, homeScore, awayScore;
+    TextView matchDate, startTime, homeClubName, awayClubName, matchLocation, mvpName
+            , matchDay, homeScore, awayScore, matchDD;
     MatchInfoResult mItem;
-    LinearLayout mLinearLayout;
+    RelativeLayout mRelatveLayout;
     Button btn;
+    ImageView imageViewBar;
 
 
     DisplayImageOptions options;
@@ -43,8 +54,13 @@ public class SearchMatchItemView extends RelativeLayout implements Checkable {
         matchDay = (TextView) findViewById(R.id.matchDay);
         homeScore = (TextView) findViewById(R.id.homeScore);
         awayScore = (TextView) findViewById(R.id.awayScore);
+        matchDD= (TextView)findViewById(R.id.matchDD);
 
-        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_extra);
+
+        imageViewBar= (ImageView)findViewById(R.id.imageView6);
+
+//        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_extra);
+        mRelatveLayout = (RelativeLayout)findViewById(R.id.relativeLayout_extra);
         btn = (Button) findViewById(R.id.button36);
         btn.setOnClickListener(new OnClickListener() {
             @Override
@@ -69,43 +85,73 @@ public class SearchMatchItemView extends RelativeLayout implements Checkable {
 
     public void setMatchInfoResult(MatchInfoResult item) {
         mItem = item;
+        Date to = new Date();
+        String dd ="" ;
+        String month ="";
+        int flag = 0;
+        if(item.matchDate != null){
+            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy/MM/dd");
+            try {
+                to = transFormat.parse(item.matchDate);
+                flag++;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
-        matchDate.setText(item.matchDate);
+        SimpleDateFormat transFormat1 = new SimpleDateFormat("MM");
+        SimpleDateFormat transFormat2 = new SimpleDateFormat("dd");
+        if(flag !=0 ) {
+            dd = transFormat2.format(to);
+           month = transFormat1.format(to);
+
+        }
+        matchDate.setText(month + "/");
+//        Toast.makeText(getContext(), dd, Toast.LENGTH_SHORT).show();
+        matchDD.setText(dd);
         homeClubName.setText(item.homeClubName);
         awayClubName.setText(item.awayClubName);
         String day = "";
         if (item.matchDay == 1) {
-            day = "토요일";
+            day = "  Sat.";
         } else if (item.matchDay == 2) {
-            day = "월요일";
+            day = "  Mon.";
         } else if (item.matchDay == 3) {
-            day = "화요일";
+            day = "  Tue.";
         } else if (item.matchDay == 4) {
-            day = "수요일";
+            day = "  Wed.";
         } else if (item.matchDay == 5) {
-            day = "목요일";
+            day = "  Thu.";
         } else if (item.matchDay == 6) {
-            day = "금요일";
+            day = "  Fri.";
         } else if (item.matchDay == 7) {
-            day = "토요일";
+            day = "  Sat.";
         }
         matchDay.setText(day);
         homeScore.setText(Integer.toString(item.homeScore));
         awayScore.setText(Integer.toString(item.awayScore));
 
+        if(item.insertResultYN == 1){
+            imageViewBar.setBackgroundColor(getResources().getColor(R.color.blue));
+        }else if(item.insertResultYN ==4){
+            imageViewBar.setBackgroundColor(getResources().getColor(R.color.red));
+        }else{
+            imageViewBar.setBackgroundColor(getResources().getColor(R.color.gray));
+        }
+
 
     }
 
     public void setVisible() {
-        mLinearLayout.setVisibility(View.VISIBLE);
+        mRelatveLayout.setVisibility(View.VISIBLE);
     }
 
     public void setInvisible() {
-        mLinearLayout.setVisibility(View.GONE);
+        mRelatveLayout.setVisibility(View.GONE);
     }
 
     public int getVisibilityLayout() {
-        return mLinearLayout.getVisibility();
+        return mRelatveLayout.getVisibility();
     }
 
     @Override
@@ -189,9 +235,9 @@ public class SearchMatchItemView extends RelativeLayout implements Checkable {
         return mItem;
     }
 
-    public LinearLayout getmLinearLayout() {
-        return mLinearLayout;
-    }
+//    public LinearLayout getmLinearLayout() {
+//        return mLinearLayout;
+//    }
 
     public interface OnExtraButtonClickListener {
         void setOnButtonClick(View view);

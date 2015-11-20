@@ -20,7 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  */
 public class MVPview extends FrameLayout {
     public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
-    ImageView memImageMVP, memImageScr, clubImage, clubImageMVP, clubImageScr;
+    ImageView memImageMVP, memImageScr, clubImage, clubImageMVP, clubImageScr, scrPlayerPosition, mvpPlayerPosition ;
     TextView month, memNameCountMVP, memNameCountScr, clubNmaeCount;
     MVP mMVP;
     MVPResult itemMVP;
@@ -50,6 +50,10 @@ public class MVPview extends FrameLayout {
         memNameCountMVP =(TextView)findViewById(R.id.memNameCountMVP);
         memNameCountScr =(TextView)findViewById(R.id.memNameCountScr);
         clubNmaeCount = (TextView)findViewById(R.id.clubNmaeCount);
+
+
+        scrPlayerPosition =(ImageView)findViewById(R.id.scrPlayerPosition);
+        mvpPlayerPosition =(ImageView)findViewById(R.id.mvpPlayerPosition);
 
 
 
@@ -102,13 +106,24 @@ public class MVPview extends FrameLayout {
         month.setText(items.month +"월의 MVPs" );
         memNameCountMVP.setText(itemMVP.memName + " / " + itemMVP.count +" 회");
         memNameCountScr.setText(itemScr.memName + " / " + itemScr.count +" 골");
-        clubNmaeCount.setText(itemWin.clubName +" / " + itemMVP.count +" 승");
+        clubNmaeCount.setText(itemWin.clubName + " / " + itemMVP.count + " 승");
 
         ImageLoader.getInstance().displayImage((ImageUrl + itemMVP.clubImage), clubImageMVP, options);
         ImageLoader.getInstance().displayImage((ImageUrl + itemMVP.memImage), memImageMVP, options);
         ImageLoader.getInstance().displayImage((ImageUrl + itemScr.clubImage), clubImageScr, options);
         ImageLoader.getInstance().displayImage((ImageUrl + itemScr.memImage), memImageScr, options);
         ImageLoader.getInstance().displayImage((ImageUrl + itemWin.clubImage), clubImage, options);
+
+
+        //todo
+        //포지션 매칭해서 보여주기
+
+//        itemScr.position
+//        scrPlayerPosition.setImageResource(R.id);
+
+//        itemMVP.position
+//        mvpPlayerPosition.setImageResource(R.id);
+
 
     }
 

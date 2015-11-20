@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.custom.CustomRoundCornerProgressBar;
 import com.android.ground.ground.model.person.main.searchClub.SearchClubResult;
 import com.android.ground.ground.view.OnSpecificDialogClickListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -34,6 +36,8 @@ public class SearchFCItemView extends RelativeLayout {
             clubMainDay_Thu,clubMainDay_Fri,clubMainDay_Sat,clubMainDay_Sun;
     ImageView btnJoin;
     Button btn;
+
+    CustomRoundCornerProgressBar progressBarSkill, progressBarManner;
 
     DisplayImageOptions options;
 
@@ -62,6 +66,11 @@ public class SearchFCItemView extends RelativeLayout {
         memYN = (ImageView)findViewById(R.id.memYN);
         matchYN = (ImageView)findViewById(R.id.matchYN);
 
+        progressBarSkill = (CustomRoundCornerProgressBar)findViewById(R.id.progressBarSkill);
+        progressBarManner = (CustomRoundCornerProgressBar)findViewById(R.id.progressBarManner);
+
+        progressBarSkill.setMax(50);
+        progressBarManner.setMax(50);
 
         btnJoin = (ImageView)findViewById(R.id.button21);
         btnJoin.setFocusable(false);
@@ -142,6 +151,10 @@ public class SearchFCItemView extends RelativeLayout {
         else{
             matchYN.setVisibility(View.VISIBLE);
         }
+        if(item.clubSkill != null)
+             progressBarSkill.setProgress((int) (item.clubSkill * 10));
+        if(item.clubManner != null)
+               progressBarManner.setProgress((int)(item.clubManner*10));
     }
 
 

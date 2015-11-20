@@ -7,8 +7,8 @@
         <clip>
             <shape>
                 <gradient
-                    android:startColor="@android:color/holo_red_light"
-                    android:endColor="@android:color/holo_blue_dark" />
+                    android:startColor="#ff3a1d"
+                    android:endColor="#ff3a1d" />
             </shape>
         </clip>
     </item>

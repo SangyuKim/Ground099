@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:paddingTop="17.75dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="20dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -10,7 +14,8 @@
         android:id="@+id/month"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -33,27 +38,48 @@
                 android:text="최다 MVP"
                 android:id="@+id/textView18"
                 android:gravity="center"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:textSize="12sp"
+                android:layout_gravity="center" />
 
-            <com.android.ground.ground.custom.CustomCircularImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/clubImageMVP"
-                android:src="@mipmap/ic_launcher" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
-            <com.android.ground.ground.custom.CustomCircularImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/memImage"
-                android:src="@mipmap/ic_launcher" />
+                <com.android.ground.ground.custom.CustomCircularImageView
+                    android:layout_width="89.25dp"
+                    android:layout_height="89dp"
+                    android:id="@+id/memImage"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_gravity="center" />
+
+                <com.android.ground.ground.custom.CustomCircularImageView
+                    android:layout_width="27.25dp"
+                    android:layout_height="27.25dp"
+                    android:id="@+id/clubImageMVP"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_gravity="left|top" />
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:id="@+id/mvpPlayerPosition"
+                    android:layout_gravity="right|bottom"
+                    android:src="@mipmap/ic_launcher" />
+
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
+                android:text="이름"
                 android:id="@+id/memNameCountMVP"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:textSize="12sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="13.25dp" />
 
         </LinearLayout>
 
@@ -70,28 +96,48 @@
                 android:text="최다 득점"
                 android:id="@+id/textView19"
                 android:gravity="center"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:textSize="12sp"
+                android:layout_gravity="center" />
 
-            <com.android.ground.ground.custom.CustomCircularImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/clubImageScr"
-                android:src="@mipmap/ic_launcher" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
-            <com.android.ground.ground.custom.CustomCircularImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/memImageScr"
-                android:src="@mipmap/ic_launcher" />
+                <com.android.ground.ground.custom.CustomCircularImageView
+                    android:layout_width="89.25dp"
+                    android:layout_height="89dp"
+                    android:id="@+id/memImageScr"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_gravity="center" />
+
+                <com.android.ground.ground.custom.CustomCircularImageView
+                    android:layout_width="27.25dp"
+                    android:layout_height="27.25dp"
+                    android:id="@+id/clubImageScr"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_gravity="left|top" />
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:id="@+id/scrPlayerPosition"
+                    android:layout_gravity="right|bottom"
+                    android:src="@mipmap/ic_launcher" />
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="김상철 30골"
+                android:text="이름"
                 android:id="@+id/memNameCountScr"
                 android:gravity="center"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="13.25dp" />
 
         </LinearLayout>
 
@@ -108,22 +154,28 @@
                 android:text="다승 FC"
                 android:id="@+id/textView20"
                 android:gravity="center"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:textSize="12sp"
+                android:layout_gravity="center" />
 
             <com.android.ground.ground.custom.CustomCircularImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="89.25dp"
+                android:layout_height="89dp"
                 android:id="@+id/clubImage"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+                android:layout_gravity="center" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="FC 신림맨 5승"
+                android:text="팀명"
                 android:id="@+id/clubNmaeCount"
                 android:gravity="center"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="13.25dp" />
 
         </LinearLayout>
     </LinearLayout>

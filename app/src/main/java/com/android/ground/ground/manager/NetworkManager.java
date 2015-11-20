@@ -241,7 +241,6 @@ public class NetworkManager {
     public static final String SEARCH_MATCHINFO_MVP_URL =GROND_SERVER_URL+"/match/MVP";
     public void getNetworkMatchInfoMVP(final Context context,  final OnResultListener<MVP> listener) {
 
-
         final RequestParams params = new RequestParams();
 
         client.get(context,SEARCH_MATCHINFO_MVP_URL , params, new AsyncHttpResponseHandler() {

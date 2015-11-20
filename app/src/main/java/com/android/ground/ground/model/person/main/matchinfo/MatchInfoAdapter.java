@@ -186,6 +186,9 @@ public class MatchInfoAdapter extends BaseExpandableListAdapter implements Searc
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         SearchMatchItemView view;
+
+
+
         if (convertView != null) {
             view = (SearchMatchItemView)convertView;
         } else {

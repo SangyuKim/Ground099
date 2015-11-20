@@ -69,6 +69,8 @@ public class FragmentMainSearchFC extends Fragment {
     LinearLayout mLinearLayout;
     //    SwipeRefreshLayout refreshLayout;
     SearchClubAdapter mAdapter;
+
+
     private static final boolean isNaverMovie = true;
     boolean isUpdate = false;
     boolean isLastItem = false;

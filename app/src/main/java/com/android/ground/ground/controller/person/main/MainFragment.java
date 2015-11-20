@@ -115,10 +115,13 @@ public class MainFragment extends Fragment {
 //                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLACK); // unselected
                 tabHostTextView = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
                 tabHostTextView.setTextColor(getResources().getColor(R.color.tabwidget));
+                tabHostTextView.setTextSize(16);
+
             }
-            getActivity().setTitle("FC 찾기");
+            getActivity().setTitle("FC찾기");
             tabHostTextView = (TextView)tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
             tabHostTextView.setTextColor(Color.WHITE);
+            tabHostTextView.setTextSize(16);
 
         }
         mAdapter.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -128,19 +131,27 @@ public class MainFragment extends Fragment {
 //                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLACK); // unselected
                     tabHostTextView = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
                     tabHostTextView.setTextColor(getResources().getColor(R.color.tabwidget));
+                    tabHostTextView.setTextSize(16);
+
                 }
                 if (tabId.equals("tab1")) {
-                    getActivity().setTitle("선수 찾기");
+                    getActivity().setTitle("선수찾기");
                     tabHostTextView = (TextView)tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
                     tabHostTextView.setTextColor(Color.WHITE);
+                    tabHostTextView.setTextSize(16);
+
                 } else if (tabId.equals("tab2")) {
-                    getActivity().setTitle("FC 찾기");
+                    getActivity().setTitle("FC찾기");
                     tabHostTextView = (TextView)tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
                     tabHostTextView.setTextColor(Color.WHITE);
+                    tabHostTextView.setTextSize(16);
+
                 } else if (tabId.equals("tab3")) {
-                    getActivity().setTitle("매치 확인");
+                    getActivity().setTitle("매치확인");
                     tabHostTextView = (TextView)tabHost.getTabWidget().getChildAt(2).findViewById(android.R.id.title);
                     tabHostTextView.setTextColor(Color.WHITE);
+                    tabHostTextView.setTextSize(16);
+
                 }
 
             }

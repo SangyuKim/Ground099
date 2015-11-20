@@ -12,8 +12,8 @@ import com.android.ground.ground.R;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.log.Logger;
 import com.android.ground.ground.model.widget.KakaoSDKAdapter;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+//import com.android.volley.RequestQueue;
+//import com.android.volley.toolbox.Volley;
 import com.facebook.FacebookSdk;
 import com.kakao.auth.KakaoSDK;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -31,7 +31,7 @@ public class MyApplication extends Application {
     private static InputMethodManager mIMM;
     private static volatile MyApplication instance = null;
     private static volatile Activity currentActivity = null;
-    private com.android.volley.toolbox.ImageLoader imageLoader;
+//    private com.android.volley.toolbox.ImageLoader imageLoader;
 
     /**
      * singleton 애플리케이션 객체를 얻는다.
@@ -96,23 +96,23 @@ public class MyApplication extends Application {
         });
 
 
-        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        com.android.volley.toolbox.ImageLoader.ImageCache imageCache = new com.android.volley.toolbox.ImageLoader.ImageCache() {
-            final LruCache<String, Bitmap> imageCache = new LruCache<String, Bitmap>(3);
-
-            @Override
-            public void putBitmap(String key, Bitmap value) {
-                imageCache.put(key, value);
-            }
-
-            @Override
-            public Bitmap getBitmap(String key) {
-                return imageCache.get(key);
-            }
-        };
-
-        imageLoader = new com.android.volley.toolbox.ImageLoader(requestQueue, imageCache);
+//        com.android.volley.toolbox.ImageLoader.ImageCache imageCache = new com.android.volley.toolbox.ImageLoader.ImageCache() {
+//            final LruCache<String, Bitmap> imageCache = new LruCache<String, Bitmap>(3);
+//
+//            @Override
+//            public void putBitmap(String key, Bitmap value) {
+//                imageCache.put(key, value);
+//            }
+//
+//            @Override
+//            public Bitmap getBitmap(String key) {
+//                return imageCache.get(key);
+//            }
+//        };
+//
+//        imageLoader = new com.android.volley.toolbox.ImageLoader(requestQueue, imageCache);
 
     }
 
@@ -162,13 +162,13 @@ public class MyApplication extends Application {
     public static void setCurrentActivity(Activity currentActivity) {
         MyApplication.currentActivity = currentActivity;
     }
-    /**
-     * 이미지 로더를 반환한다.
-     * @return 이미지 로더
-     */
-    public com.android.volley.toolbox.ImageLoader getImageLoader() {
-        return imageLoader;
-    }
+//    /**
+//     * 이미지 로더를 반환한다.
+//     * @return 이미지 로더
+//     */
+//    public com.android.volley.toolbox.ImageLoader getImageLoader() {
+//        return imageLoader;
+//    }
 
     /**
      * 애플리케이션 종료시 singleton 어플리케이션 객체 초기화한다.

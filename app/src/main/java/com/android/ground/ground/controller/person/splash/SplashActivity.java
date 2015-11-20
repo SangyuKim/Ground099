@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.http.RequestQueue;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,14 +44,14 @@ import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.person.profile.MyPageTransResult;
 import com.android.ground.ground.model.widget.WaitingDialog;
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+//import com.android.volley.AuthFailureError;
+//import com.android.volley.NetworkResponse;
+//import com.android.volley.Request;
+//import com.android.volley.RequestQueue;
+//import com.android.volley.Response;
+//import com.android.volley.VolleyError;
+//import com.android.volley.toolbox.StringRequest;
+//import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -281,7 +282,7 @@ public class SplashActivity extends AppCompatActivity {
 //----------------------------------------GCM--------------------------------------------------------
             registrationIDLabel = (TextView) findViewById(R.id.tokenLabel);
 
-            mQueue = Volley.newRequestQueue(this);
+//            mQueue = Volley.newRequestQueue(this);
             handler = new Handler();
 
             Button checkButton = (Button)findViewById(R.id.checkPlayServiceButton);
@@ -367,6 +368,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
     // Registration Intent Service를 이용해서 토큰 발급 받기
+
     void requestDeviceToken() {
         // 토큰 발급 브로드캐스트 리시버
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
@@ -438,41 +440,41 @@ public class SplashActivity extends AppCompatActivity {
         if ( deviceID == null )
             resolveDeviceID();
 
-        StringRequest request = new StringRequest(Request.Method.POST, serverAddress + "/register", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "Token 등록 결과  : " + response);
-                Toast.makeText(SplashActivity.this, "Token 등록 성공", Toast.LENGTH_SHORT).show();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Error", error);
-                NetworkResponse response = error.networkResponse;
-                if ( response != null ) {
-                    Log.e(TAG, "Error Response : " + response.statusCode);
-                    Toast.makeText(SplashActivity.this, "Token 등록 에러 " + response.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                // 바디 작성
-                Map<String, String> params = new HashMap<>();
-                params.put("deviceID", deviceID);
-                params.put("token", registrationID);
-                params.put("os", deviceOS);
-
-                return params;
-            }
-
-            @Override
-            public String getBodyContentType() {
-                // 컨텐트 타입
-                return "application/x-www-form-urlencoded; charset=UTF-8";
-            }
-        };
-        mQueue.add(request);
+//        StringRequest request = new StringRequest(Request.Method.POST, serverAddress + "/register", new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                Log.d(TAG, "Token 등록 결과  : " + response);
+//                Toast.makeText(SplashActivity.this, "Token 등록 성공", Toast.LENGTH_SHORT).show();
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e(TAG, "Error", error);
+//                NetworkResponse response = error.networkResponse;
+//                if ( response != null ) {
+//                    Log.e(TAG, "Error Response : " + response.statusCode);
+//                    Toast.makeText(SplashActivity.this, "Token 등록 에러 " + response.toString(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }){
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                // 바디 작성
+//                Map<String, String> params = new HashMap<>();
+//                params.put("deviceID", deviceID);
+//                params.put("token", registrationID);
+//                params.put("os", deviceOS);
+//
+//                return params;
+//            }
+//
+//            @Override
+//            public String getBodyContentType() {
+//                // 컨텐트 타입
+//                return "application/x-www-form-urlencoded; charset=UTF-8";
+//            }
+//        };
+//        mQueue.add(request);
     }
 
 
