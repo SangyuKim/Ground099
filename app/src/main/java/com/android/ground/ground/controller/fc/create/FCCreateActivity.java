@@ -20,11 +20,18 @@ import android.widget.ImageView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.post.fcCreate.ClubProfile;
+import com.android.ground.ground.model.post.signup.UserProfile;
 
 import java.io.File;
 
 public class FCCreateActivity extends AppCompatActivity {
+
+
+    ClubProfile mClubProfile;
+
 
     public static final int REQUEST_CODE_CROP = 0;
     File mSavedFile;
@@ -52,6 +59,38 @@ public class FCCreateActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mClubProfile = new ClubProfile();
+                //유저가 사진 입력하지 않았을 때 처리하기 !!
+
+                if(mSavedFile!=null)
+                    mClubProfile.mFile =mSavedFile;
+
+                mClubProfile.clubName= "FC티아카데미2";
+                mClubProfile.clubLocationName ="서울시 관악구 연구공원";
+                mClubProfile.clubMainDay_Mon=0;
+                mClubProfile.clubMainDay_Tue=1;
+                mClubProfile.clubMainDay_Wed=0;
+                mClubProfile.clubMainDay_Thu=1;
+                mClubProfile.clubMainDay_Fri=0;
+                mClubProfile.clubMainDay_Sat=1;
+                mClubProfile.clubMainDay_Sun=0;
+
+                mClubProfile.memYN =1;
+                mClubProfile.fieldYN =1;
+                mClubProfile.clubField ="연구공원 공터";
+
+                mClubProfile.latitude =91.0;
+                mClubProfile.longitude=92.0;
+                mClubProfile.matchYN =1;
+                mClubProfile.clubIntro="안드로이드 테스트 1";
+
+                NetworkManager.getInstance().postNetworkMakeClub(FCCreateActivity.this, mClubProfile);
+
+
+
+
+
+
                 finish();
             }
         });

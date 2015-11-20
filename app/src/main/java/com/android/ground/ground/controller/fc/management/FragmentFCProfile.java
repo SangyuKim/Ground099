@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Environment;
@@ -13,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,8 @@ import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMainResult;
+import com.android.ground.ground.model.post.fcCreate.ClubProfile;
+import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -43,6 +48,8 @@ import java.io.File;
  * create an instance of this fragment.
  */
 public class FragmentFCProfile extends Fragment {
+
+    ClubProfileUpdate mClubProfileUpdate;
 
     public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
     DisplayImageOptions options;
@@ -145,6 +152,43 @@ public class FragmentFCProfile extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mClubProfileUpdate = new ClubProfileUpdate();
+                //유저가 사진 입력하지 않았을 때 처리하기 !!
+
+                if(mSavedFile!=null)
+                    mClubProfileUpdate.file =mSavedFile;
+
+
+                int id = getActivity().getIntent().getIntExtra("clubId", -1);
+//                if(id == -1){
+//                    getActivity().finish();
+//                }
+
+                mClubProfileUpdate.club_id= PropertyManager.getInstance().getMyPageResult().club_id;
+                Log.d("hello", "id : " +PropertyManager.getInstance().getMyPageResult().club_id );
+                Log.d("hello", "id : " +id );
+
+                mClubProfileUpdate.clubLocationName ="서울시 관악 02 버스";
+
+                mClubProfileUpdate.clubMainDay_Mon=1;
+                mClubProfileUpdate.clubMainDay_Tue=1;
+                mClubProfileUpdate.clubMainDay_Wed=1;
+                mClubProfileUpdate.clubMainDay_Thu=1;
+                mClubProfileUpdate.clubMainDay_Fri=1;
+                mClubProfileUpdate.clubMainDay_Sat=1;
+                mClubProfileUpdate.clubMainDay_Sun=1;
+
+                mClubProfileUpdate.memYN =1;
+                mClubProfileUpdate.fieldYN =1;
+                mClubProfileUpdate.clubField ="연구공원 공사장";
+
+                mClubProfileUpdate.latitude =91.0;
+                mClubProfileUpdate.longitude=92.0;
+                mClubProfileUpdate.matchYN =0;
+                mClubProfileUpdate.clubIntro="안드로이드 테스트 1";
+
+                NetworkManager.getInstance().postNetworkUpdateClub(getContext(), mClubProfileUpdate);
+
             }
         });
 
@@ -245,10 +289,14 @@ public class FragmentFCProfile extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("hello", "onActivityResult before");
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("hello", "onActivityResult");
         if (requestCode == REQUEST_CODE_CROP && resultCode == Activity.RESULT_OK) {
             Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
             clubImage.setImageBitmap(bm);
+
+            Log.d("hello", mSavedFile.getAbsolutePath().toString());
         }
     }
     private Uri getTempUri() {

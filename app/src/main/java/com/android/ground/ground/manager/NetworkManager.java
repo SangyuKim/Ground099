@@ -26,6 +26,8 @@ import com.android.ground.ground.model.person.main.searchClub.SearchClub;
 import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
+import com.android.ground.ground.model.post.fcCreate.ClubProfile;
+import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
 import com.android.ground.ground.model.post.signup.UserProfile;
 import com.android.ground.ground.model.tmap.TmapItem;
 import com.begentgroup.xmlparser.XMLParser;
@@ -62,7 +64,7 @@ import java.security.cert.CertificateException;
 
 public class NetworkManager {
 
-    public final static String GROND_SERVER_URL = "http://192.168.201.240:3001";
+    public final static String GROND_SERVER_URL = "http://192.168.211.179:3001";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
         if (instance == null) {
@@ -606,50 +608,49 @@ public class NetworkManager {
         });
 
     }
-    //facebook
-    public static final String SEND_FACEBOOK_URL =GROND_SERVER_URL+"/member/login";
-    public void postNetworkFacebook(final Context context,String accesstoken) {
-
-        final RequestParams params = new RequestParams();
-        params.put("access_token",accesstoken);
-        client.post(context, SEND_FACEBOOK_URL, params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
-                String s = new String(responseBody, Charset.forName("UTF-8"));
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
-
-    }
+//    //facebook
+//    public static final String SEND_FACEBOOK_URL =GROND_SERVER_URL+"/member/login";
+//    public void postNetworkFacebook(final Context context,String accesstoken) {
+//
+//        final RequestParams params = new RequestParams();
+//        params.put("access_token",accesstoken);
+//        client.post(context, SEND_FACEBOOK_URL, params, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+//                String s = new String(responseBody, Charset.forName("UTF-8"));
+//
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//
+//            }
+//        });
+//
+//    }
 
     //login local
-    public static final String SEND_LOGIN_URL =GROND_SERVER_URL+"/member/login";
-    public void postNetworkLogin(final Context context) {
-
-        final RequestParams params = new RequestParams();
-        params.put("member_id","1");
-        params.put("password","234");
-        client.post(context, SEND_LOGIN_URL, params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
-                String s = new String(responseBody, Charset.forName("UTF-8"));
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
-
-    }
-
+//    public static final String SEND_LOGIN_URL =GROND_SERVER_URL+"/member/login";
+//    public void postNetworkLogin(final Context context) {
+//
+//        final RequestParams params = new RequestParams();
+//        params.put("member_id","1");
+//        params.put("password","234");
+//        client.post(context, SEND_LOGIN_URL, params, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+//                String s = new String(responseBody, Charset.forName("UTF-8"));
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//
+//            }
+//        });
+//
+//    }
 
     //signup
     public static final String SEND_SIGNUP_URL =GROND_SERVER_URL+"/member";
@@ -692,6 +693,140 @@ public class NetworkManager {
         });
 
     }
+
+    //login kakao
+    public static final String SEND_LOGIN_KAKAO_URL =GROND_SERVER_URL+"/member/login/kakao";
+    public void postNetworkLoginKakao(final Context context, String token) {
+
+        final RequestParams params = new RequestParams();
+        params.put("access_token",token);
+           client.post(context, SEND_LOGIN_KAKAO_URL, params, new AsyncHttpResponseHandler() {
+               @Override
+               public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                   ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                   String s = new String(responseBody, Charset.forName("UTF-8"));
+                   Log.d("hello", s);
+               }
+
+               @Override
+               public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+               }
+           });
+
+    }
+
+    //login facebook
+    public static final String SEND_LOGIN_FACEBOOK_URL =GROND_SERVER_URL+"/member/login/facebook";
+    public void postNetworkLoginFacebook(final Context context, String token) {
+
+        final RequestParams params = new RequestParams();
+        params.put("access_token",token);
+        client.post(context, SEND_LOGIN_FACEBOOK_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("hello", "status : " +statusCode);
+            }
+        });
+
+    }
+    //make fc club
+    public static final String SEND_CLUB_CREATE_URL =GROND_SERVER_URL+"/club/make";
+    public void postNetworkMakeClub(final Context context , ClubProfile mClubProfile) {
+
+        final RequestParams params = new RequestParams();
+        try {
+            params.put("file", mClubProfile.mFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        params.put("clubName",mClubProfile.clubName);
+        params.put("clubLocationName",mClubProfile.clubLocationName);
+        params.put("clubMainDay_Mon",mClubProfile.clubMainDay_Mon);
+        params.put("clubMainDay_Tue",mClubProfile.clubMainDay_Tue);
+        params.put("clubMainDay_Wed",mClubProfile.clubMainDay_Wed);
+        params.put("clubMainDay_Thu",mClubProfile.clubMainDay_Thu);
+        params.put("clubMainDay_Fri",mClubProfile.clubMainDay_Fri);
+        params.put("clubMainDay_Sat",mClubProfile.clubMainDay_Sat);
+        params.put("clubMainDay_Sun",mClubProfile.clubMainDay_Sun);
+        params.put("memYN",mClubProfile.memYN);
+        params.put("fieldYN",mClubProfile.fieldYN);
+        params.put("clubField",mClubProfile.clubField);
+        params.put("latitude",mClubProfile.latitude);
+        params.put("longitude",mClubProfile.longitude);
+        params.put("matchYN",mClubProfile.matchYN);
+        params.put("clubIntro",mClubProfile.clubIntro);
+
+
+
+        client.post(context, SEND_CLUB_CREATE_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("hello", "status code : " + statusCode);
+            }
+        });
+
+    }
+    //update fc club
+    public static final String SEND_CLUB_UPDATE_URL =GROND_SERVER_URL+"/club";
+    public void postNetworkUpdateClub(final Context context , ClubProfileUpdate mClubProfileUpdate) {
+
+        final RequestParams params = new RequestParams();
+        try {
+            params.put("file", mClubProfileUpdate.file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        params.put("club_id",mClubProfileUpdate.club_id);
+        params.put("clubLocationName",mClubProfileUpdate.clubLocationName);
+        params.put("clubMainDay_Mon",mClubProfileUpdate.clubMainDay_Mon);
+        params.put("clubMainDay_Tue",mClubProfileUpdate.clubMainDay_Tue);
+        params.put("clubMainDay_Wed",mClubProfileUpdate.clubMainDay_Wed);
+        params.put("clubMainDay_Thu",mClubProfileUpdate.clubMainDay_Thu);
+        params.put("clubMainDay_Fri",mClubProfileUpdate.clubMainDay_Fri);
+        params.put("clubMainDay_Sat",mClubProfileUpdate.clubMainDay_Sat);
+        params.put("clubMainDay_Sun",mClubProfileUpdate.clubMainDay_Sun);
+        params.put("memYN",mClubProfileUpdate.memYN);
+        params.put("fieldYN",mClubProfileUpdate.fieldYN);
+        params.put("clubField",mClubProfileUpdate.clubField);
+        params.put("latitude",mClubProfileUpdate.latitude);
+        params.put("longitude",mClubProfileUpdate.longitude);
+        params.put("matchYN",mClubProfileUpdate.matchYN);
+        params.put("clubIntro",mClubProfileUpdate.clubIntro);
+
+
+
+        client.post(context, SEND_CLUB_UPDATE_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("hello", "status code : " + statusCode);
+            }
+        });
+
+    }
+
+
 //===================================================
     public void cancelAll(Context context) {
         client.cancelRequests(context, true);

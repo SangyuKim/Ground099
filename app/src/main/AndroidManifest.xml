@@ -162,6 +162,11 @@
             android:name=".controller.person.login.SampleSignupActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".controller.fc.management.FCManagementActivity"
+            android:label="@string/title_activity_fcmanagement"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

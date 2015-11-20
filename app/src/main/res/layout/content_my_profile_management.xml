@@ -96,7 +96,7 @@
                 android:layout_toLeftOf="@+id/memImage"
                 android:layout_toStartOf="@+id/memImage" />
 
-            <com.github.siyamed.shapeimageview.CircularImageView
+            <com.android.ground.ground.custom.CustomCircularImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/memImage"

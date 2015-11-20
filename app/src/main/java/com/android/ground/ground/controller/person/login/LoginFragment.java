@@ -320,9 +320,9 @@ public class LoginFragment extends Fragment {
         WaitingDialog.cancelWaitingDialog();
     }
 
-    private void postLoginFacebook(String token) {
-        NetworkManager.getInstance().postNetworkFacebook(getContext(), token);
-    }
+//    private void postLoginFacebook(String token) {
+//        NetworkManager.getInstance().postNetworkFacebook(getContext(), token);
+//    }
 
     private void login(List<String> permissions) {
         login(permissions, true);
@@ -334,7 +334,7 @@ public class LoginFragment extends Fragment {
             public void onSuccess(LoginResult loginResult) {
                 final AccessToken token = AccessToken.getCurrentAccessToken();
                 //토큰 보내기
-                postLoginFacebook(token.getToken().toString());
+//                postLoginFacebook(token.getToken().toString());
                 Log.d("hello", "facebook token  from Login Fragment: "+ token.getToken().toString() );
 
                 Toast.makeText(getContext(), "id : " + token.getUserId(), Toast.LENGTH_SHORT).show();

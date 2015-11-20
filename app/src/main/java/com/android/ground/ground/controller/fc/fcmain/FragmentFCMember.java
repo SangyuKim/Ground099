@@ -1,5 +1,6 @@
 package com.android.ground.ground.controller.fc.fcmain;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,10 +16,12 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.fc.management.FCManagementActivity;
 import com.android.ground.ground.controller.fc.management.FCManagementFragment;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.controller.person.profile.YourProfileActivity;
+import com.android.ground.ground.manager.ActivityManager;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
@@ -33,6 +36,8 @@ import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView2;
 import com.android.ground.ground.view.fc.fcmain.FCMemberItemView;
 import com.android.ground.ground.view.person.main.SearchPlayerItemView;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -110,11 +115,15 @@ public class FragmentFCMember extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment mFragment = (Fragment) FCManagementFragment.newInstance("", "");
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
-                        .addToBackStack(null)
-                        .commit();
+//                Fragment mFragment = (Fragment) FCManagementFragment.newInstance("", "");
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.container, mFragment)
+//                        .addToBackStack(null)
+//                        .commit();
+
+                Intent intent = new Intent(getContext(), FCManagementActivity.class);
+                intent.putExtra("clubId", clubId);
+                startActivity(intent);
 
             }
         });
@@ -156,9 +165,15 @@ public class FragmentFCMember extends Fragment {
                 }else if(data instanceof MyProfileActivity) {
                     int memberId = ((FCMemberItemView)view).mItem.member_id;
                     if(memberId == PropertyManager.getInstance().getMyPageResult().member_id){
+                        ActivityManager.getInstance().activityArrayList.add(getActivity());
                         Intent intent = new Intent(getContext(), MyProfileActivity.class);
                         startActivity(intent);
                     }else{
+//                        List<Activity> mList = ActivityManager.getInstance().activityArrayList;
+//                        for(int i = 0; i < mList.size(); i++)
+//                            mList.get(i).finish();
+//
+                        ActivityManager.getInstance().activityArrayList.add(getActivity());
                         Intent intent = new Intent(getContext(), YourProfileActivity.class);
                         intent.putExtra("memberId",memberId);
                         startActivity(intent);

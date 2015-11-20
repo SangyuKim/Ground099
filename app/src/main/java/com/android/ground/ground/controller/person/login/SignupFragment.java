@@ -180,7 +180,8 @@ public class SignupFragment extends Fragment {
                 if(mSavedFile!=null)
                     mUserProfile.mFile =mSavedFile;
                 mUserProfile.gender =0;
-                mUserProfile.age=25;
+                //년도로 보내기
+                mUserProfile.age=1991;
                 mUserProfile.memLocationName ="서울시 관악구 관악동";
                 mUserProfile.memMainDay_Mon=0;
                 mUserProfile.memMainDay_Tue=1;
@@ -274,7 +275,6 @@ public class SignupFragment extends Fragment {
 
                     }
                 });
-
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
