@@ -34,7 +34,7 @@ import com.handmark.pulltorefresh.library.internal.LoadingLayout;
  * <br />Loading layouts must be listed in pulltorefresh.xml as "PullToRefresh/LoadingLayouts/layout" nodes
  * @author Wonjun Kim
  */
-class LoadingLayoutFactory {
+public class LoadingLayoutFactory {
 
 	private static final String LOG_TAG = LoadingLayoutFactory.class
 			.getSimpleName();
@@ -47,13 +47,13 @@ class LoadingLayoutFactory {
 		String clazzName = PullToRefreshXmlConfiguration.getInstance().getLoadingLayoutClazzName(layoutCode);
 		return createLoadingLayoutClazz(clazzName);
 	}
-	/**
-	 * Create a {@code LoadingLayout} instance matched by <b>{@code clazz} token</b> 
-	 * @param layoutCode Loading layout code, which must be defined in pulltorefresh.xml
-	 * @param context 
-	 * @param mode 
-	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateLoadingLayout} instance if not  
-	 */
+//	/**
+//	 * Create a {@code LoadingLayout} instance matched by <b>{@code clazz} token</b>
+//	 * @param layoutCode Loading layout code, which must be defined in pulltorefresh.xml
+//	 * @param context
+//	 * @param mode
+//	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateLoadingLayout} instance if not
+//	 */
 	@SuppressWarnings("unchecked")
 	public static Class<? extends LoadingLayout> createLoadingLayoutClazz(
 			String clazzName) {
@@ -85,13 +85,13 @@ class LoadingLayoutFactory {
 		Class<? extends LoadingLayout> clazz = createLoadingLayoutClazz(layoutCode);
 		return createLoadingLayout(clazz, context, mode, orientation, attrs);
 	}
-	/**
-	 * Create a {@code LoadingLayout} instance matched by <b>{@code clazz} token</b> 
-	 * @param layoutCode Loading layout code, which must be defined in pulltorefresh.xml
-	 * @param context 
-	 * @param mode 
-	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateLoadingLayout} instance if not  
-	 */
+//	/**
+//	 * Create a {@code LoadingLayout} instance matched by <b>{@code clazz} token</b>
+//	 * @param layoutCode Loading layout code, which must be defined in pulltorefresh.xml
+//	 * @param context
+//	 * @param mode
+//	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateLoadingLayout} instance if not
+//	 */
 	public static LoadingLayout createLoadingLayout(
 			Class<? extends LoadingLayout> clazz, Context context, Mode mode,
 			Orientation orientation, TypedArray attrs) {

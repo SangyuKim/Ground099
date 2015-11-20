@@ -8,15 +8,18 @@ import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.custom.CustomToolbar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,7 +30,8 @@ public class FinalPositionActivity extends AppCompatActivity{
 
     private ShareActionProvider mShareActionProvider;
     View captureView;
-
+    CustomToolbar customToolbar;
+    Menu menu;
 
         @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,20 @@ public class FinalPositionActivity extends AppCompatActivity{
         setContentView(R.layout.activity_final_position);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+            ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                    ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+            customToolbar = new CustomToolbar(FinalPositionActivity.this);
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setCustomView(customToolbar, params);
+
+            try{
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon401);}
+            catch(Exception e){
+                e.printStackTrace();
+            }
         captureView = findViewById(R.id.captureView);
 
         Button btn = (Button)findViewById(R.id.button28);
@@ -104,7 +121,7 @@ public class FinalPositionActivity extends AppCompatActivity{
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -127,5 +144,11 @@ public class FinalPositionActivity extends AppCompatActivity{
 
         return bitmap;
     }
+    @Override
+    public void setTitle(CharSequence title) {
+//        super.setTitle(title);
+        customToolbar.setTitle(title.toString());
+    }
+
 
 }

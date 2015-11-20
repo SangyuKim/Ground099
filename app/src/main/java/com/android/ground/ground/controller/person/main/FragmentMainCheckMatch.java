@@ -159,19 +159,22 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         hView.setOnHeaderImageListener(new MVPview.OnHeaderImageClickListener() {
             @Override
             public void onHeaderImageClick(MVPview view, String tag) {
-                if (tag.equals("MVP")) {
-//                    Toast.makeText(getContext(), hView.getItemMVP().memName, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
-                    startActivity(intent);
-                } else if (tag.equals("SCR")) {
-//                    Toast.makeText(getContext(), hView.getItemScr().memName, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
-                    startActivity(intent);
-                } else if (tag.equals("CLUB")) {
-//                    Toast.makeText(getContext(), hView.getItemWin().clubName, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getContext(), FCActivity.class);
-                    startActivity(intent);
+                switch(tag){
+                    case "MVP":{
+                        //                    Toast.makeText(getContext(), hView.getItemMVP().memName, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                        startActivity(intent);
+                    } case "SCR":{
+                        //                    Toast.makeText(getContext(), hView.getItemScr().memName, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                        startActivity(intent);
+                    } case "CLUB":{
+                        //                    Toast.makeText(getContext(), hView.getItemWin().clubName, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(), FCActivity.class);
+                        startActivity(intent);
+                    }
                 }
+
             }
         });
         listView.addHeaderView(hView);
@@ -207,29 +210,35 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 String s = ((SearchMatchGroupItemView)v).getTextView().getText().toString();
-                if(s.equals("더보기1")){
-                    Toast.makeText(getContext(),"더보기1 page 추가", Toast.LENGTH_SHORT).show();
-                    if(mAdapter.getTotalFuturePage()>mAdapter.getFuturePage()){
-                        getMoreMatch(filter, keywordView.getText().toString());
-                    }else{
-                        Toast.makeText(getContext(),"더보기1 추가 내용 없음", Toast.LENGTH_SHORT).show();
+                switch(s){
+                    case "더보기1":{
+                        Toast.makeText(getContext(),"더보기1 page 추가", Toast.LENGTH_SHORT).show();
+                        if(mAdapter.getTotalFuturePage()>mAdapter.getFuturePage()){
+                            getMoreMatch(filter, keywordView.getText().toString());
+                        }else{
+                            Toast.makeText(getContext(),"더보기1 추가 내용 없음", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    case "더보기2":{
+                        Toast.makeText(getContext(),"더보기2 page 추가", Toast.LENGTH_SHORT).show();
+                        if(mAdapter.getTotalIngPage()> mAdapter.getIngPage()){
+                            getMoreMatch(filter, keywordView.getText().toString());
+                        }else{
+                            Toast.makeText(getContext(),"더보기2 추가 내용 없음", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    case "더보기3":{
+                        Toast.makeText(getContext(),"더보기3 page 추가", Toast.LENGTH_SHORT).show();
+                        if(mAdapter.getTotalEndPage()> mAdapter.getEndPage()){
+                            getMoreMatch(filter, keywordView.getText().toString());
+                        }else {
+                            Toast.makeText(getContext(),"더보기3 추가 내용 없음", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
-                }else if(s.equals("더보기2")){
-                    Toast.makeText(getContext(),"더보기2 page 추가", Toast.LENGTH_SHORT).show();
-                    if(mAdapter.getTotalIngPage()> mAdapter.getIngPage()){
-                        getMoreMatch(filter, keywordView.getText().toString());
-                    }else{
-                        Toast.makeText(getContext(),"더보기2 추가 내용 없음", Toast.LENGTH_SHORT).show();
-                    }
-                }else if(s.equals("더보기3")){
-                    Toast.makeText(getContext(),"더보기3 page 추가", Toast.LENGTH_SHORT).show();
-                    if(mAdapter.getTotalEndPage()> mAdapter.getEndPage()){
-                        getMoreMatch(filter, keywordView.getText().toString());
-                    }else {
-                        Toast.makeText(getContext(),"더보기3 추가 내용 없음", Toast.LENGTH_SHORT).show();
-                    }
+
                 }
+
                 return false;
             }
         });
@@ -413,7 +422,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
 
@@ -568,7 +577,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
                     @Override
                     public void onFail(int code) {
-                        Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

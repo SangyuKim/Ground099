@@ -9,9 +9,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,6 +23,7 @@ import android.widget.ImageView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
+import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.post.fcCreate.ClubProfile;
@@ -31,6 +35,8 @@ public class FCCreateActivity extends AppCompatActivity {
 
 
     ClubProfile mClubProfile;
+    CustomToolbar customToolbar;
+    Menu menu;
 
 
     public static final int REQUEST_CODE_CROP = 0;
@@ -46,7 +52,20 @@ public class FCCreateActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+        customToolbar = new CustomToolbar(FCCreateActivity.this);
+        try {
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setCustomView(customToolbar, params);
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon401);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         Button btn = (Button)findViewById(R.id.button_area_search);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +155,7 @@ public class FCCreateActivity extends AppCompatActivity {
                 mSavedFile = new File(file);
             }
         }
+        setTitle("FC창단하기");
     }
 
     @Override
@@ -153,7 +173,7 @@ public class FCCreateActivity extends AppCompatActivity {
             Bitmap bm = BitmapFactory.decodeFile(mSavedFile.getAbsolutePath());
             imageView.setImageBitmap(bm);
         }
-        if(requestCode == REQ_AREA_SEARCH && requestCode == Activity.RESULT_OK){
+        if(requestCode == REQ_AREA_SEARCH && resultCode == Activity.RESULT_OK){
             String userArea = data.getExtras().getString("userArea");
 //            textViewUserArea.setText(userArea);
         }
@@ -170,6 +190,18 @@ public class FCCreateActivity extends AppCompatActivity {
         if (mSavedFile != null) {
             outState.putString("filename", mSavedFile.getAbsolutePath());
         }
+    }
+    @Override
+    public void setTitle(CharSequence title) {
+//        super.setTitle(title);
+        customToolbar.setTitle(title.toString());
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.fake_main, menu);
+        this.menu = menu;
+        return true;
     }
 
 }

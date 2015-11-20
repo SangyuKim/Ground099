@@ -17,7 +17,6 @@ import android.widget.ListView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.management.FCManagementActivity;
-import com.android.ground.ground.controller.fc.management.FCManagementFragment;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.controller.person.profile.YourProfileActivity;
@@ -120,7 +119,7 @@ public class FragmentFCMember extends Fragment {
 //                        .replace(R.id.container, mFragment)
 //                        .addToBackStack(null)
 //                        .commit();
-
+                ActivityManager.getInstance().activityArrayList.add(getActivity());
                 Intent intent = new Intent(getContext(), FCManagementActivity.class);
                 intent.putExtra("clubId", clubId);
                 startActivity(intent);
@@ -221,7 +220,7 @@ public class FragmentFCMember extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
 //    @Override

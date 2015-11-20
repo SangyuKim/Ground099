@@ -3,10 +3,13 @@ package com.android.ground.ground.controller.person.profile;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
+import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.Profile;
@@ -44,6 +48,8 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
     List<MyPageTransResult> mTransList;
 
     DisplayImageOptions options;
+    CustomToolbar customToolbar;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +57,20 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         setContentView(R.layout.activity_your_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+        customToolbar = new CustomToolbar(YourProfileActivity.this);
+        try {
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setCustomView(customToolbar, params);
+
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon401);
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
         memNameGender =(TextView)findViewById(R.id.memNameGender);
         memIntro =(TextView)findViewById(R.id.memIntro);
         winLoseDraw = (TextView)findViewById(R.id.winLoseDraw);
@@ -322,5 +340,17 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         });
     }
 
+    @Override
+    public void setTitle(CharSequence title) {
+//        super.setTitle(title);
+        customToolbar.setTitle(title.toString());
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.fake_main, menu);
+        this.menu = menu;
+        return true;
+    }
 
 }

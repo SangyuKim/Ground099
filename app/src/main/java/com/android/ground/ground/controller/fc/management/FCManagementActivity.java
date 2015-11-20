@@ -4,18 +4,25 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.custom.CustomToolbar;
 
 public class FCManagementActivity extends AppCompatActivity {
 
     TabHost tabHost;
     ViewPager pager;
     FCManagemnetTabsAdapter mAdapter;
+    CustomToolbar customToolbar;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +30,22 @@ public class FCManagementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fcmanagement);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Inflate the layout for this fragment
+
+
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+        customToolbar = new CustomToolbar(FCManagementActivity.this);
+        try{
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setCustomView(customToolbar, params);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon401);
+
 
         tabHost = (TabHost)findViewById(R.id.tabHost);
         tabHost.setup();
@@ -41,14 +63,18 @@ public class FCManagementActivity extends AppCompatActivity {
         mAdapter.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
                                              @Override
                                              public void onTabChanged(String tabId) {
-                                                 if (tabId.equals("tab1")) {
-                                                     setTitle("클럽 메신저");
-                                                 } else if (tabId.equals("tab2")) {
-                                                     setTitle("멤버 관리");
-                                                 } else if (tabId.equals("tab3")) {
-                                                     setTitle("기본설정");
-                                                 }
+                                                 switch(tabId){
+                                                     case "tab1" :{
+                                                         setTitle("클럽 메신저");
+                                                     }
+                                                     case "tab2" :{
+                                                         setTitle("멤버 관리");
+                                                     }
+                                                     case "tab3" :{
+                                                         setTitle("기본설정");
+                                                     }
 
+                                                 }
 
                                              }
                                          }
@@ -59,6 +85,26 @@ public class FCManagementActivity extends AppCompatActivity {
             mAdapter.onRestoreInstanceState(savedInstanceState);
         }
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void setTitle(CharSequence title) {
+//        super.setTitle(title);
+        customToolbar.setTitle(title.toString());
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.fake_main, menu);
+        this.menu = menu;
+        return true;
     }
 
 }

@@ -34,7 +34,7 @@ import com.handmark.pulltorefresh.library.GoogleStyleViewLayout;
  * <br />Google style view layouts must be listed in pulltorefresh.xml as "PullToRefresh/GoogleStyleViewLayouts/layout" nodes
  * @author Wonjun Kim
  */
-class GoogleStyleViewLayoutFactory {
+public class GoogleStyleViewLayoutFactory {
 
 	private static final String LOG_TAG = GoogleStyleViewLayoutFactory.class
 			.getSimpleName();
@@ -47,12 +47,12 @@ class GoogleStyleViewLayoutFactory {
 		String clazzName = PullToRefreshXmlConfiguration.getInstance().getGoogleStyleViewLayoutClazzName(layoutCode);
 		return createGoogleStyleViewLayoutClazz(clazzName);
 	}
-	/**
-	 * Create a {@code GoogleStyleViewLayout} instance matched by <b>{@code clazz} token</b> 
-	 * @param layoutCode Google style view layout code, which must be defined in pulltorefresh.xml
-	 * @param context 
-	 * @return {@code GoogleStyleViewLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateGoogleStyleViewLayout} instance if not  
-	 */
+//	/**
+//	 * Create a {@code GoogleStyleViewLayout} instance matched by <b>{@code clazz} token</b>
+//	 * @param layoutCode Google style view layout code, which must be defined in pulltorefresh.xml
+//	 * @param context
+//	 * @return {@code GoogleStyleViewLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateGoogleStyleViewLayout} instance if not
+//	 */
 	@SuppressWarnings("unchecked")
 	public static Class<? extends GoogleStyleViewLayout> createGoogleStyleViewLayoutClazz(
 			String clazzName) {
@@ -82,12 +82,12 @@ class GoogleStyleViewLayoutFactory {
 		Class<? extends GoogleStyleViewLayout> clazz = createGoogleStyleViewLayoutClazz(layoutCode);
 		return createGoogleStyleViewLayout(clazz, context, attrs);
 	}
-	/**
-	 * Create a {@code GoogleStyleViewLayout} instance matched by <b>{@code clazz} token</b> 
-	 * @param layoutCode Google style view layout code, which must be defined in pulltorefresh.xml
-	 * @param context 
-	 * @return {@code GoogleStyleViewLayout} instance if the class matched by {@code layoutCode} exists, or {@code DefaultGoogleStyleViewLayout} instance if not  
-	 */
+//	/**
+//	 * Create a {@code GoogleStyleViewLayout} instance matched by <b>{@code clazz} token</b>
+//	 * @param layoutCode Google style view layout code, which must be defined in pulltorefresh.xml
+//	 * @param context
+//	 * @return {@code GoogleStyleViewLayout} instance if the class matched by {@code layoutCode} exists, or {@code DefaultGoogleStyleViewLayout} instance if not
+//	 */
 	public static GoogleStyleViewLayout createGoogleStyleViewLayout(
 			Class<? extends GoogleStyleViewLayout> clazz, Context context, TypedArray attrs) {
 		GoogleStyleViewLayout layout = null;

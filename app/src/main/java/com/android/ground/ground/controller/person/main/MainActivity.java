@@ -85,12 +85,12 @@ public class MainActivity extends AppCompatActivity
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                                                                     ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
         customToolbar = new CustomToolbar(MainActivity.this);
-        getSupportActionBar().setCustomView(customToolbar, params);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_003);
-        toolbar.setNavigationIcon(R.drawable.icon_003);
-
-
+        try {
+            getSupportActionBar().setCustomView(customToolbar, params);
+            getSupportActionBar().setDisplayShowCustomEnabled(true);
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
         drawer = (CustomDrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_alarm) {
             alarmItem = item;
             if(!isAlarmOpened){
-                final Fragment mFragment = (Fragment)AlarmFragment.newInstance("", "");
+                final Fragment mFragment = AlarmFragment.newInstance("", "");
 
                 ((AlarmFragment)mFragment).setOnAlarmClickListener(new OnAlarmClickListener() {
                     @Override
@@ -417,7 +417,7 @@ public class MainActivity extends AppCompatActivity
             alarmItem.setIcon(R.drawable.icon_002);
             isAlarmOpened = false;
         }
-        Fragment mFragment = (Fragment) SettingFragment.newInstance("", "");
+        Fragment mFragment =  SettingFragment.newInstance("", "");
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, mFragment)
                 .addToBackStack(null)

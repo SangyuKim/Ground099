@@ -32,7 +32,7 @@ import com.handmark.pulltorefresh.library.GoogleStyleProgressLayout;
  * <br />Google style progress layouts must be listed in pulltorefresh.xml as "PullToRefresh/GoogleStyleProgressLayouts/layout" nodes
  * @author Wonjun Kim
  */
-class GoogleStyleProgressLayoutFactory {
+public class GoogleStyleProgressLayoutFactory {
 
 	private static final String LOG_TAG = GoogleStyleProgressLayoutFactory.class
 			.getSimpleName();
@@ -45,12 +45,12 @@ class GoogleStyleProgressLayoutFactory {
 		String clazzName = PullToRefreshXmlConfiguration.getInstance().getGoogleStyleProgressLayoutClazzName(layoutCode);
 		return createGoogleStyleProgressLayoutClazz(clazzName);
 	}
-	/**
-	 * Create a {@code GoogleStyleProgressLayout} instance matched by <b>{@code clazz} token</b> 
-	 * @param layoutCode Google style progress layout code, which must be defined in pulltorefresh.xml
-	 * @param context 
-	 * @return {@code GoogleStyleProgressLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateGoogleStyleProgressLayout} instance if not  
-	 */
+//	/**
+//	 * Create a {@code GoogleStyleProgressLayout} instance matched by <b>{@code clazz} token</b>
+//	 * @param layoutCode Google style progress layout code, which must be defined in pulltorefresh.xml
+//	 * @param context
+//	 * @return {@code GoogleStyleProgressLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateGoogleStyleProgressLayout} instance if not
+//	 */
 	@SuppressWarnings("unchecked")
 	public static Class<? extends GoogleStyleProgressLayout> createGoogleStyleProgressLayoutClazz(
 			String clazzName) {
@@ -80,12 +80,12 @@ class GoogleStyleProgressLayoutFactory {
 		Class<? extends GoogleStyleProgressLayout> clazz = createGoogleStyleProgressLayoutClazz(layoutCode);
 		return createGoogleStyleProgressLayout(clazz, context, attrs);
 	}
-	/**
-	 * Create a {@code GoogleStyleProgressLayout} instance matched by <b>{@code clazz} token</b> 
-	 * @param layoutCode Google style progress layout code, which must be defined in pulltorefresh.xml
-	 * @param context 
-	 * @return {@code GoogleStyleProgressLayout} instance if the class matched by {@code layoutCode} exists, or {@code DefaultGoogleStyleProgressLayout} instance if not  
-	 */
+//	/**
+//	 * Create a {@code GoogleStyleProgressLayout} instance matched by <b>{@code clazz} token</b>
+//	 * @param layoutCode Google style progress layout code, which must be defined in pulltorefresh.xml
+//	 * @param context
+//	 * @return {@code GoogleStyleProgressLayout} instance if the class matched by {@code layoutCode} exists, or {@code DefaultGoogleStyleProgressLayout} instance if not
+//	 */
 	public static GoogleStyleProgressLayout createGoogleStyleProgressLayout(
 			Class<? extends GoogleStyleProgressLayout> clazz, Context context, TypedArray attrs) {
 		GoogleStyleProgressLayout layout = null;

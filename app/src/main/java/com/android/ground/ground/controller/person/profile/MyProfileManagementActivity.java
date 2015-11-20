@@ -9,9 +9,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
 import com.android.ground.ground.controller.person.main.MainActivity;
+import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.person.profile.MyPage;
@@ -47,6 +51,10 @@ public class MyProfileManagementActivity extends AppCompatActivity {
 
 
     DisplayImageOptions options;
+
+    CustomToolbar customToolbar;
+    Menu menu;
+
     public static final int REQUEST_CODE_CROP = 0;
     File mSavedFile;
     public static final int REQ_AREA_SEARCH = 1;
@@ -58,7 +66,23 @@ public class MyProfileManagementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile_management);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+        customToolbar = new CustomToolbar(MyProfileManagementActivity.this);
+        try {
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setCustomView(customToolbar, params);
+
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon401);
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+
+
+
         age = (TextView)findViewById(R.id.age);
         position = (TextView)findViewById(R.id.position);
         skill = (TextView)findViewById(R.id.skill);
@@ -313,6 +337,18 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                 Toast.makeText(MyProfileManagementActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    public void setTitle(CharSequence title) {
+//        super.setTitle(title);
+        customToolbar.setTitle(title.toString());
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.fake_main, menu);
+        this.menu = menu;
+        return true;
     }
 
 }
