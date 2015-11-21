@@ -64,7 +64,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
     int w, h, countInField =0;
 
-    TextView matchDate, matchDay, awayClubName, homeClubName
+    TextView matchDate, awayClubName, homeClubName
             , startTime, matchLocation, homeAwayPlan, homeScore, awayScore, memName
             , MVPmemName;
     int matchId, clubId, groupPosition;
@@ -102,7 +102,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         groupPosition = getIntent().getIntExtra("groupPosition",-1);
 
         matchDate = (TextView)findViewById(R.id.matchDate);
-        matchDay = (TextView)findViewById(R.id.matchDay);
+//        matchDay = (TextView)findViewById(R.id.matchDay);
         awayClubName = (TextView)findViewById(R.id.awayClubName);
         homeClubName = (TextView)findViewById(R.id.homeClubName);
         startTime = (TextView)findViewById(R.id.startTime);
@@ -287,7 +287,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
     private void setLineupMatchResult(LineupMatchResult mLineupMatchResult) {
         matchDate.setText(mLineupMatchResult.matchDate);
-        matchDay.setText(Integer.toString(mLineupMatchResult.matchDay));
+//        matchDay.setText(Integer.toString(mLineupMatchResult.matchDay));
         awayClubName.setText(mLineupMatchResult.awayClubName);
         homeClubName.setText(mLineupMatchResult.homeClubName);
         startTime.setText(mLineupMatchResult.startTime);

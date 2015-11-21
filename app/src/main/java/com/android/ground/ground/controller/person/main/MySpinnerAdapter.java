@@ -92,6 +92,8 @@ public class MySpinnerAdapter extends BaseAdapter {
         view.setLayoutParams((new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
                 , (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
                 MyApplication.getContext().getResources().getDisplayMetrics()))));
+//        view.setBackgroundColor(MyApplication.getContext().getResources().getColor(R.color.spinner, MyApplication.getContext().getTheme().get R.style.Theme_App_Spinner));
+
         return view;
     }
 }

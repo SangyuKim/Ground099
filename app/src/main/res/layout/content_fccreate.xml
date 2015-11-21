@@ -12,7 +12,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <ImageView
             android:id="@+id/imageView_fc_profile"
@@ -29,7 +30,9 @@
             android:layout_height="wrap_content"
             android:text="창단하기"
             android:layout_below="@+id/relativeLayout6"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignRight="@+id/imageView_fc_profile"
+            android:layout_alignEnd="@+id/imageView_fc_profile"
+            android:layout_marginTop="47dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -60,7 +63,9 @@
                 android:layout_toRightOf="@+id/textView53"
                 android:textColor="#ffffffff"
                 android:hint="FC명을 적어주세요(6자 이내)"
-                android:background="#ffffffff" />
+                android:textColorHint="#ffffffff"
+                android:singleLine="true"
+                android:theme="@style/Theme.App.EditText" />
 
             <TextView
                 android:id="@+id/textView54"
@@ -82,7 +87,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignStart="@+id/clubName"
                 android:layout_below="@+id/clubName"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:theme="@style/Theme.App.EditText" />
 
             <TextView
                 android:id="@+id/textView55"
@@ -139,12 +145,15 @@
 
             <EditText
                 android:id="@+id/clubField"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffffff"
                 android:layout_alignTop="@+id/textView58"
-                android:layout_alignRight="@+id/fieldYN"
-                android:layout_alignEnd="@+id/fieldYN" />
+                android:layout_alignRight="@+id/linearLayout63"
+                android:layout_alignEnd="@+id/linearLayout63"
+                android:layout_toEndOf="@+id/fieldYN"
+                android:theme="@style/Theme.App.EditText"
+                android:layout_toRightOf="@+id/fieldYN" />
 
             <TextView
                 android:id="@+id/textView59"
@@ -162,27 +171,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:layout_below="@+id/textView60"
-                android:layout_alignParentLeft="true" />
-
-            <TextView
-                android:id="@+id/textView60"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="매치신청 받기"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffffff"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView59"
-                android:layout_alignParentLeft="true" />
-
-            <Switch
-                android:id="@+id/matchYN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:layout_below="@+id/memYN"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignTop="@+id/textView59"
+                android:layout_toLeftOf="@+id/clubField"
+                android:layout_toStartOf="@+id/clubField" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -272,7 +263,8 @@
                 android:layout_below="@+id/textView55"
                 android:layout_toRightOf="@+id/button_area_search"
                 android:layout_toEndOf="@+id/button_area_search"
-                android:background="@drawable/shape_droptarget">
+                android:background="@drawable/shape_droptarget"
+                android:id="@+id/linearLayout63">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -296,6 +288,27 @@
                     android:layout_gravity="right" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textView60"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="매치신청 받기"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#ffffffff"
+                android:layout_below="@+id/memYN"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="24dp" />
+
+            <Switch
+                android:id="@+id/matchYN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:layout_alignTop="@+id/textView60"
+                android:layout_toLeftOf="@+id/linearLayout63"
+                android:layout_toStartOf="@+id/linearLayout63" />
+
         </RelativeLayout>
 
         <ImageView
@@ -306,6 +319,14 @@
             android:layout_toRightOf="@+id/button17"
             android:layout_toEndOf="@+id/button17"
             android:src="@drawable/icon403" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/view9"
+            android:layout_below="@+id/button17"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 

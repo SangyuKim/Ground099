@@ -32,19 +32,21 @@
                 android:textColor="#ffffffff"
                 android:textSize="12sp"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignLeft="@+id/matchDD"
+                android:layout_alignStart="@+id/matchDD" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="dd"
                 android:id="@+id/matchDD"
-                android:textSize="16sp"
+                android:textSize="36sp"
                 android:layout_below="@+id/matchDate"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:textAlignment="gravity"
+                android:layout_marginLeft="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,6 +56,7 @@
                 android:id="@+id/matchDay"
                 android:textColor="#ffffffff"
                 android:textSize="12sp"
+                android:layout_alignBaseline="@+id/matchDD"
                 android:layout_alignBottom="@+id/matchDD"
                 android:layout_toRightOf="@+id/matchDD"
                 android:layout_toEndOf="@+id/matchDD" />
@@ -117,7 +120,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="0"
                     android:id="@+id/homeScore"
                     android:textColor="#ffffffff"
                     android:layout_weight="1"
@@ -135,7 +137,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="0"
                     android:id="@+id/awayScore"
                     android:textColor="#ffffffff"
                     android:layout_weight="1"

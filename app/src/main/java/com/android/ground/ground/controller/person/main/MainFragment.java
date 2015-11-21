@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
@@ -38,6 +39,7 @@ public class MainFragment extends Fragment {
     TabHost tabHost;
     ViewPager pager;
     TabsAdapter mAdapter;
+    TabWidget tabWidget;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -82,6 +84,7 @@ public class MainFragment extends Fragment {
         View view  =inflater.inflate(R.layout.fragment_main, container, false);
 
         tabHost = (TabHost)view.findViewById(R.id.tabHost);
+//        tabHost.getTabWidget().setLayoutParams();
         tabHost.setup();
 
         pager = (ViewPager)view.findViewById(R.id.pager);

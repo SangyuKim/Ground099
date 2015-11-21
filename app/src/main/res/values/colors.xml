@@ -27,6 +27,10 @@
 
     <color name="red">#ff3a1d</color>
     <color name="gray">#636363</color>
-    <color name="blue">#00726c</color>
+    <color name="blue">#0072bc</color>
 
+    <color name="floatingGray">#b7b7b7</color>
+
+
+    <color name="spinner">#66464646</color>
 </resources>

@@ -64,7 +64,9 @@ import java.security.cert.CertificateException;
 
 public class NetworkManager {
 
-    public final static String GROND_SERVER_URL = "http://192.168.211.179:3001";
+//    public final static String GROND_SERVER_URL = "http://172.31.24.101:80";
+//    public final static String GROND_SERVER_URL = "http://192.168.211.228:3001";
+    public final static String GROND_SERVER_URL = "http://54.178.160.114";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
         if (instance == null) {
@@ -710,7 +712,7 @@ public class NetworkManager {
 
                @Override
                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                   Log.d("hello", "status code : " + statusCode);
                }
            });
 

@@ -14,5 +14,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="소소소"
-        android:id="@+id/memIntro" />
+        android:id="@+id/memIntro"
+        android:textColor="#ffffffff"
+        android:singleLine="true" />
 </LinearLayout>

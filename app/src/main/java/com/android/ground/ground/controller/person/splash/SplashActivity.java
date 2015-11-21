@@ -139,43 +139,43 @@ public class SplashActivity extends AppCompatActivity {
         });
 
         //unlink
-        final String appendMessage = getString(R.string.com_kakao_confirm_unlink);
-        new AlertDialog.Builder(this)
-                .setMessage(appendMessage)
-                .setPositiveButton(getString(R.string.com_kakao_ok_button),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                UserManagement.requestUnlink(new UnLinkResponseCallback() {
-                                    @Override
-                                    public void onFailure(ErrorResult errorResult) {
-                                    }
-
-                                    @Override
-                                    public void onSessionClosed(ErrorResult errorResult) {
-
-                                    }
-
-                                    @Override
-                                    public void onNotSignedUp() {
-
-                                    }
-
-                                    @Override
-                                    public void onSuccess(Long result) {
-
-                                    }
-                                });
-                                dialog.dismiss();
-                            }
-                        })
-                .setNegativeButton(getString(R.string.com_kakao_cancel_button),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).show();
+//        final String appendMessage = getString(R.string.com_kakao_confirm_unlink);
+//        new AlertDialog.Builder(this)
+//                .setMessage(appendMessage)
+//                .setPositiveButton(getString(R.string.com_kakao_ok_button),
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                UserManagement.requestUnlink(new UnLinkResponseCallback() {
+//                                    @Override
+//                                    public void onFailure(ErrorResult errorResult) {
+//                                    }
+//
+//                                    @Override
+//                                    public void onSessionClosed(ErrorResult errorResult) {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onNotSignedUp() {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onSuccess(Long result) {
+//
+//                                    }
+//                                });
+//                                dialog.dismiss();
+//                            }
+//                        })
+//                .setNegativeButton(getString(R.string.com_kakao_cancel_button),
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        }).show();
 
 
 
@@ -355,8 +355,9 @@ public class SplashActivity extends AppCompatActivity {
             setUpIfNeeded();
 
             //sharedPreference에 아이디값이 있을 경우 ->
-        searchMyPage(1108);
-        searchMyPageTrans(1108);
+//cod 200번대이면 개인 프로필 가져오기
+//        searchMyPage(1108);
+//        searchMyPageTrans(1108);
 
 //        }//카톡 세션 확인
 

@@ -106,7 +106,7 @@ public class SearchMatchItemView extends RelativeLayout implements Checkable {
            month = transFormat1.format(to);
 
         }
-        matchDate.setText(month + "/");
+        matchDate.setText(month + " /");
 //        Toast.makeText(getContext(), dd, Toast.LENGTH_SHORT).show();
         matchDD.setText(dd);
         homeClubName.setText(item.homeClubName);

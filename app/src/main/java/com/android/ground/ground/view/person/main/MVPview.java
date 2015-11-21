@@ -103,7 +103,7 @@ public class MVPview extends FrameLayout {
         itemScr = items.resultScr;
         itemWin = items.resultWin;
 
-        month.setText(items.month +"월의 MVPs" );
+        month.setText(items.month +"월의 MVP" );
         memNameCountMVP.setText(itemMVP.memName + " / " + itemMVP.count +" 회");
         memNameCountScr.setText(itemScr.memName + " / " + itemScr.count +" 골");
         clubNmaeCount.setText(itemWin.clubName + " / " + itemMVP.count + " 승");

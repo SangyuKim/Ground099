@@ -14,5 +14,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
-        android:id="@+id/memName" />
+        android:id="@+id/memName"
+        android:textColor="#ffffffff"
+        android:singleLine="true" />
 </LinearLayout>

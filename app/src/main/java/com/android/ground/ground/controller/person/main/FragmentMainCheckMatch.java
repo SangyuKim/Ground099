@@ -536,7 +536,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
                                             @Override
                                             public void onFail(int code) {
-                                                Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(MyApplication.getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }

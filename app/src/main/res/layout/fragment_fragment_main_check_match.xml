@@ -28,13 +28,15 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:singleLine="true"
-                android:imeOptions="actionDone"/>
+                android:imeOptions="actionDone"
+                android:textColor="#ffffffff" />
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/custom_search_bar_button_cancel"
-                android:text="X" />
+                android:text="X"
+                android:background="#ff3a1d" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -42,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:text="취소"
                 android:id="@+id/custom_search_bar_button"
-                android:layout_gravity="bottom" />
+                android:layout_gravity="bottom"
+                android:background="#ff3a1d" />
         </LinearLayout>
 
         <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
@@ -55,8 +58,9 @@
             app:ptrMode="pullFromStart"
             android:orientation="horizontal"
             android:layout_below="@+id/spinner"
-            android:dividerHeight="2dp"
-            android:divider="@drawable/list_divider"/>
+            android:dividerHeight="1dp"
+            android:divider="@drawable/list_divider"
+            />
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -74,7 +78,8 @@
     <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_search" />
+        android:src="@drawable/ic_search"
+        android:theme="@style/Theme.App.FLoatingButton" />
 
 
 </FrameLayout>

@@ -9,4 +9,6 @@
 
     <dimen name="msg_dialog_width">100dp</dimen>
     <dimen name="msg_dialog_height">200dp</dimen>
+    <dimen name="your_dimension_name">15dp</dimen>
+    <dimen name="your_dimension_name2">10dp</dimen>
 </resources>

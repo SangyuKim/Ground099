@@ -12,13 +12,14 @@
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout5"
         android:background="@drawable/card_201"
-        android:paddingTop="23.5dp"
-        android:paddingLeft="16.75dp"
-        android:paddingRight="15.75dp">
+        android:paddingTop="15dp"
+        android:paddingLeft="23dp"
+        android:paddingRight="23dp">
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp">
 
             <com.android.ground.ground.custom.CustomCircularImageView
                 android:layout_width="98.75dp"
@@ -30,8 +31,8 @@
                 android:layout_alignParentStart="true" />
 
             <com.android.ground.ground.custom.CustomCircularImageView
-                android:layout_width="26.5dp"
-                android:layout_height="26.5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:id="@+id/clubImage"
                 android:layout_gravity="left|top"
                 android:src="@mipmap/ic_launcher" />
@@ -54,7 +55,9 @@
                     android:layout_height="23dp"
                     android:id="@+id/managerYN"
                     android:src="@drawable/captain"
-                    android:layout_marginRight="11dp" />
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="3dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -90,15 +93,18 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="지역  "
+                    android:text="지역"
                     android:id="@+id/textView33"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textColor="#ffffffff"
+                    android:layout_marginRight="5dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -118,7 +124,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="3dp">
 
                 <CheckBox
                     android:layout_width="15.25dp"
@@ -130,16 +137,19 @@
                     android:checked="false"
                     android:focusable="false"
                     android:clickable="false"
-                    android:button="@drawable/check_box_mon" />
+                    android:button="@drawable/check_box_mon"
+                    android:layout_marginTop="1.5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="선호  "
+                    android:text="선호"
                     android:id="@+id/text_actor"
                     android:textColor="#ffffffff"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_centerVertical="true" />
 
                 <CheckBox
                     android:layout_width="15.25dp"
@@ -151,7 +161,8 @@
                     android:checked="false"
                     android:focusable="false"
                     android:clickable="false"
-                    android:button="@drawable/check_box_tue" />
+                    android:button="@drawable/check_box_tue"
+                    android:layout_marginTop="1.5dp" />
 
                 <CheckBox
                     android:layout_width="15.25dp"
@@ -163,7 +174,8 @@
                     android:checked="false"
                     android:focusable="false"
                     android:clickable="false"
-                    android:button="@drawable/check_box_wed" />
+                    android:button="@drawable/check_box_wed"
+                    android:layout_marginTop="1.5dp" />
 
                 <CheckBox
                     android:layout_width="15.25dp"
@@ -175,7 +187,8 @@
                     android:button="@drawable/check_box_thu"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/memMainDay_Wed"
-                    android:layout_toEndOf="@+id/memMainDay_Wed" />
+                    android:layout_toEndOf="@+id/memMainDay_Wed"
+                    android:layout_marginTop="1.5dp" />
 
                 <CheckBox
                     android:layout_width="15.25dp"
@@ -187,7 +200,8 @@
                     android:button="@drawable/check_box_fri"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/memMainDay_Thu"
-                    android:layout_toEndOf="@+id/memMainDay_Thu" />
+                    android:layout_toEndOf="@+id/memMainDay_Thu"
+                    android:layout_marginTop="1.5dp" />
 
                 <CheckBox
                     android:layout_width="15.25dp"
@@ -199,7 +213,8 @@
                     android:button="@drawable/check_box_sat"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/memMainDay_Fri"
-                    android:layout_toEndOf="@+id/memMainDay_Fri" />
+                    android:layout_toEndOf="@+id/memMainDay_Fri"
+                    android:layout_marginTop="1.5dp" />
 
                 <CheckBox
                     android:layout_width="15.25dp"
@@ -211,7 +226,8 @@
                     android:button="@drawable/check_box_sun"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/memMainDay_Sat"
-                    android:layout_toEndOf="@+id/memMainDay_Sat" />
+                    android:layout_toEndOf="@+id/memMainDay_Sat"
+                    android:layout_marginTop="1.5dp" />
 
             </RelativeLayout>
 
@@ -222,7 +238,8 @@
                 android:text="memIntro"
                 android:id="@+id/memIntro"
                 android:textColor="#ffffffff"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:singleLine="true" />
 
         </LinearLayout>
 

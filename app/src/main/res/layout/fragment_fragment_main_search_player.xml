@@ -29,21 +29,24 @@
                 android:layout_gravity="bottom"
                 android:singleLine="true"
                 android:imeOptions="actionDone"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#ffffffff" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/custom_search_bar_button_cancel"
-                android:text="X" />
+                android:text="삭제"
+                android:background="#ff3a1d" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="취소"
-                android:id="@+id/custom_search_bar_button" />
+                android:id="@+id/custom_search_bar_button"
+                android:background="#ff3a1d" />
         </LinearLayout>
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView
@@ -56,7 +59,7 @@
             app:ptrMode="pullFromStart"
             android:orientation="horizontal"
             android:layout_below="@+id/spinner"
-            android:dividerHeight="2dp"
+            android:dividerHeight="1dp"
             android:divider="@drawable/list_divider"/>
 
         <Spinner
@@ -75,7 +78,9 @@
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
+
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_search" />
+        android:src="@drawable/ic_search"
+        android:theme="@style/Theme.App.FLoatingButton" />
 </FrameLayout>
