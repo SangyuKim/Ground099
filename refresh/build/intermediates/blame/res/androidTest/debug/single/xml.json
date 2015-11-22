@@ -8,6 +8,10 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
     },
     {
+        "merged": "C:\\work_android\\Ground4321\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
+        "source": "C:\\work_android\\Ground4321\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
+    },
+    {
         "merged": "C:\\work_android\\Ground432\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
         "source": "C:\\work_android\\Ground432\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
     }
