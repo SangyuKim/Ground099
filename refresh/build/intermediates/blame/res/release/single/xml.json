@@ -22,5 +22,9 @@
     {
         "merged": "C:\\work_android\\Ground4321\\refresh\\build\\intermediates\\res\\merged\\release\\xml\\pulltorefresh.xml",
         "source": "C:\\work_android\\Ground4321\\refresh\\src\\main\\res\\xml\\pulltorefresh.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground65\\refresh\\build\\intermediates\\res\\merged\\release\\xml\\pulltorefresh.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground65\\refresh\\src\\main\\res\\xml\\pulltorefresh.xml"
     }
 ]

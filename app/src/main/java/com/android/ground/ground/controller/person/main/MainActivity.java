@@ -299,15 +299,6 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, FCActivity.class);
             startActivity(intent);
             isBackPressed = false;
-        } else if (id == R.id.nav_mymessage) {
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            if(alarmItem != null){
-                alarmItem.setIcon(R.drawable.icon_002);
-                isAlarmOpened = false;
-            }
-            Intent intent = new Intent(MainActivity.this, MyMessageActivity.class);
-            startActivity(intent);
-            isBackPressed = false;
         } else if (id == R.id.nav_ground) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             if(alarmItem != null){

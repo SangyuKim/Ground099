@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -224,8 +225,8 @@ public class SignupFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        btn = (Button)view.findViewById(R.id.button_area_search);
-        btn.setOnClickListener(new View.OnClickListener() {
+        LinearLayout areaBtn = (LinearLayout)view.findViewById(R.id.button_area_search);
+        areaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(getContext(), "지역 검색으로 이동", Toast.LENGTH_SHORT).show();

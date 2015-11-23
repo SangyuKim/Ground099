@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="190dp"
-    android:layout_weight="1" >
+    android:layout_weight="1">
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="33.25dp"
+        android:layout_height="33.25dp"
         android:id="@+id/imageView11"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/icon_setting601"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="18.5dp"
+        android:layout_marginBottom="20.5dp" />
 </RelativeLayout>

@@ -20,6 +20,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer"
+        android:background="#f0101010"
+        app:itemTextColor="#ffffffff"
+        />
 
 </com.android.ground.ground.custom.CustomDrawerLayout>

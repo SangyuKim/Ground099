@@ -86,6 +86,7 @@ public class CustomNavigationMenuPresenter  implements MenuPresenter {
         if (mMenuView == null) {
             mMenuView = (NavigationMenuView) mLayoutInflater.inflate(
                     R.layout.design_navigation_menu, root, false);
+
             if (mAdapter == null) {
                 mAdapter = new NavigationMenuAdapter();
             }

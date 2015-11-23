@@ -10,331 +10,447 @@
     tools:showIn="@layout/activity_fccreate"
   >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-        <ImageView
-            android:id="@+id/imageView_fc_profile"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-
-        <Button
-            android:id="@+id/button17"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="창단하기"
-            android:layout_below="@+id/relativeLayout6"
-            android:layout_alignRight="@+id/imageView_fc_profile"
-            android:layout_alignEnd="@+id/imageView_fc_profile"
-            android:layout_marginTop="47dp" />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="5px"
+        android:id="@+id/scrollView2">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView_fc_profile"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/relativeLayout6">
-
-            <TextView
-                android:id="@+id/textView53"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:text="팀 명"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffffff" />
-
-            <EditText
-                android:id="@+id/clubName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/textView53"
-                android:layout_toRightOf="@+id/textView53"
-                android:textColor="#ffffffff"
-                android:hint="FC명을 적어주세요(6자 이내)"
-                android:textColorHint="#ffffffff"
-                android:singleLine="true"
-                android:theme="@style/Theme.App.EditText" />
-
-            <TextView
-                android:id="@+id/textView54"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/clubName"
-                android:text="소 개"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffffff" />
-
-            <EditText
-                android:id="@+id/clubIntro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/clubName"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignStart="@+id/clubName"
-                android:layout_below="@+id/clubName"
-                android:textColor="#ffffffff"
-                android:theme="@style/Theme.App.EditText" />
-
-            <TextView
-                android:id="@+id/textView55"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/clubIntro"
-                android:text="활동지역"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffffff" />
+            android:id="@+id/relativeLayout8">
 
             <Button
-                android:id="@+id/button_area_search"
+                android:id="@+id/button17"
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="지역 검색"
-                android:layout_alignTop="@+id/textView55"
-                android:layout_toRightOf="@+id/textView55"
-                android:layout_toEndOf="@+id/textView55" />
+                android:layout_width="285dp"
+                android:layout_height="38.5dp"
+                android:text="창단하기"
+                android:background="#ff3a1d"
+                android:layout_below="@+id/textView66"
+                android:layout_centerHorizontal="true" />
 
-            <TextView
-                android:id="@+id/textView56"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/relativeLayout6"
+                android:layout_below="@+id/frameLayout"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/button_area_search"
-                android:text="선호요일"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffffff" />
+                android:layout_marginLeft="23dp">
 
-            <TextView
-                android:id="@+id/textView58"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout72"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:id="@+id/textView53"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:text="팀       명"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="10dp" />
+
+                    <ImageView
+                        android:layout_width="4.5dp"
+                        android:layout_height="4.5dp"
+                        android:id="@+id/imageView14"
+                        android:src="@drawable/red401" />
+
+                    <EditText
+                        android:id="@+id/clubName"
+                        android:layout_width="169.5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignTop="@+id/textView53"
+                        android:layout_toRightOf="@+id/textView53"
+                        android:textColor="#ffffffff"
+                        android:hint="FC명을 적어주세요(6자 이내)"
+                        android:textColorHint="#ffffffff"
+                        android:singleLine="true"
+                        android:theme="@style/Theme.App.EditText"
+                        android:textSize="9sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout72"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/linearLayout73"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:id="@+id/textView54"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/clubName"
+                        android:text="소       개"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="10dp" />
+
+                    <EditText
+                        android:id="@+id/clubIntro"
+                        android:layout_width="169.5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/clubName"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignStart="@+id/clubName"
+                        android:layout_below="@+id/clubName"
+                        android:textColor="#ffffffff"
+                        android:theme="@style/Theme.App.EditText"
+                        android:hint="한글10자, 영문20자 이내로 입력해주세요."
+                        android:textColorHint="#ffffffff"
+                        android:singleLine="true"
+                        android:textSize="9sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout67"
+                    android:layout_below="@+id/linearLayout73"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:id="@+id/textView55"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/clubIntro"
+                        android:text="활동지역"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="10dp" />
+
+                    <ImageView
+                        android:layout_width="4.5dp"
+                        android:layout_height="4.5dp"
+                        android:id="@+id/imageView15"
+                        android:src="@drawable/red401" />
+
+                        <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="169.75dp"
+                        android:layout_height="28dp"
+                        android:layout_below="@+id/textView55"
+                       android:background="@drawable/shape_droptarget"
+                        android:id="@+id/button_area_search">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="지역 검색"
+                            android:id="@+id/textView39"
+                            android:layout_below="@+id/textView55"
+                            android:layout_toRightOf="@+id/button_area_search"
+                            android:layout_toEndOf="@+id/button_area_search"
+                            android:textColor="#ffffffff"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="17dp"
+                            android:layout_height="16.75dp"
+                            android:id="@+id/imageView8"
+                            android:src="@drawable/icon402"
+                            android:layout_gravity="center_vertical|right" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout67"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/linearLayout68"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:id="@+id/textView56"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/button_area_search"
+                        android:text="선호요일"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="10dp" />
+
+                    <ImageView
+                        android:layout_width="4.5dp"
+                        android:layout_height="4.5dp"
+                        android:id="@+id/imageView16"
+                        android:src="@drawable/red401" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/button_area_search"
+                        android:layout_toRightOf="@+id/textView56"
+                        android:layout_toEndOf="@+id/textView56"
+                        android:id="@+id/linearLayout62">
+
+                        <CheckBox
+                            android:id="@+id/clubMainDay_Mon"
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/textView56"
+                            android:checked="false"
+                            android:button="@drawable/check_box_mon_fc" />
+
+                        <CheckBox
+                            android:id="@+id/clubMainDay_Tue"
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:checked="false"
+                            android:button="@drawable/check_box_tue_fc"
+                            android:layout_alignBottom="@+id/clubMainDay_Mon"
+                            android:layout_toRightOf="@+id/textView56"
+                            android:layout_toEndOf="@+id/textView56" />
+
+                        <CheckBox
+                            android:id="@+id/clubMainDay_Wed"
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:layout_alignEnd="@+id/button_area_search"
+                            android:layout_alignRight="@+id/button_area_search"
+                            android:layout_alignTop="@+id/clubMainDay_Tue"
+                            android:checked="false"
+                             android:button="@drawable/check_box_wed_fc" />
+
+                        <CheckBox
+                            android:id="@+id/clubMainDay_Thu"
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:layout_alignTop="@+id/clubMainDay_Wed"
+                            android:layout_toEndOf="@+id/clubMainDay_Wed"
+                            android:layout_toRightOf="@+id/clubMainDay_Wed"
+                            android:checked="false"
+                            android:button="@drawable/check_box_thu_fc" />
+
+                        <CheckBox
+                            android:id="@+id/clubMainDay_Fri"
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:layout_alignTop="@+id/clubMainDay_Thu"
+                            android:layout_toEndOf="@+id/clubMainDay_Thu"
+                            android:layout_toRightOf="@+id/clubMainDay_Thu"
+                            android:checked="false"
+                            android:button="@drawable/check_box_fri_fc" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox13"
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:layout_alignTop="@+id/clubMainDay_Fri"
+                            android:layout_toEndOf="@+id/clubMainDay_Fri"
+                            android:layout_toRightOf="@+id/clubMainDay_Fri"
+                            android:checked="false"
+
+                            android:button="@drawable/check_box_sat_fc" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox14"
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:layout_alignTop="@+id/checkBox13"
+                            android:layout_toEndOf="@+id/checkBox13"
+                            android:layout_toRightOf="@+id/checkBox13"
+                            android:checked="false"
+                            android:button="@drawable/check_box_sun_fc" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout68"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/linearLayout69"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:id="@+id/textView58"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="제휴구장"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffffff"
+                        android:layout_below="@+id/linearLayout62"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:textSize="16sp"
+                        android:layout_marginRight="10dp" />
+
+                    <Switch
+                        android:id="@+id/fieldYN"
+                        android:layout_width="51.25dp"
+                        android:layout_height="21.5dp"
+                        android:checked="false"
+                        android:layout_alignBottom="@+id/textView58"
+                        android:layout_toRightOf="@+id/textView58"
+                        android:layout_toEndOf="@+id/textView58" />
+
+                    <EditText
+                        android:id="@+id/clubField"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffffff"
+                        android:layout_alignTop="@+id/textView58"
+                        android:layout_alignRight="@+id/linearLayout63"
+                        android:layout_alignEnd="@+id/linearLayout63"
+                        android:layout_toEndOf="@+id/fieldYN"
+                        android:theme="@style/Theme.App.EditText"
+                        android:layout_toRightOf="@+id/fieldYN"
+                        android:textSize="9sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout69"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/linearLayout70"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:id="@+id/textView59"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="맴버모집"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffffff"
+                        android:layout_below="@+id/clubField"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:textSize="16sp"
+                        android:layout_marginRight="10dp" />
+
+                    <Switch
+                        android:id="@+id/memYN"
+                        android:layout_width="51.25dp"
+                        android:layout_height="21.5dp"
+                        android:checked="false"
+                        android:layout_alignTop="@+id/textView59"
+                        android:layout_toLeftOf="@+id/clubField"
+                        android:layout_toStartOf="@+id/clubField" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout70"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:id="@+id/textView60"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="매치신청 받기"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="10dp" />
+
+                    <Switch
+                        android:id="@+id/matchYN"
+                        android:layout_width="51.25dp"
+                        android:layout_height="21.5dp"
+                        android:checked="false"
+                        />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.SwitchCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="제휴구장"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffffff"
-                android:layout_below="@+id/linearLayout62"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp" />
-
-            <Switch
-                android:id="@+id/fieldYN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:layout_alignBottom="@+id/textView58"
-                android:layout_toRightOf="@+id/textView58"
-                android:layout_toEndOf="@+id/textView58" />
-
-            <EditText
-                android:id="@+id/clubField"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#ffffffff"
-                android:layout_alignTop="@+id/textView58"
-                android:layout_alignRight="@+id/linearLayout63"
-                android:layout_alignEnd="@+id/linearLayout63"
-                android:layout_toEndOf="@+id/fieldYN"
-                android:theme="@style/Theme.App.EditText"
-                android:layout_toRightOf="@+id/fieldYN" />
-
-            <TextView
-                android:id="@+id/textView59"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="맴버모집"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffffff"
-                android:layout_below="@+id/clubField"
+                android:id="@+id/view9"
+                android:layout_below="@+id/button17"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
-            <Switch
-                android:id="@+id/memYN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:layout_alignTop="@+id/textView59"
-                android:layout_toLeftOf="@+id/clubField"
-                android:layout_toStartOf="@+id/clubField" />
+            <FrameLayout
+                android:layout_width="122.5dp"
+                android:layout_height="122.5dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/frameLayout"
+                android:layout_marginTop="24.25dp">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/button_area_search"
-                android:layout_toRightOf="@+id/textView56"
-                android:layout_toEndOf="@+id/textView56"
-                android:id="@+id/linearLayout62">
-
-                <CheckBox
-                    android:id="@+id/clubMainDay_Mon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textView56"
-                    android:checked="false"
-                    android:button="@drawable/check_box_mon_fc" />
-
-                <CheckBox
-                    android:id="@+id/clubMainDay_Tue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:button="@drawable/check_box_tue_fc"
-                    android:layout_alignBottom="@+id/clubMainDay_Mon"
-                    android:layout_toRightOf="@+id/textView56"
-                    android:layout_toEndOf="@+id/textView56" />
-
-                <CheckBox
-                    android:id="@+id/clubMainDay_Wed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/button_area_search"
-                    android:layout_alignRight="@+id/button_area_search"
-                    android:layout_alignTop="@+id/clubMainDay_Tue"
-                    android:checked="false"
-                     android:button="@drawable/check_box_wed_fc" />
-
-                <CheckBox
-                    android:id="@+id/clubMainDay_Thu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/clubMainDay_Wed"
-                    android:layout_toEndOf="@+id/clubMainDay_Wed"
-                    android:layout_toRightOf="@+id/clubMainDay_Wed"
-                    android:checked="false"
-                    android:button="@drawable/check_box_thu_fc" />
-
-                <CheckBox
-                    android:id="@+id/clubMainDay_Fri"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/clubMainDay_Thu"
-                    android:layout_toEndOf="@+id/clubMainDay_Thu"
-                    android:layout_toRightOf="@+id/clubMainDay_Thu"
-                    android:checked="false"
-                    android:button="@drawable/check_box_fri_fc" />
-
-                <CheckBox
-                    android:id="@+id/checkBox13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/clubMainDay_Fri"
-                    android:layout_toEndOf="@+id/clubMainDay_Fri"
-                    android:layout_toRightOf="@+id/clubMainDay_Fri"
-                    android:checked="false"
-
-                    android:button="@drawable/check_box_sat_fc" />
-
-                <CheckBox
-                    android:id="@+id/checkBox14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/checkBox13"
-                    android:layout_toEndOf="@+id/checkBox13"
-                    android:layout_toRightOf="@+id/checkBox13"
-                    android:checked="false"
-                    android:button="@drawable/check_box_sun_fc" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView55"
-                android:layout_toRightOf="@+id/button_area_search"
-                android:layout_toEndOf="@+id/button_area_search"
-                android:background="@drawable/shape_droptarget"
-                android:id="@+id/linearLayout63">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Small Text"
-                    android:id="@+id/textView39"
-                    android:layout_below="@+id/textView55"
-                    android:layout_toRightOf="@+id/button_area_search"
-                    android:layout_toEndOf="@+id/button_area_search"
-                    android:textColor="#ffffffff"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:gravity="center" />
+                <com.android.ground.ground.custom.CustomCircularImageView
+                    android:id="@+id/imageView_fc_profile"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center" />
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/imageView8"
-                    android:src="@drawable/icon402"
-                    android:layout_gravity="right" />
-            </LinearLayout>
+                    android:layout_width="31.75dp"
+                    android:layout_height="31.75dp"
+                    android:id="@+id/imageView12"
+                    android:layout_alignBottom="@+id/imageView_fc_profile"
+                    android:layout_toRightOf="@+id/button17"
+                    android:layout_toEndOf="@+id/button17"
+                    android:src="@drawable/icon403"
+                    android:layout_gravity="right|bottom" />
+            </FrameLayout>
 
             <TextView
-                android:id="@+id/textView60"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="매치신청 받기"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ffffffff"
-                android:layout_below="@+id/memYN"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="24dp" />
-
-            <Switch
-                android:id="@+id/matchYN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:layout_alignTop="@+id/textView60"
-                android:layout_toLeftOf="@+id/linearLayout63"
-                android:layout_toStartOf="@+id/linearLayout63" />
+                android:text="팀명을 제외한 모든 항목은 수정이 가능한니다."
+                android:id="@+id/textView66"
+                android:layout_below="@+id/relativeLayout6"
+                android:layout_centerHorizontal="true"
+                android:textColor="#636363"
+                android:layout_marginBottom="21.5dp" />
 
         </RelativeLayout>
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/imageView12"
-            android:layout_alignBottom="@+id/imageView_fc_profile"
-            android:layout_toRightOf="@+id/button17"
-            android:layout_toEndOf="@+id/button17"
-            android:src="@drawable/icon403" />
-
-        <android.support.v7.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/view9"
-            android:layout_below="@+id/button17"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-    </RelativeLayout>
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="5px">
-
     </ScrollView>
 
 </RelativeLayout>

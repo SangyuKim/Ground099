@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.android.ground.ground.controller.person.login.SignupFragment"
-    android:background="#ffffffff">
+    android:background="@drawable/back401">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingRight="5px"
         android:fillViewport="false"
         android:id="@+id/scrollView_signup">
@@ -16,286 +16,404 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.android.ground.ground.custom.CustomCircularImageView
-                android:id="@+id/memImage"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/ic_launcher"
-                android:focusable="false"
-                android:layout_below="@+id/textView5"
-                android:layout_alignRight="@+id/textView5"
-                android:layout_alignEnd="@+id/textView5" />
+            <FrameLayout
+                android:layout_width="122.5dp"
+                android:layout_height="122.5dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/frameLayout3">
+
+                <com.android.ground.ground.custom.CustomCircularImageView
+                    android:id="@+id/memImage"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:src="@mipmap/ic_launcher"
+                    android:focusable="false"
+                android:layout_centerHorizontal="true"
+                    android:layout_gravity="center" />
+
+                <ImageView
+                    android:layout_width="31.75dp"
+                    android:layout_height="31.75dp"
+                    android:id="@+id/imageView18"
+                    android:layout_gravity="right|bottom"
+                    android:src="@drawable/icon403" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/textView49"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="사진입력"
+                android:text="선수이름"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_below="@+id/memImage"
-                android:layout_centerHorizontal="true" />
+                android:layout_below="@+id/frameLayout3"
+                android:layout_centerHorizontal="true"
+                android:textColor="#ffffffff"
+                android:textSize="27sp" />
 
-            <TextView
-                android:id="@+id/textView45"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="성별"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_alignTop="@+id/gender"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:id="@+id/textView47"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="활동지역"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_below="@+id/linearLayout52"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <Button
-                android:id="@+id/button_area_search"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="지역 검색"
-                android:focusable="false"
-                android:layout_below="@+id/linearLayout52"
-                android:layout_toRightOf="@+id/textViewArea"
-                android:layout_toEndOf="@+id/textViewArea" />
-
-            <RadioGroup
-                android:id="@+id/gender"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:focusable="false"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/textView49"
-                android:layout_toRightOf="@+id/textView45"
-                android:layout_toEndOf="@+id/textView45">
-
-                <RadioButton
-                    android:id="@+id/radioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="남"
-                    android:checked="false"
-                    android:focusable="false" />
-
-                <RadioButton
-                    android:id="@+id/radioButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="여"
-                    android:checked="false"
-                    android:focusable="false" />
-
-            </RadioGroup>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/gender"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:id="@+id/linearLayout52">
+                android:layout_marginLeft="23dp">
 
-                <TextView
-                    android:id="@+id/textView46"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="나이"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:layout_below="@+id/gender" />
-
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinner2" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/textViewArea"
-                android:layout_below="@+id/linearLayout52"
-                android:layout_toRightOf="@+id/textView47"
-                android:layout_toEndOf="@+id/textView47" />
-
-            <TextView
-                android:id="@+id/textView50"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="소개"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_below="@+id/linearLayout53"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <EditText
-                android:id="@+id/editText_signup"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:singleLine="true"
-
-                android:layout_below="@+id/linearLayout53"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/textView50"
-                android:layout_toEndOf="@+id/textView50" />
-
-            <TextView
-                android:id="@+id/textView51"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="포지션"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_below="@+id/editText_signup"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner_position"
-                android:layout_below="@+id/editText_signup"
-                android:layout_toRightOf="@+id/textView51"
-                android:layout_toEndOf="@+id/textView51" />
-
-            <TextView
-                android:id="@+id/textView52"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="본인 실력"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_below="@+id/spinner_position"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner_ability"
-                android:layout_alignTop="@+id/textView52"
-                android:layout_toRightOf="@+id/textView52"
-                android:layout_toEndOf="@+id/textView52" />
-
-            <Button
-                android:id="@+id/button_complete"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|top"
-                android:text="선수 등록하기"
-                android:focusable="false"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/button_area_search"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/linearLayout53">
-
-                <TextView
-                    android:id="@+id/textView48"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="주 활동 요일"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:layout_below="@+id/button_area_search"
+                    android:layout_gravity="right|top"
+                    android:id="@+id/linearLayout54"
+                    android:layout_below="@+id/textView49"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true">
 
-                <CheckBox
-                    android:id="@+id/memMainDay_Mon"
+                    <TextView
+                        android:id="@+id/textView45"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="성       별"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_alignTop="@+id/gender"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp" />
+
+                    <RadioGroup
+                        android:id="@+id/gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:focusable="false"
+                        android:layout_below="@+id/textView49"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true">
+
+                        <RadioButton
+                            android:id="@+id/radioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="남"
+                            android:checked="false"
+                            android:focusable="false"
+                            android:textColor="#ffffffff"
+                            android:textSize="16sp" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="여"
+                            android:checked="false"
+                            android:focusable="false"
+                            android:textColor="#ffffffff"
+                            android:textSize="16sp" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout52"
+                    android:layout_gravity="bottom"
+                    android:layout_below="@+id/linearLayout54"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
+
+                    <TextView
+                        android:id="@+id/textView46"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="나       이"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_below="@+id/gender"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinner2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout52"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textView48"
-                    android:checked="false"
-                    android:focusable="false" />
+                    android:id="@+id/linearLayout75">
 
-                <CheckBox
-                    android:id="@+id/memMainDay_Tue"
+                    <TextView
+                        android:id="@+id/textView47"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="활동지역"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_below="@+id/linearLayout52"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp" />
+
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/textView55"
+                        android:background="@drawable/shape_droptarget"
+                        android:id="@+id/button_area_search" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="지역 검색"
+                            android:id="@+id/textViewArea"
+                            android:layout_below="@+id/textView55"
+                            android:layout_toRightOf="@+id/button_area_search"
+                            android:layout_toEndOf="@+id/button_area_search"
+                            android:textColor="#ffffffff"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="17dp"
+                            android:layout_height="16.75dp"
+                            android:id="@+id/imageView19"
+                            android:src="@drawable/icon402"
+                            android:layout_gravity="center_vertical|right" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout53"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/linearLayout76">
+
+                    <TextView
+                        android:id="@+id/textView50"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="소       개"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_below="@+id/linearLayout53"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp" />
+
+                    <EditText
+                        android:id="@+id/editText_signup"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+
+                        android:layout_below="@+id/linearLayout53"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toRightOf="@+id/textView50"
+                        android:layout_toEndOf="@+id/textView50"
+                        android:textColor="#ffffffff"
+                        android:hint="FC명을 적어주세요(6자 이내)"
+                        android:textColorHint="#ffffffff"
+                        android:theme="@style/Theme.App.EditText"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout74"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
+
+                    <TextView
+                        android:id="@+id/textView52"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="본인실력"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_below="@+id/spinner_position"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinner_ability"
+                        android:layout_alignTop="@+id/textView52"
+                        android:layout_toRightOf="@+id/textView52"
+                        android:layout_toEndOf="@+id/textView52" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button_complete"
+                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/memMainDay_Mon"
-                    android:layout_toEndOf="@+id/memMainDay_Mon"
-                    android:layout_toRightOf="@+id/memMainDay_Mon"
-                    android:checked="false"
-                    android:focusable="false" />
+                    android:layout_gravity="center_horizontal|top"
+                    android:text="선수 등록하기"
+                    android:focusable="false"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" />
 
-                <CheckBox
-                    android:id="@+id/memMainDay_Wed"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/memMainDay_Tue"
-                    android:layout_toEndOf="@+id/memMainDay_Tue"
-                    android:layout_toRightOf="@+id/memMainDay_Tue"
-                    android:checked="false"
-                    android:focusable="false" />
+                    android:id="@+id/linearLayout53"
+                    android:layout_below="@+id/linearLayout75"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
 
-                <CheckBox
-                    android:id="@+id/memMainDay_Thu"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textView48"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="선호요일"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_below="@+id/button_area_search"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp" />
+
+                    <CheckBox
+                        android:id="@+id/memMainDay_Mon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/textView48"
+                        android:checked="false"
+                        android:focusable="false"
+                        android:button="@drawable/check_box_mon_fc" />
+
+                    <CheckBox
+                        android:id="@+id/memMainDay_Tue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/memMainDay_Mon"
+                        android:layout_toEndOf="@+id/memMainDay_Mon"
+                        android:layout_toRightOf="@+id/memMainDay_Mon"
+                        android:checked="false"
+                        android:focusable="false"
+                        android:button="@drawable/check_box_tue_fc" />
+
+                    <CheckBox
+                        android:id="@+id/memMainDay_Wed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/memMainDay_Tue"
+                        android:layout_toEndOf="@+id/memMainDay_Tue"
+                        android:layout_toRightOf="@+id/memMainDay_Tue"
+                        android:checked="false"
+                        android:focusable="false"
+                        android:button="@drawable/check_box_wed_fc" />
+
+                    <CheckBox
+                        android:id="@+id/memMainDay_Thu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/memMainDay_Wed"
+                        android:layout_toEndOf="@+id/memMainDay_Wed"
+                        android:layout_toRightOf="@+id/memMainDay_Wed"
+                        android:checked="false"
+                        android:focusable="false"
+                        android:button="@drawable/check_box_thu_fc" />
+
+                    <CheckBox
+                        android:id="@+id/memMainDay_Fri"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/memMainDay_Thu"
+                        android:layout_toEndOf="@+id/memMainDay_Thu"
+                        android:layout_toRightOf="@+id/memMainDay_Thu"
+                        android:checked="false"
+                        android:focusable="false"
+                        android:button="@drawable/check_box_fri_fc" />
+
+                    <CheckBox
+                        android:id="@+id/memMainDay_Sat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/memMainDay_Fri"
+                        android:layout_toEndOf="@+id/memMainDay_Fri"
+                        android:layout_toRightOf="@+id/memMainDay_Fri"
+                        android:checked="false"
+                        android:focusable="false"
+                        android:button="@drawable/check_box_sat_fc" />
+
+                    <CheckBox
+                        android:id="@+id/memMainDay_Sun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/memMainDay_Sat"
+                        android:layout_toEndOf="@+id/memMainDay_Sat"
+                        android:layout_toRightOf="@+id/memMainDay_Sat"
+                        android:checked="false"
+                        android:focusable="false"
+                        android:button="@drawable/check_box_sun_fc" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/memMainDay_Wed"
-                    android:layout_toEndOf="@+id/memMainDay_Wed"
-                    android:layout_toRightOf="@+id/memMainDay_Wed"
-                    android:checked="false"
-                    android:focusable="false" />
+                    android:id="@+id/linearLayout74"
+                    android:layout_below="@+id/linearLayout76"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
 
-                <CheckBox
-                    android:id="@+id/memMainDay_Fri"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/memMainDay_Thu"
-                    android:layout_toEndOf="@+id/memMainDay_Thu"
-                    android:layout_toRightOf="@+id/memMainDay_Thu"
-                    android:checked="false"
-                    android:focusable="false" />
+                    <TextView
+                        android:id="@+id/textView51"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="포  지  션"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_below="@+id/editText_signup"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:textColor="#ffffffff"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp" />
 
-                <CheckBox
-                    android:id="@+id/memMainDay_Sat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/memMainDay_Fri"
-                    android:layout_toEndOf="@+id/memMainDay_Fri"
-                    android:layout_toRightOf="@+id/memMainDay_Fri"
-                    android:checked="false"
-                    android:focusable="false" />
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinner_position"
+                        android:layout_below="@+id/editText_signup"
+                        android:layout_toRightOf="@+id/textView51"
+                        android:layout_toEndOf="@+id/textView51" />
+                </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/memMainDay_Sun"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/memMainDay_Sat"
-                    android:layout_toEndOf="@+id/memMainDay_Sat"
-                    android:layout_toRightOf="@+id/memMainDay_Sat"
-                    android:checked="false"
-                    android:focusable="false" />
-            </LinearLayout>
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="선수등록"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </ScrollView>
 

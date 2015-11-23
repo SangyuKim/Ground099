@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
@@ -66,15 +67,16 @@ public class FCCreateActivity extends AppCompatActivity {
         }catch(Exception e){
             e.printStackTrace();
         }
-        Button btn = (Button)findViewById(R.id.button_area_search);
-        btn.setOnClickListener(new View.OnClickListener() {
+        LinearLayout areaLayout = (LinearLayout)findViewById(R.id.button_area_search);
+        areaLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FCCreateActivity.this, AreaSearchActivity.class);
                 startActivityForResult(intent, REQ_AREA_SEARCH);
             }
         });
-        btn = (Button)findViewById(R.id.button17);
+
+        Button btn = (Button)findViewById(R.id.button17);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
