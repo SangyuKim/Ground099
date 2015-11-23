@@ -22,8 +22,8 @@
 
         <com.android.ground.ground.custom.CustomCircularImageView
             android:id="@+id/memImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:src="@android:drawable/sym_def_app_icon"
             android:layout_gravity="center"
@@ -69,12 +69,13 @@
 
             <ImageView
                 android:id="@+id/managerYN"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@mipmap/ic_launcher"
+                android:layout_width="23.75dp"
+                android:layout_height="23.25dp"
+                android:src="@drawable/captain"
                 android:layout_above="@+id/memIntro"
                 android:layout_toLeftOf="@+id/memIntro"
-                android:layout_toStartOf="@+id/memIntro" />
+                android:layout_toStartOf="@+id/memIntro"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/memName"
@@ -85,7 +86,9 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:layout_below="@+id/frameLayout2"
                 android:layout_centerHorizontal="true"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:textSize="27sp"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,7 +109,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_gravity="center"
-            android:textColor="#ffffffff" />
+            android:textColor="#ffffffff"
+            android:textSize="12sp" />
     </LinearLayout>
 
 

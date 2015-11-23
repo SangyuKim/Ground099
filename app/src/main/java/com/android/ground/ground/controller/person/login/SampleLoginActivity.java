@@ -21,16 +21,39 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.main.MainActivity;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.widget.WaitingDialog;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.auth.network.request.AccessTokenInfoRequest;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 샘플에서 사용하게 될 로그인 페이지
@@ -39,6 +62,18 @@ import com.kakao.util.helper.log.Logger;
  * @author MJ
  */
 public class SampleLoginActivity extends AppCompatActivity {
+
+
+    public static final int MODE_NONE = -1;
+    public static final int MODE_PROFILE = 1;
+    public static final int MODE_POST = 2;
+    int mode = MODE_NONE;
+
+    Button btn,  btnKakao;
+    ImageView btnFacebook;
+    CallbackManager mCallbackManager;
+    LoginManager mLoginManager;
+    AccessTokenTracker tracker;
 
     protected static Activity self;
     private SessionCallback callback;
@@ -54,16 +89,60 @@ public class SampleLoginActivity extends AppCompatActivity {
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
         if (!Session.getCurrentSession().checkAndImplicitOpen()) {
+            //세션이 닫혀있거나 refresh token으로 갱신 불가
             setContentView(R.layout.layout_common_kakao_login);
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            this.getWindow().setBackgroundDrawableResource(R.drawable.xxdpi_bg);
+
+            //// TODO: 2015-10-29
+            //연동 로그인 후, 토큰 값 받기
+            //토큰 값 서버에 전달
+            //서버에서 가입 유무 확인
+            mCallbackManager = CallbackManager.Factory.create();
+            mLoginManager = LoginManager.getInstance();
+            btnFacebook = (ImageView)findViewById(R.id.button10);
+            btnFacebook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isLogin()) {
+                        login(Arrays.asList("email"), true);
+                        mLoginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                            @Override
+                            public void onSuccess(LoginResult loginResult) {
+                                redirectSignupActivity();
+                            }//success
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onError(FacebookException error) {
+
+                            }
+                        });
+                        mLoginManager.logInWithReadPermissions(SampleLoginActivity.this, null);
+                    }
+//                    else {
+//                        mLoginManager.logOut();
+//                    }
+                }
+            });
+
         }
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
         if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     @Override
@@ -71,7 +150,8 @@ public class SampleLoginActivity extends AppCompatActivity {
         super.onDestroy();
         Session.getCurrentSession().removeCallback(callback);
         clearReferences();
-    }
+
+   }
 
     private class SessionCallback implements ISessionCallback {
 
@@ -86,8 +166,11 @@ public class SampleLoginActivity extends AppCompatActivity {
                 Logger.e(exception);
             }
             setContentView(R.layout.layout_common_kakao_login);
+            //onCreate 에 있는 부분 함수화해서 옮기기
         }
     }
+
+
 
     @Override
     protected void onResume() {
@@ -118,18 +201,93 @@ public class SampleLoginActivity extends AppCompatActivity {
         WaitingDialog.cancelWaitingDialog();
     }
 
-    protected void redirectLoginActivity() {
-        final Intent intent = new Intent(this, SampleLoginActivity.class);
+   protected void redirectSignupActivity() {
+        //세션이 살아 있을 경우
+        final Intent intent = new Intent(this, TutorialActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         finish();
     }
 
-    protected void redirectSignupActivity() {
-        final Intent intent = new Intent(this, SampleSignupActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
-        finish();
+
+// ===============================================================================
+    private boolean isLogin() {
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        return token==null?false:true;
+    }
+
+//    private void postLoginFacebook(String token) {
+//        NetworkManager.getInstance().postNetworkFacebook(getContext(), token);
+//    }
+
+    private void login(List<String> permissions, boolean isRead) {
+        mLoginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                final AccessToken token = AccessToken.getCurrentAccessToken();
+                //토큰 보내기
+//                postLoginFacebook(token.getToken().toString());
+                Log.d("hello", "facebook token  from Login Fragment: " + token.getToken().toString());
+
+                Toast.makeText(MyApplication.getContext(), "id : " + token.getUserId(), Toast.LENGTH_SHORT).show();
+                NetworkManager.getInstance().loginFacebookToken(MyApplication.getContext(), token.getToken(), "NOTREGISTER", new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        if (result.equals("OK")) {
+                            PropertyManager.getInstance().setFacebookId(token.getUserId());
+                            startActivity(new Intent(MyApplication.getContext(), MainActivity.class));
+                            finish();
+                        } else if (result.equals("NOTREGISTER")) {
+//                                        startActivity(new Intent(getContext(), SignupActivity.class));
+//                                        getActivity().finish();
+
+
+//                            Fragment mFragment = (Fragment) TutorialFragment.newInstance("", "");
+//                            getFragmentManager().beginTransaction()
+//                                    .replace(R.id.container, mFragment)
+//                                    .addToBackStack(null)
+//                                    .commit();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+        if (isRead) {
+            mLoginManager.logInWithReadPermissions(SampleLoginActivity.this, permissions);
+        } else {
+            mLoginManager.logInWithPublishPermissions(SampleLoginActivity.this, permissions);
+        }
+    }
+    private void getProfile() {
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        GraphRequest request = new GraphRequest(token, "/me", null, HttpMethod.GET, new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+                JSONObject object = response.getJSONObject();
+                if (object == null) {
+                    String message = response.getError().getErrorMessage();
+                    Toast.makeText(MyApplication.getContext(), "error : " + message, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MyApplication.getContext(), "profile : " + object.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        request.executeAsync();
     }
 
 }

@@ -22,10 +22,13 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,14 +44,17 @@ import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.post.signup.UserProfile;
+import com.android.ground.ground.model.widget.KakaoToast;
 import com.android.ground.ground.model.widget.WaitingDialog;
 import com.facebook.AccessToken;
+import com.kakao.auth.ApiResponseCallback;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.UnLinkResponseCallback;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,11 +71,17 @@ import java.io.File;
  * me를 호출하여 가입 여부에 따라 가입 페이지를 그리던지 Main 페이지로 이동 시킨다.
  */
 public class SignupFragment extends Fragment {
+    static final int MONTHYEARDATESELECTOR_ID = 3;
 
+    ScrollView mScrollView;
     UserProfile mUserProfile;
+    RadioGroup gender;
+    CheckBox memMainDay_Mon,memMainDay_Tue,memMainDay_Wed,memMainDay_Thu,memMainDay_Fri,memMainDay_Sat,memMainDay_Sun;
+    EditText memIntro;
+
 
     protected static Activity self;
-    TextView textViewUserArea;
+    TextView textViewUserArea, textViewAge;
 
     @Override
     public void onResume() {
@@ -87,6 +99,7 @@ public class SignupFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        redirectLoginActivity();
         clearReferences();
     }
     private void clearReferences() {
@@ -157,6 +170,7 @@ public class SignupFragment extends Fragment {
 //        requestMe();
     }
 
+    LinearLayout linearLayoutAge;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -164,38 +178,148 @@ public class SignupFragment extends Fragment {
         ((Activity)getActivity()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
         view = inflater.inflate(R.layout.fragment_signup, container, false);
+        mUserProfile = new UserProfile();
+
+
 //        setSpinner(R.id.spinner_age, R.array.items_search_player);
         setSpinner(R.id.spinner_ability, R.array.items_player_ability);
         setSpinner(R.id.spinner_position, R.array.items_player_position);
         textViewUserArea = (TextView)view.findViewById(R.id.textViewArea);
-        DatePicker mDatePicker;
+        linearLayoutAge = (LinearLayout)view.findViewById(R.id.linearLayoutAge);
+        mScrollView   = (ScrollView)view.findViewById(R.id.scrollView_signup);
+        gender = (RadioGroup)view.findViewById(R.id.gender);
+        memMainDay_Mon = (CheckBox)view.findViewById(R.id.memMainDay_Mon);
+        memMainDay_Tue = (CheckBox)view.findViewById(R.id.memMainDay_Tue);
+        memMainDay_Wed = (CheckBox)view.findViewById(R.id.memMainDay_Wed);
+        memMainDay_Thu = (CheckBox)view.findViewById(R.id.memMainDay_Thu);
+        memMainDay_Fri = (CheckBox)view.findViewById(R.id.memMainDay_Fri);
+        memMainDay_Sat = (CheckBox)view.findViewById(R.id.memMainDay_Sat);
+        memMainDay_Sun = (CheckBox)view.findViewById(R.id.memMainDay_Sun);
+        textViewAge = (TextView)view.findViewById(R.id.textView89);
+
+        memIntro = (EditText)view.findViewById(R.id.memIntro);
+
+        gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == 0) {
+                    mUserProfile.gender = 0;
+                } else {
+                    mUserProfile.gender = 1;
+                }
+            }
+        });
+
+
+
+
+        linearLayoutAge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                getActivity().showDialog(MONTHYEARDATESELECTOR_ID);
+                RelativeLayout linearLayout = new RelativeLayout(getContext());
+                final NumberPicker aNumberPicker = new NumberPicker(getContext());
+                aNumberPicker.setMaxValue(2020);
+                aNumberPicker.setMinValue(1940);
+
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+                RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+                linearLayout.setLayoutParams(params);
+                linearLayout.addView(aNumberPicker,numPicerParams);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                alertDialogBuilder.setTitle("Select the number");
+                alertDialogBuilder.setView(linearLayout);
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+//                                        Log.e("hello","New Quantity Value : "+ aNumberPicker.getValue());
+                                        mUserProfile.age = aNumberPicker.getValue();
+                                        textViewAge.setText(Integer.toString(aNumberPicker.getValue())+"세");
+
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+
 
 
         Button btn = (Button)view.findViewById(R.id.button_complete);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUserProfile = new UserProfile();
+
                 //유저가 사진 입력하지 않았을 때 처리하기 !!
 
                 if(mSavedFile!=null)
                     mUserProfile.mFile =mSavedFile;
-                mUserProfile.gender =0;
+
+                if( mUserProfile.gender == 0)
+                    mUserProfile.gender =0;
+
                 //년도로 보내기
-                mUserProfile.age=1991;
-                mUserProfile.memLocationName ="서울시 관악구 관악동";
-                mUserProfile.memMainDay_Mon=0;
-                mUserProfile.memMainDay_Tue=1;
-                mUserProfile.memMainDay_Wed=0;
-                mUserProfile.memMainDay_Thu=1;
-                mUserProfile.memMainDay_Fri=0;
-                mUserProfile.memMainDay_Sat=1;
-                mUserProfile.memMainDay_Sun=0;
-                mUserProfile.memIntro="안드로이드 테스트 1";
-                mUserProfile.position =1;
-                mUserProfile.skill=5;
-                mUserProfile.latitude =91.0;
-                mUserProfile.longitude=92.0;
+                if( mUserProfile.age == 0)
+                    mUserProfile.age=1991;
+
+                mUserProfile.memLocationName =textViewUserArea.getText().toString();
+
+                if(memMainDay_Mon.isChecked()){
+                    mUserProfile.memMainDay_Mon=1;
+                }else{
+                    mUserProfile.memMainDay_Mon=0;
+                }
+                if(memMainDay_Tue.isChecked()){
+                    mUserProfile.memMainDay_Tue=1;
+                }else{
+                    mUserProfile.memMainDay_Tue=0;
+                }
+                if(memMainDay_Wed.isChecked()){
+                    mUserProfile.memMainDay_Wed=1;
+                }else{
+                    mUserProfile.memMainDay_Wed=0;
+                }
+                if(memMainDay_Thu.isChecked()){
+                    mUserProfile.memMainDay_Thu=1;
+                }else{
+                    mUserProfile.memMainDay_Thu=0;
+                }
+                if(memMainDay_Fri.isChecked()){
+                    mUserProfile.memMainDay_Fri=1;
+                }else{
+                    mUserProfile.memMainDay_Fri=0;
+                }
+                if(memMainDay_Sat.isChecked()){
+                    mUserProfile.memMainDay_Sat=1;
+                }else{
+                    mUserProfile.memMainDay_Sat=0;
+                }
+                if(memMainDay_Sun.isChecked()){
+                    mUserProfile.memMainDay_Sun=1;
+                }else{
+                    mUserProfile.memMainDay_Sun=0;
+                }
+
+                mUserProfile.memIntro=memIntro.getText().toString();
+
+//                mUserProfile.position =1;
+//                mUserProfile.skill=5;
+
+//                mUserProfile.latitude =91.0;
+//                mUserProfile.longitude=92.0;
                 NetworkManager.getInstance().postNetworkSignup(getContext(), mUserProfile);
 
 
@@ -216,13 +340,17 @@ public class SignupFragment extends Fragment {
                     }
                 });
                 //선수 아이디 발급 받음
-                searchMyPage(1);
-                searchMyPageTrans(1);
+//                searchMyPage(1);
+//                searchMyPageTrans(1);
 
+                requestSignUp(null);
 
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();
+
+
+
             }
         });
         LinearLayout areaBtn = (LinearLayout)view.findViewById(R.id.button_area_search);
@@ -234,8 +362,7 @@ public class SignupFragment extends Fragment {
                 startActivityForResult(intent, REQ_AREA_SEARCH);
             }
         });
-        editText = (EditText)view.findViewById(R.id.editText_signup);
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        memIntro.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
@@ -292,21 +419,39 @@ public class SignupFragment extends Fragment {
     }
 
     private void setSpinner(int id, int dataId) {
+
         spinner = (Spinner)view.findViewById(id);
         mySpinnerAdapter = new MySpinnerSignupAdapter(getContext());
         spinner.setAdapter(mySpinnerAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(id == R.id.spinner_position) {
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-            }
+                    mUserProfile.position = position;
+                    ;
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+                }
+            });
+        }else{
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+                    mUserProfile.skill = position;
+                    ;
+                }
 
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
         initSpinnerData(dataId, mySpinnerAdapter);
     }
 
@@ -328,6 +473,10 @@ public class SignupFragment extends Fragment {
         }
         if(requestCode == REQ_AREA_SEARCH && resultCode == Activity.RESULT_OK){
             String userArea = data.getExtras().getString("userArea");
+            double latitude = data.getExtras().getDouble("latitude");
+            mUserProfile.latitude = latitude;
+            double longitude = data.getExtras().getDouble("longitude");
+            mUserProfile.longitude = longitude;
             textViewUserArea.setText(userArea);
         }
 
@@ -474,7 +623,7 @@ public class SignupFragment extends Fragment {
     }
 
     protected void redirectSignupActivity() {
-        final Intent intent = new Intent(getContext(), SampleSignupActivity.class);
+        final Intent intent = new Intent(getContext(), TutorialActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         getActivity().finish();
@@ -567,6 +716,30 @@ public class SignupFragment extends Fragment {
 //            }
 //        }, properties);
 //    }
+    private void requestSignUp(final Map<String, String> properties) {
+        UserManagement.requestSignup(new ApiResponseCallback<Long>() {
+            @Override
+            public void onNotSignedUp() {
+            }
+
+            @Override
+            public void onSuccess(Long result) {
+                ((TutorialActivity)getActivity()).requestMe();
+            }
+
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                final String message = "UsermgmtResponseCallback : failure : " + errorResult;
+                com.kakao.util.helper.log.Logger.w(message);
+                KakaoToast.makeToast(self, message, Toast.LENGTH_LONG).show();
+                getActivity().finish();
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+            }
+        }, properties);
+    }
 
 
 

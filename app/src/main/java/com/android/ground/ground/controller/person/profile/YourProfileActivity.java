@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,12 +38,16 @@ import java.util.List;
 public class YourProfileActivity extends AppCompatActivity implements Profile {
 
     TextView memNameGender, memIntro, winLoseDraw, score, mvp, skill, clubName
-            ,age, memLocationName;
+            ,age, memLocationName ,oldClubName1,oldClubName2,oldClubName3;
     ImageView memImage, oldClubImage1, oldClubImage2, oldClubImage3, clubImage
             , position, managerYN;
-    Button btnFc, btnRequest, btnMsg;
+    Button  btnRequest;
+    ImageView btnFc, btnMsg;
     CheckBox memMainDay_Mon,memMainDay_Tue,memMainDay_Wed,memMainDay_Thu,memMainDay_Fri
             ,memMainDay_Sat,memMainDay_Sun;
+
+
+    LinearLayout oldLayout1, oldLayout2, oldLayout3;
 
     MyPageResult myPageResult;
     List<MyPageTransResult> mTransList;
@@ -71,6 +76,15 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         }catch(NullPointerException e){
             e.printStackTrace();
         }
+        oldLayout1 = (LinearLayout)findViewById(R.id.oldLayout1);
+        oldLayout2 = (LinearLayout)findViewById(R.id.oldLayout2);
+        oldLayout3= (LinearLayout)findViewById(R.id.oldLayout3);
+
+
+        oldClubName1 = (TextView)findViewById(R.id.oldClubName1);
+        oldClubName2 = (TextView)findViewById(R.id.oldClubName2);
+        oldClubName3 = (TextView)findViewById(R.id.oldClubName3);
+
         memNameGender =(TextView)findViewById(R.id.memNameGender);
         memIntro =(TextView)findViewById(R.id.memIntro);
         winLoseDraw = (TextView)findViewById(R.id.winLoseDraw);
@@ -98,7 +112,7 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         memMainDay_Sun= (CheckBox)findViewById(R.id.memMainDay_Sun);
 
 
-        btnFc =  (Button)findViewById(R.id.btnFc);
+        btnFc =  (ImageView)findViewById(R.id.btnFc);
         btnFc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +123,7 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
             }
         });
         //메시지 보내기
-        btnMsg = (Button)findViewById(R.id.btnMsg);
+        btnMsg = (ImageView)findViewById(R.id.btnMsg);
         btnMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,21 +231,25 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         if(mList.size()>=1){
             if(mList.get(0)!= null){
                 ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(0).clubImage), oldClubImage1, options);
-                oldClubImage1.setVisibility(View.VISIBLE);
+                oldClubName1.setText(mList.get(0).clubName);
+                oldLayout1.setVisibility(View.VISIBLE);
             }
         }
         if(mList.size()>=2){
             if(mList.get(1)!= null){
                 ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(1).clubImage), oldClubImage2, options);
-                oldClubImage2.setVisibility(View.VISIBLE);
+                oldClubName2.setText(mList.get(1).clubName);
+                oldLayout2.setVisibility(View.VISIBLE);
             }
         }
         if(mList.size()>=3){
             if(mList.get(2)!= null){
                 ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(2).clubImage), oldClubImage3, options);
-                oldClubImage3.setVisibility(View.VISIBLE);
+                oldClubName3.setText(mList.get(2).clubName);
+                oldLayout3.setVisibility(View.VISIBLE);
             }
         }
+
 
     }
     public void setMyPageResult(MyPageResult mResult){
@@ -254,9 +272,9 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
             position.setVisibility(View.VISIBLE);
         }
         if(mResult.managerYN==0){
-            managerYN.setVisibility(View.INVISIBLE);
+            managerYN.setImageResource(R.drawable.icon201);
         }else {
-            managerYN.setVisibility(View.VISIBLE);
+            managerYN.setImageResource(R.drawable.captain);
         }
 
         if(mResult.memMainDay_Mon ==0){

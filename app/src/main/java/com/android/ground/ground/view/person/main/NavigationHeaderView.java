@@ -76,9 +76,9 @@ public class NavigationHeaderView extends FrameLayout {
         memIntro.setText(item.memIntro);
 
         if(item.managerYN ==0 ){
-            managerYN.setVisibility(View.INVISIBLE);
+            managerYN.setImageResource(R.drawable.icon201);
         }else{
-            managerYN.setVisibility(View.VISIBLE);
+            managerYN.setImageResource(R.drawable.captain);
         }
 
 

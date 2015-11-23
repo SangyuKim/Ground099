@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_login"
-    tools:context="com.android.ground.ground.controller.person.login.LoginActivity"
+    tools:context="com.android.ground.ground.controller.person.login.TutorialActivity"
     android:id="@+id/container">
 
 

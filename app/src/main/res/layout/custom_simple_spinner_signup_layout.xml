@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content" android:layout_height="30dp"
+    android:theme="@style/Theme.App.Spinner"
+    android:background="@drawable/shape_droptarget">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="center_vertical|center|center_horizontal"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:text="asdf"
+        android:id="@+id/textView23"
+        android:textColor="#ffffffff"
+        android:textSize="12sp"
+        android:layout_alignParentTop="false"
+        android:foregroundGravity="center_vertical|center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/imageView4"
+        android:layout_toStartOf="@+id/imageView4" />
+
+    <TextView
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/textView88"
+        android:layout_alignTop="@+id/imageView4"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:layout_width="21.75dp"
+        android:layout_height="13.25dp"
+        android:id="@+id/imageView4"
+        android:src="@drawable/add701"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/textView88"
+        android:layout_toStartOf="@+id/textView88" />
+
+</RelativeLayout>

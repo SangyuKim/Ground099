@@ -10,6 +10,7 @@ import com.android.ground.ground.R;
 
 
 public class TmapItemView extends RelativeLayout {
+    public DongInfo mItem;
     public TmapItemView(Context context) {
         super(context);
         init();
@@ -28,6 +29,7 @@ public class TmapItemView extends RelativeLayout {
     }
 
     public void setTmapItem(DongInfo item) {
+        mItem = item;
         textView.setText(Html.fromHtml(item.address));
 
     }

@@ -17,8 +17,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout5"
-        android:layout_toLeftOf="@+id/button34"
-        android:layout_toStartOf="@+id/button34">
+        >
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -42,7 +41,8 @@
                 android:layout_below="@+id/memImage"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:id="@+id/linearLayout71">
 
                 <CheckBox
                     android:layout_width="14.5dp"
@@ -336,42 +336,37 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="51.75dp"
+                android:layout_height="51.75dp"
+                android:id="@+id/button21"
+                android:src="@drawable/uniform_001"
+                android:background="#00000000"
+                android:visibility="visible"
+                android:layout_gravity="top|right"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+    />
+
+            <ImageView
+                android:layout_width="51.75dp"
+                android:layout_height="51.75dp"
+                android:id="@+id/button34"
+                android:src="@drawable/whistle_001"
+                android:layout_above="@+id/linearLayout71"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </LinearLayout>
+
     </LinearLayout>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="매치신청"
-        android:id="@+id/button34"
-        android:layout_alignBottom="@+id/linearLayout5"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:focusable="false" />
-
-
-    <ImageView
-        android:layout_width="51.75dp"
-        android:layout_height="51.75dp"
-        android:id="@+id/button21"
-        android:src="@drawable/uniform_001"
-        android:background="#00000000"
-        android:visibility="visible"
-        android:layout_gravity="top|right"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:layout_above="@+id/button34"
-        android:layout_alignRight="@+id/button34"
-        android:layout_alignEnd="@+id/button34" />
-
-    <ImageView
-        android:layout_width="51.75dp"
-        android:layout_height="51.75dp"
-        android:id="@+id/imageView13"
-        android:src="@drawable/whistle_001"
-        android:layout_below="@+id/button21"
-        android:layout_toRightOf="@+id/linearLayout5"
-        android:layout_toEndOf="@+id/linearLayout5" />
 
 
 </RelativeLayout>

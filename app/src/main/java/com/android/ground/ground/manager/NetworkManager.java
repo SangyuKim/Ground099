@@ -19,6 +19,8 @@ import com.android.ground.ground.model.lineup.result.LineupResult;
 import com.android.ground.ground.model.lineup.scorer.LineupScorer;
 import com.android.ground.ground.model.lineup.virtual.fomation.LineupVirtualFomation;
 import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualRes;
+import com.android.ground.ground.model.login.KakaoLogin;
+import com.android.ground.ground.model.login.KakaoResponse;
 import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfo;
@@ -698,7 +700,7 @@ public class NetworkManager {
 
     //login kakao
     public static final String SEND_LOGIN_KAKAO_URL =GROND_SERVER_URL+"/member/login/kakao";
-    public void postNetworkLoginKakao(final Context context, String token) {
+    public void postNetworkLoginKakao(final Context context, String token , final OnResultListener<KakaoLogin> listener) {
 
         final RequestParams params = new RequestParams();
         params.put("access_token",token);
@@ -708,6 +710,10 @@ public class NetworkManager {
                    ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                    String s = new String(responseBody, Charset.forName("UTF-8"));
                    Log.d("hello", s);
+                   KakaoLogin items = gson.fromJson(s, KakaoLogin.class);
+                   if (items != null){
+                       listener.onSuccess(items);
+                   }
                }
 
                @Override
@@ -715,6 +721,31 @@ public class NetworkManager {
                    Log.d("hello", "status code : " + statusCode);
                }
            });
+
+    }
+
+    //login kakao after token send
+    public void getNetworkLoginKakao(final Context context, String token , final OnResultListener<KakaoResponse> listener) {
+
+        final RequestParams params = new RequestParams();
+//        params.put("access_token",token);
+        client.get(context, SEND_LOGIN_KAKAO_URL, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                KakaoResponse items = gson.fromJson(s, KakaoResponse.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("hello", "status code : " + statusCode);
+            }
+        });
 
     }
 

@@ -60,7 +60,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controller.person.login.LoginActivity"
+            android:name=".controller.person.login.TutorialActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" >
@@ -156,10 +156,6 @@
         </activity>
         <activity
             android:name=".controller.person.login.SampleLoginActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".controller.person.login.SampleSignupActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

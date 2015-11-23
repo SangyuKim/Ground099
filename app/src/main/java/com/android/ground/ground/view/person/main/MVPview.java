@@ -23,9 +23,9 @@ public class MVPview extends FrameLayout {
     ImageView memImageMVP, memImageScr, clubImage, clubImageMVP, clubImageScr, scrPlayerPosition, mvpPlayerPosition ;
     TextView month, memNameCountMVP, memNameCountScr, clubNmaeCount;
     MVP mMVP;
-    MVPResult itemMVP;
-    ScrResult itemScr;
-    WinResult itemWin;
+    public  MVPResult itemMVP;
+    public ScrResult itemScr;
+    public WinResult itemWin;
 
     DisplayImageOptions options;
 

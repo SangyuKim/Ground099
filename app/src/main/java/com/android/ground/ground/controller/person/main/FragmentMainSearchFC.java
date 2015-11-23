@@ -148,7 +148,6 @@ public class FragmentMainSearchFC extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("hello", "fc item clicked");
 
                 int clubId = ((SearchFCItemView)view).getmItem().club_id;
                 Intent intent = new Intent(getContext(), FCActivity.class);

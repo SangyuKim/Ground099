@@ -62,8 +62,11 @@ public class AreaSearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String userArea = ((TmapItemView)view).getTextView().getText().toString();
+
                 Intent intent = new Intent();
                 intent.putExtra("userArea", userArea);
+                intent.putExtra("latitude", Double.parseDouble( ((TmapItemView) view).mItem.resLat));
+                intent.putExtra("longitude", Double.parseDouble(((TmapItemView)view).mItem.resLon));
                 //경도랑 위도도 보내기
                 setResult(RESULT_OK, intent);
                 finish();

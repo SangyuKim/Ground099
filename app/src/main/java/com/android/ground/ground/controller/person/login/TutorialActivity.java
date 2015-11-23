@@ -1,34 +1,27 @@
-/**
- * Copyright 2014 Daum Kakao Corp.
- *
- * Redistribution and modification in source or binary forms are not permitted without specific prior written permission. 
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.android.ground.ground.controller.person.login;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.main.MainActivity;
+import com.android.ground.ground.controller.person.main.MainFragment;
+import com.android.ground.ground.custom.CustomDateSlider;
+import com.android.ground.ground.custom.CustomMonthYearDateSlider;
+import com.android.ground.ground.custom.CustomYearPicker;
+import com.android.ground.ground.custom.TimeLabeler;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.log.Logger;
 import com.android.ground.ground.model.usermgmt.ExtraUserPropertyLayout;
@@ -43,21 +36,34 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.callback.UnLinkResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 
+import java.util.Calendar;
 import java.util.Map;
+
 
 /**
  * 유효한 세션이 있다는 검증 후
  * me를 호출하여 가입 여부에 따라 가입 페이지를 그리던지 Main 페이지로 이동 시킨다.
  */
-public class SampleSignupActivity extends AppCompatActivity {
-
+public class TutorialActivity extends AppCompatActivity {
     protected static Activity self;
+    Bundle mSavedInstanceState;
+
+    /**
+     * Main으로 넘길지 가입 페이지를 그릴지 판단하기 위해 me를 호출한다.
+     * @param savedInstanceState 기존 session 정보가 저장된 객체
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mSavedInstanceState = savedInstanceState;
+        requestMe();
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
         MyApplication.setCurrentActivity(this);
-        self = SampleSignupActivity.this;
+        self = TutorialActivity.this;
     }
 
     @Override
@@ -79,67 +85,19 @@ public class SampleSignupActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    /**
-     * Main으로 넘길지 가입 페이지를 그릴지 판단하기 위해 me를 호출한다.
-     * @param savedInstanceState 기존 session 정보가 저장된 객체
-     */
-    @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestMe();
-    }
-
-    protected void showSignup() {
-        setContentView(R.layout.layout_usermgmt_signup);
-        final ExtraUserPropertyLayout extraUserPropertyLayout = (ExtraUserPropertyLayout) findViewById(R.id.extra_user_property);
-        Button signupButton = (Button) findViewById(R.id.buttonSignup);
-        signupButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                requestSignUp(extraUserPropertyLayout.getProperties());
-//                requestSignUp(null);
-            }
-        });
-    }
-
-    private void requestSignUp(final Map<String, String> properties) {
-        UserManagement.requestSignup(new ApiResponseCallback<Long>() {
-            @Override
-            public void onNotSignedUp() {
-            }
-
-            @Override
-            public void onSuccess(Long result) {
-                requestMe();
-            }
-
-            @Override
-            public void onFailure(ErrorResult errorResult) {
-                final String message = "UsermgmtResponseCallback : failure : " + errorResult;
-                com.kakao.util.helper.log.Logger.w(message);
-                KakaoToast.makeToast(self, message, Toast.LENGTH_LONG).show();
-                finish();
-            }
-
-            @Override
-            public void onSessionClosed(ErrorResult errorResult) {
-            }
-        }, properties);
     }
 
     /**
      * 사용자의 상태를 알아 보기 위해 me API 호출을 한다.
      */
-    protected void requestMe() {
+    public void requestMe() {
         UserManagement.requestMe(new MeResponseCallback() {
             @Override
             public void onFailure(ErrorResult errorResult) {
                 String message = "failed to get user info. msg=" + errorResult;
                 Logger.d(message);
-
                 ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
                 if (result == ErrorCode.CLIENT_ERROR_CODE) {
                     KakaoToast.makeToast(getApplicationContext(), getString(R.string.error_message_for_service_unavailable), Toast.LENGTH_SHORT).show();
@@ -158,7 +116,7 @@ public class SampleSignupActivity extends AppCompatActivity {
             public void onSuccess(UserProfile userProfile) {
                 //user 정보 저장 -> shared preference
                 Long userId = userProfile.getId();
-
+                //유저 정보 획득
                 Logger.d("UserProfile : " + userProfile);
                 redirectMainActivity();
             }
@@ -169,7 +127,6 @@ public class SampleSignupActivity extends AppCompatActivity {
             }
         });
     }
-
     private void redirectMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
@@ -191,7 +148,7 @@ public class SampleSignupActivity extends AppCompatActivity {
     }
 
     protected void redirectSignupActivity() {
-        final Intent intent = new Intent(this, SampleSignupActivity.class);
+        final Intent intent = new Intent(this, TutorialActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         finish();
@@ -248,4 +205,19 @@ public class SampleSignupActivity extends AppCompatActivity {
                         }).show();
 
     }
+
+    protected void showSignup() {
+
+        setContentView(R.layout.activity_login);
+
+        if (mSavedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, TutorialFragment.newInstance("", "")).commit();
+        }
+//        final ExtraUserPropertyLayout extraUserPropertyLayout = (ExtraUserPropertyLayout) findViewById(R.id.extra_user_property);
+
+    }
+
+
+
 }

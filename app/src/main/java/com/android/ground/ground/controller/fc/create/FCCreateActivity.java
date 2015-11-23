@@ -19,8 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
@@ -39,6 +43,11 @@ public class FCCreateActivity extends AppCompatActivity {
     CustomToolbar customToolbar;
     Menu menu;
 
+    TextView  textArea;
+    CheckBox clubMainDay_Mon, clubMainDay_Tue,clubMainDay_Wed,clubMainDay_Thu,clubMainDay_Fri,clubMainDay_Sat,clubMainDay_Sun;
+    Switch fieldYN , memYN, matchYN;
+    EditText clubName, clubField, clubIntro;
+
 
     public static final int REQUEST_CODE_CROP = 0;
     File mSavedFile;
@@ -53,6 +62,7 @@ public class FCCreateActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mClubProfile = new ClubProfile();
 
 
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
@@ -68,6 +78,26 @@ public class FCCreateActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         LinearLayout areaLayout = (LinearLayout)findViewById(R.id.button_area_search);
+
+
+        textArea = (TextView) findViewById(R.id.textArea);
+        clubMainDay_Mon = (CheckBox)findViewById(R.id.clubMainDay_Mon);
+        clubMainDay_Tue = (CheckBox)findViewById(R.id.clubMainDay_Tue);
+        clubMainDay_Wed = (CheckBox)findViewById(R.id.clubMainDay_Wed);
+        clubMainDay_Thu = (CheckBox)findViewById(R.id.clubMainDay_Thu);
+        clubMainDay_Fri = (CheckBox)findViewById(R.id.clubMainDay_Fri);
+        clubMainDay_Sat = (CheckBox)findViewById(R.id.clubMainDay_Sat);
+        clubMainDay_Sun = (CheckBox)findViewById(R.id.clubMainDay_Sun);
+
+        fieldYN = (Switch)findViewById(R.id.fieldYN);
+        memYN = (Switch)findViewById(R.id.memYN);
+        matchYN = (Switch)findViewById(R.id.matchYN);
+
+        clubField = (EditText)findViewById(R.id.clubField);
+        clubName = (EditText)findViewById(R.id.clubName);
+        clubIntro = (EditText)findViewById(R.id.clubIntro);
+
+
         areaLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,36 +110,77 @@ public class FCCreateActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mClubProfile = new ClubProfile();
                 //유저가 사진 입력하지 않았을 때 처리하기 !!
 
                 if(mSavedFile!=null)
                     mClubProfile.mFile =mSavedFile;
 
-                mClubProfile.clubName= "FC티아카데미2";
+                mClubProfile.clubName= clubName.getText().toString();
+
                 mClubProfile.clubLocationName ="서울시 관악구 연구공원";
-                mClubProfile.clubMainDay_Mon=0;
-                mClubProfile.clubMainDay_Tue=1;
-                mClubProfile.clubMainDay_Wed=0;
-                mClubProfile.clubMainDay_Thu=1;
-                mClubProfile.clubMainDay_Fri=0;
-                mClubProfile.clubMainDay_Sat=1;
-                mClubProfile.clubMainDay_Sun=0;
-
-                mClubProfile.memYN =1;
-                mClubProfile.fieldYN =1;
-                mClubProfile.clubField ="연구공원 공터";
-
                 mClubProfile.latitude =91.0;
                 mClubProfile.longitude=92.0;
-                mClubProfile.matchYN =1;
-                mClubProfile.clubIntro="안드로이드 테스트 1";
+
+
+                if(clubMainDay_Mon.isChecked()){
+                    mClubProfile.clubMainDay_Mon=1;
+                }else{
+                    mClubProfile.clubMainDay_Mon=0;
+                }
+                if(clubMainDay_Tue.isChecked()){
+                    mClubProfile.clubMainDay_Tue=1;
+                }else{
+                    mClubProfile.clubMainDay_Tue=0;
+                }
+                if(clubMainDay_Wed.isChecked()){
+                    mClubProfile.clubMainDay_Wed=1;
+                }else{
+                    mClubProfile.clubMainDay_Wed=0;
+                }
+                if(clubMainDay_Thu.isChecked()){
+                    mClubProfile.clubMainDay_Thu=1;
+                }else{
+                    mClubProfile.clubMainDay_Thu=0;
+                }
+                if(clubMainDay_Fri.isChecked()){
+                    mClubProfile.clubMainDay_Fri=1;
+                }else{
+                    mClubProfile.clubMainDay_Fri=0;
+                }
+                if(clubMainDay_Sat.isChecked()){
+                    mClubProfile.clubMainDay_Sat=1;
+                }else{
+                    mClubProfile.clubMainDay_Sat=0;
+                }
+                    if(clubMainDay_Sun.isChecked()){
+                    mClubProfile.clubMainDay_Sun=1;
+                }else{
+                    mClubProfile.clubMainDay_Sun=0;
+                }
+
+                if(memYN.isChecked()){
+                    mClubProfile.memYN =1;
+                }else{
+                    mClubProfile.memYN =0;
+                }
+                if(fieldYN.isChecked()){
+                    mClubProfile.fieldYN =1;
+                }else{
+                    mClubProfile.fieldYN =0;
+                }
+                if(matchYN.isChecked()){
+                    mClubProfile.matchYN =1;
+                }else{
+                    mClubProfile.matchYN =0;
+                }
+
+               mClubProfile.clubField =clubField.getText().toString();
+
+
+
+                mClubProfile.clubIntro=clubIntro.getText().toString();
 
                 NetworkManager.getInstance().postNetworkMakeClub(FCCreateActivity.this, mClubProfile);
-
-
-
-
 
 
                 finish();
@@ -177,7 +248,11 @@ public class FCCreateActivity extends AppCompatActivity {
         }
         if(requestCode == REQ_AREA_SEARCH && resultCode == Activity.RESULT_OK){
             String userArea = data.getExtras().getString("userArea");
-//            textViewUserArea.setText(userArea);
+            double latitude = data.getExtras().getDouble("latitude");
+            mClubProfile.latitude = latitude;
+            double longitude = data.getExtras().getDouble("longitude");
+            mClubProfile.longitude = longitude;
+            textArea.setText(userArea);
         }
     }
     private Uri getTempUri() {

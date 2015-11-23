@@ -21,7 +21,8 @@
                 android:layout_height="122.5dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/frameLayout3">
+                android:id="@+id/frameLayout3"
+                android:layout_marginTop="24.25dp">
 
                 <com.android.ground.ground.custom.CustomCircularImageView
                     android:id="@+id/memImage"
@@ -67,7 +68,8 @@
                     android:id="@+id/linearLayout54"
                     android:layout_below="@+id/textView49"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true">
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="23.25dp">
 
                     <TextView
                         android:id="@+id/textView45"
@@ -100,7 +102,9 @@
                             android:checked="false"
                             android:focusable="false"
                             android:textColor="#ffffffff"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:button="@drawable/radio_gender"
+                            android:layout_marginRight="10dp" />
 
                         <RadioButton
                             android:id="@+id/radioButton2"
@@ -111,7 +115,8 @@
                             android:checked="false"
                             android:focusable="false"
                             android:textColor="#ffffffff"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:button="@drawable/radio_gender" />
 
                     </RadioGroup>
                 </LinearLayout>
@@ -124,7 +129,8 @@
                     android:layout_gravity="bottom"
                     android:layout_below="@+id/linearLayout54"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true">
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="23.25dp">
 
                     <TextView
                         android:id="@+id/textView46"
@@ -137,10 +143,32 @@
                         android:textSize="16sp"
                         android:layout_marginRight="15dp" />
 
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner2" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="111dp"
+                        android:layout_height="28dp"
+                        android:id="@+id/linearLayoutAge"
+                        android:background="@drawable/shape_droptarget">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="연도"
+                            android:id="@+id/textView89"
+                            android:textColor="#ffffffff"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:layout_gravity="center" />
+
+                        <ImageView
+                            android:layout_width="17.5dp"
+                            android:layout_height="11dp"
+                            android:id="@+id/imageView22"
+                            android:src="@drawable/add701"
+                            android:layout_gravity="center_vertical|right" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -150,7 +178,8 @@
                     android:layout_below="@+id/linearLayout52"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:id="@+id/linearLayout75">
+                    android:id="@+id/linearLayout75"
+                    android:layout_marginBottom="23.25dp">
 
                     <TextView
                         android:id="@+id/textView47"
@@ -170,13 +199,13 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="28dp"
                         android:layout_below="@+id/textView55"
                         android:background="@drawable/shape_droptarget"
                         android:id="@+id/button_area_search" >
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="169.75dp"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="지역 검색"
@@ -188,7 +217,8 @@
                             android:layout_weight="1"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:singleLine="true" />
 
                         <ImageView
                             android:layout_width="17dp"
@@ -206,7 +236,8 @@
                     android:layout_below="@+id/linearLayout53"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:id="@+id/linearLayout76">
+                    android:id="@+id/linearLayout76"
+                    android:layout_marginBottom="23.25dp">
 
                     <TextView
                         android:id="@+id/textView50"
@@ -222,8 +253,8 @@
                         android:layout_marginRight="15dp" />
 
                     <EditText
-                        android:id="@+id/editText_signup"
-                        android:layout_width="fill_parent"
+                        android:id="@+id/memIntro"
+                        android:layout_width="169.5dp"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:singleLine="true"
@@ -246,7 +277,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/linearLayout74"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true">
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="23.25dp"
+                    android:id="@+id/LinearLayout90">
 
                     <TextView
                         android:id="@+id/textView52"
@@ -262,8 +295,8 @@
                         android:layout_marginRight="15dp" />
 
                     <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100.25dp"
+                        android:layout_height="30dp"
                         android:id="@+id/spinner_ability"
                         android:layout_alignTop="@+id/textView52"
                         android:layout_toRightOf="@+id/textView52"
@@ -273,13 +306,17 @@
                 <Button
                     android:id="@+id/button_complete"
                     style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="285dp"
+                    android:layout_height="38.5dp"
                     android:layout_gravity="center_horizontal|top"
                     android:text="선수 등록하기"
                     android:focusable="false"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_alignParentBottom="false"
+                    android:layout_centerHorizontal="true"
+                    android:background="#ff3a1d"
+                    android:layout_below="@+id/LinearLayout90"
+                    android:layout_marginBottom="26dp"
+                    android:textColor="#ffffffff" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -288,7 +325,8 @@
                     android:id="@+id/linearLayout53"
                     android:layout_below="@+id/linearLayout75"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true">
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="23.25dp">
 
                     <TextView
                         android:id="@+id/textView48"
@@ -305,8 +343,8 @@
 
                     <CheckBox
                         android:id="@+id/memMainDay_Mon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22.75dp"
+                        android:layout_height="22.75dp"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/textView48"
@@ -316,8 +354,8 @@
 
                     <CheckBox
                         android:id="@+id/memMainDay_Tue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22.75dp"
+                        android:layout_height="22.75dp"
                         android:layout_alignTop="@+id/memMainDay_Mon"
                         android:layout_toEndOf="@+id/memMainDay_Mon"
                         android:layout_toRightOf="@+id/memMainDay_Mon"
@@ -327,8 +365,8 @@
 
                     <CheckBox
                         android:id="@+id/memMainDay_Wed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22.75dp"
+                        android:layout_height="22.75dp"
                         android:layout_alignTop="@+id/memMainDay_Tue"
                         android:layout_toEndOf="@+id/memMainDay_Tue"
                         android:layout_toRightOf="@+id/memMainDay_Tue"
@@ -338,8 +376,8 @@
 
                     <CheckBox
                         android:id="@+id/memMainDay_Thu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22.75dp"
+                        android:layout_height="22.75dp"
                         android:layout_alignTop="@+id/memMainDay_Wed"
                         android:layout_toEndOf="@+id/memMainDay_Wed"
                         android:layout_toRightOf="@+id/memMainDay_Wed"
@@ -349,8 +387,8 @@
 
                     <CheckBox
                         android:id="@+id/memMainDay_Fri"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22.75dp"
+                        android:layout_height="22.75dp"
                         android:layout_alignTop="@+id/memMainDay_Thu"
                         android:layout_toEndOf="@+id/memMainDay_Thu"
                         android:layout_toRightOf="@+id/memMainDay_Thu"
@@ -360,8 +398,8 @@
 
                     <CheckBox
                         android:id="@+id/memMainDay_Sat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22.75dp"
+                        android:layout_height="22.75dp"
                         android:layout_alignTop="@+id/memMainDay_Fri"
                         android:layout_toEndOf="@+id/memMainDay_Fri"
                         android:layout_toRightOf="@+id/memMainDay_Fri"
@@ -371,8 +409,8 @@
 
                     <CheckBox
                         android:id="@+id/memMainDay_Sun"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22.75dp"
+                        android:layout_height="22.75dp"
                         android:layout_alignTop="@+id/memMainDay_Sat"
                         android:layout_toEndOf="@+id/memMainDay_Sat"
                         android:layout_toRightOf="@+id/memMainDay_Sat"
@@ -388,7 +426,8 @@
                     android:id="@+id/linearLayout74"
                     android:layout_below="@+id/linearLayout76"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true">
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="23.25dp">
 
                     <TextView
                         android:id="@+id/textView51"
@@ -396,7 +435,7 @@
                         android:layout_height="wrap_content"
                         android:text="포  지  션"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_below="@+id/editText_signup"
+                        android:layout_below="@+id/memIntro"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:textColor="#ffffffff"
@@ -404,10 +443,10 @@
                         android:layout_marginRight="15dp" />
 
                     <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100.25dp"
+                        android:layout_height="30dp"
                         android:id="@+id/spinner_position"
-                        android:layout_below="@+id/editText_signup"
+                        android:layout_below="@+id/memIntro"
                         android:layout_toRightOf="@+id/textView51"
                         android:layout_toEndOf="@+id/textView51" />
                 </LinearLayout>

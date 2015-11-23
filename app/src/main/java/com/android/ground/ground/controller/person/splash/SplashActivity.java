@@ -14,12 +14,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -29,29 +25,18 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.RegistrationIntentService;
-import com.android.ground.ground.controller.person.login.LoginActivity;
+import com.android.ground.ground.controller.person.login.TutorialActivity;
 import com.android.ground.ground.controller.person.login.SampleLoginActivity;
-import com.android.ground.ground.controller.person.login.SampleSignupActivity;
 import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.manager.ServerUtilities;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.person.main.searchMem.SearchMem;
-import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
+import com.android.ground.ground.model.login.KakaoLogin;
+import com.android.ground.ground.model.login.KakaoResponse;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
-import com.android.ground.ground.model.person.profile.MyPageTransResult;
-import com.android.ground.ground.model.widget.WaitingDialog;
-//import com.android.volley.AuthFailureError;
-//import com.android.volley.NetworkResponse;
-//import com.android.volley.Request;
-//import com.android.volley.RequestQueue;
-//import com.android.volley.Response;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.StringRequest;
-//import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -64,19 +49,14 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.kakao.auth.Session;
-import com.kakao.network.ErrorResult;
-import com.kakao.network.response.ResponseBody;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
-import com.kakao.usermgmt.callback.UnLinkResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
-import com.loopj.android.http.AsyncHttpClient;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+
 import com.kakao.auth.ISessionCallback;
 
 /**
@@ -132,7 +112,6 @@ public class SplashActivity extends AppCompatActivity {
                 UserManagement.requestLogout(new LogoutResponseCallback() {
                     @Override
                     public void onCompleteLogout() {
-
                     }
                 });
             }
@@ -190,7 +169,7 @@ public class SplashActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                Intent intent = new Intent(SplashActivity.this, SampleLoginActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -207,13 +186,6 @@ public class SplashActivity extends AppCompatActivity {
         });
 //---------------------------------------KakaoTalk---------------------------------------------------
         //카톡 토큰 얻기 -> 서버에서 확인 작업 -> 선수 아이디 얻기
-        final String kakaoId = PropertyManager.getInstance().getKakaoId();
-        UserProfile.loadFromCache().getId();
-
-         if (!TextUtils.isEmpty(kakaoId)) {
-
-        }
-
         String kakaoToken = Session.getCurrentSession().getAccessToken();
         String refreshToken = Session.getCurrentSession().getRefreshToken();
 
@@ -607,7 +579,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goLoginActivity() {
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, SampleLoginActivity.class));
         finish();
     }
 
@@ -661,7 +633,38 @@ public class SplashActivity extends AppCompatActivity {
 //        NetworkManager.getInstance().postNetworkLoginFacebook(SplashActivity.this, token);
 //    }
     private void sendLoginKakao(String token) {
-        NetworkManager.getInstance().postNetworkLoginKakao(SplashActivity.this, token);
+        NetworkManager.getInstance().postNetworkLoginKakao(SplashActivity.this, token, new NetworkManager.OnResultListener<KakaoLogin>() {
+            @Override
+            public void onSuccess(KakaoLogin result) {
+                if(result.code==200){
+                    if(result.user == null){
+                        NetworkManager.getInstance().getNetworkLoginKakao(SplashActivity.this, "", new NetworkManager.OnResultListener<KakaoResponse>() {
+                            @Override
+                            public void onSuccess(KakaoResponse result) {
+
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+
+                            }
+                        });
+                    }else{
+                        if(result.user.signUpYN ==0){
+                            //signup 으로 이동
+                        }else{
+                            //main으로 이동
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
     }
 
 

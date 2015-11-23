@@ -1,20 +1,21 @@
 package com.android.ground.ground.controller.person.login;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.android.ground.ground.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dongja94 on 2015-10-06.
- */
 public class MySpinnerSignupAdapter extends BaseAdapter {
     List<String> items = new ArrayList<String>();
     AbsListView.LayoutParams lp;
@@ -48,15 +49,24 @@ public class MySpinnerSignupAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        View view;
         TextView tv;
+        ImageView imageView;
         if (convertView != null) {
-            tv = (TextView)convertView;
+//            tv = (TextView)convertView;
+            view = convertView;
+            tv = (TextView)view.findViewById(R.id.textView23);
+            imageView = (ImageView)view.findViewById(R.id.imageView4);
         } else {
-            tv = (TextView)LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, null);
+//            tv = (TextView)LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, null);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_simple_spinner_signup_layout, null);
+            tv = (TextView)view.findViewById(R.id.textView23);
+            imageView = (ImageView)view.findViewById(R.id.imageView4);
         }
         tv.setText(items.get(position));
-        tv.setLayoutParams(lp);
-        return tv;
+        tv.setGravity(Gravity.CENTER);
+        view.setLayoutParams(lp);
+        return view;
     }
 
     @Override

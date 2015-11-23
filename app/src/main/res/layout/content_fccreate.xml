@@ -164,8 +164,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="지역 검색"
-                            android:id="@+id/textView39"
+                            android:text="지역검색"
+                            android:id="@+id/textArea"
                             android:layout_below="@+id/textView55"
                             android:layout_toRightOf="@+id/button_area_search"
                             android:layout_toEndOf="@+id/button_area_search"
@@ -273,7 +273,7 @@
                             android:button="@drawable/check_box_fri_fc" />
 
                         <CheckBox
-                            android:id="@+id/checkBox13"
+                            android:id="@+id/clubMainDay_Sat"
                             android:layout_width="22.75dp"
                             android:layout_height="22.75dp"
                             android:layout_alignTop="@+id/clubMainDay_Fri"
@@ -284,12 +284,12 @@
                             android:button="@drawable/check_box_sat_fc" />
 
                         <CheckBox
-                            android:id="@+id/checkBox14"
+                            android:id="@+id/clubMainDay_Sun"
                             android:layout_width="22.75dp"
                             android:layout_height="22.75dp"
-                            android:layout_alignTop="@+id/checkBox13"
-                            android:layout_toEndOf="@+id/checkBox13"
-                            android:layout_toRightOf="@+id/checkBox13"
+                            android:layout_alignTop="@+id/clubMainDay_Sat"
+                            android:layout_toEndOf="@+id/clubMainDay_Sat"
+                            android:layout_toRightOf="@+id/clubMainDay_Sat"
                             android:checked="false"
                             android:button="@drawable/check_box_sun_fc" />
                     </LinearLayout>

@@ -35,7 +35,7 @@ public class SearchFCItemView extends RelativeLayout {
     CheckBox clubMainDay_Mon,clubMainDay_Tue,clubMainDay_Wed,
             clubMainDay_Thu,clubMainDay_Fri,clubMainDay_Sat,clubMainDay_Sun;
     ImageView btnJoin;
-    Button btn;
+    ImageView btnMatch;
 
     CustomRoundCornerProgressBar progressBarSkill, progressBarManner;
 
@@ -82,8 +82,8 @@ public class SearchFCItemView extends RelativeLayout {
                 }
             }
         });
-        btn = (Button)findViewById(R.id.button34);
-        btn.setOnClickListener(new OnClickListener() {
+        btnMatch = (ImageView)findViewById(R.id.button34);
+        btnMatch.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mRequestListener != null) {

@@ -1,6 +1,5 @@
 package com.android.ground.ground.controller.etc.setting;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,14 +7,13 @@ import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.person.login.LoginActivity;
+import com.android.ground.ground.controller.person.login.TutorialActivity;
 import com.android.ground.ground.controller.person.profile.MyProfileManagementActivity;
 
 /**
@@ -94,7 +92,7 @@ public class SettingFragment extends Fragment {
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        Intent intent = new Intent(getContext(), TutorialActivity.class);
                         startActivity(intent);
                         getActivity().finish();
                     }

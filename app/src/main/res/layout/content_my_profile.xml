@@ -31,7 +31,8 @@
         android:id="@+id/memNameGender"
         android:layout_below="@+id/position"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,7 +42,8 @@
         android:id="@+id/memIntro"
         android:layout_below="@+id/memNameGender"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,7 +53,8 @@
         android:id="@+id/textView63"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/btnRequest"
-        android:layout_alignEnd="@+id/btnRequest" />
+        android:layout_alignEnd="@+id/btnRequest"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,7 +64,8 @@
         android:id="@+id/winLoseDraw"
         android:layout_below="@+id/textView63"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,7 +75,8 @@
         android:id="@+id/score"
         android:layout_below="@+id/winLoseDraw"
         android:layout_alignRight="@+id/winLoseDraw"
-        android:layout_alignEnd="@+id/winLoseDraw" />
+        android:layout_alignEnd="@+id/winLoseDraw"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -81,7 +86,8 @@
         android:id="@+id/mvp"
         android:layout_below="@+id/score"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -91,7 +97,8 @@
         android:id="@+id/skill"
         android:layout_below="@+id/mvp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffffff" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -190,7 +197,8 @@
             android:text="기본정보"
             android:id="@+id/textView68"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffffff" />
     </RelativeLayout>
 
     <TextView
@@ -201,7 +209,8 @@
         android:id="@+id/textView69"
         android:layout_below="@+id/relativeLayout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -211,7 +220,8 @@
         android:id="@+id/clubName"
         android:layout_alignTop="@+id/textView69"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -221,7 +231,8 @@
         android:id="@+id/textView71"
         android:layout_below="@+id/textView69"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -231,7 +242,8 @@
         android:id="@+id/age"
         android:layout_below="@+id/clubName"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -241,7 +253,8 @@
         android:id="@+id/textView73"
         android:layout_below="@+id/textView71"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -251,7 +264,8 @@
         android:id="@+id/memLocationName"
         android:layout_below="@+id/age"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -261,7 +275,8 @@
         android:id="@+id/textView75"
         android:layout_below="@+id/textView73"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -271,7 +286,8 @@
         android:id="@+id/textView76"
         android:layout_below="@+id/memLocationName"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffffff" />
 
 
     <com.android.ground.ground.custom.CustomCircularImageView
@@ -301,7 +317,8 @@
             android:layout_below="@+id/textView75"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:checked="false" />
+            android:checked="false"
+            android:textColor="#ffffffff" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -311,7 +328,8 @@
             android:layout_alignTop="@+id/memMainDay_Mon"
             android:layout_toRightOf="@+id/memMainDay_Mon"
             android:layout_toEndOf="@+id/memMainDay_Mon"
-            android:checked="false" />
+            android:checked="false"
+            android:textColor="#ffffffff" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -321,7 +339,8 @@
             android:layout_alignTop="@+id/memMainDay_Tue"
             android:layout_toRightOf="@+id/memMainDay_Tue"
             android:layout_toEndOf="@+id/memMainDay_Tue"
-            android:checked="false" />
+            android:checked="false"
+            android:textColor="#ffffffff" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -331,28 +350,32 @@
             android:layout_alignTop="@+id/memMainDay_Wed"
             android:layout_toRightOf="@+id/memMainDay_Wed"
             android:layout_toEndOf="@+id/memMainDay_Wed"
-            android:checked="false" />
+            android:checked="false"
+            android:textColor="#ffffffff" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="금"
             android:id="@+id/memMainDay_Fri"
-            android:checked="false" />
+            android:checked="false"
+            android:textColor="#ffffffff" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="토"
             android:id="@+id/memMainDay_Sat"
-            android:checked="false" />
+            android:checked="false"
+            android:textColor="#ffffffff" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="일"
             android:id="@+id/memMainDay_Sun"
-            android:checked="false" />
+            android:checked="false"
+            android:textColor="#ffffffff" />
     </LinearLayout>
 
     <ImageView

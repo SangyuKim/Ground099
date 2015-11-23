@@ -32,7 +32,9 @@ import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.finalposition.FinalPositionActivity;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
+import com.android.ground.ground.controller.person.profile.YourProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.person.main.matchinfo.CheckMatchListGroupItem;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
@@ -162,16 +164,37 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                 switch(tag){
                     case "MVP":{
                         //                    Toast.makeText(getContext(), hView.getItemMVP().memName, Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(), MyProfileActivity.class);
-                        startActivity(intent);
+                        int id = view.itemMVP.member_id;
+
+
+                        if(id == PropertyManager.getInstance().getMyPageResult().member_id){
+                            Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                            startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(getContext(), YourProfileActivity.class);
+                            intent.putExtra("memberId",id);
+                            startActivity(intent);
+                        }
+                          break;
                     } case "SCR":{
                         //                    Toast.makeText(getContext(), hView.getItemScr().memName, Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(), MyProfileActivity.class);
-                        startActivity(intent);
+                       int id =  view.itemScr.member_id;
+                        if(id == PropertyManager.getInstance().getMyPageResult().member_id){
+                            Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                            startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(getContext(), YourProfileActivity.class);
+                            intent.putExtra("memberId",id);
+                            startActivity(intent);
+                        }
+                        break;
                     } case "CLUB":{
                         //                    Toast.makeText(getContext(), hView.getItemWin().clubName, Toast.LENGTH_SHORT).show();
+                        int id = view.itemWin.club_id;
                         Intent intent = new Intent(getContext(), FCActivity.class);
+                        intent.putExtra("clubId", id);
                         startActivity(intent);
+                        break;
                     }
                 }
 
@@ -218,6 +241,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                         }else{
                             Toast.makeText(getContext(),"더보기1 추가 내용 없음", Toast.LENGTH_SHORT).show();
                         }
+                        break;
                     }
                     case "더보기2":{
                         Toast.makeText(getContext(),"더보기2 page 추가", Toast.LENGTH_SHORT).show();
@@ -226,6 +250,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                         }else{
                             Toast.makeText(getContext(),"더보기2 추가 내용 없음", Toast.LENGTH_SHORT).show();
                         }
+                        break;
                     }
                     case "더보기3":{
                         Toast.makeText(getContext(),"더보기3 page 추가", Toast.LENGTH_SHORT).show();
@@ -234,6 +259,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                         }else {
                             Toast.makeText(getContext(),"더보기3 추가 내용 없음", Toast.LENGTH_SHORT).show();
                         }
+                        break;
                     }
 
 

@@ -18,13 +18,23 @@
         android:foregroundGravity="center_vertical|center_horizontal"
         android:layout_centerInParent="true" />
 
+    <TextView
+        android:layout_width="23dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/textView88"
+        android:layout_alignTop="@+id/imageView4"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible" />
+
     <ImageView
         android:layout_width="21.75dp"
         android:layout_height="13.25dp"
         android:id="@+id/imageView4"
         android:src="@drawable/icon_001"
         android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toLeftOf="@+id/textView88"
+        android:layout_toStartOf="@+id/textView88" />
 
 </RelativeLayout>

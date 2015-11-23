@@ -70,7 +70,8 @@
                     android:layout_toRightOf="@+id/memImage"
                     android:layout_toEndOf="@+id/memImage"
                     android:textColor="#ffffffff"
-                    android:textSize="27sp" />
+                    android:textSize="27sp"
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -79,7 +80,8 @@
                     android:text="나이"
                     android:id="@+id/age"
                     android:textColor="#ffffffff"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
