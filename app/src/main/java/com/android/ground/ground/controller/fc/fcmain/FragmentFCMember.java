@@ -157,27 +157,27 @@ public class FragmentFCMember extends Fragment {
         });
         mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
-            public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
-                if(data instanceof FCActivity){
-                    Intent intent = new Intent(getContext(), FCActivity.class);
-                    startActivity(intent);
-                }else if(data instanceof MyProfileActivity) {
-                    int memberId = ((FCMemberItemView)view).mItem.member_id;
-                    if(memberId == PropertyManager.getInstance().getMyPageResult().member_id){
-                        ActivityManager.getInstance().activityArrayList.add(getActivity());
-                        Intent intent = new Intent(getContext(), MyProfileActivity.class);
-                        startActivity(intent);
-                    }else{
-//                        List<Activity> mList = ActivityManager.getInstance().activityArrayList;
-//                        for(int i = 0; i < mList.size(); i++)
-//                            mList.get(i).finish();
-//
-                        ActivityManager.getInstance().activityArrayList.add(getActivity());
-                        Intent intent = new Intent(getContext(), YourProfileActivity.class);
-                        intent.putExtra("memberId",memberId);
-                        startActivity(intent);
-                    }
-                }
+            public void onAdapterProfileClick(Adapter adapter, View view) {
+//                if(data instanceof FCActivity){
+//                    Intent intent = new Intent(getContext(), FCActivity.class);
+//                    startActivity(intent);
+//                }else if(data instanceof MyProfileActivity) {
+//                    int memberId = ((FCMemberItemView)view).mItem.member_id;
+//                    if(memberId == PropertyManager.getInstance().getMyPageResult().member_id){
+//                        ActivityManager.getInstance().activityArrayList.add(getActivity());
+//                        Intent intent = new Intent(getContext(), MyProfileActivity.class);
+//                        startActivity(intent);
+//                    }else{
+////                        List<Activity> mList = ActivityManager.getInstance().activityArrayList;
+////                        for(int i = 0; i < mList.size(); i++)
+////                            mList.get(i).finish();
+////
+//                        ActivityManager.getInstance().activityArrayList.add(getActivity());
+//                        Intent intent = new Intent(getContext(), YourProfileActivity.class);
+//                        intent.putExtra("memberId",memberId);
+//                        startActivity(intent);
+//                    }
+//                }
             }
         });
 

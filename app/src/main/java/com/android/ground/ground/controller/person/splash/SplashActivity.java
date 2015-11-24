@@ -110,7 +110,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
+        //카톡 로그아웃
         Button btnLogout = (Button)findViewById(R.id.button49);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,45 +122,53 @@ public class SplashActivity extends AppCompatActivity {
                 });
             }
         });
+        Button fbLogout = (Button)findViewById(R.id.button3);
+        fbLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginManager mLoginManager = LoginManager.getInstance();
+                mLoginManager.logOut();
+            }
+        });
 
         //unlink
-//        final String appendMessage = getString(R.string.com_kakao_confirm_unlink);
-//        new AlertDialog.Builder(this)
-//                .setMessage(appendMessage)
-//                .setPositiveButton(getString(R.string.com_kakao_ok_button),
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                UserManagement.requestUnlink(new UnLinkResponseCallback() {
-//                                    @Override
-//                                    public void onFailure(ErrorResult errorResult) {
-//                                    }
-//
-//                                    @Override
-//                                    public void onSessionClosed(ErrorResult errorResult) {
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onNotSignedUp() {
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onSuccess(Long result) {
-//
-//                                    }
-//                                });
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                .setNegativeButton(getString(R.string.com_kakao_cancel_button),
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        }).show();
+        final String appendMessage = getString(R.string.com_kakao_confirm_unlink);
+        new AlertDialog.Builder(this)
+                .setMessage(appendMessage)
+                .setPositiveButton(getString(R.string.com_kakao_ok_button),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                UserManagement.requestUnlink(new UnLinkResponseCallback() {
+                                    @Override
+                                    public void onFailure(ErrorResult errorResult) {
+                                    }
+
+                                    @Override
+                                    public void onSessionClosed(ErrorResult errorResult) {
+
+                                    }
+
+                                    @Override
+                                    public void onNotSignedUp() {
+
+                                    }
+
+                                    @Override
+                                    public void onSuccess(Long result) {
+
+                                    }
+                                });
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton(getString(R.string.com_kakao_cancel_button),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).show();
 
 
 
@@ -200,110 +208,44 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
                         AccessToken token = AccessToken.getCurrentAccessToken();
-                        if (token != null) {
-                            if (token.getUserId().equals(id)) {
-//                                NetworkManager.getInstance().loginFacebookToken(SplashActivity.this, token.getToken(),"OK", new NetworkManager.OnResultListener<String>() {
-//                                    @Override
-//                                    public void onSuccess(String result) {
-//                                        if (result.equals("OK")) {
-//                                            goMainActivity();
-//                                        }
-//                                    }
-//
-//                                    @Override
-//                                    public void onFail(int code) {
-//
-//                                    }
-//                                });
-
-                                //todo
-                                NetworkManager.getInstance().postNetworkLoginFacebook(SplashActivity.this, token.getToken().toString()
-                                        , new NetworkManager.OnResultListener<FacebookLogin>() {
-                                    @Override
-                                    public void onSuccess(FacebookLogin result) {
-                                        if(result.user.signUpYN ==0){
-                                            //signup 으로 이동
-                                            final Intent intent = new Intent(SplashActivity.this, TutorialActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                            startActivity(intent);
-//                                            PropertyManager.getInstance().setUserId(result.user.id);
-//                                            PropertyManager.getInstance().setUserName(result.user.memName);
-                                            finish();
-                                        }else{
-                                            //main으로 이동
-//                                            PropertyManager.getInstance().setUserId(result.user.id);
-//                                            PropertyManager.getInstance().setUserName(result.user.memName);
-                                            searchMyPage(result.user.member_id);
-                                            searchMyPageTrans(result.user.member_id);
-                                            final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFail(int code) {
+                        if (token != null) {if (token.getUserId().equals(id)) {
+                            //todo
+                            NetworkManager.getInstance().postNetworkLoginFacebook(SplashActivity.this, token.getToken().toString()
+                                    , new NetworkManager.OnResultListener<FacebookLogin>() {
+                                @Override
+                                public void onSuccess(FacebookLogin result) {
+                                    if(result.user.signUpYN ==0){
+                                        //signup 으로 이동
+                                        final Intent intent = new Intent(SplashActivity.this, TutorialActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                        startActivity(intent);
+                                            PropertyManager.getInstance().setUserId(result.user.member_id);
+                                            PropertyManager.getInstance().setUserName(result.user.memName);
+                                        finish();
+                                    }else{
+                                        //main으로 이동
+                                        PropertyManager.getInstance().setUserId(result.user.member_id);
+                                        PropertyManager.getInstance().setUserName(result.user.memName);
+                                        searchMyPage(result.user.member_id);
 
                                     }
-                                });
-                            } else {
-                                Toast.makeText(SplashActivity.this, "facebook id change", Toast.LENGTH_SHORT).show();
-                                mLoginManager.logOut();
-                                goLoginActivity();
-                            }
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+
+                                }
+                            });
+                        } else {
+                            Toast.makeText(SplashActivity.this, "facebook id change", Toast.LENGTH_SHORT).show();
+                            mLoginManager.logOut();
+                            goLoginActivity();
+                        }
                         }
                     }
                 };
-                mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                       AccessToken token = loginResult.getAccessToken();
-                        //todo
-                        NetworkManager.getInstance().postNetworkLoginFacebook(SplashActivity.this, token.getToken().toString(), new NetworkManager.OnResultListener<FacebookLogin>() {
-                            @Override
-                            public void onSuccess(FacebookLogin result) {
-                                if(result.user.signUpYN ==0){
-                                    //signup 으로 이동
-                                    final Intent intent = new Intent(SplashActivity.this, TutorialActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    startActivity(intent);
-//                                    PropertyManager.getInstance().setUserId(result.user.id);
-//                                    PropertyManager.getInstance().setUserName(result.user.memName);
-                                    finish();
-                                }else{
-                                    //main으로 이동
-//                                    PropertyManager.getInstance().setUserId(result.user.id);
-//                                    PropertyManager.getInstance().setUserName(result.user.memName);
-                                    searchMyPage(result.user.member_id);
-                                    searchMyPageTrans(result.user.member_id);
-                                    final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }
 
-                            @Override
-                            public void onFail(int code) {
-
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        Toast.makeText(SplashActivity.this, "facebook login fail...",Toast.LENGTH_SHORT).show();
-                        goLoginActivity();
-                    }
-                });
-                mLoginManager.logInWithReadPermissions(this, null);
-            }
+         }
             else {
 
                 //todo
@@ -381,29 +323,25 @@ public class SplashActivity extends AppCompatActivity {
 
         AccessToken token = AccessToken.getCurrentAccessToken();
         if(token != null) {
-//            sendLoginFacebook(token.getToken().toString());
             Log.d("hello", "facebook token  from SplashActivity: " + token.getToken().toString());
             NetworkManager.getInstance().postNetworkLoginFacebook(SplashActivity.this, token.getToken().toString(), new NetworkManager.OnResultListener<FacebookLogin>() {
                 @Override
                 public void onSuccess(FacebookLogin result) {
                     if (result.user.signUpYN == 0) {
                         //signup 으로 이동
+                        PropertyManager.getInstance().setUserId(result.user.member_id);
+                        PropertyManager.getInstance().setUserName(result.user.memName);
                         final Intent intent = new Intent(SplashActivity.this, TutorialActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
-//                        PropertyManager.getInstance().setUserId(result.user.id);
-//                                    PropertyManager.getInstance().setUserName(result.user.memName);
+
                         finish();
                     } else {
                         //main으로 이동
-//                        PropertyManager.getInstance().setUserId(result.user.id);
-//                                    PropertyManager.getInstance().setUserName(result.user.memName);
+                        PropertyManager.getInstance().setUserId(result.user.member_id);
+                        PropertyManager.getInstance().setUserName(result.user.memName);
                         searchMyPage(result.user.member_id);
-                        searchMyPageTrans(result.user.member_id);
-                        final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(intent);
-                        finish();
+
                     }
                 }
 
@@ -630,6 +568,7 @@ public class SplashActivity extends AppCompatActivity {
             public void onSuccess(MyPage result) {
                 for (MyPageResult item : result.items) {
                     PropertyManager.getInstance().setMyPageResult(item);
+                    searchMyPageTrans(memberId);
                 }
             }
 
@@ -644,6 +583,10 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MyPageTrans result) {
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
+                final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                finish();
             }
 
             @Override
@@ -654,10 +597,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
-    private void goMainActivity() {
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
-    }
 
     private void goLoginActivity() {
         startActivity(new Intent(this, SampleLoginActivity.class));
@@ -743,19 +682,16 @@ public class SplashActivity extends AppCompatActivity {
                             final Intent intent = new Intent(SplashActivity.this, TutorialActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
-                            PropertyManager.getInstance().setUserId(result.user.id);
+                            PropertyManager.getInstance().setUserId(result.user.member_id);
                             PropertyManager.getInstance().setUserName(result.user.memName);
                             finish();
                         }else{
                             //main으로 이동
-                            PropertyManager.getInstance().setUserId(result.user.id);
+                            PropertyManager.getInstance().setUserId(result.user.member_id);
                             PropertyManager.getInstance().setUserName(result.user.memName);
-                            searchMyPage(result.user.member_id);
-                            searchMyPageTrans(result.user.member_id);
-                            final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            startActivity(intent);
-                            finish();
+//                            searchMyPage(result.user.member_id);
+
+
                         }
                     }
 

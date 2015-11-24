@@ -124,7 +124,7 @@ public class FragmentClubMessage extends Fragment {
         //프로필
         mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
-            public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
+            public void onAdapterProfileClick(Adapter adapter, View view) {
 
 //                Intent intent = new Intent(getActivity(), MyProfileActivity.class);
 //                startActivity(intent);

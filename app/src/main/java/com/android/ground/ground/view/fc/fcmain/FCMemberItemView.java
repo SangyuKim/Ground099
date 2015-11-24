@@ -50,7 +50,7 @@ public class FCMemberItemView extends FrameLayout {
             @Override
             public void onClick(View v) {
                 if (mProfileListener != null) {
-                    mProfileListener.onProfileClick(FCMemberItemView.this, new MyProfileActivity());
+                    mProfileListener.onProfileClick(FCMemberItemView.this);
                 }
             }
         });

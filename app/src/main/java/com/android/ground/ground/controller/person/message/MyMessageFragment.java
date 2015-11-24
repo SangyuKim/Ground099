@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
+import com.android.ground.ground.controller.person.profile.YourProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
@@ -33,6 +34,10 @@ import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.OnAdapterYesListener;
+import com.android.ground.ground.view.person.main.SearchFCItemView;
+import com.android.ground.ground.view.person.message.MyMessageItemView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +52,12 @@ import java.util.List;
  */
 public class MyMessageFragment extends Fragment {
 
+    PullToRefreshListView refreshView;
     ListView listView;
     MyMessageAdapter mAdapter;
     List<MyMessageItem> items = new ArrayList<MyMessageItem>();
     Button btn;
+    boolean isUpdate = false;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -100,16 +107,30 @@ public class MyMessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_message, container, false);
         this.setUserVisibleHint(true);
-        listView = (ListView)view.findViewById(R.id.listView_my_message);
+
+
+        refreshView = (PullToRefreshListView)view.findViewById(R.id.listView_my_message);
+        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                searchMyMessage();
+            }
+        });
+
+        refreshView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+            @Override
+            public void onLastItemVisible() {
+                getMoreItem();
+            }
+        });
+
+        listView = refreshView.getRefreshableView();
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-
-//        mAdapter = new MyMessageAdapter(getContext(), items);
         mAdapter = new MyMessageAdapter();
         searchMyMessage();
 
         listView.setAdapter(mAdapter);
-//        listView.setOnItemClickListener(mItemClickListener);
        //편집
         btn  = (Button)view.findViewById(R.id.button11);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -126,13 +147,71 @@ public class MyMessageFragment extends Fragment {
 
         mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
-            public void onAdapterProfileClick(Adapter adapter, View view, Profile data) {
-                if (data instanceof FCActivity) {
-                    Intent intent = new Intent(getContext(), FCActivity.class);
-                    startActivity(intent);
-                } else if (data instanceof MyProfileActivity) {
-                    Intent intent = new Intent(getContext(), MyProfileActivity.class);
-                    startActivity(intent);
+            public void onAdapterProfileClick(Adapter adapter, View view) {
+
+                MyMessageDataResult item = ((MyMessageItemView) view).mItem;
+                if(item.sender != PropertyManager.getInstance().getUserId()) {
+                    switch (((MyMessageItemView) view).mItem.code) {
+                        case 100: {
+                            //your profile 이동
+                            Intent intent = new Intent(getContext(), YourProfileActivity.class);
+                            intent.putExtra("memberId", item.sender);
+                            startActivity(intent);
+
+                            break;
+                        }
+                        case 200: {
+                            //your profile 이동
+                            Intent intent = new Intent(getContext(), YourProfileActivity.class);
+                            intent.putExtra("memberId", item.sender);
+                            startActivity(intent);
+
+                            break;
+                        }
+                        case 201: {
+                            //your profile 이동
+                            Intent intent = new Intent(getContext(), YourProfileActivity.class);
+                            intent.putExtra("memberId", item.sender);
+                            startActivity(intent);
+
+                            break;
+                        }
+                        case 300: {
+
+                            Intent intent = new Intent(getContext(), FCActivity.class);
+                            intent.putExtra("clubId", item.senderClub);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 301: {
+                            Intent intent = new Intent(getContext(), FCActivity.class);
+                            intent.putExtra("clubId", item.senderClub);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 302: {
+                            Intent intent = new Intent(getContext(), FCActivity.class);
+                            intent.putExtra("clubId", item.senderClub);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 400: {
+                            Intent intent = new Intent(getContext(), FCActivity.class);
+                            intent.putExtra("clubId", item.senderClub);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 401: {
+                            Intent intent = new Intent(getContext(), FCActivity.class);
+                            intent.putExtra("clubId", item.senderClub);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 500: {
+                            break;
+                        }
+
+                    }
                 }
             }
         });
@@ -140,20 +219,32 @@ public class MyMessageFragment extends Fragment {
         mAdapter.setOnAdapterYesListener(new OnAdapterYesListener() {
             @Override
             public void onAdapterYesClick(Adapter adapter, View view) {
-                Toast.makeText(getContext(), "YES", Toast.LENGTH_SHORT).show();
+                MyMessageDataResult item = ((MyMessageItemView) view).mItem;
+                if(item.sender != PropertyManager.getInstance().getUserId()) {
+                    Toast.makeText(getContext(), "YES", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         mAdapter.setOnAdapterNoListener(new OnAdapterNoListener() {
             @Override
             public void onAdapterNoClick(Adapter adapter, View view) {
-                Toast.makeText(getContext(), "NO", Toast.LENGTH_SHORT).show();
+                MyMessageDataResult item = ((MyMessageItemView) view).mItem;
+                if(item.sender != PropertyManager.getInstance().getUserId()) {
+                    Toast.makeText(getContext(), "NO", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         mAdapter.setOnAdapterReplyListener(new OnAdapterReplyListener() {
             @Override
             public void onAdapterReplyClick(Adapter adapter, View view) {
-                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
-                dialog.show(getChildFragmentManager(), "custom");
+                MyMessageDataResult item = ((MyMessageItemView) view).mItem;
+                if(item.sender != PropertyManager.getInstance().getUserId()) {
+                    CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                    dialog.show(getChildFragmentManager(), "custom");
+                }
+
             }
         });
 
@@ -253,6 +344,28 @@ public class MyMessageFragment extends Fragment {
             public void onFail(int code) {
             }
         });
+    }
+    private void getMoreItem() {
+        if (!isUpdate) {
+            int nextPage = mAdapter.getNextPage();
+            if (nextPage != -1) {
+                isUpdate = true;
+                NetworkManager.getInstance().getNetworkMessage(getContext(), 1, nextPage, new NetworkManager.OnResultListener<MyMessageData>() {
+                    @Override
+                    public void onSuccess(MyMessageData result) {
+                        for (MyMessageDataResult item : result.items) {
+                            mAdapter.add(item);
+                        }
+                        isUpdate = false;
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        isUpdate = false;
+                    }
+                });
+            }
+        }
     }
 
 }

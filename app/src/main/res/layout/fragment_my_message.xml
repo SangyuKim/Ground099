@@ -21,13 +21,14 @@
             android:focusable="false" />
     </LinearLayout>
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/listView_my_message"
+        android:choiceMode="multipleChoice"
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:choiceMode="multipleChoice" />
+        android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>

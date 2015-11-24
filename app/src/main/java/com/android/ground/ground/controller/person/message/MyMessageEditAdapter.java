@@ -1,6 +1,7 @@
 package com.android.ground.ground.controller.person.message;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.message.MyMessageDataResult;
-import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
-import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.OnAdapterYesListener;
@@ -19,9 +18,8 @@ import com.android.ground.ground.view.OnNoClickListener;
 import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
 import com.android.ground.ground.view.OnYesClickListener;
-import com.android.ground.ground.view.OnAdapterNoListener;
-import com.android.ground.ground.view.person.main.SearchPlayerItemView;
 import com.android.ground.ground.view.person.message.MyMessageItemView;
+import com.android.ground.ground.view.person.message.MyMessageItemViewEdit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,22 +27,14 @@ import java.util.List;
 /**
  * Created by Tacademy on 2015-11-02.
  */
-public class MyMessageAdapter extends BaseAdapter implements OnProfileClickListener,OnReplyClickListener, OnNoClickListener, OnYesClickListener {
+public class MyMessageEditAdapter extends BaseAdapter{
     private ViewHolder viewHolder = null;
     private LayoutInflater inflater = null;
     List<MyMessageDataResult> items = new ArrayList<MyMessageDataResult>();
     private boolean[] isCheckedConfrim;
     int isVisible = View.GONE;
 
-    public MyMessageAdapter() {
-    }
 
-    public MyMessageAdapter(Context c, List<MyMessageDataResult> items){
-        inflater = LayoutInflater.from(c);
-        this.items =items;
-        this.isCheckedConfrim = new boolean[this.items.size()];
-
-    }
     public void setAllChecked(boolean ischeked) {
         int tempSize = isCheckedConfrim.length;
         for(int a=0 ; a<tempSize ; a++){
@@ -89,86 +79,29 @@ public class MyMessageAdapter extends BaseAdapter implements OnProfileClickListe
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        if (convertView == null) {
-//
-//            viewHolder = new ViewHolder();
-//            MyMessageItemView view = new MyMessageItemView(parent.getContext());
-//            convertView = view;
-//            viewHolder.chk = (CheckBox) convertView.findViewById(R.id.checkBox_message);
-//            convertView.setTag(viewHolder);
-//
-//        } else {
-////            view = (MyMessageItemView) convertView;
-//            viewHolder = (ViewHolder) convertView.getTag();
-//        }
-////        viewHolder.chk.setFocusable(false);
-////        viewHolder.chk.setClickable(false);
-////        viewHolder.chk.setChecked(isCheckedConfrim[position]);
-////        viewHolder.chk.setVisibility(isVisible);
-//        return convertView;
-        MyMessageItemView view;
+
+        MyMessageItemViewEdit view;
         if (convertView == null) {
-            view = new MyMessageItemView(parent.getContext());
-            view.setOnProfileListener(this);
-            view.setOnReplyListener(this);
-            view.setOnYesListener(this);
-            view.setOnNoListener(this);
+            view = new MyMessageItemViewEdit(parent.getContext());
         } else {
-            view = (MyMessageItemView) convertView;
+            view = (MyMessageItemViewEdit) convertView;
         }
         view.setMyMessageItem(items.get(position));
+        view.setCheckBox_messageVisible();
         return view;
     }
     class ViewHolder {
         public CheckBox chk = null;
     }
 
-    OnAdapterProfileListener mProfileListener;
-    public void setOnAdapterProfileListener(OnAdapterProfileListener listener) {
-        mProfileListener = listener;
-    }
-    @Override
-    public void onProfileClick(View view) {
-        if (mProfileListener != null) {
-            mProfileListener.onAdapterProfileClick(this, view);
-        }
-    }
-    OnAdapterNoListener mNoListener;
-    public void setOnAdapterNoListener(OnAdapterNoListener listener) {
-        mNoListener = listener;
-    }
-    @Override
-    public void onNoClick(View view) {
-        if (mNoListener != null) {
-            mNoListener.onAdapterNoClick(this, view);
-        }
-    }
-    OnAdapterReplyListener mReplyListener;
-    public void setOnAdapterReplyListener(OnAdapterReplyListener listener) {
-        mReplyListener = listener;
-    }
-    @Override
-    public void onReplyClick(View view) {
-        if (mReplyListener != null) {
-            mReplyListener.onAdapterReplyClick(this, view);
-        }
-    }
-    OnAdapterYesListener mYesListener;
-    public void setOnAdapterYesListener(OnAdapterYesListener listener) {
-        mYesListener = listener;
-    }
-    @Override
-    public void onYesClick(View view) {
-        if (mYesListener != null) {
-            mYesListener.onAdapterYesClick(this, view);
-        }
-    }
+
     int totalCount;
     int page;
 
     public int getPage(){return page;}
     public void setPgae(int page){this.page = page;}
     public void setTotalCount(int totalCount) {
+        this.isCheckedConfrim = new boolean[totalCount +1 ];
         this.totalCount = totalCount;
     }
 

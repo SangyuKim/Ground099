@@ -8,6 +8,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,7 +16,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.model.message.MyMessageData;
+import com.android.ground.ground.model.message.MyMessageDataResult;
 import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +35,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class MyMessageEditFragment extends Fragment {
-
+    boolean isUpdate = false;
+    PullToRefreshListView refreshView;
     ListView listView;
-    MyMessageAdapter mAdapter;
+    MyMessageEditAdapter mAdapter;
     List<MyMessageItem> items = new ArrayList<MyMessageItem>();
     Button btn, btn2;
     LinearLayout mLinearLayout;
@@ -84,24 +91,41 @@ public class MyMessageEditFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_message_edit, container, false);
         getActivity().setTitle("메시지 편집");
-        listView = (ListView)view.findViewById(R.id.listView_my_message);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        initData();
 
-        mAdapter = new MyMessageAdapter();
+        refreshView = (PullToRefreshListView)view.findViewById(R.id.listView_my_message);
+        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                searchMyMessage();
+            }
+        });
+
+        refreshView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+            @Override
+            public void onLastItemVisible() {
+                getMoreItem();
+            }
+        });
+        listView = refreshView.getRefreshableView();
+        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+
+        mAdapter = new MyMessageEditAdapter();
+        searchMyMessage();
+
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(mItemClickListener);
+
         //전체선택
+        //포지션 계산할때 +1 해서 계산하기
+        //
         btn2 = (Button)view.findViewById(R.id.button6);
         mLinearLayout = (LinearLayout)view.findViewById(R.id.linearLayout_clear_cancel);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isAllchecked) {
-
-                    for (int i = 0; i < mAdapter.getCount(); i++) {
-
+                    for (int i = 0; i < mAdapter.getCount()+1; i++) {
                         listView.setItemChecked(i, true);
                         if (!mAdapter.getChecked(i))
                             mAdapter.setChecked(i);
@@ -110,7 +134,7 @@ public class MyMessageEditFragment extends Fragment {
                         isAllchecked = true;
                     }
                 } else {
-                    for (int i = 0; i < mAdapter.getCount(); i++) {
+                    for (int i = 0; i < mAdapter.getCount()+1; i++) {
 
                         listView.setItemChecked(i, false);
                         if (mAdapter.getChecked(i))
@@ -163,12 +187,6 @@ public class MyMessageEditFragment extends Fragment {
 
     }
 
-    public void initData(){
-        for(int i=0; i< 20; i++){
-            MyMessageItem item = new MyMessageItem();
-            items.add(item);
-        }
-    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -228,6 +246,50 @@ public class MyMessageEditFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             getActivity().setTitle("메시지 편집");
+        }
+    }
+
+    private void searchMyMessage() {
+
+        NetworkManager.getInstance().getNetworkMessage(getContext(), 1, 1, new NetworkManager.OnResultListener<MyMessageData>() {
+            @Override
+            public void onSuccess(MyMessageData result) {
+                mAdapter.setTotalCount(result.itemCount);
+                mAdapter.setPgae(1);
+                mAdapter.clear();
+                for (MyMessageDataResult item : result.items) {
+
+                    mAdapter.add(item);
+                }
+//                mAdapter = new MyMessageAdapter(getContext(), result.items);
+//                refreshView.onRefreshComplete();
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
+    }
+    private void getMoreItem() {
+        if (!isUpdate) {
+            int nextPage = mAdapter.getNextPage();
+            if (nextPage != -1) {
+                isUpdate = true;
+                NetworkManager.getInstance().getNetworkMessage(getContext(), 1, nextPage, new NetworkManager.OnResultListener<MyMessageData>() {
+                    @Override
+                    public void onSuccess(MyMessageData result) {
+                        for (MyMessageDataResult item : result.items) {
+                            mAdapter.add(item);
+                        }
+                        isUpdate = false;
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        isUpdate = false;
+                    }
+                });
+            }
         }
     }
 

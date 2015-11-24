@@ -18,6 +18,7 @@
 
 package com.loopj.android.http;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.apache.http.Header;
@@ -85,6 +86,16 @@ class JsonStreamerEntity implements HttpEntity {
     public JsonStreamerEntity(boolean contentEncoding) {
         this.contentEncoding = contentEncoding ? HEADER_GZIP_ENCODING : null;
     }
+//    private final ResponseHandlerInterface progressHandler;
+//    private final byte[] elapsedField;
+//
+//    public JsonStreamerEntity(ResponseHandlerInterface progressHandler, boolean useGZipCompression, String elapsedField) {
+//        this.progressHandler = progressHandler;
+//        this.contentEncoding = useGZipCompression ? HEADER_GZIP_ENCODING : null;
+//        this.elapsedField = TextUtils.isEmpty(elapsedField)
+//                ? null
+//                : escape(elapsedField);
+//    }
 
     public void addPart(String key, Object value) {
         kvParams.put(key, value);
@@ -185,6 +196,7 @@ class JsonStreamerEntity implements HttpEntity {
             }
 
             upload.write(',');
+
         }
 
         // Buffer used for reading from input streams.

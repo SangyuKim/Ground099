@@ -84,8 +84,8 @@ public class PropertyManager {
 
 	private static final String USER_ID = "userId";
 
-	public void setUserId(int userId) {
-		mEditor.putInt(USER_ID, userId);
+	public void setUserId(int memberId) {
+		mEditor.putInt(USER_ID, memberId);
 		mEditor.commit();
 	}
 

@@ -22,6 +22,7 @@ import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualRes;
 import com.android.ground.ground.model.login.FacebookLogin;
 import com.android.ground.ground.model.login.KakaoLogin;
 import com.android.ground.ground.model.login.KakaoResponse;
+import com.android.ground.ground.model.login.SignupData;
 import com.android.ground.ground.model.message.MyMessageData;
 import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
@@ -34,6 +35,7 @@ import com.android.ground.ground.model.post.fcCreate.ClubProfile;
 import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
 import com.android.ground.ground.model.post.signup.UserProfile;
 import com.android.ground.ground.model.tmap.TmapItem;
+import com.android.internal.http.multipart.MultipartEntity;
 import com.begentgroup.xmlparser.XMLParser;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -44,11 +46,14 @@ import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
+import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicHeader;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -318,6 +323,7 @@ public class NetworkManager {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", "mypage : " +s );
 
                 MyPage items = gson.fromJson(s, MyPage.class);
                 if (items != null){
@@ -660,11 +666,16 @@ public class NetworkManager {
 
     //signup
     public static final String SEND_SIGNUP_URL =GROND_SERVER_URL+"/member";
-    public void postNetworkSignup(final Context context , UserProfile mUserProfile) {
+    public void postNetworkSignup(final Context context , UserProfile mUserProfile,  final OnResultListener<SignupData> listener) {
 
         final RequestParams params = new RequestParams();
         try {
-            params.put("file", mUserProfile.mFile);
+            if(mUserProfile.mFile != null){
+                params.put("file", mUserProfile.mFile);
+            }else{
+                params.put("file", new File(""));
+            }
+
           } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -675,7 +686,7 @@ public class NetworkManager {
         params.put("memMainDay_Tue", mUserProfile.memMainDay_Tue);
         params.put("memMainDay_Wed",mUserProfile.memMainDay_Wed);
         params.put("memMainDay_Thu", mUserProfile.memMainDay_Thu);
-        params.put("memMainDay_Fri",mUserProfile.memMainDay_Fri);
+        params.put("memMainDay_Fri", mUserProfile.memMainDay_Fri);
         params.put("memMainDay_Sat", mUserProfile.memMainDay_Sat);
         params.put("memMainDay_Sun",mUserProfile.memMainDay_Sun);
         params.put("memIntro", mUserProfile.memIntro);
@@ -687,13 +698,21 @@ public class NetworkManager {
 //        Log.d("hello", "latitude : " + mUserProfile.latitude);
         params.put("longitude", mUserProfile.longitude);
 //        Log.d("hello", "longitude : " + mUserProfile.longitude);
-
-        client.post(context, SEND_SIGNUP_URL, params, new AsyncHttpResponseHandler() {
+//        params.setContentEncoding("multipart/form-data");
+//        params.setForceMultipartEntityContentType(true);
+//        Header[] headers =new Header[2];
+//        headers[0] = new BasicHeader("Connection", "Keep-Alive" );
+//        headers[1] = new BasicHeader("Content-Type", "multipart/form-data" );
+        client.post(context, SEND_SIGNUP_URL, params,new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
-                Log.d("hello", s);
+                Log.d("hello", "sign up : " + s);
+                SignupData items = gson.fromJson(s, SignupData.class);
+                if (items != null){
+                    listener.onSuccess(items);
+                }
             }
 
             @Override
@@ -701,6 +720,7 @@ public class NetworkManager {
                 Log.d("hello", "status code : " + statusCode);
             }
         });
+
 
     }
 

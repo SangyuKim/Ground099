@@ -5,7 +5,7 @@ package com.android.ground.ground.model.login;
  */
 public class KakaoLoginUser {
     public int member_id;
-    public int id;
+    public long id;
     public int loginCode;
     public int clubYN;
     public int club_id;;

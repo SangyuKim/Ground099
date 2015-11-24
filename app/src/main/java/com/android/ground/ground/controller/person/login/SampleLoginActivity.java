@@ -97,81 +97,79 @@ public class SampleLoginActivity extends AppCompatActivity {
         if (!Session.getCurrentSession().checkAndImplicitOpen()) {
             //세션이 닫혀있거나 refresh token으로 갱신 불가
             setContentView(R.layout.layout_common_kakao_login);
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            this.getWindow().setBackgroundDrawableResource(R.drawable.xxdpi_bg);
-
-            //// TODO: 2015-10-29
-            //연동 로그인 후, 토큰 값 받기
-            //토큰 값 서버에 전달
-            //서버에서 가입 유무 확인
-            mCallbackManager = CallbackManager.Factory.create();
-            mLoginManager = LoginManager.getInstance();
-            btnFacebook = (ImageView)findViewById(R.id.button10);
-            btnFacebook.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isLogin()) {
-                        login(Arrays.asList("email"), true);
-                        mLoginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-                            @Override
-                            public void onSuccess(LoginResult loginResult) {
-                                AccessToken token = loginResult.getAccessToken();
-                                //todo
-                                NetworkManager.getInstance().postNetworkLoginFacebook(SampleLoginActivity.this, token.getToken().toString(), new NetworkManager.OnResultListener<FacebookLogin>() {
-                                    @Override
-                                    public void onSuccess(FacebookLogin result) {
-                                        if(result.user.signUpYN ==0){
-                                            //signup 으로 이동
-                                            final Intent intent = new Intent(SampleLoginActivity.this, TutorialActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                            startActivity(intent);
-//                                            PropertyManager.getInstance().setUserId(result.user.id);
-//                                            PropertyManager.getInstance().setUserName(result.user.memName);
-                                            finish();
-                                        }else{
-                                            //main으로 이동
-//                                            PropertyManager.getInstance().setUserId(result.user.id);
-//                                            PropertyManager.getInstance().setUserName(result.user.memName);
-                                            searchMyPage(result.user.member_id);
-                                            searchMyPageTrans(result.user.member_id);
-                                            final Intent intent = new Intent(SampleLoginActivity.this, MainActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFail(int code) {
-
-                                    }
-                                });
-                                //가입이 안되었을 경우
-                                redirectSignupActivity();
-                                //가입이 되었을 경우 -> Main Activity
-                            }//success
-
-                            @Override
-                            public void onCancel() {
-
-                            }
-
-                            @Override
-                            public void onError(FacebookException error) {
-
-                            }
-                        });
-                        mLoginManager.logInWithReadPermissions(SampleLoginActivity.this, null);
-                    }
-//                    else {
-//                        mLoginManager.logOut();
-//                    }
-                }
-            });
-
+            checkFacebookLogin();
         }
 
+    }
+
+    private void checkFacebookLogin() {
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setBackgroundDrawableResource(R.drawable.xxdpi_bg);
+
+        //// TODO: 2015-10-29
+        //연동 로그인 후, 토큰 값 받기
+        //토큰 값 서버에 전달
+        //서버에서 가입 유무 확인
+        mCallbackManager = CallbackManager.Factory.create();
+        mLoginManager = LoginManager.getInstance();
+        btnFacebook = (ImageView)findViewById(R.id.button10);
+        btnFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isLogin()) {
+                    login(Arrays.asList("email"), true);
+                    mLoginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                        @Override
+                        public void onSuccess(LoginResult loginResult) {
+                            AccessToken token = loginResult.getAccessToken();
+                            //todo
+                            NetworkManager.getInstance().postNetworkLoginFacebook(SampleLoginActivity.this, token.getToken().toString(), new NetworkManager.OnResultListener<FacebookLogin>() {
+                                @Override
+                                public void onSuccess(FacebookLogin result) {
+                                    if(result.user.signUpYN ==0){
+                                        //signup 으로 이동
+                                        PropertyManager.getInstance().setUserId(result.user.member_id);
+                                        PropertyManager.getInstance().setUserName(result.user.memName);
+                                        final Intent intent = new Intent(SampleLoginActivity.this, TutorialActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        //main으로 이동
+                                        PropertyManager.getInstance().setUserId(result.user.member_id);
+                                        PropertyManager.getInstance().setUserName(result.user.memName);
+                                        searchMyPage(result.user.member_id);
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+
+                                }
+                            });
+
+                        }//success
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+
+                        @Override
+                        public void onError(FacebookException error) {
+
+                        }
+                    });
+                    mLoginManager.logInWithReadPermissions(SampleLoginActivity.this, null);
+                }
+//                    else {
+//                        mLoginManager.logOut();
+//
+//                    }
+            }
+        });
     }
 
     @Override
@@ -200,8 +198,6 @@ public class SampleLoginActivity extends AppCompatActivity {
             Log.d("hello", "kakao from login: " + kakaoToken);
             if(kakaoToken != null)
                 sendLoginKakao(kakaoToken);
-
-//            redirectSignupActivity();
         }
 
         @Override
@@ -210,7 +206,7 @@ public class SampleLoginActivity extends AppCompatActivity {
                 Logger.e(exception);
             }
             setContentView(R.layout.layout_common_kakao_login);
-            //onCreate 에 있는 부분 함수화해서 옮기기
+            checkFacebookLogin();
         }
     }
 
@@ -272,7 +268,6 @@ public class SampleLoginActivity extends AppCompatActivity {
                 //토큰 보내기
 //                postLoginFacebook(token.getToken().toString());
                 Log.d("hello", "facebook token  from Login Fragment: " + token.getToken().toString());
-
                 Toast.makeText(MyApplication.getContext(), "id : " + token.getUserId(), Toast.LENGTH_SHORT).show();
                 NetworkManager.getInstance().loginFacebookToken(MyApplication.getContext(), token.getToken(), "NOTREGISTER", new NetworkManager.OnResultListener<String>() {
                     @Override
@@ -317,22 +312,22 @@ public class SampleLoginActivity extends AppCompatActivity {
             mLoginManager.logInWithPublishPermissions(SampleLoginActivity.this, permissions);
         }
     }
-    private void getProfile() {
-        AccessToken token = AccessToken.getCurrentAccessToken();
-        GraphRequest request = new GraphRequest(token, "/me", null, HttpMethod.GET, new GraphRequest.Callback() {
-            @Override
-            public void onCompleted(GraphResponse response) {
-                JSONObject object = response.getJSONObject();
-                if (object == null) {
-                    String message = response.getError().getErrorMessage();
-                    Toast.makeText(MyApplication.getContext(), "error : " + message, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MyApplication.getContext(), "profile : " + object.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        request.executeAsync();
-    }
+//    private void getProfile() {
+//        AccessToken token = AccessToken.getCurrentAccessToken();
+//        GraphRequest request = new GraphRequest(token, "/me", null, HttpMethod.GET, new GraphRequest.Callback() {
+//            @Override
+//            public void onCompleted(GraphResponse response) {
+//                JSONObject object = response.getJSONObject();
+//                if (object == null) {
+//                    String message = response.getError().getErrorMessage();
+//                    Toast.makeText(MyApplication.getContext(), "error : " + message, Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(MyApplication.getContext(), "profile : " + object.toString(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//        request.executeAsync();
+//    }
 
 
 
@@ -356,7 +351,7 @@ public class SampleLoginActivity extends AppCompatActivity {
                         if (result.user.signUpYN == 0) {
                             //signup 으로 이동
                             PropertyManager.getInstance().setUserName(result.user.memName);
-                            PropertyManager.getInstance().setUserId(result.user.id);
+                            PropertyManager.getInstance().setUserId(result.user.member_id);
                             final Intent intent = new Intent(SampleLoginActivity.this, TutorialActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
@@ -365,13 +360,9 @@ public class SampleLoginActivity extends AppCompatActivity {
                         } else {
                             //main으로 이동
                             PropertyManager.getInstance().setUserName(result.user.memName);
-                            PropertyManager.getInstance().setUserId(result.user.id);
+                            PropertyManager.getInstance().setUserId(result.user.member_id);
                             searchMyPage(result.user.member_id);
-                            searchMyPageTrans(result.user.member_id);
-                            final Intent intent = new Intent(SampleLoginActivity.this, MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            startActivity(intent);
-                            finish();
+
                         }
                     }
 
@@ -390,6 +381,8 @@ public class SampleLoginActivity extends AppCompatActivity {
             public void onSuccess(MyPage result) {
                 for (MyPageResult item : result.items) {
                     PropertyManager.getInstance().setMyPageResult(item);
+                    searchMyPageTrans(memberId);
+
                 }
             }
 
@@ -403,6 +396,10 @@ public class SampleLoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MyPageTrans result) {
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
+                final Intent intent = new Intent(SampleLoginActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                finish();
             }
 
             @Override

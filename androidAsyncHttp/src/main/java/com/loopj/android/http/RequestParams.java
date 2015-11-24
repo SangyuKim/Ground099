@@ -388,6 +388,13 @@ public class RequestParams {
         } else {
             return createMultipartEntity(progressHandler);
         }
+//        if (useJsonStreamer) {
+//            return createJsonStreamerEntity(progressHandler);
+//        } else if (!forceMultipartEntity && streamParams.isEmpty() && fileParams.isEmpty() && fileArrayParams.isEmpty()) {
+//            return createFormEntity();
+//        } else {
+//            return createMultipartEntity(progressHandler);
+//        }
     }
 
     private HttpEntity createJsonStreamerEntity() throws IOException {
@@ -414,6 +421,7 @@ public class RequestParams {
             }
         }
 
+
         // Add stream params
         for (ConcurrentHashMap.Entry<String, StreamWrapper> entry : streamParams.entrySet()) {
             StreamWrapper stream = entry.getValue();
@@ -427,6 +435,47 @@ public class RequestParams {
 
         return entity;
     }
+    protected String elapsedFieldInJsonStreamer = "_elapsed";
+    public void setElapsedFieldInJsonStreamer(String value) {
+        this.elapsedFieldInJsonStreamer = value;
+    }
+//    private HttpEntity createJsonStreamerEntity(ResponseHandlerInterface progressHandler) throws IOException {
+//        JsonStreamerEntity entity = new JsonStreamerEntity(
+//                progressHandler,
+//                !fileParams.isEmpty() || !streamParams.isEmpty(),
+//                elapsedFieldInJsonStreamer);
+//
+//        // Add string params
+//        for (ConcurrentHashMap.Entry<String, String> entry : urlParams.entrySet()) {
+//            entity.addPart(entry.getKey(), entry.getValue());
+//        }
+//
+//        // Add non-string params
+//        for (ConcurrentHashMap.Entry<String, Object> entry : urlParamsWithObjects.entrySet()) {
+//            entity.addPart(entry.getKey(), entry.getValue());
+//        }
+//
+//        // Add file params
+//        for (ConcurrentHashMap.Entry<String, FileWrapper> entry : fileParams.entrySet()) {
+//            entity.addPart(entry.getKey(), entry.getValue());
+//        }
+//
+//        // Add stream params
+//        for (ConcurrentHashMap.Entry<String, StreamWrapper> entry : streamParams.entrySet()) {
+//            StreamWrapper stream = entry.getValue();
+//            if (stream.inputStream != null) {
+//                entity.addPart(entry.getKey(),
+//                        StreamWrapper.newInstance(
+//                                stream.inputStream,
+//                                stream.name,
+//                                stream.contentType,
+//                                stream.autoClose)
+//                );
+//            }
+//        }
+//
+//        return entity;
+//    }
 
     private HttpEntity createFormEntity() {
         try {
@@ -552,5 +601,9 @@ public class RequestParams {
             this.name = name;
             this.contentType = contentType;
         }
+    }
+    protected boolean forceMultipartEntity = false;
+    public void setForceMultipartEntityContentType(boolean force) {
+        this.forceMultipartEntity = force;
     }
 }

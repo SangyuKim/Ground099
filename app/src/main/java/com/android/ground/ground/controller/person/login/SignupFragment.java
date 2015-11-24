@@ -37,10 +37,12 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
 import com.android.ground.ground.controller.person.main.MainActivity;
+import com.android.ground.ground.controller.person.message.MyMessageActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.login.KakaoLogin;
+import com.android.ground.ground.model.login.SignupData;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
@@ -73,14 +75,11 @@ import java.util.Map;
  */
 public class SignupFragment extends Fragment {
     static final int MONTHYEARDATESELECTOR_ID = 3;
-
     ScrollView mScrollView;
     UserProfile mUserProfile;
     RadioGroup gender;
     CheckBox memMainDay_Mon,memMainDay_Tue,memMainDay_Wed,memMainDay_Thu,memMainDay_Fri,memMainDay_Sat,memMainDay_Sun;
     EditText memIntro;
-
-
 
     protected static Activity self;
     TextView textViewUserArea, textViewAge, memName;
@@ -157,7 +156,6 @@ public class SignupFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     /**
      * Main으로 넘길지 가입 페이지를 그릴지 판단하기 위해 me를 호출한다.
      * @param savedInstanceState 기존 session 정보가 저장된 객체
@@ -182,8 +180,6 @@ public class SignupFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_signup, container, false);
         mUserProfile = new UserProfile();
 
-
-//        setSpinner(R.id.spinner_age, R.array.items_search_player);
         setSpinner(R.id.spinner_ability, R.array.items_player_ability);
         setSpinner(R.id.spinner_position, R.array.items_player_position);
         textViewUserArea = (TextView)view.findViewById(R.id.textViewArea);
@@ -215,9 +211,6 @@ public class SignupFragment extends Fragment {
                 }
             }
         });
-
-
-
 
         linearLayoutAge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -320,8 +313,21 @@ public class SignupFragment extends Fragment {
                 }
 
                 mUserProfile.memIntro=memIntro.getText().toString();
+                NetworkManager.getInstance().postNetworkSignup(getContext(), mUserProfile, new NetworkManager.OnResultListener<SignupData>() {
+                    @Override
+                    public void onSuccess(SignupData result) {
+                        if(result.code==200){
+                            searchMyPage(PropertyManager.getInstance().getUserId());
 
-                NetworkManager.getInstance().postNetworkSignup(getContext(), mUserProfile);
+
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(MyApplication.getContext(), "error code in signup: " + code, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 //선수 등록이 끝났을 경우 -> 서버에게 데이터 전달
 //                NetworkManager.getInstance().signupFacebook(getContext(), "message", new NetworkManager.OnResultListener<String>() {
@@ -338,11 +344,6 @@ public class SignupFragment extends Fragment {
 //
 //                    }
 //                });
-
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-                //로그인 activity 제거 하기
 
 
 
@@ -535,6 +536,8 @@ public class SignupFragment extends Fragment {
             public void onSuccess(MyPage result) {
                 for (MyPageResult item : result.items) {
                     PropertyManager.getInstance().setMyPageResult(item);
+                    searchMyPageTrans(memberId);
+
                 }
             }
 
@@ -549,6 +552,9 @@ public class SignupFragment extends Fragment {
             @Override
             public void onSuccess(MyPageTrans result) {
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
 
             }
 

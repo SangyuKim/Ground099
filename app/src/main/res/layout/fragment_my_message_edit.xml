@@ -54,7 +54,7 @@
 
     </LinearLayout>
 
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:layout_width="wrap_content"
         android:layout_height="687dp"
         android:id="@+id/listView_my_message"

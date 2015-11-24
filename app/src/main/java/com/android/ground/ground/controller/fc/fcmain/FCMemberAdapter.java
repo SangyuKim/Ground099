@@ -65,9 +65,9 @@ public class FCMemberAdapter extends BaseAdapter
         mProfileListener = listener;
     }
     @Override
-    public void onProfileClick(View view, Profile data) {
+    public void onProfileClick(View view) {
         if (mProfileListener != null) {
-            mProfileListener.onAdapterProfileClick(this, view, data);
+            mProfileListener.onAdapterProfileClick(this, view);
         }
 
     }
