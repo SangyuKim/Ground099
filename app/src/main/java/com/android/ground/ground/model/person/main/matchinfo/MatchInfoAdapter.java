@@ -115,6 +115,21 @@ public class MatchInfoAdapter extends BaseExpandableListAdapter implements Searc
     }
 
     public void add(String groupName, List<MatchInfoResult> child) {
+        switch(groupName){
+            case "futureMat":{
+                groupName= "예정된 매치";
+                break;
+            }
+            case "ingMat":{
+                groupName= "기록 대기중 매치";
+                break;
+            }
+            case "endMat":{
+                groupName= "종료된 매치";
+                break;
+            }
+        }
+
         CheckMatchListGroupItem g = null;
         for (CheckMatchListGroupItem item : items) {
             if (item.text.equals(groupName)) {
@@ -186,8 +201,7 @@ public class MatchInfoAdapter extends BaseExpandableListAdapter implements Searc
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         SearchMatchItemView view;
-
-
+        CheckMatchListGroupItem mGroup = (CheckMatchListGroupItem)getGroup(groupPosition);
 
         if (convertView != null) {
             view = (SearchMatchItemView)convertView;
@@ -198,6 +212,12 @@ public class MatchInfoAdapter extends BaseExpandableListAdapter implements Searc
 
         view.setMatchInfoResult(items.get(groupPosition).children.get(childPosition));
         view.setInvisible();
+
+        if(mGroup.text.equals("예정된 매치")){
+            view.setInvisibleScore();
+        }else{
+            view.setVisibleScore();
+        }
         return view;
     }
 

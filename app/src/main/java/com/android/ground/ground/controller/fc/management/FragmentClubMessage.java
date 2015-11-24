@@ -101,7 +101,7 @@ public class FragmentClubMessage extends Fragment {
 
         initData();
 
-        mAdapter = new MyMessageAdapter(getContext(), items);
+        mAdapter = new MyMessageAdapter();
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(mItemClickListener);
 

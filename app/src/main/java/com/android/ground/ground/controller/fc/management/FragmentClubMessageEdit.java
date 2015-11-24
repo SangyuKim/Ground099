@@ -89,7 +89,7 @@ public class FragmentClubMessageEdit extends Fragment {
 
         initData();
 
-        mAdapter = new MyMessageAdapter(getContext(), items);
+        mAdapter = new MyMessageAdapter();
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(mItemClickListener);
         //전체선택

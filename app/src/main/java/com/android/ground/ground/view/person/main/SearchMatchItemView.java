@@ -36,7 +36,7 @@ public class SearchMatchItemView extends RelativeLayout implements Checkable {
     }
 
     TextView matchDate, startTime, homeClubName, awayClubName, matchLocation, mvpName
-            , matchDay, homeScore, awayScore, matchDD;
+            , matchDay, homeScore, awayScore, matchDD, text_colon;
     MatchInfoResult mItem;
     RelativeLayout mRelatveLayout;
     Button btn;
@@ -44,6 +44,20 @@ public class SearchMatchItemView extends RelativeLayout implements Checkable {
 
 
     DisplayImageOptions options;
+
+    public TextView getText_colon() {
+        return text_colon;
+    }
+    public void setInvisibleScore(){
+        text_colon.setVisibility(View.INVISIBLE);
+        homeScore.setVisibility(View.INVISIBLE);
+        awayScore.setVisibility(View.INVISIBLE);
+    }
+    public void setVisibleScore(){
+        text_colon.setVisibility(View.VISIBLE);
+        homeScore.setVisibility(View.VISIBLE);
+        awayScore.setVisibility(View.VISIBLE);
+    }
 
     private void init() {
         inflate(getContext(), R.layout.view_search_match_test_item, this);
@@ -55,6 +69,7 @@ public class SearchMatchItemView extends RelativeLayout implements Checkable {
         homeScore = (TextView) findViewById(R.id.homeScore);
         awayScore = (TextView) findViewById(R.id.awayScore);
         matchDD= (TextView)findViewById(R.id.matchDD);
+        text_colon = (TextView)findViewById(R.id.textView22);
 
 
         imageViewBar= (ImageView)findViewById(R.id.imageView6);

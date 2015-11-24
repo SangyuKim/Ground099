@@ -2,41 +2,111 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_final_position"
     tools:context="com.android.ground.ground.controller.person.finalposition.FinalPositionActivity"
     android:id="@+id/captureView">
-
-    <TextView
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="최종 포지션"
-        android:id="@+id/textView25"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/scrollView" >
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button28"
-        android:layout_below="@+id/textView25"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button40"
-        android:layout_below="@+id/button28"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
+                android:background="@drawable/field_001"
+                android:layout_below="@+id/relativeLayout14"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:columnCount="7"
+                android:rowCount="14"
+                android:id="@+id/gridLayout_field">
+
+            </GridLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/relativeLayout14">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/textView27"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/textView39"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=" vs "
+                    android:id="@+id/textView76"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/textView39"
+                    android:layout_toStartOf="@+id/textView39" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="20dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="#ff3a1d"
+                    android:id="@+id/linearLayout80"></LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="date"
+                    android:id="@+id/textView77"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/linearLayout80"
+                    android:layout_toEndOf="@+id/linearLayout80" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="day"
+                    android:id="@+id/textView80"
+                    android:layout_alignBottom="@+id/textView76"
+                    android:layout_toRightOf="@+id/linearLayout80"
+                    android:layout_toEndOf="@+id/linearLayout80" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="time"
+                    android:id="@+id/textView85"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/linearLayout80"
+                    android:layout_toEndOf="@+id/linearLayout80" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
 </RelativeLayout>

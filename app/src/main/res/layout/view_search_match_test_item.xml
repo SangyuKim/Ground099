@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="VS"
-                    android:id="@+id/text_director"
+                    android:id="@+id/text_vs"
                     android:layout_toLeftOf="@+id/button35"
                     android:layout_below="@+id/memNameCountScr"
                     android:layout_toRightOf="@+id/memImage"

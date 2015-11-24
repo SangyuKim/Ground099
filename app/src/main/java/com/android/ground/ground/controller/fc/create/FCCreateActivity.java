@@ -23,7 +23,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
+
+import android.support.v7.widget.SwitchCompat;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
@@ -45,7 +46,7 @@ public class FCCreateActivity extends AppCompatActivity {
 
     TextView  textArea;
     CheckBox clubMainDay_Mon, clubMainDay_Tue,clubMainDay_Wed,clubMainDay_Thu,clubMainDay_Fri,clubMainDay_Sat,clubMainDay_Sun;
-    Switch fieldYN , memYN, matchYN;
+    SwitchCompat fieldYN , memYN, matchYN;
     EditText clubName, clubField, clubIntro;
 
 
@@ -89,9 +90,9 @@ public class FCCreateActivity extends AppCompatActivity {
         clubMainDay_Sat = (CheckBox)findViewById(R.id.clubMainDay_Sat);
         clubMainDay_Sun = (CheckBox)findViewById(R.id.clubMainDay_Sun);
 
-        fieldYN = (Switch)findViewById(R.id.fieldYN);
-        memYN = (Switch)findViewById(R.id.memYN);
-        matchYN = (Switch)findViewById(R.id.matchYN);
+        fieldYN = (SwitchCompat)findViewById(R.id.fieldYN);
+        memYN = (SwitchCompat)findViewById(R.id.memYN);
+        matchYN = (SwitchCompat)findViewById(R.id.matchYN);
 
         clubField = (EditText)findViewById(R.id.clubField);
         clubName = (EditText)findViewById(R.id.clubName);

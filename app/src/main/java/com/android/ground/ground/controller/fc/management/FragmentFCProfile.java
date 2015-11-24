@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -53,8 +54,8 @@ public class FragmentFCProfile extends Fragment {
 
     public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
     DisplayImageOptions options;
-    EditText clubName, clubIntro, clubField;
-    TextView clubLocationName;
+    EditText clubIntro, clubField;
+    TextView clubLocationName, clubName;
     CheckBox clubMainDay_Mon, clubMainDay_Tue, clubMainDay_Wed,clubMainDay_Thu ,clubMainDay_Fri,
             clubMainDay_Sat,clubMainDay_Sun;
     Switch memYN, matchYN, fieldYN;
@@ -117,10 +118,12 @@ public class FragmentFCProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_fragment_fcprofile, container, false);
+
+        mClubProfileUpdate = new ClubProfileUpdate();
         clubId = PropertyManager.getInstance().getMyPageResult().club_id;
         clubImage = (ImageView)view.findViewById(R.id.clubImage);
 
-        clubName = (EditText)view.findViewById(R.id.clubName);
+        clubName = (TextView)view.findViewById(R.id.clubName);
         clubIntro = (EditText)view.findViewById(R.id.clubIntro);
         clubField = (EditText)view.findViewById(R.id.clubField);
 
@@ -140,19 +143,20 @@ public class FragmentFCProfile extends Fragment {
 
         searchHeaderFCMember();
 
-        Button btn = (Button)view.findViewById(R.id.button_area_search);
-        btn.setOnClickListener(new View.OnClickListener() {
+        LinearLayout areaSearch = (LinearLayout)view.findViewById(R.id.button_area_search);
+        areaSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AreaSearchActivity.class);
                 startActivityForResult(intent, REQ_AREA_SEARCH);
             }
         });
-        btn = (Button)view.findViewById(R.id.button17);
+
+        Button btn = (Button)view.findViewById(R.id.button17);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mClubProfileUpdate = new ClubProfileUpdate();
+
                 //유저가 사진 입력하지 않았을 때 처리하기 !!
 
                 if(mSavedFile!=null)
@@ -297,6 +301,14 @@ public class FragmentFCProfile extends Fragment {
             clubImage.setImageBitmap(bm);
 
             Log.d("hello", mSavedFile.getAbsolutePath().toString());
+        }
+        if(requestCode == REQ_AREA_SEARCH && resultCode == Activity.RESULT_OK){
+            String userArea = data.getExtras().getString("userArea");
+            double latitude = data.getExtras().getDouble("latitude");
+            mClubProfileUpdate.latitude = latitude;
+            double longitude = data.getExtras().getDouble("longitude");
+            mClubProfileUpdate.longitude = longitude;
+            clubLocationName.setText(userArea);
         }
     }
     private Uri getTempUri() {

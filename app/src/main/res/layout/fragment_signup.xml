@@ -42,10 +42,10 @@
             </FrameLayout>
 
             <TextView
-                android:id="@+id/textView49"
+                android:id="@+id/memName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="선수이름"
+                android:text="memName"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_below="@+id/frameLayout3"
                 android:layout_centerHorizontal="true"
@@ -55,7 +55,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/textView49"
+                android:layout_below="@+id/memName"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="23dp">
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|top"
                     android:id="@+id/linearLayout54"
-                    android:layout_below="@+id/textView49"
+                    android:layout_below="@+id/memName"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_marginBottom="23.25dp">
@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:focusable="false"
-                        android:layout_below="@+id/textView49"
+                        android:layout_below="@+id/memName"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true">
 

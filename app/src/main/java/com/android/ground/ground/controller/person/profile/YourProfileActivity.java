@@ -195,7 +195,6 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
 
         setTitle("프로필");
         int id = getIntent().getIntExtra("memberId",-1);
-        Log.d("hello", "id : " + id);
         if(id==-1){
             finish();
         }
@@ -256,10 +255,10 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         myPageResult = mResult;
         memNameGender.setText(mResult.memName + " (" +mResult.age +")");
         memIntro.setText(mResult.memIntro);
-        winLoseDraw.setText(mResult.win+"승 / " +mResult.lose+"패 / "+mResult.draw+"무");
-        score.setText(mResult.score +"골");
-        mvp.setText(mResult.mvp +"회");
-        skill.setText(Double.toString(mResult.skill));
+        winLoseDraw.setText("승 패 : " + mResult.win+"승 " +mResult.lose+"패 "+mResult.draw+"무");
+        score.setText("득 점 : " + mResult.score +"골");
+        mvp.setText("MVP : " + mResult.mvp +"회");
+        skill.setText("실 력 : " + Double.toString(mResult.skill));
         clubName.setText(mResult.clubName);
         age.setText(Integer.toString(mResult.age));
         memLocationName.setText(mResult.memLocationName);

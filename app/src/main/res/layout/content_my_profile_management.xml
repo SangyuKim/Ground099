@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="사진입력"
-                android:id="@+id/textView49"
+                android:id="@+id/memName"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/memImage"
                 android:layout_toStartOf="@+id/memImage" />

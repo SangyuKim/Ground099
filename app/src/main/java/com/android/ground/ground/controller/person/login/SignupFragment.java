@@ -40,6 +40,7 @@ import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.login.KakaoLogin;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
@@ -80,8 +81,9 @@ public class SignupFragment extends Fragment {
     EditText memIntro;
 
 
+
     protected static Activity self;
-    TextView textViewUserArea, textViewAge;
+    TextView textViewUserArea, textViewAge, memName;
 
     @Override
     public void onResume() {
@@ -196,6 +198,10 @@ public class SignupFragment extends Fragment {
         memMainDay_Sat = (CheckBox)view.findViewById(R.id.memMainDay_Sat);
         memMainDay_Sun = (CheckBox)view.findViewById(R.id.memMainDay_Sun);
         textViewAge = (TextView)view.findViewById(R.id.textView89);
+        memName = (TextView)view.findViewById(R.id.memName);
+
+       if(PropertyManager.getInstance().getUserName() != null)
+            memName.setText(PropertyManager.getInstance().getUserName());
 
         memIntro = (EditText)view.findViewById(R.id.memIntro);
 
@@ -315,39 +321,28 @@ public class SignupFragment extends Fragment {
 
                 mUserProfile.memIntro=memIntro.getText().toString();
 
-//                mUserProfile.position =1;
-//                mUserProfile.skill=5;
-
-//                mUserProfile.latitude =91.0;
-//                mUserProfile.longitude=92.0;
                 NetworkManager.getInstance().postNetworkSignup(getContext(), mUserProfile);
 
-
-
                 //선수 등록이 끝났을 경우 -> 서버에게 데이터 전달
-                NetworkManager.getInstance().signupFacebook(getContext(), "message", new NetworkManager.OnResultListener<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        AccessToken token = AccessToken.getCurrentAccessToken();
-//                        PropertyManager.getInstance().setFacebookId(token.getUserId());
-                        startActivity(new Intent(getContext(), MainActivity.class));
-                        getActivity().finish();
-                    }
-
-                    @Override
-                    public void onFail(int code) {
-
-                    }
-                });
-                //선수 아이디 발급 받음
-//                searchMyPage(1);
-//                searchMyPageTrans(1);
-
-                requestSignUp(null);
+//                NetworkManager.getInstance().signupFacebook(getContext(), "message", new NetworkManager.OnResultListener<String>() {
+//                    @Override
+//                    public void onSuccess(String result) {
+//                        AccessToken token = AccessToken.getCurrentAccessToken();
+////                        PropertyManager.getInstance().setFacebookId(token.getUserId());
+//                        startActivity(new Intent(getContext(), MainActivity.class));
+//                        getActivity().finish();
+//                    }
+//
+//                    @Override
+//                    public void onFail(int code) {
+//
+//                    }
+//                });
 
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();
+                //로그인 activity 제거 하기
 
 
 
@@ -559,7 +554,7 @@ public class SignupFragment extends Fragment {
 
             @Override
             public void onFail(int code) {
-                Toast.makeText(getContext(), "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -680,67 +675,6 @@ public class SignupFragment extends Fragment {
                         }).show();
 
     }
-
-//    protected void showSignup() {
-//
-//        final ExtraUserPropertyLayout extraUserPropertyLayout = (ExtraUserPropertyLayout) findViewById(R.id.extra_user_property);
-//        Button signupButton = (Button) findViewById(R.id.buttonSignup);
-//        signupButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View view) {
-//                requestSignUp(extraUserPropertyLayout.getProperties());
-//            }
-//        });
-//    }
-
-//    private void requestSignUp(final Map<String, String> properties) {
-//        UserManagement.requestSignup(new ApiResponseCallback<Long>() {
-//            @Override
-//            public void onNotSignedUp() {
-//            }
-//
-//            @Override
-//            public void onSuccess(Long result) {
-//                requestMe();
-//            }
-//
-//            @Override
-//            public void onFailure(ErrorResult errorResult) {
-//                final String message = "UsermgmtResponseCallback : failure : " + errorResult;
-//                com.kakao.util.helper.log.Logger.w(message);
-//                KakaoToast.makeToast(self, message, Toast.LENGTH_LONG).show();
-//                getActivity().finish();
-//            }
-//
-//            @Override
-//            public void onSessionClosed(ErrorResult errorResult) {
-//            }
-//        }, properties);
-//    }
-    private void requestSignUp(final Map<String, String> properties) {
-        UserManagement.requestSignup(new ApiResponseCallback<Long>() {
-            @Override
-            public void onNotSignedUp() {
-            }
-
-            @Override
-            public void onSuccess(Long result) {
-                ((TutorialActivity)getActivity()).requestMe();
-            }
-
-            @Override
-            public void onFailure(ErrorResult errorResult) {
-                final String message = "UsermgmtResponseCallback : failure : " + errorResult;
-                com.kakao.util.helper.log.Logger.w(message);
-                KakaoToast.makeToast(self, message, Toast.LENGTH_LONG).show();
-                getActivity().finish();
-            }
-
-            @Override
-            public void onSessionClosed(ErrorResult errorResult) {
-            }
-        }, properties);
-    }
-
 
 
 }

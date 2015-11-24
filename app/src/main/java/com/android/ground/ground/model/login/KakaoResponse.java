@@ -6,6 +6,6 @@ package com.android.ground.ground.model.login;
 public class KakaoResponse {
     public int code;
     public String msg;
-    public int result;
+    public boolean result;
     public KakaoResponseUser user;
 }

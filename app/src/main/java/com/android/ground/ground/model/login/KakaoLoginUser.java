@@ -12,5 +12,5 @@ public class KakaoLoginUser {
     public int signUpYN;
     public int managerYN;
     public int deleteYN;
-
+    public String memName;
 }

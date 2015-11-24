@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,14 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Profile;
+import com.android.ground.ground.model.message.MyMessageData;
+import com.android.ground.ground.model.message.MyMessageDataResult;
+import com.android.ground.ground.model.person.main.searchMem.SearchMem;
+import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
 import com.android.ground.ground.model.person.message.MyMessageItem;
 import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
@@ -94,11 +103,13 @@ public class MyMessageFragment extends Fragment {
         listView = (ListView)view.findViewById(R.id.listView_my_message);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        initData();
 
-        mAdapter = new MyMessageAdapter(getContext(), items);
+//        mAdapter = new MyMessageAdapter(getContext(), items);
+        mAdapter = new MyMessageAdapter();
+        searchMyMessage();
+
         listView.setAdapter(mAdapter);
-        listView.setOnItemClickListener(mItemClickListener);
+//        listView.setOnItemClickListener(mItemClickListener);
        //편집
         btn  = (Button)view.findViewById(R.id.button11);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -163,12 +174,7 @@ public class MyMessageFragment extends Fragment {
 
     }
 
-    public void initData(){
-        for(int i=0; i< 20; i++){
-            MyMessageItem item = new MyMessageItem();
-            items.add(item);
-        }
-    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -208,17 +214,17 @@ public class MyMessageFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-    private AdapterView.OnItemClickListener mItemClickListener = new
-            AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1,
-                                        int position, long arg3) {
-                    mAdapter.setChecked(position);
-                    // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
-                    mAdapter.notifyDataSetChanged();
-
-                }
-    };
+//    private AdapterView.OnItemClickListener mItemClickListener = new
+//            AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> arg0, View arg1,
+//                                        int position, long arg3) {
+//                    mAdapter.setChecked(position);
+//                    // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+//                    mAdapter.notifyDataSetChanged();
+//
+//                }
+//    };
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -227,4 +233,26 @@ public class MyMessageFragment extends Fragment {
             getActivity().setTitle("메시지함");
         }
     }
+    private void searchMyMessage() {
+
+        NetworkManager.getInstance().getNetworkMessage(getContext(), 1, 1, new NetworkManager.OnResultListener<MyMessageData>() {
+            @Override
+            public void onSuccess(MyMessageData result) {
+                mAdapter.setTotalCount(result.itemCount);
+                mAdapter.setPgae(1);
+                mAdapter.clear();
+                for (MyMessageDataResult item : result.items) {
+
+                    mAdapter.add(item);
+                }
+//                mAdapter = new MyMessageAdapter(getContext(), result.items);
+//                refreshView.onRefreshComplete();
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
+    }
+
 }

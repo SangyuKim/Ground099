@@ -1,52 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
-                android:background="@color/color8"
+                android:background="@drawable/xxdpi_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
 
     <ImageView
-        android:layout_width="265dp"
+        android:layout_width="fill_parent"
         android:layout_height="95.75dp"
         android:id="@+id/imageView_logo"
         android:src="@drawable/xxdpi_logo"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="68.25dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="79dp"
         android:padding="0dp"
         android:paddingLeft="0dp"
         android:paddingTop="0dp"
         android:paddingRight="0dp"
-        android:paddingBottom="0dp" />
+        android:paddingBottom="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="60dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button10"
+        android:src="@drawable/facebook"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/facebook" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp" />
 
     <com.kakao.usermgmt.LoginButton
         android:id="@+id/com_kakao_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/button10"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="main"
-        android:id="@+id/button4"
-        android:layout_above="@+id/button3"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal" />
-
-</LinearLayout>
+</RelativeLayout>
 

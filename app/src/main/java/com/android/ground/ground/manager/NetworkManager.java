@@ -19,8 +19,10 @@ import com.android.ground.ground.model.lineup.result.LineupResult;
 import com.android.ground.ground.model.lineup.scorer.LineupScorer;
 import com.android.ground.ground.model.lineup.virtual.fomation.LineupVirtualFomation;
 import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualRes;
+import com.android.ground.ground.model.login.FacebookLogin;
 import com.android.ground.ground.model.login.KakaoLogin;
 import com.android.ground.ground.model.login.KakaoResponse;
+import com.android.ground.ground.model.message.MyMessageData;
 import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfo;
@@ -663,24 +665,28 @@ public class NetworkManager {
         final RequestParams params = new RequestParams();
         try {
             params.put("file", mUserProfile.mFile);
-        } catch (FileNotFoundException e) {
+          } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        params.put("gender",mUserProfile.gender);
-        params.put("age",mUserProfile.age);
-        params.put("memLocationName",mUserProfile.memLocationName);
-        params.put("memMainDay_Mon",mUserProfile.memMainDay_Mon);
-        params.put("memMainDay_Tue",mUserProfile.memMainDay_Tue);
+        params.put("gender", mUserProfile.gender);
+        params.put("age", mUserProfile.age);
+        params.put("memLocationName", mUserProfile.memLocationName);
+        params.put("memMainDay_Mon", mUserProfile.memMainDay_Mon);
+        params.put("memMainDay_Tue", mUserProfile.memMainDay_Tue);
         params.put("memMainDay_Wed",mUserProfile.memMainDay_Wed);
-        params.put("memMainDay_Thu",mUserProfile.memMainDay_Thu);
+        params.put("memMainDay_Thu", mUserProfile.memMainDay_Thu);
         params.put("memMainDay_Fri",mUserProfile.memMainDay_Fri);
-        params.put("memMainDay_Sat",mUserProfile.memMainDay_Sat);
+        params.put("memMainDay_Sat", mUserProfile.memMainDay_Sat);
         params.put("memMainDay_Sun",mUserProfile.memMainDay_Sun);
-        params.put("memIntro",mUserProfile.memIntro);
-        params.put("position",mUserProfile.position);
-        params.put("skill",mUserProfile.skill);
-        params.put("latitude",mUserProfile.latitude);
-        params.put("longitude",mUserProfile.longitude);
+        params.put("memIntro", mUserProfile.memIntro);
+        params.put("position", mUserProfile.position);
+//        Log.d("hello", "position : " + mUserProfile.position);
+        params.put("skill", mUserProfile.skill);
+//        Log.d("hello", "skill : " + mUserProfile.skill);
+        params.put("latitude", mUserProfile.latitude);
+//        Log.d("hello", "latitude : " + mUserProfile.latitude);
+        params.put("longitude", mUserProfile.longitude);
+//        Log.d("hello", "longitude : " + mUserProfile.longitude);
 
         client.post(context, SEND_SIGNUP_URL, params, new AsyncHttpResponseHandler() {
             @Override
@@ -709,7 +715,7 @@ public class NetworkManager {
                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                    ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                    String s = new String(responseBody, Charset.forName("UTF-8"));
-                   Log.d("hello", s);
+                   Log.d("hello", "kakao post : " + s);
                    KakaoLogin items = gson.fromJson(s, KakaoLogin.class);
                    if (items != null){
                        listener.onSuccess(items);
@@ -719,6 +725,8 @@ public class NetworkManager {
                @Override
                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                    Log.d("hello", "status code : " + statusCode);
+//                   String s = new String(responseBody, Charset.forName("UTF-8"));
+//                   Log.d("hello", "kakao post error : " + s);
                }
            });
 
@@ -734,9 +742,9 @@ public class NetworkManager {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
-                Log.d("hello", s);
+                Log.d("hello", "kakao get : " + s);
                 KakaoResponse items = gson.fromJson(s, KakaoResponse.class);
-                if (items != null){
+                if (items != null) {
                     listener.onSuccess(items);
                 }
             }
@@ -751,7 +759,7 @@ public class NetworkManager {
 
     //login facebook
     public static final String SEND_LOGIN_FACEBOOK_URL =GROND_SERVER_URL+"/member/login/facebook";
-    public void postNetworkLoginFacebook(final Context context, String token) {
+    public void postNetworkLoginFacebook(final Context context, String token, final OnResultListener<FacebookLogin> listener) {
 
         final RequestParams params = new RequestParams();
         params.put("access_token",token);
@@ -761,15 +769,22 @@ public class NetworkManager {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
+                FacebookLogin items = gson.fromJson(s, FacebookLogin.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.d("hello", "status : " +statusCode);
+                Log.d("hello", "status : " + statusCode);
             }
         });
 
     }
+
+
+
     //make fc club
     public static final String SEND_CLUB_CREATE_URL =GROND_SERVER_URL+"/club/make";
     public void postNetworkMakeClub(final Context context , ClubProfile mClubProfile) {
@@ -859,6 +874,33 @@ public class NetworkManager {
 
     }
 
+    //my message
+    public static final String SEND_MY_MESSAGE_URL =GROND_SERVER_URL+"/message/member";
+    public void getNetworkMessage(final Context context, int member_id, int page,  final OnResultListener<MyMessageData> listener ){
+
+        final RequestParams params = new RequestParams();
+        params.put("member_id",member_id);
+        params.put("page",page);
+
+        client.get(context, SEND_MY_MESSAGE_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                MyMessageData items = gson.fromJson(s, MyMessageData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("hello", "status code : " + statusCode);
+            }
+        });
+
+    }
 
 //===================================================
     public void cancelAll(Context context) {

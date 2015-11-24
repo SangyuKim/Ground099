@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,6 +33,7 @@ import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.manager.ServerUtilities;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.login.FacebookLogin;
 import com.android.ground.ground.model.login.KakaoLogin;
 import com.android.ground.ground.model.login.KakaoResponse;
 import com.android.ground.ground.model.person.profile.MyPage;
@@ -49,8 +51,10 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.kakao.usermgmt.callback.UnLinkResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
@@ -66,6 +70,8 @@ import com.kakao.auth.ISessionCallback;
  * @author MJ
  */
 public class SplashActivity extends AppCompatActivity {
+
+
 
     protected static Activity self;
 
@@ -159,11 +165,6 @@ public class SplashActivity extends AppCompatActivity {
 
 
 //        postLogin();
-        AccessToken token = AccessToken.getCurrentAccessToken();
-        if(token != null) {
-//            sendLoginFacebook(token.getToken().toString());
-            Log.d("hello", "facebook token  from SplashActivity: " + token.getToken().toString());
-        }
 
         Button btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -185,21 +186,12 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 //---------------------------------------KakaoTalk---------------------------------------------------
-        //카톡 토큰 얻기 -> 서버에서 확인 작업 -> 선수 아이디 얻기
-        String kakaoToken = Session.getCurrentSession().getAccessToken();
-        String refreshToken = Session.getCurrentSession().getRefreshToken();
 
-        Log.d("hello", "kakao : " + kakaoToken);
-        Log.d("hello", "kakao refresh : " + refreshToken);
 
-        sendLoginKakao(kakaoToken);
+        callback = new SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+        if (!Session.getCurrentSession().checkAndImplicitOpen()) {
 
-//        callback = new SessionCallback();
-//        Session.getCurrentSession().addCallback(callback);
-//        if (!Session.getCurrentSession().checkAndImplicitOpen()) {
-//            Log.d("hello", "in if");
-
-//            setContentView(R.layout.activity_splash);
 //---------------------------------------Facebook----------------------------------------------------
             final String id = PropertyManager.getInstance().getFaceBookId();
             if (!TextUtils.isEmpty(id)) {
@@ -210,14 +202,43 @@ public class SplashActivity extends AppCompatActivity {
                         AccessToken token = AccessToken.getCurrentAccessToken();
                         if (token != null) {
                             if (token.getUserId().equals(id)) {
-                                NetworkManager.getInstance().loginFacebookToken(SplashActivity.this, token.getToken(),"OK", new NetworkManager.OnResultListener<String>() {
+//                                NetworkManager.getInstance().loginFacebookToken(SplashActivity.this, token.getToken(),"OK", new NetworkManager.OnResultListener<String>() {
+//                                    @Override
+//                                    public void onSuccess(String result) {
+//                                        if (result.equals("OK")) {
+//                                            goMainActivity();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onFail(int code) {
+//
+//                                    }
+//                                });
+
+                                //todo
+                                NetworkManager.getInstance().postNetworkLoginFacebook(SplashActivity.this, token.getToken().toString()
+                                        , new NetworkManager.OnResultListener<FacebookLogin>() {
                                     @Override
-                                    public void onSuccess(String result) {
-                                        if (result.equals("OK")) {
-
-
-
-                                            goMainActivity();
+                                    public void onSuccess(FacebookLogin result) {
+                                        if(result.user.signUpYN ==0){
+                                            //signup 으로 이동
+                                            final Intent intent = new Intent(SplashActivity.this, TutorialActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                            startActivity(intent);
+//                                            PropertyManager.getInstance().setUserId(result.user.id);
+//                                            PropertyManager.getInstance().setUserName(result.user.memName);
+                                            finish();
+                                        }else{
+                                            //main으로 이동
+//                                            PropertyManager.getInstance().setUserId(result.user.id);
+//                                            PropertyManager.getInstance().setUserName(result.user.memName);
+                                            searchMyPage(result.user.member_id);
+                                            searchMyPageTrans(result.user.member_id);
+                                            final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                            startActivity(intent);
+                                            finish();
                                         }
                                     }
 
@@ -237,7 +258,37 @@ public class SplashActivity extends AppCompatActivity {
                 mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+                       AccessToken token = loginResult.getAccessToken();
+                        //todo
+                        NetworkManager.getInstance().postNetworkLoginFacebook(SplashActivity.this, token.getToken().toString(), new NetworkManager.OnResultListener<FacebookLogin>() {
+                            @Override
+                            public void onSuccess(FacebookLogin result) {
+                                if(result.user.signUpYN ==0){
+                                    //signup 으로 이동
+                                    final Intent intent = new Intent(SplashActivity.this, TutorialActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    startActivity(intent);
+//                                    PropertyManager.getInstance().setUserId(result.user.id);
+//                                    PropertyManager.getInstance().setUserName(result.user.memName);
+                                    finish();
+                                }else{
+                                    //main으로 이동
+//                                    PropertyManager.getInstance().setUserId(result.user.id);
+//                                    PropertyManager.getInstance().setUserName(result.user.memName);
+                                    searchMyPage(result.user.member_id);
+                                    searchMyPageTrans(result.user.member_id);
+                                    final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
 
+                            @Override
+                            public void onFail(int code) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -252,10 +303,10 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 });
                 mLoginManager.logInWithReadPermissions(this, null);
-            } else {
+            }
+            else {
 
                 //todo
-                //sharedPreference에 저장된 페북 값이 없음
 
 // =================================================== 실행하기
 
@@ -264,7 +315,7 @@ public class SplashActivity extends AppCompatActivity {
 //                    public void run() {
 //                        goLoginActivity();
 //                    }
-//                }, 1000);
+//                }, 2000);
             }
 
 
@@ -326,12 +377,42 @@ public class SplashActivity extends AppCompatActivity {
             };
             setUpIfNeeded();
 
-            //sharedPreference에 아이디값이 있을 경우 ->
-//cod 200번대이면 개인 프로필 가져오기
-//        searchMyPage(1108);
-//        searchMyPageTrans(1108);
+        }//카톡 세션 확인
 
-//        }//카톡 세션 확인
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        if(token != null) {
+//            sendLoginFacebook(token.getToken().toString());
+            Log.d("hello", "facebook token  from SplashActivity: " + token.getToken().toString());
+            NetworkManager.getInstance().postNetworkLoginFacebook(SplashActivity.this, token.getToken().toString(), new NetworkManager.OnResultListener<FacebookLogin>() {
+                @Override
+                public void onSuccess(FacebookLogin result) {
+                    if (result.user.signUpYN == 0) {
+                        //signup 으로 이동
+                        final Intent intent = new Intent(SplashActivity.this, TutorialActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+//                        PropertyManager.getInstance().setUserId(result.user.id);
+//                                    PropertyManager.getInstance().setUserName(result.user.memName);
+                        finish();
+                    } else {
+                        //main으로 이동
+//                        PropertyManager.getInstance().setUserId(result.user.id);
+//                                    PropertyManager.getInstance().setUserName(result.user.memName);
+                        searchMyPage(result.user.member_id);
+                        searchMyPageTrans(result.user.member_id);
+                        final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFail(int code) {
+
+                }
+            });
+        }
 
 
 
@@ -598,7 +679,14 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void onSessionOpened() {
-//            redirectSignupFragment();
+            //todo
+            //카톡 토큰 얻기 -> 서버에서 확인 작업 -> 선수 아이디 얻기
+
+            String kakaoToken = Session.getCurrentSession().getAccessToken();
+            Log.d("hello", "kakao from Splash: " + kakaoToken);
+            if(kakaoToken != null)
+                sendLoginKakao(kakaoToken);
+
         }
 
         @Override
@@ -652,8 +740,22 @@ public class SplashActivity extends AppCompatActivity {
                     }else{
                         if(result.user.signUpYN ==0){
                             //signup 으로 이동
+                            final Intent intent = new Intent(SplashActivity.this, TutorialActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            PropertyManager.getInstance().setUserId(result.user.id);
+                            PropertyManager.getInstance().setUserName(result.user.memName);
+                            finish();
                         }else{
                             //main으로 이동
+                            PropertyManager.getInstance().setUserId(result.user.id);
+                            PropertyManager.getInstance().setUserName(result.user.memName);
+                            searchMyPage(result.user.member_id);
+                            searchMyPageTrans(result.user.member_id);
+                            final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            finish();
                         }
                     }
 

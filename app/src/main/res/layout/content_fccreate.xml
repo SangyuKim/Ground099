@@ -318,7 +318,7 @@
                         android:textSize="16sp"
                         android:layout_marginRight="10dp" />
 
-                    <Switch
+                    <android.support.v7.widget.SwitchCompat
                         android:id="@+id/fieldYN"
                         android:layout_width="51.25dp"
                         android:layout_height="21.5dp"
@@ -364,7 +364,7 @@
                         android:textSize="16sp"
                         android:layout_marginRight="10dp" />
 
-                    <Switch
+                    <android.support.v7.widget.SwitchCompat
                         android:id="@+id/memYN"
                         android:layout_width="51.25dp"
                         android:layout_height="21.5dp"
@@ -372,6 +372,8 @@
                         android:layout_alignTop="@+id/textView59"
                         android:layout_toLeftOf="@+id/clubField"
                         android:layout_toStartOf="@+id/clubField" />
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -393,7 +395,7 @@
                         android:textSize="16sp"
                         android:layout_marginRight="10dp" />
 
-                    <Switch
+                    <android.support.v7.widget.SwitchCompat
                         android:id="@+id/matchYN"
                         android:layout_width="51.25dp"
                         android:layout_height="21.5dp"
@@ -402,14 +404,6 @@
                 </LinearLayout>
 
             </RelativeLayout>
-
-            <android.support.v7.widget.SwitchCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/view9"
-                android:layout_below="@+id/button17"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
 
             <FrameLayout
                 android:layout_width="122.5dp"

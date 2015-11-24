@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
@@ -33,10 +34,10 @@ import java.util.List;
 public class MyProfileActivity extends AppCompatActivity implements Profile {
 
     TextView memNameGender, memIntro, winLoseDraw, score, mvp, skill, clubName
-    ,age, memLocationName;
+    ,age, memLocationName, oldClubName1,oldClubName2,oldClubName3;
     ImageView memImage, oldClubImage1, oldClubImage2, oldClubImage3, clubImage
-            , position, managerYN;
-    Button btnFc, btnMsgCollection, btnProfileManagement;
+            , position, managerYN, btnFc;
+    Button btnMsgCollection, btnProfileManagement;
     CheckBox memMainDay_Mon,memMainDay_Tue,memMainDay_Wed,memMainDay_Thu,memMainDay_Fri
             ,memMainDay_Sat,memMainDay_Sun;
 
@@ -47,6 +48,8 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
     CustomToolbar customToolbar;
     Menu menu;
 
+
+    LinearLayout oldLayout1, oldLayout2, oldLayout3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,17 +96,27 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         memMainDay_Sat=(CheckBox)findViewById(R.id.memMainDay_Sat);
         memMainDay_Sun= (CheckBox)findViewById(R.id.memMainDay_Sun);
 
+        oldLayout1 = (LinearLayout)findViewById(R.id.oldLayout1);
+        oldLayout2 = (LinearLayout)findViewById(R.id.oldLayout2);
+        oldLayout3= (LinearLayout)findViewById(R.id.oldLayout3);
 
 
+        oldClubName1 = (TextView)findViewById(R.id.oldClubName1);
+        oldClubName2 = (TextView)findViewById(R.id.oldClubName2);
+        oldClubName3 = (TextView)findViewById(R.id.oldClubName3);
 
-        btnFc =  (Button)findViewById(R.id.custom_search_bar_button_cancel);
+
+        btnFc =  (ImageView)findViewById(R.id.btnFc);
         btnFc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyProfileActivity.this, FCActivity.class);
+                if(myPageResult.club_id != 0)
+                    intent.putExtra("clubId",myPageResult.club_id);
                 startActivity(intent);
             }
         });
+
         btnMsgCollection =  (Button)findViewById(R.id.button8);
         btnMsgCollection.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,19 +190,22 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         if(mList.size()>=1){
             if(mList.get(0)!= null){
                 ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(0).clubImage), oldClubImage1, options);
-                oldClubImage1.setVisibility(View.VISIBLE);
+                oldClubName1.setText(mList.get(0).clubName);
+                oldLayout1.setVisibility(View.VISIBLE);
             }
         }
         if(mList.size()>=2){
             if(mList.get(1)!= null){
                 ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(1).clubImage), oldClubImage2, options);
-                oldClubImage2.setVisibility(View.VISIBLE);
+                oldClubName2.setText(mList.get(1).clubName);
+                oldLayout2.setVisibility(View.VISIBLE);
             }
         }
         if(mList.size()>=3){
             if(mList.get(2)!= null){
                 ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mList.get(2).clubImage), oldClubImage3, options);
-                oldClubImage3.setVisibility(View.VISIBLE);
+                oldClubName3.setText(mList.get(2).clubName);
+                oldLayout3.setVisibility(View.VISIBLE);
             }
         }
 
@@ -208,10 +224,10 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         myPageResult = mResult;
         memNameGender.setText(mResult.memName + " (" +mResult.age +")");
         memIntro.setText(mResult.memIntro);
-        winLoseDraw.setText(mResult.win+"승 / " +mResult.lose+"패 / "+mResult.draw+"무");
-        score.setText(mResult.score +"골");
-        mvp.setText(mResult.mvp +"회");
-        skill.setText(Double.toString(mResult.skill));
+        winLoseDraw.setText("승 패 : " + mResult.win+"승 " +mResult.lose+"패 "+mResult.draw+"무");
+        score.setText("득 점 : " + mResult.score +"골");
+        mvp.setText("MVP : " + mResult.mvp +"회");
+        skill.setText("실 력 : " + Double.toString(mResult.skill));
         clubName.setText(mResult.clubName);
         age.setText(Integer.toString(mResult.age));
         memLocationName.setText(mResult.memLocationName);
@@ -226,9 +242,9 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
             position.setVisibility(View.VISIBLE);
         }
         if(mResult.managerYN==0){
-            managerYN.setVisibility(View.INVISIBLE);
+            managerYN.setImageResource(R.drawable.icon201);
         }else {
-            managerYN.setVisibility(View.VISIBLE);
+            managerYN.setImageResource(R.drawable.captain);
         }
 
         if(mResult.memMainDay_Mon ==0){

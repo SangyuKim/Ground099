@@ -81,17 +81,20 @@ public class MySpinnerAdapter extends BaseAdapter {
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_simple_spinner_layout, null);
             tv = (TextView)view.findViewById(R.id.textView23);
-            view.setLayoutParams(new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
-                    , (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
-                    MyApplication.getContext().getResources().getDisplayMetrics())));
+//            view.setLayoutParams(new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+//                    , (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
+//                    MyApplication.getContext().getResources().getDisplayMetrics())));
             imageView =(ImageView)view.findViewById(R.id.imageView4);
         }
         imageView.setVisibility(View.INVISIBLE);
         tv.setText(items.get(position));
         tv.setGravity(Gravity.CENTER);
-        view.setLayoutParams((new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
-                , (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
-                MyApplication.getContext().getResources().getDisplayMetrics()))));
+        //todo
+//        view.setLayoutParams((new Spinner.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT
+//                , (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
+//                MyApplication.getContext().getResources().getDisplayMetrics()))));
+
+        view.setLayoutParams(lp);
 //        view.setBackgroundColor(MyApplication.getContext().getResources().getColor(R.color.spinner, MyApplication.getContext().getTheme().get R.style.Theme_App_Spinner));
 
         return view;

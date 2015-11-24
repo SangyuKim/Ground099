@@ -33,6 +33,12 @@ import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.login.FacebookLogin;
+import com.android.ground.ground.model.login.KakaoLogin;
+import com.android.ground.ground.model.login.KakaoResponse;
+import com.android.ground.ground.model.person.profile.MyPage;
+import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.widget.WaitingDialog;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -110,7 +116,40 @@ public class SampleLoginActivity extends AppCompatActivity {
                         mLoginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
                             @Override
                             public void onSuccess(LoginResult loginResult) {
+                                AccessToken token = loginResult.getAccessToken();
+                                //todo
+                                NetworkManager.getInstance().postNetworkLoginFacebook(SampleLoginActivity.this, token.getToken().toString(), new NetworkManager.OnResultListener<FacebookLogin>() {
+                                    @Override
+                                    public void onSuccess(FacebookLogin result) {
+                                        if(result.user.signUpYN ==0){
+                                            //signup 으로 이동
+                                            final Intent intent = new Intent(SampleLoginActivity.this, TutorialActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                            startActivity(intent);
+//                                            PropertyManager.getInstance().setUserId(result.user.id);
+//                                            PropertyManager.getInstance().setUserName(result.user.memName);
+                                            finish();
+                                        }else{
+                                            //main으로 이동
+//                                            PropertyManager.getInstance().setUserId(result.user.id);
+//                                            PropertyManager.getInstance().setUserName(result.user.memName);
+                                            searchMyPage(result.user.member_id);
+                                            searchMyPageTrans(result.user.member_id);
+                                            final Intent intent = new Intent(SampleLoginActivity.this, MainActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFail(int code) {
+
+                                    }
+                                });
+                                //가입이 안되었을 경우
                                 redirectSignupActivity();
+                                //가입이 되었을 경우 -> Main Activity
                             }//success
 
                             @Override
@@ -157,7 +196,12 @@ public class SampleLoginActivity extends AppCompatActivity {
 
         @Override
         public void onSessionOpened() {
-            redirectSignupActivity();
+            String kakaoToken = Session.getCurrentSession().getAccessToken();
+            Log.d("hello", "kakao from login: " + kakaoToken);
+            if(kakaoToken != null)
+                sendLoginKakao(kakaoToken);
+
+//            redirectSignupActivity();
         }
 
         @Override
@@ -289,5 +333,84 @@ public class SampleLoginActivity extends AppCompatActivity {
         });
         request.executeAsync();
     }
+
+
+
+    private void sendLoginKakao(String token) {
+        NetworkManager.getInstance().postNetworkLoginKakao(SampleLoginActivity.this, token, new NetworkManager.OnResultListener<KakaoLogin>() {
+            @Override
+            public void onSuccess(KakaoLogin result) {
+                if (result.code == 200) {
+                    if (result.user == null) {
+                        NetworkManager.getInstance().getNetworkLoginKakao(SampleLoginActivity.this, "", new NetworkManager.OnResultListener<KakaoResponse>() {
+                            @Override
+                            public void onSuccess(KakaoResponse result) {
+                           }
+
+                            @Override
+                            public void onFail(int code) {
+
+                            }
+                        });
+                    } else {
+                        if (result.user.signUpYN == 0) {
+                            //signup 으로 이동
+                            PropertyManager.getInstance().setUserName(result.user.memName);
+                            PropertyManager.getInstance().setUserId(result.user.id);
+                            final Intent intent = new Intent(SampleLoginActivity.this, TutorialActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            intent.putExtra("KakaoLogin", result);
+                            finish();
+                        } else {
+                            //main으로 이동
+                            PropertyManager.getInstance().setUserName(result.user.memName);
+                            PropertyManager.getInstance().setUserId(result.user.id);
+                            searchMyPage(result.user.member_id);
+                            searchMyPageTrans(result.user.member_id);
+                            final Intent intent = new Intent(SampleLoginActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
+    }
+    private void searchMyPage(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPage(SampleLoginActivity.this, memberId, new NetworkManager.OnResultListener<MyPage>() {
+            @Override
+            public void onSuccess(MyPage result) {
+                for (MyPageResult item : result.items) {
+                    PropertyManager.getInstance().setMyPageResult(item);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
+    }
+    private void searchMyPageTrans(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPageTrans(SampleLoginActivity.this, memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
+            @Override
+            public void onSuccess(MyPageTrans result) {
+                PropertyManager.getInstance().setMyPageTransResult(result.items);
+            }
+
+            @Override
+            public void onFail(int code) {
+             }
+        });
+    }
+
+
 
 }

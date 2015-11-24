@@ -20,8 +20,8 @@
             android:text="전체"
             android:id="@+id/button13"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_toRightOf="@+id/radioButton3"
+            android:layout_toEndOf="@+id/radioButton3" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -62,6 +62,12 @@
             android:layout_above="@+id/listView_management_member"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton3"
+            android:checked="false" />
     </RelativeLayout>
 
     <ListView

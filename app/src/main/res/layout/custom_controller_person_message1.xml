@@ -1,29 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_width="match_parent" android:layout_height="match_parent"
     android:clickable="false"
     android:focusable="false">
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox_message"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:checked="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="10/15"
-        android:id="@+id/textView42"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/checkBox_message"
-        android:layout_toEndOf="@+id/checkBox_message" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -32,73 +11,134 @@
         android:text="프로필"
         android:id="@+id/button29"
         android:focusable="false"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/linearLayout90"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewMessage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp" />
+        android:id="@+id/linearLayout90">
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/imageView10"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView42"
-        android:layout_toEndOf="@+id/textView42"
-        android:src="@mipmap/ic_launcher" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox_message"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:checked="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="김상철[FC신림]"
-        android:id="@+id/textView43"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView10"
-        android:layout_toEndOf="@+id/imageView10" />
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageViewMessage"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/messageDate"
+            android:layout_toEndOf="@+id/messageDate"
+            android:src="@mipmap/ic_launcher" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="N"
-        android:id="@+id/button30"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:focusable="false" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageViewMessage"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/imageViewMessage"
+            android:layout_toEndOf="@+id/imageViewMessage">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Y"
-        android:id="@+id/button31"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/button30"
-        android:layout_toStartOf="@+id/button30"
-        android:focusable="false" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout88"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout89">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="답장"
-        android:id="@+id/button32"
-        android:layout_below="@+id/button30"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:focusable="false" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="김상철[FC신림]"
+                    android:id="@+id/textViewName"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/imageViewMessage"
+                    android:layout_toEndOf="@+id/imageViewMessage" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="혹시 일요일 가능하신가요? 가능하시면 저희 팀에서 같이 뛰시는 건 어떠세요~?"
-        android:id="@+id/textView44"
-        android:layout_toLeftOf="@+id/button31"
-        android:layout_toRightOf="@+id/button29"
-        android:layout_toEndOf="@+id/button29"
-        android:layout_toStartOf="@+id/button31"
-        android:layout_alignTop="@+id/button29" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="10/15"
+                    android:id="@+id/messageDate"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignRight="@+id/msContents"
+                    android:layout_alignEnd="@+id/msContents" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="혹시 일요일 가능하신가요? 가능하시면 저희 팀에서 같이 뛰시는 건 어떠세요~?"
+                android:id="@+id/msContents"
+                android:layout_toLeftOf="@+id/button31"
+                android:layout_toRightOf="@+id/button29"
+                android:layout_toEndOf="@+id/button29"
+                android:layout_toStartOf="@+id/button31"
+                android:layout_alignTop="@+id/button29" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button29"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout88">
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Y"
+                    android:id="@+id/button31"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/button30"
+                    android:layout_toStartOf="@+id/button30"
+                    android:focusable="false" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="N"
+                    android:id="@+id/button30"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:focusable="false" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="답장"
+                    android:id="@+id/button32"
+                    android:layout_below="@+id/button30"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:focusable="false" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

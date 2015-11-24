@@ -42,7 +42,12 @@ import com.android.ground.ground.custom.CustomDrawerLayout;
 import com.android.ground.ground.custom.CustomNavigationView;
 import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.ActivityManager;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.person.profile.MyPage;
+import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.view.OnAlarmClickListener;
 import com.android.ground.ground.view.person.main.NavigationHeaderView;
 import com.facebook.appevents.AppEventsLogger;
@@ -78,6 +83,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//                int id = PropertyManager.getInstance().getUserId();
+//                if(id ==-1 ){
+//                }else{
+//                    searchMyPage(id);
+//                    searchMyPageTrans(id);
+//                }
         loadTypeface();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -417,5 +429,31 @@ public class MainActivity extends AppCompatActivity
 
 
         return true;
+    }
+    private void searchMyPage(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPage(MainActivity.this, memberId, new NetworkManager.OnResultListener<MyPage>() {
+            @Override
+            public void onSuccess(MyPage result) {
+                for (MyPageResult item : result.items) {
+                    PropertyManager.getInstance().setMyPageResult(item);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
+    }
+    private void searchMyPageTrans(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPageTrans(MainActivity.this, memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
+            @Override
+            public void onSuccess(MyPageTrans result) {
+                PropertyManager.getInstance().setMyPageTransResult(result.items);
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
     }
 }

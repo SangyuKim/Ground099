@@ -24,6 +24,7 @@ import com.android.ground.ground.custom.CustomYearPicker;
 import com.android.ground.ground.custom.TimeLabeler;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.log.Logger;
+import com.android.ground.ground.model.login.KakaoLogin;
 import com.android.ground.ground.model.usermgmt.ExtraUserPropertyLayout;
 import com.android.ground.ground.model.widget.KakaoToast;
 import com.android.ground.ground.model.widget.WaitingDialog;
@@ -36,6 +37,7 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.callback.UnLinkResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -56,7 +58,8 @@ public class TutorialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSavedInstanceState = savedInstanceState;
-        requestMe();
+//        requestMe();
+        showSignup();
     }
 
     @Override
@@ -89,44 +92,44 @@ public class TutorialActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    /**
-     * 사용자의 상태를 알아 보기 위해 me API 호출을 한다.
-     */
-    public void requestMe() {
-        UserManagement.requestMe(new MeResponseCallback() {
-            @Override
-            public void onFailure(ErrorResult errorResult) {
-                String message = "failed to get user info. msg=" + errorResult;
-                Logger.d(message);
-                ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
-                if (result == ErrorCode.CLIENT_ERROR_CODE) {
-                    KakaoToast.makeToast(getApplicationContext(), getString(R.string.error_message_for_service_unavailable), Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    redirectLoginActivity();
-                }
-            }
-
-            @Override
-            public void onSessionClosed(ErrorResult errorResult) {
-                redirectLoginActivity();
-            }
-
-            @Override
-            public void onSuccess(UserProfile userProfile) {
-                //user 정보 저장 -> shared preference
-                Long userId = userProfile.getId();
-                //유저 정보 획득
-                Logger.d("UserProfile : " + userProfile);
-                redirectMainActivity();
-            }
-
-            @Override
-            public void onNotSignedUp() {
-                showSignup();
-            }
-        });
-    }
+//    /**
+//     * 사용자의 상태를 알아 보기 위해 me API 호출을 한다.
+//     */
+//    public void requestMe() {
+//        UserManagement.requestMe(new MeResponseCallback() {
+//            @Override
+//            public void onFailure(ErrorResult errorResult) {
+//                String message = "failed to get user info. msg=" + errorResult;
+//                Logger.d(message);
+//                ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
+//                if (result == ErrorCode.CLIENT_ERROR_CODE) {
+//                    KakaoToast.makeToast(getApplicationContext(), getString(R.string.error_message_for_service_unavailable), Toast.LENGTH_SHORT).show();
+//                    finish();
+//                } else {
+//                    redirectLoginActivity();
+//                }
+//            }
+//
+//            @Override
+//            public void onSessionClosed(ErrorResult errorResult) {
+//                redirectLoginActivity();
+//            }
+//
+//            @Override
+//            public void onSuccess(UserProfile userProfile) {
+//                //user 정보 저장 -> shared preference
+//                Long userId = userProfile.getId();
+//                //유저 정보 획득
+//                Logger.d("UserProfile : " + userProfile);
+//                redirectMainActivity();
+//            }
+//
+//            @Override
+//            public void onNotSignedUp() {
+//
+//            }
+//        });
+//    }
     private void redirectMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
@@ -205,10 +208,11 @@ public class TutorialActivity extends AppCompatActivity {
                         }).show();
 
     }
-
+    Serializable mKakaoLogin;
     protected void showSignup() {
 
         setContentView(R.layout.activity_login);
+        mKakaoLogin = getIntent().getSerializableExtra("KakaoLogin");
 
         if (mSavedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -217,7 +221,42 @@ public class TutorialActivity extends AppCompatActivity {
 //        final ExtraUserPropertyLayout extraUserPropertyLayout = (ExtraUserPropertyLayout) findViewById(R.id.extra_user_property);
 
     }
+    /**
+     * 사용자의 상태를 알아 보기 위해 me API 호출을 한다.
+     */
+    protected void requestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                String message = "failed to get user info. msg=" + errorResult;
+                Logger.d(message);
 
+                ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
+                if (result == ErrorCode.CLIENT_ERROR_CODE) {
+                    KakaoToast.makeToast(getApplicationContext(), getString(R.string.error_message_for_service_unavailable), Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    redirectLoginActivity();
+                }
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                redirectLoginActivity();
+            }
+
+            @Override
+            public void onSuccess(UserProfile userProfile) {
+                Logger.d("UserProfile : " + userProfile);
+                redirectMainActivity();
+            }
+
+            @Override
+            public void onNotSignedUp() {
+                showSignup();
+            }
+        });
+    }
 
 
 }

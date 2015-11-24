@@ -82,5 +82,31 @@ public class PropertyManager {
 	}
 
 
-	
+	private static final String USER_ID = "userId";
+
+	public void setUserId(int userId) {
+		mEditor.putInt(USER_ID, userId);
+		mEditor.commit();
+	}
+
+	public int getUserId() {
+		return mPrefs.getInt(USER_ID, -1);
+	}
+	private static final String USER_NAME = "userName";
+
+	public void setUserName(String userName) {
+		mEditor.putString(USER_NAME, userName);
+		mEditor.commit();
+	}
+
+	public String getUserName() {
+		return mPrefs.getString(USER_NAME, "");
+	}
+
+
+
+
+
+
+
 }

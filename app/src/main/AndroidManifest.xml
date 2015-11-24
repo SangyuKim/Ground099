@@ -103,10 +103,6 @@
             android:label="@string/title_activity_area_search"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".controller.person.finalposition.Main22Activity" >
-        </activity>
-        <activity android:name=".controller.person.finalposition.Main24Activity" >
-        </activity>
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"

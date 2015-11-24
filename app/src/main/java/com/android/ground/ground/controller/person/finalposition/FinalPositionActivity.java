@@ -12,11 +12,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.custom.CustomToolbar;
@@ -25,6 +29,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class FinalPositionActivity extends AppCompatActivity{
 
@@ -32,6 +37,10 @@ public class FinalPositionActivity extends AppCompatActivity{
     View captureView;
     CustomToolbar customToolbar;
     Menu menu;
+
+    GridLayout gridLayout;
+    ArrayList<LinearLayout> mLinearLayouts = new ArrayList<LinearLayout>();
+    int w, h, countInField =0;
 
         @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,22 +64,9 @@ public class FinalPositionActivity extends AppCompatActivity{
             }
         captureView = findViewById(R.id.captureView);
 
-        Button btn = (Button)findViewById(R.id.button28);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FinalPositionActivity.this, Main22Activity.class);
-                startActivity(intent);
-            }
-        });
-        btn = (Button)findViewById(R.id.button40);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FinalPositionActivity.this, Main24Activity.class);
-                startActivity(intent);
-            }
-        });
+            gridLayout = (GridLayout)findViewById(R.id.gridLayout_field);
+
+
 
     }
     @Override
@@ -148,6 +144,46 @@ public class FinalPositionActivity extends AppCompatActivity{
     public void setTitle(CharSequence title) {
 //        super.setTitle(title);
         customToolbar.setTitle(title.toString());
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        w= gridLayout.getWidth()/7;
+        h= gridLayout.getHeight()/14;
+
+        Log.d("hello", "w : " + w + "  //  h : " + h);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w,h);
+        mLinearLayouts.clear();
+        gridLayout.removeAllViews();
+        for(int i=0; i< 98; i++){
+            LinearLayout mLinearLayout = new LinearLayout(FinalPositionActivity.this);
+            mLinearLayout.setLayoutParams(lp);
+            mLinearLayouts.add(mLinearLayout);
+            ViewGroup parent = (ViewGroup)mLinearLayouts.get(i).getParent();
+            if(parent != null)
+                parent.removeAllViews();
+            gridLayout.addView(mLinearLayouts.get(i));
+        }//for
+
+
+    }//windowfocus
+
+    @Override
+    protected void onPause() {
+        for(int i=0; i< mLinearLayouts.size(); i++){
+            mLinearLayouts.get(i).removeAllViews();
+            ViewGroup parent = (ViewGroup)mLinearLayouts.get(i).getParent();
+            if(parent != null)
+                parent.removeAllViews();
+        }
+        gridLayout.removeAllViews();
+        ViewGroup parent = (ViewGroup)gridLayout.getParent();
+        if(parent != null){
+            parent.removeAllViews();
+        }
+        super.onPause();
     }
 
 

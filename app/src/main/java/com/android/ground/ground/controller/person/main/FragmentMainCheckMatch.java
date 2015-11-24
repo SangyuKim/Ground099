@@ -218,7 +218,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 if (((SearchMatchItemView) v).getVisibilityLayout() == View.GONE) {
                     CheckMatchListGroupItem mGroupItem = (CheckMatchListGroupItem)mAdapter.getGroup(groupPosition);
-                    if(!mGroupItem.text.equals("futureMat")){
+                    if(!mGroupItem.text.equals("예정된 매치")){
                         ((SearchMatchItemView) v).setVisible();
                     }
                 } else {
@@ -571,7 +571,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
                                 @Override
                                 public void onFail(int code) {
-                                    Toast.makeText(getContext(), "Search Match error code :  " + code, Toast.LENGTH_SHORT).show();
+
                                 }
                             });
                         }
