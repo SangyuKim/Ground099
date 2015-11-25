@@ -53,7 +53,7 @@ public class FCManagementActivity extends AppCompatActivity {
 
         mAdapter = new FCManagemnetTabsAdapter(FCManagementActivity.this, getSupportFragmentManager(), tabHost, pager);
 
-        mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("클럽 메신저"), FragmentClubMessage.class, null);
+        mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("클럽 메신저"), FragmentClubMessageEdit.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("멤버 관리"), FragmentManagementMember.class, null);
         mAdapter.addTab(tabHost.newTabSpec("tab3").setIndicator("기본설정"), FragmentFCProfile.class, null);
 

@@ -2,6 +2,7 @@ package com.android.ground.ground.controller.person.finalposition;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,9 +22,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.custom.CustomToolbar;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.model.lineup.match.LineupMatch;
+import com.android.ground.ground.model.lineup.match.LineupMatchResult;
+import com.android.ground.ground.model.person.main.matchinfo.MatchInfoResult;
+import com.android.ground.ground.model.person.main.matchinfo.matchFormation.MatchFormation;
+import com.android.ground.ground.model.person.main.matchinfo.matchFormation.MatchFormationResult;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,7 +45,9 @@ public class FinalPositionActivity extends AppCompatActivity{
     View captureView;
     CustomToolbar customToolbar;
     Menu menu;
-
+    LineupMatchResult mLineupMatchResult;
+    int match_id,home_id, away_id;
+    TextView matchDate, matchDay, startTime, homeClubName, awayClubName;
     GridLayout gridLayout;
     ArrayList<LinearLayout> mLinearLayouts = new ArrayList<LinearLayout>();
     int w, h, countInField =0;
@@ -62,13 +72,55 @@ public class FinalPositionActivity extends AppCompatActivity{
             catch(Exception e){
                 e.printStackTrace();
             }
+
+            match_id = getIntent().getIntExtra("matchId", -1);
+            home_id = getIntent().getIntExtra("home_id", -1);
+            away_id = getIntent().getIntExtra("away_id", -1);
+
+
         captureView = findViewById(R.id.captureView);
+            matchDate= (TextView)findViewById(R.id.matchDate);
+            matchDay= (TextView)findViewById(R.id.matchDay);
+            startTime= (TextView)findViewById(R.id.startTime);
+            homeClubName= (TextView)findViewById(R.id.homeClubName);
+            awayClubName= (TextView)findViewById(R.id.awayClubName);
+
+
 
             gridLayout = (GridLayout)findViewById(R.id.gridLayout_field);
+
+            searchMatchInfoResult(match_id);
 
 
 
     }
+
+    private void searchMatchInfoResult(final int matchId) {
+        NetworkManager.getInstance().getNetworkLineupMatch(FinalPositionActivity.this,matchId , new NetworkManager.OnResultListener<LineupMatch>(){
+            @Override
+            public void onSuccess(LineupMatch result) {
+                for(LineupMatchResult item : result.items){
+                    setLineupMatchResult(item);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
+    }
+
+    public void setLineupMatchResult(LineupMatchResult item){
+        mLineupMatchResult = item;
+        matchDate.setText(item.matchDate);
+        matchDay.setText(Integer.toString(item.matchDay));
+        startTime.setText(item.startTime);
+        homeClubName.setText(item.homeClubName);
+        awayClubName.setText(item.awayClubName);
+   }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -166,9 +218,153 @@ public class FinalPositionActivity extends AppCompatActivity{
                 parent.removeAllViews();
             gridLayout.addView(mLinearLayouts.get(i));
         }//for
-
+        searchLineupResultFormationHome(match_id, home_id);
+        searchLineupResultFormationAway(match_id, away_id);
 
     }//windowfocus
+
+    private void searchLineupResultFormationHome(int matchId, int homeId ) {
+        NetworkManager.getInstance().getNetworkLineupResultFormation(FinalPositionActivity.this, matchId, homeId, new NetworkManager.OnResultListener<MatchFormation>() {
+            @Override
+            public void onSuccess(MatchFormation result) {
+                for(MatchFormationResult item : result.items){
+                    GridItemView2 gridItemView2 = new GridItemView2(FinalPositionActivity.this);
+                    gridItemView2.setText(item.memName);
+                    if(item.locIndex <= 1){
+                        gridItemView2.setImageRes(R.drawable.lw);
+                    }else if(item.locIndex <= 4){
+                        gridItemView2.setImageRes(R.drawable.cf);
+                    }else if(item.locIndex <= 6){
+                        gridItemView2.setImageRes(R.drawable.rw);
+                    }
+
+                    else if(item.locIndex <= 8){
+                        gridItemView2.setImageRes(R.drawable.lm);
+                    }else if(item.locIndex <= 11){
+                        gridItemView2.setImageRes(R.drawable.am);
+                    }else if(item.locIndex <= 13){
+                        gridItemView2.setImageRes(R.drawable.rm);
+                    }
+
+                    else if(item.locIndex <= 15){
+                        gridItemView2.setImageRes(R.drawable.lm);
+                    }else if(item.locIndex <= 18){
+//                        gridItemView2.setImageRes(R.drawable.cm);
+                    }else if(item.locIndex <= 20){
+                        gridItemView2.setImageRes(R.drawable.rm);
+                    }
+
+                    else if(item.locIndex <= 22){
+                        gridItemView2.setImageRes(R.drawable.lm);
+                    }else if(item.locIndex <= 25){
+                        gridItemView2.setImageRes(R.drawable.dm);
+                    }else if(item.locIndex <= 27){
+                        gridItemView2.setImageRes(R.drawable.rm);
+                    }
+
+                    else if(item.locIndex <= 29){
+                        gridItemView2.setImageRes(R.drawable.lwb);
+                    }else if(item.locIndex <= 32){
+                        gridItemView2.setImageRes(R.drawable.cb);
+                    }else if(item.locIndex <= 34){
+                        gridItemView2.setImageRes(R.drawable.rwb);
+                    }
+
+                    else if(item.locIndex <= 36){
+                        gridItemView2.setImageRes(R.drawable.lb);
+                    }else if(item.locIndex <= 39){
+                        gridItemView2.setImageRes(R.drawable.cb);
+                    }else if(item.locIndex <= 41){
+                        gridItemView2.setImageRes(R.drawable.rb);
+                    }else{
+//                        gridItemView2.setImageRes(R.drawable.gk);
+                    }
+                    if(item.virtualFlag==1){
+                        gridItemView2.setBackgroundColor(Color.GRAY);
+                    }
+                    if(item.locIndex < 49)
+                         mLinearLayouts.get(item.locIndex + 49).addView(gridItemView2);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
+    }
+    private void searchLineupResultFormationAway(int matchId, int awayId) {
+        NetworkManager.getInstance().getNetworkLineupResultFormation(FinalPositionActivity.this, matchId, awayId, new NetworkManager.OnResultListener<MatchFormation>() {
+            @Override
+            public void onSuccess(MatchFormation result) {
+                for(MatchFormationResult item : result.items){
+                    GridItemView2 gridItemView2 = new GridItemView2(FinalPositionActivity.this);
+                    if(item.locIndex <= 1){
+                        gridItemView2.setImageRes(R.drawable.lw);
+                    }else if(item.locIndex <= 4){
+                        gridItemView2.setImageRes(R.drawable.cf);
+                    }else if(item.locIndex <= 6){
+                        gridItemView2.setImageRes(R.drawable.rw);
+                    }
+
+                    else if(item.locIndex <= 8){
+                        gridItemView2.setImageRes(R.drawable.lm);
+                    }else if(item.locIndex <= 11){
+                        gridItemView2.setImageRes(R.drawable.am);
+                    }else if(item.locIndex <= 13){
+                        gridItemView2.setImageRes(R.drawable.rm);
+                    }
+
+                    else if(item.locIndex <= 15){
+                        gridItemView2.setImageRes(R.drawable.lm);
+                    }else if(item.locIndex <= 18){
+//                        gridItemView2.setImageRes(R.drawable.cm);
+                    }else if(item.locIndex <= 20){
+                        gridItemView2.setImageRes(R.drawable.rm);
+                    }
+
+                    else if(item.locIndex <= 22){
+                        gridItemView2.setImageRes(R.drawable.lm);
+                    }else if(item.locIndex <= 25){
+                        gridItemView2.setImageRes(R.drawable.dm);
+                    }else if(item.locIndex <= 27){
+                        gridItemView2.setImageRes(R.drawable.rm);
+                    }
+
+                    else if(item.locIndex <= 29){
+                        gridItemView2.setImageRes(R.drawable.lwb);
+                    }else if(item.locIndex <= 32){
+                        gridItemView2.setImageRes(R.drawable.cb);
+                    }else if(item.locIndex <= 34){
+                        gridItemView2.setImageRes(R.drawable.rwb);
+                    }
+
+                    else if(item.locIndex <= 36){
+                        gridItemView2.setImageRes(R.drawable.lb);
+                    }else if(item.locIndex <= 39){
+                        gridItemView2.setImageRes(R.drawable.cb);
+                    }else if(item.locIndex <= 41){
+                        gridItemView2.setImageRes(R.drawable.rb);
+                    }else{
+//                        gridItemView2.setImageRes(R.drawable.gk);
+                    }
+                    gridItemView2.setText(item.memName);
+                    if(item.virtualFlag==1){
+                        gridItemView2.setBackgroundColor(Color.GRAY);
+                    }
+                    if(item.locIndex < 49)
+                        mLinearLayouts.get(48 - item.locIndex ).addView(gridItemView2);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
+    }
+
+
 
     @Override
     protected void onPause() {

@@ -49,6 +49,7 @@ import java.util.Map;
 public class TutorialActivity extends AppCompatActivity {
     protected static Activity self;
     Bundle mSavedInstanceState;
+    public static final String TAG_SIGNUP_FRAGMENT = "5";
 
     /**
      * Main으로 넘길지 가입 페이지를 그릴지 판단하기 위해 me를 호출한다.
@@ -56,6 +57,7 @@ public class TutorialActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         mSavedInstanceState = savedInstanceState;
 //        requestMe();
@@ -258,5 +260,11 @@ public class TutorialActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(getSupportFragmentManager().findFragmentByTag(TAG_SIGNUP_FRAGMENT).isVisible()){
+            finish();
+        }
+    }
 }

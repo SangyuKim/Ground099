@@ -8,4 +8,5 @@ public class KakaoResponse {
     public String msg;
     public boolean result;
     public KakaoResponseUser user;
+
 }

@@ -12,6 +12,7 @@ public class KakaoResponseUser {
     public int signUpYN;
     public int managerYN;
     public int deleteYN;
+    public String memName;
 
 
 

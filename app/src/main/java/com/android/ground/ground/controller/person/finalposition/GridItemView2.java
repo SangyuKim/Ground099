@@ -19,6 +19,9 @@ public class GridItemView2 extends FrameLayout {
         super(context);
         init();
     }
+    public void setImageRes(int res){
+        imageView.setImageResource(res);
+    }
 
     TextView textView;
     public GridItemView2(Context context, AttributeSet attrs) {

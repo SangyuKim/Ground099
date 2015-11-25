@@ -8,6 +8,10 @@
         "source": "C:\\work_android\\Ground4321\\refresh\\src\\main\\res\\drawable\\progress_indeterminate_horizontal_holo.xml"
     },
     {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\build\\intermediates\\res\\merged\\debug\\drawable\\progress_horizontal_holo_light_right.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\src\\main\\res\\drawable\\progress_horizontal_holo_light_right.xml"
+    },
+    {
         "merged": "C:\\work_android\\Ground4321\\refresh\\build\\intermediates\\res\\merged\\debug\\drawable\\indicator_bg_top.xml",
         "source": "C:\\work_android\\Ground4321\\refresh\\src\\main\\res\\drawable\\indicator_bg_top.xml"
     },
@@ -48,6 +52,10 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground65\\refresh\\src\\main\\res\\drawable\\progress_horizontal_holo_light_right.xml"
     },
     {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\build\\intermediates\\res\\merged\\debug\\drawable\\indicator_bg_bottom.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\src\\main\\res\\drawable\\indicator_bg_bottom.xml"
+    },
+    {
         "merged": "C:\\work_android\\Ground432\\refresh\\build\\intermediates\\res\\merged\\debug\\drawable\\indicator_bg_top.xml",
         "source": "C:\\work_android\\Ground432\\refresh\\src\\main\\res\\drawable\\indicator_bg_top.xml"
     },
@@ -68,8 +76,20 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground54\\refresh\\src\\main\\res\\drawable\\progress_indeterminate_horizontal_holo.xml"
     },
     {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\build\\intermediates\\res\\merged\\debug\\drawable\\progress_horizontal_holo_light.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\src\\main\\res\\drawable\\progress_horizontal_holo_light.xml"
+    },
+    {
         "merged": "C:\\work_android\\Ground432\\refresh\\build\\intermediates\\res\\merged\\debug\\drawable\\progress_horizontal_holo_light_right.xml",
         "source": "C:\\work_android\\Ground432\\refresh\\src\\main\\res\\drawable\\progress_horizontal_holo_light_right.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\build\\intermediates\\res\\merged\\debug\\drawable\\indicator_bg_top.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\src\\main\\res\\drawable\\indicator_bg_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\build\\intermediates\\res\\merged\\debug\\drawable\\progress_indeterminate_horizontal_holo.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\src\\main\\res\\drawable\\progress_indeterminate_horizontal_holo.xml"
     },
     {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\refresh\\build\\intermediates\\res\\merged\\debug\\drawable\\indicator_bg_bottom.xml",

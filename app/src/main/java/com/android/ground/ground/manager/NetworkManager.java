@@ -1,14 +1,13 @@
 package com.android.ground.ground.manager;
 
 import android.content.Context;
-import android.net.http.Headers;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Utils;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
 import com.android.ground.ground.model.fc.fcmain.ClubMatchList.ClubMatchList;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
@@ -23,10 +22,13 @@ import com.android.ground.ground.model.login.FacebookLogin;
 import com.android.ground.ground.model.login.KakaoLogin;
 import com.android.ground.ground.model.login.KakaoResponse;
 import com.android.ground.ground.model.login.SignupData;
+import com.android.ground.ground.model.message.ClubMessageData;
 import com.android.ground.ground.model.message.MyMessageData;
 import com.android.ground.ground.model.naver.NaverMovies;
+import com.android.ground.ground.model.noti.NotiData;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfo;
+import com.android.ground.ground.model.person.main.matchinfo.matchFormation.MatchFormation;
 import com.android.ground.ground.model.person.main.searchClub.SearchClub;
 import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.person.profile.MyPage;
@@ -35,7 +37,6 @@ import com.android.ground.ground.model.post.fcCreate.ClubProfile;
 import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
 import com.android.ground.ground.model.post.signup.UserProfile;
 import com.android.ground.ground.model.tmap.TmapItem;
-import com.android.internal.http.multipart.MultipartEntity;
 import com.begentgroup.xmlparser.XMLParser;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -44,13 +45,6 @@ import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
-import org.apache.http.Header;
-import org.apache.http.HeaderElement;
-import org.apache.http.HttpEntity;
-import org.apache.http.ParseException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicHeader;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -69,6 +63,10 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.message.BasicHeader;
 
 
 public class NetworkManager {
@@ -160,20 +158,21 @@ public class NetworkManager {
         headers[0] = new BasicHeader("Accept", "application/json" );
         headers[1] = new BasicHeader("appKey",TMAP_API_KEY);
 
-        client.get(context, TMAP_URL, headers, params, new AsyncHttpResponseHandler() {
+        client.get(context, TMAP_URL,  headers, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
-               String s = new String(responseBody, Charset.forName("UTF-8"));
+                String s = new String(responseBody, Charset.forName("UTF-8"));
                 TmapItem items = gson.fromJson(s, TmapItem.class);
                 if(items != null)
-                   listener.onSuccess(items);
+                    listener.onSuccess(items);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 //                 listener.onFail(statusCode);
             }
+
         });
 
     }
@@ -210,6 +209,8 @@ public class NetworkManager {
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 listener.onFail(statusCode);
             }
+
+
         });
 
     }
@@ -244,9 +245,10 @@ public class NetworkManager {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
                 listener.onFail(statusCode);
             }
+
         });
 
     }
@@ -698,11 +700,12 @@ public class NetworkManager {
 //        Log.d("hello", "latitude : " + mUserProfile.latitude);
         params.put("longitude", mUserProfile.longitude);
 //        Log.d("hello", "longitude : " + mUserProfile.longitude);
-//        params.setContentEncoding("multipart/form-data");
+
 //        params.setForceMultipartEntityContentType(true);
 //        Header[] headers =new Header[2];
 //        headers[0] = new BasicHeader("Connection", "Keep-Alive" );
 //        headers[1] = new BasicHeader("Content-Type", "multipart/form-data" );
+        params.setForceMultipartEntityContentType(true);
         client.post(context, SEND_SIGNUP_URL, params,new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -807,7 +810,7 @@ public class NetworkManager {
 
     //make fc club
     public static final String SEND_CLUB_CREATE_URL =GROND_SERVER_URL+"/club/make";
-    public void postNetworkMakeClub(final Context context , ClubProfile mClubProfile) {
+    public void postNetworkMakeClub(final Context context , ClubProfile mClubProfile,  final OnResultListener<EtcData> listener) {
 
         final RequestParams params = new RequestParams();
         try {
@@ -831,8 +834,8 @@ public class NetworkManager {
         params.put("longitude",mClubProfile.longitude);
         params.put("matchYN",mClubProfile.matchYN);
         params.put("clubIntro",mClubProfile.clubIntro);
-
-
+//        params.setContentEncoding("multipart/form-data");
+        params.setForceMultipartEntityContentType(true);
 
         client.post(context, SEND_CLUB_CREATE_URL, params, new AsyncHttpResponseHandler() {
             @Override
@@ -840,6 +843,10 @@ public class NetworkManager {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
             }
 
             @Override
@@ -851,7 +858,7 @@ public class NetworkManager {
     }
     //update fc club
     public static final String SEND_CLUB_UPDATE_URL =GROND_SERVER_URL+"/club";
-    public void postNetworkUpdateClub(final Context context , ClubProfileUpdate mClubProfileUpdate) {
+    public void postNetworkUpdateClub(final Context context , ClubProfileUpdate mClubProfileUpdate,  final OnResultListener<EtcData> listener) {
 
         final RequestParams params = new RequestParams();
         try {
@@ -874,9 +881,8 @@ public class NetworkManager {
         params.put("latitude",mClubProfileUpdate.latitude);
         params.put("longitude",mClubProfileUpdate.longitude);
         params.put("matchYN",mClubProfileUpdate.matchYN);
-        params.put("clubIntro",mClubProfileUpdate.clubIntro);
-
-
+        params.put("clubIntro", mClubProfileUpdate.clubIntro);
+        params.setForceMultipartEntityContentType(true);
 
         client.post(context, SEND_CLUB_UPDATE_URL, params, new AsyncHttpResponseHandler() {
             @Override
@@ -884,6 +890,10 @@ public class NetworkManager {
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
             }
 
             @Override
@@ -922,7 +932,87 @@ public class NetworkManager {
 
     }
 
-//===================================================
+    //club message
+    public static final String SEND_CLUB_MESSAGE_URL =GROND_SERVER_URL+"/message/club";
+    public void getNetworkClubMessage(final Context context, int club_id, int page,  final OnResultListener<ClubMessageData> listener ){
+
+        final RequestParams params = new RequestParams();
+        params.put("club_id",club_id);
+        params.put("page",page);
+
+        client.get(context, SEND_CLUB_MESSAGE_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                ClubMessageData items = gson.fromJson(s, ClubMessageData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("hello", "status code : " + statusCode);
+            }
+        });
+
+    }
+
+    //match result postion fomation
+    public static final String SEND_LINEUP_RESULT_FORMATION_URL =GROND_SERVER_URL+"/lineup/result/formation";
+    public void getNetworkLineupResultFormation(final Context context, int match_id, int club_id,  final OnResultListener<MatchFormation> listener ){
+
+        final RequestParams params = new RequestParams();
+        params.put("club_id",club_id);
+        params.put("match_id",match_id);
+
+        client.get(context, SEND_LINEUP_RESULT_FORMATION_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                MatchFormation items = gson.fromJson(s, MatchFormation.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("hello", "status code : " + statusCode);
+            }
+        });
+
+    }
+    //message noti
+    public static final String GET_MESSAGE_NOTI_URL =GROND_SERVER_URL+"/message/noti";
+    public void getNetworkNoti(final Context context, int member_id, int page,  final OnResultListener<NotiData> listener ){
+
+        final RequestParams params = new RequestParams();
+        params.put("member_id",member_id);
+        params.put("page",page);
+
+        client.get(context, GET_MESSAGE_NOTI_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                NotiData items = gson.fromJson(s, NotiData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("hello", "status code : " + statusCode);
+            }
+        });
+
+    }
+
+    //===================================================
     public void cancelAll(Context context) {
         client.cancelRequests(context, true);
     }

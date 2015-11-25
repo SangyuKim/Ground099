@@ -287,7 +287,11 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
         mAdapter.setOnAdapterExtraButtonClickListener(new MatchInfoAdapter.OnAdapterExtraButtonClickListener() {
             @Override
             public void setOnExtraButtonClick(ExpandableListAdapter adapter, View view) {
+
                 Intent intent = new Intent(getContext(), FinalPositionActivity.class);
+                intent.putExtra("matchId",((SearchMatchItemView) view).mItem.match_id );
+                intent.putExtra("home_id", ((SearchMatchItemView) view).mItem.home_id);
+                intent.putExtra("away_id", ((SearchMatchItemView) view).mItem.away_id);
                 startActivity(intent);
             }
         });

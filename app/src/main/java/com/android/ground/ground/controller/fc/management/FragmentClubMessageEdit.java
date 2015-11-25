@@ -1,5 +1,6 @@
 package com.android.ground.ground.controller.fc.management;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,8 +17,23 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.fc.fcmain.FCActivity;
+import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.controller.person.message.MyMessageAdapter;
+import com.android.ground.ground.controller.person.profile.YourProfileActivity;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.message.ClubMessageData;
+import com.android.ground.ground.model.message.ClubMessageDataResult;
 import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.view.OnAdapterNoListener;
+import com.android.ground.ground.view.OnAdapterProfileListener;
+import com.android.ground.ground.view.OnAdapterReplyListener;
+import com.android.ground.ground.view.OnAdapterYesListener;
+import com.android.ground.ground.view.person.message.MyMessageItemView;
+import com.android.ground.ground.view.person.message.MyMessageItemViewEdit;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +47,11 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class FragmentClubMessageEdit extends Fragment {
-
+    boolean isUpdate = false;
+    PullToRefreshListView refreshView;
     ListView listView;
-    MyMessageAdapter mAdapter;
-    List<MyMessageItem> items = new ArrayList<MyMessageItem>();
+    ClubMessageEditAdapter mAdapter;
+//    List<MyMessageItem> items = new ArrayList<MyMessageItem>();
     Button btn, btn2;
     LinearLayout mLinearLayout;
     boolean isAllchecked= false;
@@ -84,14 +102,28 @@ public class FragmentClubMessageEdit extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_club_message_edit, container, false);
-        listView = (ListView)view.findViewById(R.id.listView_my_message);
+
+        refreshView = (PullToRefreshListView)view.findViewById(R.id.listView_my_message);
+        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                searchClubMessage();
+            }
+        });
+
+        refreshView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+            @Override
+            public void onLastItemVisible() {
+                getMoreItem();
+            }
+        });
+
+        listView = refreshView.getRefreshableView();
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-        initData();
-
-        mAdapter = new MyMessageAdapter();
+        mAdapter = new ClubMessageEditAdapter();
+        searchClubMessage();
         listView.setAdapter(mAdapter);
-        listView.setOnItemClickListener(mItemClickListener);
+
         //전체선택
         btn2 = (Button)view.findViewById(R.id.button6);
         mLinearLayout = (LinearLayout)view.findViewById(R.id.linearLayout_clear_cancel);
@@ -100,7 +132,7 @@ public class FragmentClubMessageEdit extends Fragment {
             public void onClick(View v) {
                 if(!isAllchecked){
 
-                    for(int i=0; i< mAdapter.getCount(); i++){
+                    for(int i=0; i< mAdapter.getCount()+1; i++){
 
                         listView.setItemChecked(i, true);
                         if(!mAdapter.getChecked(i))
@@ -110,7 +142,7 @@ public class FragmentClubMessageEdit extends Fragment {
                         isAllchecked = true;
                     }
                 }else{
-                    for(int i=0; i< mAdapter.getCount(); i++){
+                    for(int i=0; i< mAdapter.getCount()+1; i++){
 
                         listView.setItemChecked(i, false);
                         if(mAdapter.getChecked(i))
@@ -123,6 +155,16 @@ public class FragmentClubMessageEdit extends Fragment {
                 }
             }
         });
+
+        Button btnClear = (Button)view.findViewById(R.id.button12);
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChoiceItem();
+            }
+        });
+
+
         btn  = (Button)view.findViewById(R.id.button46);
 
         mLinearLayout.setVisibility(View.VISIBLE);
@@ -134,7 +176,109 @@ public class FragmentClubMessageEdit extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+        mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
+            @Override
+            public void onAdapterProfileClick(Adapter adapter, View view) {
 
+                ClubMessageDataResult item = ((MyMessageItemViewEdit) view).mClubMessageDataResult;
+                if (item.sender != PropertyManager.getInstance().getUserId()) {
+                    switch (((MyMessageItemViewEdit) view).mClubMessageDataResult.code) {
+                        case 100: {
+                            //your profile 이동
+                            Intent intent = new Intent(getContext(), YourProfileActivity.class);
+                            intent.putExtra("memberId", item.sender);
+                            startActivity(intent);
+
+                            break;
+                        }
+                        case 200: {
+                            //your profile 이동
+                            Intent intent = new Intent(getContext(), YourProfileActivity.class);
+                            intent.putExtra("memberId", item.sender);
+                            startActivity(intent);
+
+                            break;
+                        }
+                        case 201: {
+                            //your profile 이동
+                            Intent intent = new Intent(getContext(), YourProfileActivity.class);
+                            intent.putExtra("memberId", item.sender);
+                            startActivity(intent);
+
+                            break;
+                        }
+                        case 300: {
+
+                            Intent intent = new Intent(getContext(), FCActivity.class);
+                            intent.putExtra("clubId", item.senderClub);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 301: {
+                            Intent intent = new Intent(getContext(), FCActivity.class);
+                            intent.putExtra("clubId", item.senderClub);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 302: {
+                            Intent intent = new Intent(getContext(), FCActivity.class);
+                            intent.putExtra("clubId", item.senderClub);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 400: {
+                            Intent intent = new Intent(getContext(), FCActivity.class);
+                            intent.putExtra("clubId", item.senderClub);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 401: {
+                            Intent intent = new Intent(getContext(), FCActivity.class);
+                            intent.putExtra("clubId", item.senderClub);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 500: {
+                            break;
+                        }
+
+                    }
+                }
+            }
+        });
+
+
+        mAdapter.setOnAdapterYesListener(new OnAdapterYesListener() {
+            @Override
+            public void onAdapterYesClick(Adapter adapter, View view) {
+                ClubMessageDataResult item = ((MyMessageItemViewEdit) view).mClubMessageDataResult;
+                if (item.sender != PropertyManager.getInstance().getMyPageResult().club_id) {
+                    Toast.makeText(getContext(), "YES", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        mAdapter.setOnAdapterNoListener(new OnAdapterNoListener() {
+            @Override
+            public void onAdapterNoClick(Adapter adapter, View view) {
+                ClubMessageDataResult item = ((MyMessageItemViewEdit) view).mClubMessageDataResult;
+                if (item.sender != PropertyManager.getInstance().getMyPageResult().club_id) {
+                    Toast.makeText(getContext(), "NO", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        mAdapter.setOnAdapterReplyListener(new OnAdapterReplyListener() {
+            @Override
+            public void onAdapterReplyClick(Adapter adapter, View view) {
+                ClubMessageDataResult item = ((MyMessageItemViewEdit) view).mClubMessageDataResult;
+                if (item.sender != PropertyManager.getInstance().getMyPageResult().club_id) {
+                    CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                    dialog.show(getChildFragmentManager(), "custom");
+                }
+
+            }
+        });
 
 
         return view;
@@ -152,12 +296,6 @@ public class FragmentClubMessageEdit extends Fragment {
 
     }
 
-    public void initData(){
-        for(int i=0; i< 20; i++){
-            MyMessageItem item = new MyMessageItem();
-            items.add(item);
-        }
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -208,5 +346,48 @@ public class FragmentClubMessageEdit extends Fragment {
 
                 }
             };
+
+    private void searchClubMessage() {
+
+        NetworkManager.getInstance().getNetworkClubMessage(getContext(), 1, 1, new NetworkManager.OnResultListener<ClubMessageData>() {
+            @Override
+            public void onSuccess(ClubMessageData result) {
+                mAdapter.setTotalCount(result.itemCount);
+                mAdapter.setPgae(1);
+                mAdapter.clear();
+                for (ClubMessageDataResult item : result.items) {
+                    mAdapter.add(item);
+                }
+//                mAdapter = new MyMessageAdapter(getContext(), result.items);
+//                refreshView.onRefreshComplete();
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
+    }
+    private void getMoreItem() {
+        if (!isUpdate) {
+            int nextPage = mAdapter.getNextPage();
+            if (nextPage != -1) {
+                isUpdate = true;
+                NetworkManager.getInstance().getNetworkClubMessage(getContext(), 1, nextPage, new NetworkManager.OnResultListener<ClubMessageData>() {
+                    @Override
+                    public void onSuccess(ClubMessageData result) {
+                        for (ClubMessageDataResult item : result.items) {
+                            mAdapter.add(item);
+                        }
+                        isUpdate = false;
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        isUpdate = false;
+                    }
+                });
+            }
+        }
+    }
 
 }

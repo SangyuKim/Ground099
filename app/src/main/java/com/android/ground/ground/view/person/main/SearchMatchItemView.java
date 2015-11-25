@@ -37,7 +37,7 @@ public class SearchMatchItemView extends RelativeLayout implements Checkable {
 
     TextView matchDate, startTime, homeClubName, awayClubName, matchLocation, mvpName
             , matchDay, homeScore, awayScore, matchDD, text_colon;
-    MatchInfoResult mItem;
+    public MatchInfoResult mItem;
     RelativeLayout mRelatveLayout;
     Button btn;
     ImageView imageViewBar;

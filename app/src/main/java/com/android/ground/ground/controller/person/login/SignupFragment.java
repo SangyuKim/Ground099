@@ -100,7 +100,6 @@ public class SignupFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        redirectLoginActivity();
         clearReferences();
     }
     private void clearReferences() {
@@ -218,8 +217,11 @@ public class SignupFragment extends Fragment {
 //                getActivity().showDialog(MONTHYEARDATESELECTOR_ID);
                 RelativeLayout linearLayout = new RelativeLayout(getContext());
                 final NumberPicker aNumberPicker = new NumberPicker(getContext());
-                aNumberPicker.setMaxValue(2020);
+                //올해 년도로 넣기
+                aNumberPicker.setMaxValue(2015);
                 aNumberPicker.setMinValue(1940);
+                aNumberPicker.setValue(2015);
+
 
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
                 RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -264,9 +266,11 @@ public class SignupFragment extends Fragment {
 
                 //유저가 사진 입력하지 않았을 때 처리하기 !!
 
-                if(mSavedFile!=null)
-                    mUserProfile.mFile =mSavedFile;
-
+                if(mSavedFile!=null) {
+                    mUserProfile.mFile = mSavedFile;
+                }else{
+                    mUserProfile.mFile =  new File(Environment.getExternalStorageDirectory(),"temp_" + System.currentTimeMillis()/1000);
+                }
                 if( mUserProfile.gender == 0)
                     mUserProfile.gender =0;
 
@@ -318,8 +322,6 @@ public class SignupFragment extends Fragment {
                     public void onSuccess(SignupData result) {
                         if(result.code==200){
                             searchMyPage(PropertyManager.getInstance().getUserId());
-
-
                         }
                     }
 

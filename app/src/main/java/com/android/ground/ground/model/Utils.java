@@ -1,5 +1,12 @@
 package com.android.ground.ground.model;
 
+import android.app.Dialog;
+import android.view.Window;
+import android.widget.TextView;
+
+import com.android.ground.ground.R;
+import com.greenfrvr.rubberloader.RubberLoaderView;
+
 import java.io.ByteArrayInputStream;
 
 /**
@@ -18,4 +25,5 @@ public class Utils {
 
         return new String(theChars);
     }
+
 }

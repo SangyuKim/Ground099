@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
-                    android:id="@+id/textView27"
+                    android:id="@+id/homeClubName"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true" />
 
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
-                    android:id="@+id/textView39"
+                    android:id="@+id/awayClubName"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -60,8 +60,8 @@
                     android:text=" vs "
                     android:id="@+id/textView76"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/textView39"
-                    android:layout_toStartOf="@+id/textView39" />
+                    android:layout_toLeftOf="@+id/awayClubName"
+                    android:layout_toStartOf="@+id/awayClubName" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -77,8 +77,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="date"
-                    android:id="@+id/textView77"
+                    android:text="matchDate"
+                    android:id="@+id/matchDate"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/linearLayout80"
                     android:layout_toEndOf="@+id/linearLayout80" />
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="day"
-                    android:id="@+id/textView80"
+                    android:id="@+id/matchDay"
                     android:layout_alignBottom="@+id/textView76"
                     android:layout_toRightOf="@+id/linearLayout80"
                     android:layout_toEndOf="@+id/linearLayout80" />
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="time"
-                    android:id="@+id/textView85"
+                    android:id="@+id/startTime"
                     android:layout_alignParentBottom="true"
                     android:layout_toRightOf="@+id/linearLayout80"
                     android:layout_toEndOf="@+id/linearLayout80" />

@@ -326,7 +326,7 @@ public class MyMessageFragment extends Fragment {
     }
     private void searchMyMessage() {
 
-        NetworkManager.getInstance().getNetworkMessage(getContext(), 1, 1, new NetworkManager.OnResultListener<MyMessageData>() {
+        NetworkManager.getInstance().getNetworkMessage(getContext(), PropertyManager.getInstance().getUserId(), 1, new NetworkManager.OnResultListener<MyMessageData>() {
             @Override
             public void onSuccess(MyMessageData result) {
                 mAdapter.setTotalCount(result.itemCount);
@@ -350,7 +350,7 @@ public class MyMessageFragment extends Fragment {
             int nextPage = mAdapter.getNextPage();
             if (nextPage != -1) {
                 isUpdate = true;
-                NetworkManager.getInstance().getNetworkMessage(getContext(), 1, nextPage, new NetworkManager.OnResultListener<MyMessageData>() {
+                NetworkManager.getInstance().getNetworkMessage(getContext(), PropertyManager.getInstance().getUserId(), nextPage, new NetworkManager.OnResultListener<MyMessageData>() {
                     @Override
                     public void onSuccess(MyMessageData result) {
                         for (MyMessageDataResult item : result.items) {

@@ -84,7 +84,7 @@ public class TutorialFragment extends Fragment {
                     getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     Fragment mFragment = (Fragment) SignupFragment.newInstance("", "");
                     getActivity().getSupportFragmentManager().beginTransaction()
-                           .replace(R.id.container, mFragment)
+                           .replace(R.id.container, mFragment, TutorialActivity.TAG_SIGNUP_FRAGMENT)
                            .addToBackStack(null)
                            .commit();
                 }

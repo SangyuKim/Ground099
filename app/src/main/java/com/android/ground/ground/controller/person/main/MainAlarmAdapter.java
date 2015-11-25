@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.android.ground.ground.model.noti.NotiDataResult;
 import com.android.ground.ground.model.person.main.AlarmItemData;
 import com.android.ground.ground.view.person.main.AlarmItemView;
 
@@ -13,9 +14,9 @@ import java.util.List;
 /**
  * Created by Tacademy on 2015-10-30.
  */
-public class MainAlarmAdapter extends BaseAdapter implements AlarmItemView.OnImageClickListener {
+public class MainAlarmAdapter extends BaseAdapter{
 
-    List<AlarmItemData> items = new ArrayList<AlarmItemData>();
+    List<NotiDataResult> items = new ArrayList<NotiDataResult>();
 
     @Override
     public int getCount() {
@@ -37,7 +38,6 @@ public class MainAlarmAdapter extends BaseAdapter implements AlarmItemView.OnIma
         AlarmItemView view;
         if (convertView == null) {
             view =  new AlarmItemView(parent.getContext());
-            view.setOnImageClickListener(this);
         } else {
             view = (AlarmItemView) convertView;
         }
@@ -45,26 +45,27 @@ public class MainAlarmAdapter extends BaseAdapter implements AlarmItemView.OnIma
         return view;
     }
 
-    @Override
-    public void onImageClick(AlarmItemView view, AlarmItemData data) {
-
-    }
-    public interface OnAdapterImageListener {
-        public void onAdapterImageClick(MainAlarmAdapter adapter, AlarmItemView view, AlarmItemData data);
-    }
-    OnAdapterImageListener mListener;
-    public void setOnAdapterImageListener(OnAdapterImageListener listener) {
-        mListener = listener;
-    }
-    AlarmItemView.OnImageClickListener mImageClickListener;
-    public void setOnImageClickListener(AlarmItemView.OnImageClickListener listener) {
-        mImageClickListener = listener;
-        notifyDataSetChanged();
-        notifyDataSetInvalidated();
-    }
-
-    public void add(AlarmItemData item) {
+    public void add(NotiDataResult item) {
         items.add(item);
         notifyDataSetChanged();
+    }
+    int totalCount;
+    int page;
+
+    public int getPage(){return page;}
+    public void setPgae(int page){this.page = page;}
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+    public int getNextPage(){
+        if(totalCount-items.size()>0){
+            page ++;
+            return page;
+        }
+        return -1;
     }
 }

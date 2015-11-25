@@ -62,7 +62,8 @@
                     android:id="@+id/textViewName"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imageViewMessage"
-                    android:layout_toEndOf="@+id/imageViewMessage" />
+                    android:layout_toEndOf="@+id/imageViewMessage"
+                    android:textColor="#ffffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -72,7 +73,8 @@
                     android:id="@+id/messageDate"
                     android:layout_alignParentTop="true"
                     android:layout_alignRight="@+id/msContents"
-                    android:layout_alignEnd="@+id/msContents" />
+                    android:layout_alignEnd="@+id/msContents"
+                    android:textColor="#ffffffff" />
             </LinearLayout>
 
             <TextView
@@ -85,7 +87,8 @@
                 android:layout_toRightOf="@+id/button29"
                 android:layout_toEndOf="@+id/button29"
                 android:layout_toStartOf="@+id/button31"
-                android:layout_alignTop="@+id/button29" />
+                android:layout_alignTop="@+id/button29"
+                android:textColor="#ffffffff" />
 
             <LinearLayout
                 android:orientation="horizontal"

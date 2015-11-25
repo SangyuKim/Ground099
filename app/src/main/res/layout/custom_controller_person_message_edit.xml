@@ -24,9 +24,11 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:visibility="visible"
-            android:clickable="false" />
+            android:clickable="false"
+            android:button="@drawable/check_box_club_message"
+            android:layout_gravity="center_vertical" />
 
-        <ImageView
+        <com.android.ground.ground.custom.CustomCircularImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/imageViewMessage"
@@ -62,7 +64,9 @@
                     android:id="@+id/textViewName"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imageViewMessage"
-                    android:layout_toEndOf="@+id/imageViewMessage" />
+                    android:layout_toEndOf="@+id/imageViewMessage"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -72,7 +76,9 @@
                     android:id="@+id/messageDate"
                     android:layout_alignParentTop="true"
                     android:layout_alignRight="@+id/msContents"
-                    android:layout_alignEnd="@+id/msContents" />
+                    android:layout_alignEnd="@+id/msContents"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <TextView
@@ -85,9 +91,73 @@
                 android:layout_toRightOf="@+id/button29"
                 android:layout_toEndOf="@+id/button29"
                 android:layout_toStartOf="@+id/button31"
-                android:layout_alignTop="@+id/button29" />
+                android:layout_alignTop="@+id/button29"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button29"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout88">
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="44.25dp"
+                    android:layout_height="18dp"
+                    android:text="Y"
+                    android:id="@+id/button31"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/button30"
+                    android:layout_toStartOf="@+id/button30"
+                    android:focusable="false"
+                    android:background="#00a651" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="44.25dp"
+                    android:layout_height="18dp"
+                    android:text="N"
+                    android:id="@+id/button30"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:focusable="false"
+                    android:background="#ff3a1d" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="답장"
+                    android:id="@+id/button32"
+                    android:layout_below="@+id/button30"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:focusable="false" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="44.25dp"
+        android:layout_height="18dp"
+        android:id="@+id/imageView10"
+        android:layout_below="@+id/linearLayout90"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/yse801" />
+
+    <ImageView
+        android:layout_width="44.25dp"
+        android:layout_height="18dp"
+        android:id="@+id/imageView13"
+        android:layout_alignTop="@+id/imageView10"
+        android:layout_toRightOf="@+id/imageView10"
+        android:layout_toEndOf="@+id/imageView10"
+        android:src="@drawable/nono801" />
 </RelativeLayout>

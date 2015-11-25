@@ -26,11 +26,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMainResult;
 import com.android.ground.ground.model.post.fcCreate.ClubProfile;
@@ -159,9 +162,12 @@ public class FragmentFCProfile extends Fragment {
 
                 //유저가 사진 입력하지 않았을 때 처리하기 !!
 
-                if(mSavedFile!=null)
-                    mClubProfileUpdate.file =mSavedFile;
-
+                if(mSavedFile!=null) {
+                    mClubProfileUpdate.file = mSavedFile;
+                }
+                else{
+                    mClubProfileUpdate.file =  new File(Environment.getExternalStorageDirectory(),"temp_" + System.currentTimeMillis()/1000);
+                }
 
                 int id = getActivity().getIntent().getIntExtra("clubId", -1);
 //                if(id == -1){
@@ -172,26 +178,86 @@ public class FragmentFCProfile extends Fragment {
                 Log.d("hello", "id : " +PropertyManager.getInstance().getMyPageResult().club_id );
                 Log.d("hello", "id : " +id );
 
-                mClubProfileUpdate.clubLocationName ="서울시 관악 02 버스";
+                mClubProfileUpdate.clubLocationName =clubLocationName.getText().toString();
+//                mClubProfileUpdate.latitude =91.0;
+//                mClubProfileUpdate.longitude=92.0;
 
-                mClubProfileUpdate.clubMainDay_Mon=1;
-                mClubProfileUpdate.clubMainDay_Tue=1;
-                mClubProfileUpdate.clubMainDay_Wed=1;
-                mClubProfileUpdate.clubMainDay_Thu=1;
-                mClubProfileUpdate.clubMainDay_Fri=1;
-                mClubProfileUpdate.clubMainDay_Sat=1;
-                mClubProfileUpdate.clubMainDay_Sun=1;
+                if(clubMainDay_Mon.isChecked()){
+                    mClubProfileUpdate.clubMainDay_Mon=1;
+                }else{
+                    mClubProfileUpdate.clubMainDay_Mon=0;
+                }
+                if(clubMainDay_Tue.isChecked()){
+                    mClubProfileUpdate.clubMainDay_Tue=1;
+                }else{
+                    mClubProfileUpdate.clubMainDay_Tue=0;
+                }
+                if(clubMainDay_Wed.isChecked()){
+                    mClubProfileUpdate.clubMainDay_Wed=1;
+                }else{
+                    mClubProfileUpdate.clubMainDay_Wed=0;
+                }
+                if(clubMainDay_Thu.isChecked()){
+                    mClubProfileUpdate.clubMainDay_Thu=1;
+                }else{
+                    mClubProfileUpdate.clubMainDay_Thu=0;
+                }
+                if(clubMainDay_Fri.isChecked()){
+                    mClubProfileUpdate.clubMainDay_Fri=1;
+                }else{
+                    mClubProfileUpdate.clubMainDay_Fri=0;
+                }
+                if(clubMainDay_Sat.isChecked()){
+                    mClubProfileUpdate.clubMainDay_Sat=1;
+                }else{
+                    mClubProfileUpdate.clubMainDay_Sat=0;
+                }
+                if(clubMainDay_Sun.isChecked()){
+                    mClubProfileUpdate.clubMainDay_Sun=1;
+                }else{
+                    mClubProfileUpdate.clubMainDay_Sun=0;
+                }
 
-                mClubProfileUpdate.memYN =1;
-                mClubProfileUpdate.fieldYN =1;
-                mClubProfileUpdate.clubField ="연구공원 공사장";
+                if(memYN.isChecked()){
+                    mClubProfileUpdate.memYN =1;
+                }else{
+                    mClubProfileUpdate.memYN =0;
+                }
+                if(fieldYN.isChecked()){
+                    mClubProfileUpdate.fieldYN =1;
+                }else{
+                    mClubProfileUpdate.fieldYN =0;
+                }
 
-                mClubProfileUpdate.latitude =91.0;
-                mClubProfileUpdate.longitude=92.0;
-                mClubProfileUpdate.matchYN =0;
-                mClubProfileUpdate.clubIntro="안드로이드 테스트 1";
 
-                NetworkManager.getInstance().postNetworkUpdateClub(getContext(), mClubProfileUpdate);
+                mClubProfileUpdate.clubField =clubField.getText().toString();
+
+                if(matchYN.isChecked()){
+                    mClubProfileUpdate.matchYN =1;
+                }else{
+                    mClubProfileUpdate.matchYN =0;
+                }
+
+                mClubProfileUpdate.clubIntro=clubIntro.getText().toString();
+
+                NetworkManager.getInstance().postNetworkUpdateClub(getContext(), mClubProfileUpdate, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+                        if(result.code==200){
+                            getActivity().finish();
+
+                        }else{
+                            Toast.makeText(MyApplication.getContext(), result.msg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+
+
 
             }
         });

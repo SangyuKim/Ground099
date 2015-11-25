@@ -12,8 +12,7 @@ import com.android.ground.ground.R;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.log.Logger;
 import com.android.ground.ground.model.widget.KakaoSDKAdapter;
-//import com.android.volley.RequestQueue;
-//import com.android.volley.toolbox.Volley;
+
 import com.facebook.FacebookSdk;
 import com.kakao.auth.KakaoSDK;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -23,6 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.HttpClientImageDownloader;
 
+import org.apache.http.client.HttpClient;
 
 public class MyApplication extends Application {
 
@@ -146,7 +146,7 @@ public class MyApplication extends Application {
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
                 .writeDebugLogs() // Remove for release app
                 .defaultDisplayImageOptions(options)
-                .imageDownloader(new HttpClientImageDownloader(context, NetworkManager.getInstance().getHttpClient()))
+//                .imageDownloader(new HttpClientImageDownloader(context, (HttpClient) NetworkManager.getInstance().getHttpClient()))
                 .build();
         ImageLoader.getInstance().init(config);
     }

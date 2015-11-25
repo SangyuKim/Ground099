@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.message.MyMessageData;
 import com.android.ground.ground.model.message.MyMessageDataResult;
 import com.android.ground.ground.model.person.message.MyMessageItem;
@@ -251,7 +252,7 @@ public class MyMessageEditFragment extends Fragment {
 
     private void searchMyMessage() {
 
-        NetworkManager.getInstance().getNetworkMessage(getContext(), 1, 1, new NetworkManager.OnResultListener<MyMessageData>() {
+        NetworkManager.getInstance().getNetworkMessage(getContext(), PropertyManager.getInstance().getUserId(), 1, new NetworkManager.OnResultListener<MyMessageData>() {
             @Override
             public void onSuccess(MyMessageData result) {
                 mAdapter.setTotalCount(result.itemCount);
@@ -275,7 +276,7 @@ public class MyMessageEditFragment extends Fragment {
             int nextPage = mAdapter.getNextPage();
             if (nextPage != -1) {
                 isUpdate = true;
-                NetworkManager.getInstance().getNetworkMessage(getContext(), 1, nextPage, new NetworkManager.OnResultListener<MyMessageData>() {
+                NetworkManager.getInstance().getNetworkMessage(getContext(), PropertyManager.getInstance().getUserId(), nextPage, new NetworkManager.OnResultListener<MyMessageData>() {
                     @Override
                     public void onSuccess(MyMessageData result) {
                         for (MyMessageDataResult item : result.items) {

@@ -1,0 +1,18 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#aa161515">
+
+    <com.greenfrvr.rubberloader.RubberLoaderView
+        android:id="@+id/loader2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        app:loaderExtraColor="@color/extra_1"
+        app:loaderPrimeColor="@color/prime_1"
+        app:loaderSize="tiny"
+        app:loaderRippleMode="cycle"/>
+
+</FrameLayout>

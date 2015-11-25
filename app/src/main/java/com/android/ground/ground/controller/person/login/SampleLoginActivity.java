@@ -106,6 +106,35 @@ public class SampleLoginActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.getWindow().setBackgroundDrawableResource(R.drawable.xxdpi_bg);
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        if(token != null) {
+            Log.d("hello", "facebook token  from SampleLoginActivity: " + token.getToken().toString());
+            NetworkManager.getInstance().postNetworkLoginFacebook(SampleLoginActivity.this, token.getToken().toString(), new NetworkManager.OnResultListener<FacebookLogin>() {
+                @Override
+                public void onSuccess(FacebookLogin result) {
+                    if (result.user.signUpYN == 0) {
+                        //signup 으로 이동
+                        PropertyManager.getInstance().setUserId(result.user.member_id);
+                        PropertyManager.getInstance().setUserName(result.user.memName);
+                        final Intent intent = new Intent(SampleLoginActivity.this, TutorialActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        //main으로 이동
+                        PropertyManager.getInstance().setUserId(result.user.member_id);
+                        PropertyManager.getInstance().setUserName(result.user.memName);
+                        searchMyPage(result.user.member_id);
+
+                    }
+                }
+
+                @Override
+                public void onFail(int code) {
+
+                }
+            });
+        }
 
         //// TODO: 2015-10-29
         //연동 로그인 후, 토큰 값 받기
@@ -269,31 +298,31 @@ public class SampleLoginActivity extends AppCompatActivity {
 //                postLoginFacebook(token.getToken().toString());
                 Log.d("hello", "facebook token  from Login Fragment: " + token.getToken().toString());
                 Toast.makeText(MyApplication.getContext(), "id : " + token.getUserId(), Toast.LENGTH_SHORT).show();
-                NetworkManager.getInstance().loginFacebookToken(MyApplication.getContext(), token.getToken(), "NOTREGISTER", new NetworkManager.OnResultListener<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        if (result.equals("OK")) {
-                            PropertyManager.getInstance().setFacebookId(token.getUserId());
-                            startActivity(new Intent(MyApplication.getContext(), MainActivity.class));
-                            finish();
-                        } else if (result.equals("NOTREGISTER")) {
-//                                        startActivity(new Intent(getContext(), SignupActivity.class));
-//                                        getActivity().finish();
-
-
-//                            Fragment mFragment = (Fragment) TutorialFragment.newInstance("", "");
-//                            getFragmentManager().beginTransaction()
-//                                    .replace(R.id.container, mFragment)
-//                                    .addToBackStack(null)
-//                                    .commit();
-                        }
-                    }
-
-                    @Override
-                    public void onFail(int code) {
-
-                    }
-                });
+//                NetworkManager.getInstance().loginFacebookToken(MyApplication.getContext(), token.getToken(), "NOTREGISTER", new NetworkManager.OnResultListener<String>() {
+//                    @Override
+//                    public void onSuccess(String result) {
+//                        if (result.equals("OK")) {
+//                            PropertyManager.getInstance().setFacebookId(token.getUserId());
+//                            startActivity(new Intent(MyApplication.getContext(), MainActivity.class));
+//                            finish();
+//                        } else if (result.equals("NOTREGISTER")) {
+////                                        startActivity(new Intent(getContext(), SignupActivity.class));
+////                                        getActivity().finish();
+//
+//
+////                            Fragment mFragment = (Fragment) TutorialFragment.newInstance("", "");
+////                            getFragmentManager().beginTransaction()
+////                                    .replace(R.id.container, mFragment)
+////                                    .addToBackStack(null)
+////                                    .commit();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFail(int code) {
+//
+//                    }
+//                });
             }
 
             @Override

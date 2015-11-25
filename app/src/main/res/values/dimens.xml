@@ -10,5 +10,10 @@
     <dimen name="msg_dialog_width">100dp</dimen>
     <dimen name="msg_dialog_height">200dp</dimen>
     <dimen name="your_dimension_name">15dp</dimen>
+
+    <dimen name="page_padding">48dp</dimen>
+    <dimen name="page_title_margin">32dp</dimen>
+    <dimen name="page_title_text_size">18sp</dimen>
+
     <dimen name="your_dimension_name2">10dp</dimen>
 </resources>

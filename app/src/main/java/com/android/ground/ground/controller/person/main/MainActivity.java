@@ -274,7 +274,6 @@ public class MainActivity extends AppCompatActivity
                         .add(R.id.container, mFragment)
                         .addToBackStack(null)
                         .commit();
-                item.setIcon(R.mipmap.ic_launcher);
                 isAlarmOpened = true;
                 return true;
             }else{

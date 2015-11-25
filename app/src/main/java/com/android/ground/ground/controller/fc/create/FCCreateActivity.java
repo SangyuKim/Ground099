@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,16 +29,25 @@ import android.widget.LinearLayout;
 
 import android.support.v7.widget.SwitchCompat;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
+import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.etc.EtcData;
+import com.android.ground.ground.model.person.profile.MyPage;
+import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.post.fcCreate.ClubProfile;
 import com.android.ground.ground.model.post.signup.UserProfile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 public class FCCreateActivity extends AppCompatActivity {
 
@@ -113,14 +125,35 @@ public class FCCreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //유저가 사진 입력하지 않았을 때 처리하기 !!
 
-                if(mSavedFile!=null)
-                    mClubProfile.mFile =mSavedFile;
+                if(mSavedFile!=null) {
+                    mClubProfile.mFile = mSavedFile;
+                }else{
+                    //기본 이미지
+                    File testFile=  new File(Environment.getExternalStorageDirectory(),"temp_" + System.currentTimeMillis()/1000 );
+
+//                    Drawable mDrawable = getDrawable(R.mipmap.ic_launcher);
+//                    Bitmap bm = Bitmap.createBitmap(mDrawable.getIntrinsicWidth(), mDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+//                    Canvas canvas = new Canvas(bm);
+//                    mDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+//                    mDrawable.draw(canvas);
+//                   try {
+//                        FileOutputStream fos = new FileOutputStream(testFile);
+//                        bm.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+//                        fos.close();
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+                    mClubProfile.mFile = testFile;
+                }
 
                 mClubProfile.clubName= clubName.getText().toString();
+                Log.d("hello", clubName.getText().toString());
 
-                mClubProfile.clubLocationName ="서울시 관악구 연구공원";
-                mClubProfile.latitude =91.0;
-                mClubProfile.longitude=92.0;
+                mClubProfile.clubLocationName =textArea.getText().toString();
+//                mClubProfile.latitude =91.0;
+//                mClubProfile.longitude=92.0;
 
 
                 if(clubMainDay_Mon.isChecked()){
@@ -181,7 +214,22 @@ public class FCCreateActivity extends AppCompatActivity {
 
                 mClubProfile.clubIntro=clubIntro.getText().toString();
 
-                NetworkManager.getInstance().postNetworkMakeClub(FCCreateActivity.this, mClubProfile);
+                NetworkManager.getInstance().postNetworkMakeClub(FCCreateActivity.this, mClubProfile, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+                        if(result.code==200){
+                            searchMyPage(PropertyManager.getInstance().getUserId());
+
+                        }else{
+                            Toast.makeText(MyApplication.getContext(), result.msg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
 
 
                 finish();
@@ -280,6 +328,37 @@ public class FCCreateActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.fake_main, menu);
         this.menu = menu;
         return true;
+    }
+    private void searchMyPage(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPage(FCCreateActivity.this, memberId, new NetworkManager.OnResultListener<MyPage>() {
+            @Override
+            public void onSuccess(MyPage result) {
+                for (MyPageResult item : result.items) {
+                    PropertyManager.getInstance().setMyPageResult(item);
+                    searchMyPageTrans(memberId);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
+    }
+    private void searchMyPageTrans(final int memberId) {
+        NetworkManager.getInstance().getNetworkMyPageTrans(FCCreateActivity.this, memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
+            @Override
+            public void onSuccess(MyPageTrans result) {
+                PropertyManager.getInstance().setMyPageTransResult(result.items);
+                final Intent intent = new Intent(FCCreateActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFail(int code) {
+            }
+        });
     }
 
 }

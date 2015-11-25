@@ -1,6 +1,7 @@
 package com.android.ground.ground.controller.person.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,9 +16,23 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.fc.fcmain.FCActivity;
+import com.android.ground.ground.controller.fc.management.FCManagementActivity;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
+import com.android.ground.ground.controller.person.profile.YourProfileActivity;
+import com.android.ground.ground.manager.ActivityManager;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.message.MyMessageData;
+import com.android.ground.ground.model.message.MyMessageDataResult;
+import com.android.ground.ground.model.noti.NotiData;
+import com.android.ground.ground.model.noti.NotiDataResult;
 import com.android.ground.ground.model.person.main.AlarmItemData;
 import com.android.ground.ground.view.OnAlarmClickListener;
+import com.android.ground.ground.view.person.main.AlarmItemView;
+import com.android.ground.ground.view.person.message.MyMessageItemView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +43,10 @@ import com.android.ground.ground.view.OnAlarmClickListener;
  * create an instance of this fragment.
  */
 public class AlarmFragment extends Fragment {
+    PullToRefreshListView refreshView;
     MainAlarmAdapter mAdapter;
     ListView listView;
+    boolean isUpdate = false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,37 +96,132 @@ public class AlarmFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
 
+        refreshView = (PullToRefreshListView)view.findViewById(R.id.listView_alarm);
+        refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                searchNoti();
+            }
+        });
+
+        refreshView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+            @Override
+            public void onLastItemVisible() {
+                getMoreItem();
+            }
+        });
+
+        listView = refreshView.getRefreshableView();
+
         mAdapter = new MainAlarmAdapter();
-        listView  = (ListView)view.findViewById(R.id.listView_alarm);
+        searchNoti();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mAlarmListener.onDialogClick(false);
-                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
-                        .addToBackStack(null)
-                        .commit();
+                NotiDataResult item = ((AlarmItemView) view).mNotiDataResult;
+                if(item.sender != PropertyManager.getInstance().getUserId()) {
+                    switch (((AlarmItemView) view).mNotiDataResult.code) {
+                        case 100: {
+                            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment)
+                                    .addToBackStack(null)
+                                    .commit();
+                            break;
+                        }
+                        case 200: {
+                            //fc 메시지함으로 이동
+                            Intent intent = new Intent(getContext(), FCManagementActivity.class);
+                            intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
+                            startActivity(intent);
+
+                            break;
+                        }
+                        case 201: {
+                            Intent intent = new Intent(getContext(), FCManagementActivity.class);
+                            intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
+                            startActivity(intent);
+
+                            break;
+                        }
+                        case 300: {
+                            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment)
+                                    .addToBackStack(null)
+                                    .commit();
+                            break;
+                        }
+                        case 301: {
+                            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment)
+                                    .addToBackStack(null)
+                                    .commit();
+                            break;
+                        }
+                        case 302: {
+                            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment)
+                                    .addToBackStack(null)
+                                    .commit();
+                            break;
+                        }
+                        case 400: {
+                            Intent intent = new Intent(getContext(), FCManagementActivity.class);
+                            intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
+                            startActivity(intent);
+
+                            break;
+                        }
+                        case 401: {
+                            Intent intent = new Intent(getContext(), FCManagementActivity.class);
+                            intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
+                            startActivity(intent);
+
+                            break;
+                        }
+                        case 500: {
+                            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment)
+                                    .addToBackStack(null)
+                                    .commit();
+                            break;
+                        }
+
+                    }
+                }
             }
         });
 
         listView.setAdapter(mAdapter);
 
-
-        initAlarmData();
-
-
         return view;
     }
 
-        private void initAlarmData() {
-        for(int i=0; i<5; i ++){
-            AlarmItemData data = new AlarmItemData();
-            data.name = "test id : " + i;
-            data.content = "님이 보낸 메시지입니다. " +i;
-            mAdapter.add(data);
-        }
+    private void searchNoti() {
+        // PropertyManager.getInstance().getUserId()
+        NetworkManager.getInstance().getNetworkNoti(getContext(),1, 1, new NetworkManager.OnResultListener<NotiData>() {
+            @Override
+            public void onSuccess(NotiData result) {
+                for(NotiDataResult item : result.items){
+                      mAdapter.add(item);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -153,6 +265,29 @@ public class AlarmFragment extends Fragment {
     OnAlarmClickListener mAlarmListener;
     public void setOnAlarmClickListener(OnAlarmClickListener listener){
         mAlarmListener =listener;
+    }
+    private void getMoreItem() {
+        if (!isUpdate) {
+            int nextPage = mAdapter.getNextPage();
+            if (nextPage != -1) {
+                isUpdate = true;
+                //PropertyManager.getInstance().getUserId()
+                NetworkManager.getInstance().getNetworkNoti(getContext(), 1, nextPage, new NetworkManager.OnResultListener<NotiData>() {
+                    @Override
+                    public void onSuccess(NotiData result) {
+                        for (NotiDataResult item : result.items) {
+                            mAdapter.add(item);
+                        }
+                        isUpdate = false;
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        isUpdate = false;
+                    }
+                });
+            }
+        }
     }
 
 }
