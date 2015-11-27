@@ -1,34 +1,6 @@
 [
     {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground54\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground54\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\work_android\\Ground65\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
-        "source": "C:\\work_android\\Ground65\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground1234\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\work_android\\Ground4321\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
-        "source": "C:\\work_android\\Ground4321\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\work_android\\Ground432\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
-        "source": "C:\\work_android\\Ground432\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground76\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\work_android\\Ground09\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
-        "source": "C:\\work_android\\Ground09\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
-    },
-    {
-        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground65\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
-        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground65\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
+        "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground09\\refresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\pulltorefresh.xml",
+        "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground09\\refresh\\build\\intermediates\\bundles\\debug\\res\\xml\\pulltorefresh.xml"
     }
 ]

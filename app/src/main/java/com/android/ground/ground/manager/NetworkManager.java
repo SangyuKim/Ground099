@@ -40,9 +40,9 @@ import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.post.fcCreate.ClubProfile;
 import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
+import com.android.ground.ground.model.post.push.Push401;
 import com.android.ground.ground.model.post.signup.UserProfile;
 import com.android.ground.ground.model.tmap.TmapItem;
-import com.begentgroup.xmlparser.XMLParser;
 import com.google.gson.Gson;
 import com.greenfrvr.rubberloader.RubberLoaderView;
 import com.loopj.android.http.AsyncHttpClient;
@@ -70,6 +70,8 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpResponse;
@@ -78,9 +80,7 @@ import cz.msebera.android.httpclient.message.BasicHeader;
 
 
 public class NetworkManager{
-
-//    public final static String GROND_SERVER_URL = "http://172.31.24.101:80";
-//    public final static String GROND_SERVER_URL = "http://192.168.211.228:3001";
+    public List<Dialog> mDialogList= new ArrayList<Dialog>();
     public final static String GROND_SERVER_URL = "http://54.178.160.114";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
@@ -92,7 +92,6 @@ public class NetworkManager{
     }
 
     AsyncHttpClient client;
-    XMLParser parser;
     Gson gson;
     private NetworkManager() {
 
@@ -119,7 +118,6 @@ public class NetworkManager{
         }
 
 
-        parser = new XMLParser();
         gson = new Gson();
         client.setCookieStore(new PersistentCookieStore(MyApplication.getContext()));
 
@@ -188,10 +186,10 @@ public class NetworkManager{
         });
 
     }
-    Dialog _dialog;
+
     public static final String SEARCH_CLUB_URL =GROND_SERVER_URL+"/club/search";
     public void getNetworkSearchClub(final Context context, String filter,String keyword, int page, int memberId, final OnResultListener<SearchClub> listener) {
-
+//        showWaitingDialog(context);
         final RequestParams params = new RequestParams();
 
         String url;
@@ -210,7 +208,7 @@ public class NetworkManager{
         client.get(context, url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+//                unShowWaitingDialog();
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 SearchClub items = gson.fromJson(s, SearchClub.class);
@@ -221,27 +219,28 @@ public class NetworkManager{
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                        listener.onFail(statusCode);
+//                unShowWaitingDialog();
             }
 
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
-
-                    _dialog  = new Dialog(context);
-                    _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    _dialog.setContentView(R.layout.fragment_sample_ripple);
-                    ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                    TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                    mTextView.setText("getNetworkSearchClub");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
+//            @Override
+//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPreProcessResponse(instance, response);
+//
+//                    _dialog  = new Dialog(context);
+//                    _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                    _dialog.setContentView(R.layout.fragment_sample_ripple);
+//                    ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+//                    TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+//                    mTextView.setText("getNetworkSearchClub");
+//                _dialog.show();
+//
+//            }
+//
+//            @Override
+//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPostProcessResponse(instance, response);
+//                _dialog.dismiss();
+//            }
         });
 
     }
@@ -249,7 +248,7 @@ public class NetworkManager{
     public static final String SEARCH_MEM_URL =GROND_SERVER_URL+"/member/search";
     public void getNetworkSearchMem(final Context context, String filter,String keyword, int page, int memberId, final OnResultListener<SearchMem> listener) {
         final RequestParams params = new RequestParams();
-
+//        showWaitingDialog(context);
         String url;
         if(keyword.equals("")){
             url = SEARCH_MEM_URL + "/"+ filter;
@@ -265,6 +264,7 @@ public class NetworkManager{
         client.get(context, url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                unShowWaitingDialog();
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 SearchMem items = gson.fromJson(s, SearchMem.class);
@@ -274,27 +274,29 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
+//                unShowWaitingDialog();
                   listener.onFail(statusCode);
             }
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
 
-                _dialog  = new Dialog(context);
-                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                _dialog.setContentView(R.layout.fragment_sample_ripple);
-                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                mTextView.setText("getNetworkSearchMem");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
+//            @Override
+//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPreProcessResponse(instance, response);
+//
+//                _dialog  = new Dialog(context);
+//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                _dialog.setContentView(R.layout.fragment_sample_ripple);
+//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+//                mTextView.setText("getNetworkSearchMem");
+//                _dialog.show();
+//
+//            }
+//
+//            @Override
+//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPostProcessResponse(instance, response);
+//                _dialog.dismiss();
+//            }
 
 
         });
@@ -319,25 +321,25 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 listener.onFail(statusCode);
             }
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
-
-                _dialog  = new Dialog(context);
-                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                _dialog.setContentView(R.layout.fragment_sample_ripple);
-                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                mTextView.setText("getNetworkMatchInfoMVP");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
+//            @Override
+//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPreProcessResponse(instance, response);
+//
+//                _dialog  = new Dialog(context);
+//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                _dialog.setContentView(R.layout.fragment_sample_ripple);
+//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+//                mTextView.setText("getNetworkMatchInfoMVP");
+//                _dialog.show();
+//
+//            }
+//
+//            @Override
+//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPostProcessResponse(instance, response);
+//                _dialog.dismiss();
+//            }
 
 
         });
@@ -347,7 +349,7 @@ public class NetworkManager{
     public static final String SEARCH_MATCHINFO_URL =GROND_SERVER_URL+"/match/search";
     public void getNetworkMatchInfo(final Context context,  String filter,String keyword, int page, int memberId, final OnResultListener<MatchInfo> listener) {
               final RequestParams params = new RequestParams();
-
+//        showWaitingDialog(context);
         String url;
         if(keyword.equals("")){
             url = SEARCH_MATCHINFO_URL + "/"+ filter;
@@ -364,6 +366,7 @@ public class NetworkManager{
         client.get(context,url , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                unShowWaitingDialog();
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
 
@@ -375,28 +378,10 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                unShowWaitingDialog();
                   listener.onFail(statusCode);
             }
 
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
-
-                _dialog  = new Dialog(context);
-                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                _dialog.setContentView(R.layout.fragment_sample_ripple);
-                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                mTextView.setText("getNetworkMatchInfo");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
 
 
         });
@@ -428,25 +413,25 @@ public class NetworkManager{
 
                 listener.onFail(statusCode);
             }
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
-
-                _dialog  = new Dialog(context);
-                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                _dialog.setContentView(R.layout.fragment_sample_ripple);
-                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                mTextView.setText("getNetworkMyPage");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
+//            @Override
+//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPreProcessResponse(instance, response);
+//
+//                _dialog  = new Dialog(context);
+//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                _dialog.setContentView(R.layout.fragment_sample_ripple);
+//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+//                mTextView.setText("getNetworkMyPage");
+//                _dialog.show();
+//
+//            }
+//
+//            @Override
+//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPostProcessResponse(instance, response);
+//                _dialog.dismiss();
+//            }
 
         });
 
@@ -476,25 +461,25 @@ public class NetworkManager{
                 listener.onFail(statusCode);
             }
 
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
-
-                _dialog  = new Dialog(context);
-                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                _dialog.setContentView(R.layout.fragment_sample_ripple);
-                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                mTextView.setText("getNetworkMyPageTrans");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
+//            @Override
+//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPreProcessResponse(instance, response);
+//
+//                _dialog  = new Dialog(context);
+//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                _dialog.setContentView(R.layout.fragment_sample_ripple);
+//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+//                mTextView.setText("getNetworkMyPageTrans");
+//                _dialog.show();
+//
+//            }
+//
+//            @Override
+//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPostProcessResponse(instance, response);
+//                _dialog.dismiss();
+//            }
         });
 
     }
@@ -522,25 +507,25 @@ public class NetworkManager{
 
                 listener.onFail(statusCode);
             }
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
-
-                _dialog  = new Dialog(context);
-                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                _dialog.setContentView(R.layout.fragment_sample_ripple);
-                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                mTextView.setText("getNetworkClubMain");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
+//            @Override
+//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPreProcessResponse(instance, response);
+//
+//                _dialog  = new Dialog(context);
+//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                _dialog.setContentView(R.layout.fragment_sample_ripple);
+//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+//                mTextView.setText("getNetworkClubMain");
+//                _dialog.show();
+//
+//            }
+//
+//            @Override
+//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPostProcessResponse(instance, response);
+//                _dialog.dismiss();
+//            }
 
         });
 
@@ -569,25 +554,25 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
             }
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
-
-                _dialog  = new Dialog(context);
-                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                _dialog.setContentView(R.layout.fragment_sample_ripple);
-                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                mTextView.setText("getNetworkClubAndMember");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
+//            @Override
+//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPreProcessResponse(instance, response);
+//
+//                _dialog  = new Dialog(context);
+//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                _dialog.setContentView(R.layout.fragment_sample_ripple);
+//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+//                mTextView.setText("getNetworkClubAndMember");
+//                _dialog.show();
+//
+//            }
+//
+//            @Override
+//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPostProcessResponse(instance, response);
+//                _dialog.dismiss();
+//            }
 
         });
 
@@ -619,25 +604,25 @@ public class NetworkManager{
 
                 listener.onFail(statusCode);
             }
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
-
-                _dialog  = new Dialog(context);
-                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                _dialog.setContentView(R.layout.fragment_sample_ripple);
-                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                mTextView.setText("getNetworkClubMatchList");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
+//            @Override
+//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPreProcessResponse(instance, response);
+//
+//                _dialog  = new Dialog(context);
+//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                _dialog.setContentView(R.layout.fragment_sample_ripple);
+//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+//                mTextView.setText("getNetworkClubMatchList");
+//                _dialog.show();
+//
+//            }
+//
+//            @Override
+//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPostProcessResponse(instance, response);
+//                _dialog.dismiss();
+//            }
 
         });
 
@@ -668,25 +653,25 @@ public class NetworkManager{
 
                 listener.onFail(statusCode);
             }
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
-
-                _dialog  = new Dialog(context);
-                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                _dialog.setContentView(R.layout.fragment_sample_ripple);
-                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                mTextView.setText("getNetworkLineupInfo");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
+//            @Override
+//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPreProcessResponse(instance, response);
+//
+//                _dialog  = new Dialog(context);
+//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                _dialog.setContentView(R.layout.fragment_sample_ripple);
+//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+//                mTextView.setText("getNetworkLineupInfo");
+//                _dialog.show();
+//
+//            }
+//
+//            @Override
+//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPostProcessResponse(instance, response);
+//                _dialog.dismiss();
+//            }
 
         });
 
@@ -715,25 +700,25 @@ public class NetworkManager{
 
                 listener.onFail(statusCode);
             }
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPreProcessResponse(instance, response);
-
-                _dialog  = new Dialog(context);
-                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                _dialog.setContentView(R.layout.fragment_sample_ripple);
-                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-                mTextView.setText("getNetworkLineupMatch");
-                _dialog.show();
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-                super.onPostProcessResponse(instance, response);
-                _dialog.dismiss();
-            }
+//            @Override
+//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPreProcessResponse(instance, response);
+//
+//                _dialog  = new Dialog(context);
+//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                _dialog.setContentView(R.layout.fragment_sample_ripple);
+//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+//                mTextView.setText("getNetworkLineupMatch");
+//                _dialog.show();
+//
+//            }
+//
+//            @Override
+//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+//                super.onPostProcessResponse(instance, response);
+//                _dialog.dismiss();
+//            }
 
         });
 
@@ -937,7 +922,7 @@ public class NetworkManager{
     public static final String SEND_SIGNUP_URL =GROND_SERVER_URL+"/member";
     public void postNetworkSignup(final Context context , UserProfile mUserProfile,  final OnResultListener<SignupData> listener) {
 
-
+        showWaitingDialog(context);
         final RequestParams params = new RequestParams();
         try {
             if(mUserProfile.mFile != null){
@@ -977,7 +962,7 @@ public class NetworkManager{
         client.post(context, SEND_SIGNUP_URL, params,new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                unShowWaitingDialog();
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", "sign up : " + s);
@@ -989,9 +974,10 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
             }
+
 
 
         });
@@ -1002,14 +988,14 @@ public class NetworkManager{
     //login kakao
     public static final String SEND_LOGIN_KAKAO_URL =GROND_SERVER_URL+"/member/login/kakao";
     public void postNetworkLoginKakao(final Context context, String token , final OnResultListener<KakaoLogin> listener) {
-
+        showWaitingDialog(context);
 
         final RequestParams params = new RequestParams();
         params.put("access_token",token);
            client.post(context, SEND_LOGIN_KAKAO_URL, params, new AsyncHttpResponseHandler() {
                @Override
                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                    unShowWaitingDialog();
                    ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                    String s = new String(responseBody, Charset.forName("UTF-8"));
                    Log.d("hello", "kakao post : " + s);
@@ -1021,11 +1007,12 @@ public class NetworkManager{
 
                @Override
                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                    unShowWaitingDialog();
                    Log.d("hello", "status code : " + statusCode);
 //                   String s = new String(responseBody, Charset.forName("UTF-8"));
 //                   Log.d("hello", "kakao post error : " + s);
                }
+
 
 
            });
@@ -1034,14 +1021,14 @@ public class NetworkManager{
 
     //login kakao after token send
     public void getNetworkLoginKakao(final Context context, String token , final OnResultListener<KakaoResponse> listener) {
-
+        showWaitingDialog(context);
 
         final RequestParams params = new RequestParams();
 //        params.put("access_token",token);
         client.get(context, SEND_LOGIN_KAKAO_URL, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                unShowWaitingDialog();
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", "kakao get : " + s);
@@ -1053,7 +1040,7 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
             }
 
@@ -1066,13 +1053,14 @@ public class NetworkManager{
     public static final String SEND_LOGIN_FACEBOOK_URL =GROND_SERVER_URL+"/member/login/facebook";
     public void postNetworkLoginFacebook(final Context context, String token, final OnResultListener<FacebookLogin> listener) {
 
+        showWaitingDialog(context);
 
         final RequestParams params = new RequestParams();
         params.put("access_token",token);
         client.post(context, SEND_LOGIN_FACEBOOK_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                unShowWaitingDialog();
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1084,7 +1072,7 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                unShowWaitingDialog();
                 Log.d("hello", "status : " + statusCode);
             }
 
@@ -1329,13 +1317,134 @@ public class NetworkManager{
 
     }
 
+    // SEND_MESSAGE_401_URL
+    public static final String SEND_MESSAGE_401_URL =GROND_SERVER_URL+"/message/401";
+    public void postNetworkMessage401(final Context context , Push401 mPush401,  final OnResultListener<EtcData> listener) {
+
+        final RequestParams params = new RequestParams();
+        params.put("sender_id",mPush401.sender_id);
+        params.put("collectorClub_id",mPush401.collectorClub_id);
+        params.put("matchDate",mPush401.matchDate);
+        params.put("startTime",mPush401.startTime);
+        params.put("endTime",mPush401.endTime);
+        params.put("matchLocation",mPush401.matchLocation);
+        params.put("etc",mPush401.etc);
+
+        client.post(context, SEND_MESSAGE_401_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // push401
+    public static final String SEND_PUSH_401_URL =GROND_SERVER_URL+"/push/401";
+    public void postNetworkPush401(final Context context , Push401 mPush401,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("sender_id",mPush401.sender_id);
+        params.put("collectorClub_id",mPush401.collectorClub_id);
+        params.put("matchDate",mPush401.matchDate);
+        params.put("startTime",mPush401.startTime);
+        params.put("endTime",mPush401.endTime);
+        params.put("matchLocation",mPush401.matchLocation);
+        params.put("etc",mPush401.etc);
+
+        client.post(context, SEND_PUSH_401_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // gcm registration id token
+    public static final String SEND_MEMBER_PUSH_URL =GROND_SERVER_URL+"/member/push";
+    public void postNetworkMemberPush(final Context context , String device_id, String token,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("device_id",device_id);
+        params.put("os","Android");
+        params.put("token",token);
+
+        client.post(context, SEND_MEMBER_PUSH_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+
     //===================================================
     public void cancelAll(Context context) {
         client.cancelRequests(context, true);
     }
 
 
+    public void showWaitingDialog(Context context){
+        mDialogList.add(new Dialog(context));
+        mDialogList.get(mDialogList.size()-1).requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialogList.get(mDialogList.size()-1).setContentView(R.layout.fragment_sample_ripple);
+        ((RubberLoaderView) (mDialogList.get(mDialogList.size()-1).findViewById(R.id.loader2))).startLoading();
+        TextView mTextView = (TextView)mDialogList.get(mDialogList.size()-1).findViewById(R.id.textDialog);
+        mTextView.setText("");
+        mDialogList.get(mDialogList.size()-1).show();
 
+    }
+
+    public void unShowWaitingDialog(){
+        for(Dialog item : mDialogList){
+            item.dismiss();
+        }
+
+    }
 
 }
 

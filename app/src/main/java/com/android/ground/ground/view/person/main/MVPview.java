@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVPResult;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.ScrResult;
@@ -105,7 +106,7 @@ public class MVPview extends FrameLayout {
 
         month.setText(items.month +"월의 MVP" );
         memNameCountMVP.setText(itemMVP.memName + " / " + itemMVP.count +" 회");
-        memNameCountScr.setText(itemScr.memName + " / " + itemScr.count +" 골");
+        memNameCountScr.setText(itemScr.memName + " / " + itemScr.count + " 골");
         clubNmaeCount.setText(itemWin.clubName + " / " + itemMVP.count + " 승");
 
         ImageLoader.getInstance().displayImage((ImageUrl + itemMVP.clubImage), clubImageMVP, options);
@@ -115,12 +116,17 @@ public class MVPview extends FrameLayout {
         ImageLoader.getInstance().displayImage((ImageUrl + itemWin.clubImage), clubImage, options);
 
 
-        //todo
-        //포지션 매칭해서 보여주기
-
-//        itemScr.position
+//int a=  Utils.POSITION_AM;
+//
+//        switch (){
+//            case Utils.POSITION_AM :{
+//
+//                break;
+//            }
+//        }
+//        int a = Utils.POSITIONS[itemScr.position];
 //        scrPlayerPosition.setImageResource(R.id);
-
+//
 //        itemMVP.position
 //        mvpPlayerPosition.setImageResource(R.id);
 

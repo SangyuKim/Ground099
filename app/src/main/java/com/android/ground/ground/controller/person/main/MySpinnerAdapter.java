@@ -90,9 +90,11 @@ public class MySpinnerAdapter extends BaseAdapter {
         tv.setText(items.get(position));
         tv.setGravity(Gravity.CENTER);
         //todo
-        Spinner.LayoutParams mLp = new Spinner.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT
+
+        AbsListView.LayoutParams mLp = new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT
                 , (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
                 MyApplication.getContext().getResources().getDisplayMetrics()));
+
         view.setLayoutParams(mLp);
 //        float density = getApplicationContext().getResources().getDisplayMetrics().density;
 //        view.setBackgroundColor(MyApplication.getContext().getResources().getColor(R.color.spinner, MyApplication.getContext().getTheme().get R.style.Theme_App_Spinner));

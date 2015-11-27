@@ -34,16 +34,26 @@ public class PropertyManager {
 	}
 
 	private static final String REG_ID = "regToken";
-	
+
 	public void setRegistrationToken(String regId) {
 		mEditor.putString(REG_ID, regId);
 		mEditor.commit();
 	}
-	
+
 	public String getRegistrationToken() {
 		return mPrefs.getString(REG_ID, "");
 	}
 
+	private static final String DEVICE_ID = "deviceID";
+
+	public void setDeviceId(String deviceId) {
+		mEditor.putString(DEVICE_ID, deviceId);
+		mEditor.commit();
+	}
+
+	public String getDeviceId() {
+		return mPrefs.getString(DEVICE_ID, "");
+	}
 
 	private static final String FIELD_FACEBOOK_ID = "facebookId";
 	public void setFacebookId(String id) {

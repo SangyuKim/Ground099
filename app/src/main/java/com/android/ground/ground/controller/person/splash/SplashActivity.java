@@ -35,6 +35,7 @@ import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.manager.ServerUtilities;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Utils;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.login.FacebookLogin;
 import com.android.ground.ground.model.login.KakaoLogin;
 import com.android.ground.ground.model.login.KakaoResponse;
@@ -82,8 +83,7 @@ public class SplashActivity extends AppCompatActivity {
     static final private String serverAddress = "http://192.168.0.105:3000";
 
     private Handler handler;
-    private TextView registrationIDLabel;
-    private TextView deviceIDLabel;
+
     private RequestQueue mQueue;
 
     private String deviceID;
@@ -115,6 +115,31 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+
+        handler = new Handler();
+        //checkPlayService
+        checkPlayService();
+        // 토큰 발급 버튼과 이벤트
+        new RequestTokenThread().start();
+        //device id
+        resolveDeviceID();
+
+
+        // 토큰 등록 버튼과 이벤트
+        Log.d(TAG, "Register Device Token to App Server");
+        registerToken();
+
+        showStoredToken();
+
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                doRealStart();
+            }
+        };
+        setUpIfNeeded();
+
         //카톡 로그아웃
         Button btnLogout = (Button)findViewById(R.id.button49);
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -137,44 +162,44 @@ public class SplashActivity extends AppCompatActivity {
         });
 
         //unlink
-        final String appendMessage = getString(R.string.com_kakao_confirm_unlink);
-        new AlertDialog.Builder(this)
-                .setMessage(appendMessage)
-                .setPositiveButton(getString(R.string.com_kakao_ok_button),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                UserManagement.requestUnlink(new UnLinkResponseCallback() {
-                                    @Override
-                                    public void onFailure(ErrorResult errorResult) {
-                                    }
-
-                                    @Override
-                                    public void onSessionClosed(ErrorResult errorResult) {
-
-                                    }
-
-                                    @Override
-                                    public void onNotSignedUp() {
-
-                                    }
-
-                                    @Override
-                                    public void onSuccess(Long result) {
-
-                                    }
-                                });
-                                dialog.dismiss();
-                            }
-                        })
-                .setNegativeButton(getString(R.string.com_kakao_cancel_button),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).show();
-
+//        final String appendMessage = getString(R.string.com_kakao_confirm_unlink);
+//        new AlertDialog.Builder(this)
+//                .setMessage(appendMessage)
+//                .setPositiveButton(getString(R.string.com_kakao_ok_button),
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                UserManagement.requestUnlink(new UnLinkResponseCallback() {
+//                                    @Override
+//                                    public void onFailure(ErrorResult errorResult) {
+//                                    }
+//
+//                                    @Override
+//                                    public void onSessionClosed(ErrorResult errorResult) {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onNotSignedUp() {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onSuccess(Long result) {
+//
+//                                    }
+//                                });
+//                                dialog.dismiss();
+//                            }
+//                        })
+//                .setNegativeButton(getString(R.string.com_kakao_cancel_button),
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        }).show();
+//
 
 
 //        postLogin();
@@ -188,17 +213,7 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         });
-        btn = (Button) findViewById(R.id.button2);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-
-            }
-        });
-//---------------------------------------KakaoTalk---------------------------------------------------
+ //---------------------------------------KakaoTalk---------------------------------------------------
 
 
         callback = new SessionCallback();
@@ -246,7 +261,7 @@ public class SplashActivity extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            Toast.makeText(SplashActivity.this, "facebook id change", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(SplashActivity.this, "facebook id change", Toast.LENGTH_SHORT).show();
 //                            mLoginManager.logOut();
                             goLoginActivity();
                         }
@@ -255,78 +270,6 @@ public class SplashActivity extends AppCompatActivity {
                 };
 
          }
-            else {
-
-                //todo
-
-// =================================================== 실행하기
-
-//                mHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        goLoginActivity();
-//                    }
-//                }, 2000);
-            }
-
-
-//----------------------------------------GCM--------------------------------------------------------
-            registrationIDLabel = (TextView) findViewById(R.id.tokenLabel);
-
-//            mQueue = Volley.newRequestQueue(this);
-            handler = new Handler();
-
-            Button checkButton = (Button)findViewById(R.id.checkPlayServiceButton);
-            checkButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    checkPlayService();
-                }
-            });
-
-            // 토큰 발급 버튼과 이벤트
-            Button requestTokenButton = (Button)findViewById(R.id.requestDeviceTokenButton);
-            requestTokenButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // API19 에서 에러
-//            requestDeviceToken();
-                    new RequestTokenThread().start();
-                }
-            });
-
-            Button deviceIDButton = (Button)findViewById(R.id.getDeviceIDButton);
-            deviceIDLabel = (TextView)findViewById(R.id.deviceIdLabel);
-            deviceIDButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    resolveDeviceID();
-                }
-            });
-
-            // 토큰 등록 버튼과 이벤트
-            Button registTokenButton = (Button)findViewById(R.id.registTokenButton);
-            registTokenButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "Register Device Token to App Server");
-                    registerToken();
-                }
-            });
-
-            TextView addressView = (TextView)findViewById(R.id.serverAddress);
-            addressView.setText("Server Address : " + serverAddress);
-
-            showStoredToken();
-
-
-            mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    doRealStart();
-                }
-            };
-            setUpIfNeeded();
 
         }//카톡 세션 확인
 
@@ -359,20 +302,23 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onFail(int code) {
 //                    unShowWaitingDialog();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            goLoginActivity();
+                        }
+                    }, 2000);
 
                 }
             });
         }
 
-
-
     }
 
     private void resolveDeviceID() {
         String androidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        deviceIDLabel.setText(androidID);
         Log.d(TAG, "Android ID : " + androidID);
-
+        PropertyManager.getInstance().setDeviceId(androidID);
         deviceID = androidID;
     }
 
@@ -382,7 +328,7 @@ public class SplashActivity extends AppCompatActivity {
         Log.d(TAG, "isGooglePlayServicesAvailable : " + resultCode);
         if (ConnectionResult.SUCCESS == resultCode) {
             // 구글 플레이 서비스 가능
-            Toast.makeText(this, "플레이 서비스 사용 가능", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "플레이 서비스 사용 가능", Toast.LENGTH_SHORT).show();
         } else {
             // 구글 플레이 서비스 불가능 - 설치/업데이트 다이얼로그 출력
             GoogleApiAvailability.getInstance().getErrorDialog(this, resultCode, 0).show();
@@ -400,8 +346,8 @@ public class SplashActivity extends AppCompatActivity {
                     registrationID = token;
                     saveRegistrationID();
                 }
-
-                registrationIDLabel.setText(token);
+//
+//                registrationIDLabel.setText(token);
             }
         }, new IntentFilter(RegistrationIntentService.REGISTRATION_COMPLETE_BROADCAST));
 
@@ -429,7 +375,7 @@ public class SplashActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        registrationIDLabel.setText(token);
+//                        registrationIDLabel.setText(token);
                     }
                 });
             } catch (IOException e) {
@@ -444,9 +390,9 @@ public class SplashActivity extends AppCompatActivity {
         String storedToken = sharedPref.getString("REGISTRATION_ID", null);
         if ( storedToken != null ) {
             registrationID = storedToken;
-            registrationIDLabel.setText(registrationID);
-            Log.d("token: ", registrationID);
-        }
+//            registrationIDLabel.setText(registrationID);
+         }
+        PropertyManager.getInstance().setRegistrationToken(registrationID);
     }
 
     void saveRegistrationID() {
@@ -580,36 +526,51 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MyPage result) {
 //                unShowWaitingDialog();
+
                 for (MyPageResult item : result.items) {
                     PropertyManager.getInstance().setMyPageResult(item);
-
                     searchMyPageTrans(memberId);
                 }
             }
 
             @Override
             public void onFail(int code) {
-                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
 //                unShowWaitingDialog();
             }
         });
     }
     private void searchMyPageTrans(final int memberId) {
+
 //        showWaitingDialog();
         NetworkManager.getInstance().getNetworkMyPageTrans(SplashActivity.this, memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
             @Override
             public void onSuccess(MyPageTrans result) {
 //                unShowWaitingDialog();
+                Log.d("hello",  PropertyManager.getInstance().getDeviceId());
+                Log.d("hello",  PropertyManager.getInstance().getRegistrationToken());
+                NetworkManager.getInstance().postNetworkMemberPush(SplashActivity.this, PropertyManager.getInstance().getDeviceId(), PropertyManager.getInstance().getRegistrationToken(), new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+
+                        final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
-                final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
-                finish();
+
             }
 
             @Override
             public void onFail(int code) {
-                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
 //                unShowWaitingDialog();
             }
         });
@@ -673,12 +634,6 @@ public class SplashActivity extends AppCompatActivity {
         finish();
     }
 
-//    private void postLoginFacebook(String token) {
-//        NetworkManager.getInstance().postNetworkFacebook(SplashActivity.this, token);
-//    }
-//    private void sendLoginFacebook(String token) {
-//        NetworkManager.getInstance().postNetworkLoginFacebook(SplashActivity.this, token);
-//    }
     private void sendLoginKakao(String token) {
 //        showWaitingDialog();
         NetworkManager.getInstance().postNetworkLoginKakao(SplashActivity.this, token, new NetworkManager.OnResultListener<KakaoLogin>() {

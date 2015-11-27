@@ -41,6 +41,7 @@ import com.android.ground.ground.controller.person.message.MyMessageActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.login.KakaoLogin;
 import com.android.ground.ground.model.login.SignupData;
 import com.android.ground.ground.model.person.profile.MyPage;
@@ -330,7 +331,7 @@ public class SignupFragment extends Fragment {
 
                     @Override
                     public void onFail(int code) {
-                        Toast.makeText(MyApplication.getContext(), "error code in signup: " + code, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MyApplication.getContext(), "error code in signup: " + code, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -429,8 +430,8 @@ public class SignupFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-                    mUserProfile.position = position;
-                    ;
+                    mUserProfile.position = position+1;
+
                 }
 
                 @Override
@@ -443,7 +444,7 @@ public class SignupFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
-                    mUserProfile.skill = position;
+                    mUserProfile.skill = position+1;
                     ;
                 }
 
@@ -553,19 +554,33 @@ public class SignupFragment extends Fragment {
         });
     }
     private void searchMyPageTrans(final int memberId) {
+//        showWaitingDialog();
         NetworkManager.getInstance().getNetworkMyPageTrans(getContext(), memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
             @Override
             public void onSuccess(MyPageTrans result) {
+//                unShowWaitingDialog();
+                NetworkManager.getInstance().postNetworkMemberPush(getContext(), PropertyManager.getInstance().getDeviceId(), PropertyManager.getInstance().getRegistrationToken(), new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+                        final Intent intent = new Intent(getContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
 
             }
 
             @Override
             public void onFail(int code) {
-//                Toast.makeText(getContext(), "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                unShowWaitingDialog();
             }
         });
     }

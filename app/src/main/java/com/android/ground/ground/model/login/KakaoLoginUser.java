@@ -8,9 +8,9 @@ public class KakaoLoginUser {
     public long id;
     public int loginCode;
     public int clubYN;
-    public int club_id;;
+//    public int club_id;;
     public int signUpYN;
-    public int managerYN;
-    public int deleteYN;
+//    public int managerYN;
+//    public int deleteYN;
     public String memName;
 }

@@ -217,10 +217,11 @@ public class FCCreateActivity extends AppCompatActivity {
                 NetworkManager.getInstance().postNetworkMakeClub(FCCreateActivity.this, mClubProfile, new NetworkManager.OnResultListener<EtcData>() {
                     @Override
                     public void onSuccess(EtcData result) {
-                        if(result.code==200){
+                        if (result.code == 200) {
                             searchMyPage(PropertyManager.getInstance().getUserId());
 
-                        }else{
+
+                        } else {
                             Toast.makeText(MyApplication.getContext(), result.msg, Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -231,8 +232,6 @@ public class FCCreateActivity extends AppCompatActivity {
                     }
                 });
 
-
-                finish();
             }
         });
         imageView = (ImageView)findViewById(R.id.imageView_fc_profile);

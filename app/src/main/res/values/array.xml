@@ -24,16 +24,26 @@
         <item>기록 대기중 매치만 보기</item>
     </string-array>
     <string-array name="items_player_ability">
-        <item>상</item>
-        <item>중상</item>
-        <item>중 </item>
-        <item>중하</item>
         <item>하</item>
+        <item>중하</item>
+        <item>중 </item>
+        <item>중상</item>
+        <item>상</item>
     </string-array>
     <string-array name="items_player_position">
+        <item>LW</item>
+        <item>CF</item>
+        <item>RW</item>
+        <item>LM</item>
+        <item>AM</item>
+        <item>RM</item>
+        <item>CM</item>
+        <item>DM</item>
+        <item>LWB</item>
+        <item>CB</item>
+        <item>RWB</item>
+        <item>LB</item>
+        <item>RB</item>
         <item>GK</item>
-        <item>MF</item>
-        <item>DF</item>
-        <item>FW</item>
     </string-array>
 </resources>

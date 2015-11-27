@@ -1,0 +1,149 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.android.ground.ground.custom.MatchRequestFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView5" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="매치신청서"
+                android:id="@+id/textView3"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="매치일자"
+                android:id="@+id/textView25"
+                android:layout_alignTop="@+id/matchDate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="매치시간"
+                android:id="@+id/시작시간"
+                android:layout_alignTop="@+id/startTime"
+                android:layout_alignRight="@+id/textView100"
+                android:layout_alignEnd="@+id/textView100" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText3"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/textView3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="매치장소"
+                android:id="@+id/textView39"
+                android:layout_below="@+id/matchDate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/matchLocation"
+                android:layout_alignTop="@+id/textView39"
+                android:layout_toRightOf="@+id/textView39"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="추가메시지"
+                android:id="@+id/textView42"
+                android:layout_below="@+id/matchLocation"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/etc"
+                android:layout_below="@+id/matchLocation"
+                android:layout_alignRight="@+id/matchLocation"
+                android:layout_alignEnd="@+id/matchLocation"
+                android:layout_toRightOf="@+id/textView42"
+                android:layout_toEndOf="@+id/textView42" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/matchContent"
+                android:layout_below="@+id/textView3"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="끝날 시간"
+                android:id="@+id/textView100"
+                android:layout_below="@+id/startTime" />
+
+            <TimePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/endTime"
+                android:layout_below="@+id/textView100"
+                android:timePickerMode="spinner" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전송"
+                android:id="@+id/button4"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <DatePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/matchDate"
+                android:datePickerMode="spinner"
+                android:layout_below="@+id/button4"
+                android:layout_alignRight="@+id/editText3"
+                android:layout_alignEnd="@+id/editText3" />
+
+            <TimePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/startTime"
+                android:layout_below="@+id/etc"
+                android:layout_toRightOf="@+id/시작시간"
+                android:layout_toEndOf="@+id/시작시간"
+                android:timePickerMode="spinner" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

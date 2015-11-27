@@ -32,8 +32,10 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
+import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.controller.person.profile.YourProfileActivity;
+import com.android.ground.ground.custom.MatchRequestFragment;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
@@ -69,6 +71,7 @@ public class FragmentMainSearchFC extends Fragment {
     LinearLayout mLinearLayout;
     //    SwipeRefreshLayout refreshLayout;
     SearchClubAdapter mAdapter;
+    int collectorClub_id;
 
 
     private static final boolean isNaverMovie = true;
@@ -183,6 +186,7 @@ public class FragmentMainSearchFC extends Fragment {
             public void onAdapterDialogClick(Adapter adapter, View view, String tag) {
                 SearchFCItemView mView = (SearchFCItemView)view;
                 int club_id = mView.getmItem().club_id;
+                String club_name = mView.getmItem().clubName;
 
                 if(tag.equals("입단신청")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -212,31 +216,38 @@ public class FragmentMainSearchFC extends Fragment {
                     dialog.show();
 
                 }else if(tag.equals("매치신청")){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setIcon(R.mipmap.ic_launcher);
-                    builder.setTitle("매치 신청하기");
-                    builder.setMessage(club_id + "팀에게 " +  " 매치 신청하시겠습니까? ");
-                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    });
-                    builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                    MatchRequestFragment dialog = new MatchRequestFragment();
+                    getActivity().getIntent().putExtra("collectorClub_id",club_id);
+                    getActivity().getIntent().putExtra("club_name",club_name);
 
-                        }
-                    });
-                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+//                    collectorClub_id = club_id;
 
-                        }
-                    });
-                    builder.setCancelable(true);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                    builder.setIcon(R.mipmap.ic_launcher);
+//                    builder.setTitle("매치 신청하기");
+//                    builder.setMessage(club_id + "팀에게 " +  " 매치 신청하시겠습니까? ");
+//                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    });
+//                    builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    });
+//                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    });
+//                    builder.setCancelable(true);
+//                    AlertDialog dialog = builder.create();
+                    dialog.show(getFragmentManager(), "dialog");
                 }
 
 

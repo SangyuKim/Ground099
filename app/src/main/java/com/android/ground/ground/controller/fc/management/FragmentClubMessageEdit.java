@@ -349,7 +349,7 @@ public class FragmentClubMessageEdit extends Fragment {
 
     private void searchClubMessage() {
 
-        NetworkManager.getInstance().getNetworkClubMessage(getContext(), 1, 1, new NetworkManager.OnResultListener<ClubMessageData>() {
+        NetworkManager.getInstance().getNetworkClubMessage(getContext(), PropertyManager.getInstance().getMyPageResult().club_id, 1, new NetworkManager.OnResultListener<ClubMessageData>() {
             @Override
             public void onSuccess(ClubMessageData result) {
                 mAdapter.setTotalCount(result.itemCount);
@@ -372,7 +372,7 @@ public class FragmentClubMessageEdit extends Fragment {
             int nextPage = mAdapter.getNextPage();
             if (nextPage != -1) {
                 isUpdate = true;
-                NetworkManager.getInstance().getNetworkClubMessage(getContext(), 1, nextPage, new NetworkManager.OnResultListener<ClubMessageData>() {
+                NetworkManager.getInstance().getNetworkClubMessage(getContext(), PropertyManager.getInstance().getMyPageResult().club_id, nextPage, new NetworkManager.OnResultListener<ClubMessageData>() {
                     @Override
                     public void onSuccess(ClubMessageData result) {
                         for (ClubMessageDataResult item : result.items) {

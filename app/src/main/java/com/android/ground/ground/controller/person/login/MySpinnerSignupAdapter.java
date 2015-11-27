@@ -1,6 +1,7 @@
 package com.android.ground.ground.controller.person.login;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.model.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,11 +78,13 @@ public class MySpinnerSignupAdapter extends BaseAdapter {
             tv = (TextView)convertView;
         } else {
             tv = (TextView)LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, null);
-            tv.setLayoutParams(new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+//            tv.setLayoutParams(new Spinner.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
 //            tv.setBackgroundColor(Color.YELLOW);
         }
+        AbsListView.LayoutParams mLp = new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT
+                ,AbsListView.LayoutParams.WRAP_CONTENT);
         tv.setText(items.get(position));
-        tv.setLayoutParams(lp);
+        tv.setLayoutParams(mLp);
         return tv;
     }
 }

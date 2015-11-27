@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.main.MainActivity;
+import com.android.ground.ground.controller.person.splash.SplashActivity;
 import com.google.android.gms.gcm.GcmListenerService;
 
 public class MyGcmListenerService extends GcmListenerService {
@@ -55,8 +56,10 @@ public class MyGcmListenerService extends GcmListenerService {
    }
 
    private void sendNotification(String title, String message) {
+      Log.d("hello", title);
+      Log.d("hello", message);
       // 알림 터치시 - MainActivity가 나타나도록
-      Intent intent = new Intent(this, MainActivity.class);
+      Intent intent = new Intent(this, SplashActivity.class);
       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       PendingIntent pendingIntent = PendingIntent.getActivity(this, 0/* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 

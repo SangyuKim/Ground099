@@ -218,7 +218,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 if (((SearchMatchItemView) v).getVisibilityLayout() == View.GONE) {
                     CheckMatchListGroupItem mGroupItem = (CheckMatchListGroupItem)mAdapter.getGroup(groupPosition);
-                    if(!mGroupItem.text.equals("예정된 매치")){
+                    if(mGroupItem.text.equals("종료된 매치")){
                         ((SearchMatchItemView) v).setVisible();
                     }
                 } else {
@@ -234,30 +234,30 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 String s = ((SearchMatchGroupItemView)v).getTextView().getText().toString();
                 switch(s){
-                    case "더보기1":{
-                        Toast.makeText(getContext(),"더보기1 page 추가", Toast.LENGTH_SHORT).show();
+                    case "예정된 매치 더보기":{
+//                        Toast.makeText(getContext(),"예정된 매치 더보기 page 추가", Toast.LENGTH_SHORT).show();
                         if(mAdapter.getTotalFuturePage()>mAdapter.getFuturePage()){
                             getMoreMatch(filter, keywordView.getText().toString());
                         }else{
-                            Toast.makeText(getContext(),"더보기1 추가 내용 없음", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),"예정된 매치 더보기 추가 내용 없음", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     }
-                    case "더보기2":{
-                        Toast.makeText(getContext(),"더보기2 page 추가", Toast.LENGTH_SHORT).show();
+                    case "기록 대기중 매치 더보기":{
+//                        Toast.makeText(getContext(),"기록 대기중 매치 더보기 page 추가", Toast.LENGTH_SHORT).show();
                         if(mAdapter.getTotalIngPage()> mAdapter.getIngPage()){
                             getMoreMatch(filter, keywordView.getText().toString());
                         }else{
-                            Toast.makeText(getContext(),"더보기2 추가 내용 없음", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),"기록 대기중 매치 더보기 추가 내용 없음", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     }
-                    case "더보기3":{
-                        Toast.makeText(getContext(),"더보기3 page 추가", Toast.LENGTH_SHORT).show();
+                    case "종료된 매치 더보기":{
+//                        Toast.makeText(getContext(),"종료된 매치 더보기 page 추가", Toast.LENGTH_SHORT).show();
                         if(mAdapter.getTotalEndPage()> mAdapter.getEndPage()){
                             getMoreMatch(filter, keywordView.getText().toString());
                         }else {
-                            Toast.makeText(getContext(),"더보기3 추가 내용 없음", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),"종료된 매치 더보기 추가 내용 없음", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     }
@@ -524,7 +524,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
                         mAdapter.add("futureMat", result.items);
 
-                        mAdapter.add("더보기1", null);
+                        mAdapter.add("예정된 매치 더보기", null);
                         expandGroup();
                         refreshView.onRefreshComplete();
 //                    if(result.matPage)
@@ -542,7 +542,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 //                    mAdapter.clear();
 
                                     mAdapter.add("ingMat", result.items);
-                                    mAdapter.add("더보기2", null);
+                                    mAdapter.add("기록 대기중 매치 더보기", null);
                                     expandGroup();
                                     refreshView.onRefreshComplete();
                                     flag2 = true;
@@ -558,7 +558,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 //                    mAdapter.setTotalCount(result.total);
 //                    mAdapter.clear();
                                                 mAdapter.add("endMat", result.items);
-                                                mAdapter.add("더보기3", null);
+                                                mAdapter.add("종료된 매치 더보기", null);
                                                 expandGroup();
                                                 refreshView.onRefreshComplete();
 

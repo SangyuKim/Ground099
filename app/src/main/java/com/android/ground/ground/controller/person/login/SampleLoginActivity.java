@@ -33,6 +33,7 @@ import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.login.FacebookLogin;
 import com.android.ground.ground.model.login.KakaoLogin;
 import com.android.ground.ground.model.login.KakaoResponse;
@@ -370,7 +371,7 @@ public class SampleLoginActivity extends AppCompatActivity {
                         NetworkManager.getInstance().getNetworkLoginKakao(SampleLoginActivity.this, "", new NetworkManager.OnResultListener<KakaoResponse>() {
                             @Override
                             public void onSuccess(KakaoResponse result) {
-                           }
+                            }
 
                             @Override
                             public void onFail(int code) {
@@ -421,20 +422,36 @@ public class SampleLoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private void searchMyPageTrans(final int memberId) {
+//        showWaitingDialog();
         NetworkManager.getInstance().getNetworkMyPageTrans(SampleLoginActivity.this, memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
             @Override
             public void onSuccess(MyPageTrans result) {
+//                unShowWaitingDialog();
+                NetworkManager.getInstance().postNetworkMemberPush(SampleLoginActivity.this, PropertyManager.getInstance().getDeviceId(), PropertyManager.getInstance().getRegistrationToken(), new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+                        final Intent intent = new Intent(SampleLoginActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
-                final Intent intent = new Intent(SampleLoginActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
-                finish();
+
             }
 
             @Override
             public void onFail(int code) {
-             }
+//                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                unShowWaitingDialog();
+            }
         });
     }
 

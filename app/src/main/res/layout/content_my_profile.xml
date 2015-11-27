@@ -493,7 +493,6 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:id="@+id/oldClubImage1"
-                            android:src="@mipmap/ic_launcher"
                             android:visibility="visible"
                             android:layout_gravity="center_horizontal" />
 
@@ -517,7 +516,6 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:id="@+id/oldClubImage2"
-                            android:src="@mipmap/ic_launcher"
                             android:visibility="visible"
                             android:layout_gravity="center_horizontal" />
 
@@ -540,7 +538,6 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:id="@+id/oldClubImage3"
-                            android:src="@mipmap/ic_launcher"
                             android:visibility="visible"
                             android:layout_gravity="center_horizontal" />
 

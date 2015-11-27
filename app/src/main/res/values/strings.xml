@@ -42,7 +42,7 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="input_complete">완료</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_alarm">alarm</string>
     <string name="title_activity_my_message">MyMessageActivity</string>
@@ -58,7 +58,6 @@
     <string name="GCM_SenderId">155174750894</string>
     <string name="title_activity_your_profile">YourProfileActivity</string>
     <string name="text_usermgmt">User Management</string>
-
 
 
     <string name="kakaotalk_profile_button">프로필</string>

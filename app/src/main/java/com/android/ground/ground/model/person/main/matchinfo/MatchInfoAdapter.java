@@ -215,9 +215,13 @@ public class MatchInfoAdapter extends BaseExpandableListAdapter implements Searc
 
         if(mGroup.text.equals("예정된 매치")){
             view.setInvisibleScore();
-        }else{
+        }else if(mGroup.text.equals("기록 대기중 매치")){
+            view.setInvisibleScore();
+        }
+        else{
             view.setVisibleScore();
         }
+
         return view;
     }
 

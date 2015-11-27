@@ -53,17 +53,17 @@ public class SearchMatchGroupItemView extends RelativeLayout {
 //            imageViewBar.setBackgroundColor(getResources().getColor(R.color.blue));
             textView.setPadding(0, getContext().getResources().getDimensionPixelSize(R.dimen.your_dimension_name), 0, getContext().getResources().getDimensionPixelSize(R.dimen.your_dimension_name));
             textView.setTextColor(Color.WHITE);
-        }else if(item.text.equals("더보기1")){
+        }else if(item.text.equals("예정된 매치 더보기")){
 //            imageViewBar.setVisibility(View.GONE);
             textView.setGravity(Gravity.CENTER);
             textView.setPadding(0, 0, 0, getContext().getResources().getDimensionPixelSize(R.dimen.your_dimension_name));
             textView.setTextColor(getResources().getColor(R.color.spinner));
-        }else if(item.text.equals("더보기2")){
+        }else if(item.text.equals("기록 대기중 매치 더보기")){
 //            imageViewBar.setVisibility(View.GONE);
             textView.setGravity(Gravity.CENTER);
             textView.setPadding(0, 0, 0, getContext().getResources().getDimensionPixelSize(R.dimen.your_dimension_name));
             textView.setTextColor(getResources().getColor(R.color.spinner));
-        }else if(item.text.equals("더보기3")){
+        }else if(item.text.equals("종료된 매치 더보기")){
 //            imageViewBar.setVisibility(View.GONE);
             textView.setGravity(Gravity.CENTER);
             textView.setPadding(0, 0, 0, getContext().getResources().getDimensionPixelSize(R.dimen.your_dimension_name));
