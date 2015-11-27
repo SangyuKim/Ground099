@@ -367,6 +367,7 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
     }
 
     @Override

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.message.MyMessageData;
 import com.android.ground.ground.model.message.MyMessageDataResult;
 import com.android.ground.ground.model.person.message.MyMessageItem;
@@ -47,6 +48,14 @@ public class MyMessageEditFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+    }
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 

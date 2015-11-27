@@ -23,6 +23,7 @@ import com.android.ground.ground.controller.person.profile.YourProfileActivity;
 import com.android.ground.ground.manager.ActivityManager;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.message.MyMessageData;
 import com.android.ground.ground.model.message.MyMessageDataResult;
 import com.android.ground.ground.model.noti.NotiData;
@@ -241,6 +242,12 @@ public class AlarmFragment extends Fragment {
 //                    + " must implement OnFragmentInteractionListener");
 //        }
 //    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+    }
 
     @Override
     public void onDetach() {

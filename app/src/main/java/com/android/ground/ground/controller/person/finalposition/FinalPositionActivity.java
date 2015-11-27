@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.android.ground.ground.R;
 import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.lineup.match.LineupMatch;
 import com.android.ground.ground.model.lineup.match.LineupMatchResult;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfoResult;
@@ -52,7 +53,13 @@ public class FinalPositionActivity extends AppCompatActivity{
     ArrayList<LinearLayout> mLinearLayouts = new ArrayList<LinearLayout>();
     int w, h, countInField =0;
 
-        @Override
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_position);
@@ -90,6 +97,7 @@ public class FinalPositionActivity extends AppCompatActivity{
             gridLayout = (GridLayout)findViewById(R.id.gridLayout_field);
 
             searchMatchInfoResult(match_id);
+
 
 
 
@@ -197,13 +205,12 @@ public class FinalPositionActivity extends AppCompatActivity{
 //        super.setTitle(title);
         customToolbar.setTitle(title.toString());
     }
-
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        w= gridLayout.getWidth()/7;
-        h= gridLayout.getHeight()/14;
+        w= gridLayout.getWidth() / 7;
+        h = gridLayout.getHeight() / 14;
 
         Log.d("hello", "w : " + w + "  //  h : " + h);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w,h);
@@ -218,6 +225,7 @@ public class FinalPositionActivity extends AppCompatActivity{
                 parent.removeAllViews();
             gridLayout.addView(mLinearLayouts.get(i));
         }//for
+
         searchLineupResultFormationHome(match_id, home_id);
         searchLineupResultFormationAway(match_id, away_id);
 

@@ -32,6 +32,7 @@ import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -51,6 +52,12 @@ public class MyProfileManagementActivity extends AppCompatActivity {
 
 
     DisplayImageOptions options;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+    }
 
     CustomToolbar customToolbar;
     Menu menu;

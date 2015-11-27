@@ -216,6 +216,7 @@ public class SampleLoginActivity extends AppCompatActivity {
         super.onDestroy();
         Session.getCurrentSession().removeCallback(callback);
         clearReferences();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
 
    }
 

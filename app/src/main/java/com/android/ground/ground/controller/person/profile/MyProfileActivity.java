@@ -22,7 +22,9 @@ import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.controller.person.message.MyMessageActivity;
 import com.android.ground.ground.custom.CustomToolbar;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTransResult;
@@ -48,6 +50,11 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
     CustomToolbar customToolbar;
     Menu menu;
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+    }
 
     LinearLayout oldLayout1, oldLayout2, oldLayout3;
     @Override

@@ -22,6 +22,7 @@ import com.android.ground.ground.custom.CustomDateSlider;
 import com.android.ground.ground.custom.CustomMonthYearDateSlider;
 import com.android.ground.ground.custom.CustomYearPicker;
 import com.android.ground.ground.custom.TimeLabeler;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.log.Logger;
 import com.android.ground.ground.model.login.KakaoLogin;
@@ -81,6 +82,7 @@ public class TutorialActivity extends AppCompatActivity {
     protected void onDestroy() {
         clearReferences();
         super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
     }
     private void clearReferences() {
         Activity currActivity = MyApplication.getCurrentActivity();

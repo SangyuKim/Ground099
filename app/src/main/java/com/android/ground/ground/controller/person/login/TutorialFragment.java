@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.model.MyApplication;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,6 +118,12 @@ public class TutorialFragment extends Fragment {
 //                    + " must implement OnFragmentInteractionListener");
 //        }
 //    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+    }
 
     @Override
     public void onDetach() {

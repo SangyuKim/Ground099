@@ -19,6 +19,7 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
 
 /**
@@ -200,6 +201,12 @@ public class MainFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
     }
 
     /**

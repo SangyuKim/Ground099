@@ -1,10 +1,15 @@
 package com.android.ground.ground.manager;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Window;
+import android.widget.TextView;
 
+import com.android.ground.ground.R;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.etc.EtcData;
@@ -39,11 +44,13 @@ import com.android.ground.ground.model.post.signup.UserProfile;
 import com.android.ground.ground.model.tmap.TmapItem;
 import com.begentgroup.xmlparser.XMLParser;
 import com.google.gson.Gson;
+import com.greenfrvr.rubberloader.RubberLoaderView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.ResponseHandlerInterface;
 
 
 import java.io.ByteArrayInputStream;
@@ -65,17 +72,19 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.message.BasicHeader;
 
 
-public class NetworkManager {
+public class NetworkManager{
 
 //    public final static String GROND_SERVER_URL = "http://172.31.24.101:80";
 //    public final static String GROND_SERVER_URL = "http://192.168.211.228:3001";
     public final static String GROND_SERVER_URL = "http://54.178.160.114";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
+
         if (instance == null) {
             instance = new NetworkManager();
         }
@@ -113,7 +122,10 @@ public class NetworkManager {
         parser = new XMLParser();
         gson = new Gson();
         client.setCookieStore(new PersistentCookieStore(MyApplication.getContext()));
+
     }
+
+
 
     public HttpClient getHttpClient() {
         return client.getHttpClient();
@@ -176,9 +188,9 @@ public class NetworkManager {
         });
 
     }
+    Dialog _dialog;
     public static final String SEARCH_CLUB_URL =GROND_SERVER_URL+"/club/search";
     public void getNetworkSearchClub(final Context context, String filter,String keyword, int page, int memberId, final OnResultListener<SearchClub> listener) {
-
 
         final RequestParams params = new RequestParams();
 
@@ -198,6 +210,7 @@ public class NetworkManager {
         client.get(context, url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 SearchClub items = gson.fromJson(s, SearchClub.class);
@@ -207,19 +220,34 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                listener.onFail(statusCode);
+                       listener.onFail(statusCode);
             }
 
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
 
+                    _dialog  = new Dialog(context);
+                    _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    _dialog.setContentView(R.layout.fragment_sample_ripple);
+                    ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                    TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                    mTextView.setText("getNetworkSearchClub");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
+            }
         });
 
     }
 
     public static final String SEARCH_MEM_URL =GROND_SERVER_URL+"/member/search";
     public void getNetworkSearchMem(final Context context, String filter,String keyword, int page, int memberId, final OnResultListener<SearchMem> listener) {
-
-
-
         final RequestParams params = new RequestParams();
 
         String url;
@@ -246,8 +274,28 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
-                listener.onFail(statusCode);
+                  listener.onFail(statusCode);
             }
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
+
+                _dialog  = new Dialog(context);
+                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                _dialog.setContentView(R.layout.fragment_sample_ripple);
+                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                mTextView.setText("getNetworkSearchMem");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
+            }
+
 
         });
 
@@ -255,13 +303,12 @@ public class NetworkManager {
     //MVP
     public static final String SEARCH_MATCHINFO_MVP_URL =GROND_SERVER_URL+"/match/MVP";
     public void getNetworkMatchInfoMVP(final Context context,  final OnResultListener<MVP> listener) {
-
-        final RequestParams params = new RequestParams();
+         final RequestParams params = new RequestParams();
 
         client.get(context,SEARCH_MATCHINFO_MVP_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                     ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 MVP items = gson.fromJson(s, MVP.class);
                 if (items != null)
@@ -272,14 +319,34 @@ public class NetworkManager {
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 listener.onFail(statusCode);
             }
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
+
+                _dialog  = new Dialog(context);
+                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                _dialog.setContentView(R.layout.fragment_sample_ripple);
+                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                mTextView.setText("getNetworkMatchInfoMVP");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
+            }
+
+
         });
 
     }
     //Match
     public static final String SEARCH_MATCHINFO_URL =GROND_SERVER_URL+"/match/search";
     public void getNetworkMatchInfo(final Context context,  String filter,String keyword, int page, int memberId, final OnResultListener<MatchInfo> listener) {
-
-        final RequestParams params = new RequestParams();
+              final RequestParams params = new RequestParams();
 
         String url;
         if(keyword.equals("")){
@@ -308,8 +375,30 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                listener.onFail(statusCode);
+                  listener.onFail(statusCode);
             }
+
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
+
+                _dialog  = new Dialog(context);
+                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                _dialog.setContentView(R.layout.fragment_sample_ripple);
+                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                mTextView.setText("getNetworkMatchInfo");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
+            }
+
+
         });
 
     }
@@ -323,9 +412,10 @@ public class NetworkManager {
         client.get(context,SEARCH_MY_PAGE_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
-                Log.d("hello", "mypage : " +s );
+                Log.d("hello", "mypage : " + s);
 
                 MyPage items = gson.fromJson(s, MyPage.class);
                 if (items != null){
@@ -335,8 +425,29 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
             }
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
+
+                _dialog  = new Dialog(context);
+                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                _dialog.setContentView(R.layout.fragment_sample_ripple);
+                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                mTextView.setText("getNetworkMyPage");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
+            }
+
         });
 
     }
@@ -350,6 +461,7 @@ public class NetworkManager {
         client.get(context,SEARCH_MY_PAGE_TRANS_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 MyPageTrans items = gson.fromJson(s, MyPageTrans.class);
@@ -360,7 +472,28 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
+            }
+
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
+
+                _dialog  = new Dialog(context);
+                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                _dialog.setContentView(R.layout.fragment_sample_ripple);
+                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                mTextView.setText("getNetworkMyPageTrans");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
             }
         });
 
@@ -368,13 +501,13 @@ public class NetworkManager {
     //ClubMain
     public static final String SEARCH_CLUB_PAGE_URL =GROND_SERVER_URL+"/club";
     public void getNetworkClubMain(final Context context,  int clubId, final OnResultListener<ClubMain> listener) {
-
-        final RequestParams params = new RequestParams();
+           final RequestParams params = new RequestParams();
         params.put("club_id", clubId);
 
         client.get(context,SEARCH_CLUB_PAGE_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
 
@@ -386,8 +519,29 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
             }
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
+
+                _dialog  = new Dialog(context);
+                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                _dialog.setContentView(R.layout.fragment_sample_ripple);
+                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                mTextView.setText("getNetworkClubMain");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
+            }
+
         });
 
     }
@@ -395,12 +549,14 @@ public class NetworkManager {
     public static final String SEARCH_CLUB_AND_MEMBER_PAGE_URL =GROND_SERVER_URL+"/club/member";
     public void getNetworkClubAndMember(final Context context,  int clubId, final OnResultListener<ClubAndMember> listener) {
 
+
         final RequestParams params = new RequestParams();
         params.put("club_id", clubId);
 
         client.get(context,SEARCH_CLUB_AND_MEMBER_PAGE_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 ClubAndMember items = gson.fromJson(s, ClubAndMember.class);
@@ -411,14 +567,35 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                listener.onFail(statusCode);
+
             }
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
+
+                _dialog  = new Dialog(context);
+                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                _dialog.setContentView(R.layout.fragment_sample_ripple);
+                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                mTextView.setText("getNetworkClubAndMember");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
+            }
+
         });
 
     }
     //ClubMatchList
     public static final String SEARCH_CLUB_AND_MATCHLSIT_PAGE_URL =GROND_SERVER_URL+"/club/matchList";
     public void getNetworkClubMatchList(final Context context,  int clubId, int page, final OnResultListener<ClubMatchList> listener) {
+
 
         final RequestParams params = new RequestParams();
         params.put("club_id", clubId);
@@ -427,6 +604,7 @@ public class NetworkManager {
         client.get(context,SEARCH_CLUB_AND_MATCHLSIT_PAGE_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
 
@@ -438,14 +616,36 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
             }
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
+
+                _dialog  = new Dialog(context);
+                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                _dialog.setContentView(R.layout.fragment_sample_ripple);
+                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                mTextView.setText("getNetworkClubMatchList");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
+            }
+
         });
 
     }
     //Lineup info
     public static final String SEARCH_LINEUP_INFO_URL =GROND_SERVER_URL+"/lineup/info";
     public void getNetworkLineupInfo(final Context context,  int clubId, int matchId, final OnResultListener<LineupInfo> listener) {
+
 
         final RequestParams params = new RequestParams();
         params.put("club_id", clubId);
@@ -454,6 +654,7 @@ public class NetworkManager {
         client.get(context, SEARCH_LINEUP_INFO_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 LineupInfo items = gson.fromJson(s, LineupInfo.class);
@@ -464,8 +665,29 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
             }
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
+
+                _dialog  = new Dialog(context);
+                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                _dialog.setContentView(R.layout.fragment_sample_ripple);
+                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                mTextView.setText("getNetworkLineupInfo");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
+            }
+
         });
 
     }
@@ -479,6 +701,7 @@ public class NetworkManager {
         client.get(context,SEARCH_LINEUP_MATCH_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 LineupMatch items = gson.fromJson(s, LineupMatch.class);
@@ -489,8 +712,29 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
             }
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPreProcessResponse(instance, response);
+
+                _dialog  = new Dialog(context);
+                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                _dialog.setContentView(R.layout.fragment_sample_ripple);
+                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
+                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
+                mTextView.setText("getNetworkLineupMatch");
+                _dialog.show();
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
+                super.onPostProcessResponse(instance, response);
+                _dialog.dismiss();
+            }
+
         });
 
     }
@@ -498,12 +742,14 @@ public class NetworkManager {
     public static final String SEARCH_LINEUP_PLANLOC_URL =GROND_SERVER_URL+"/lineup/planLoc";
     public void getNetworkLineupPlanLoc(final Context context,  int matchId, final OnResultListener<LineupPlanLoc> listener) {
 
+
         final RequestParams params = new RequestParams();
         params.put("match_id",matchId);
 
         client.get(context,SEARCH_LINEUP_PLANLOC_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 LineupPlanLoc items = gson.fromJson(s, LineupPlanLoc.class);
@@ -514,14 +760,18 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
             }
+
+
         });
 
     }
     //Lineup virtual res
     public static final String SEARCH_LINEUP_VIRTUAL_RES_URL =GROND_SERVER_URL+"/lineup/virtual/res";
     public void getNetworkLineupVirtualRes(final Context context,int clubId,  int matchId, final OnResultListener<LineupVirtualRes> listener) {
+
 
         final RequestParams params = new RequestParams();
         params.put("match_id",matchId);
@@ -530,6 +780,7 @@ public class NetworkManager {
         client.get(context,SEARCH_LINEUP_VIRTUAL_RES_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 LineupVirtualRes items = gson.fromJson(s, LineupVirtualRes.class);
@@ -540,14 +791,18 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
             }
+
+
         });
 
     }
     //Lineup virtual fomation
     public static final String SEARCH_LINEUP_VIRTUAL_FOMATION_URL =GROND_SERVER_URL+"/lineup/virtual/fomation";
     public void getNetworkLineupVirtualFomation(final Context context,int clubId,  int matchId, final OnResultListener<LineupVirtualFomation> listener) {
+
 
         final RequestParams params = new RequestParams();
         params.put("match_id",matchId);
@@ -556,6 +811,7 @@ public class NetworkManager {
         client.get(context,SEARCH_LINEUP_VIRTUAL_FOMATION_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 LineupVirtualFomation items = gson.fromJson(s, LineupVirtualFomation.class);
@@ -566,8 +822,10 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
             }
+
         });
 
     }
@@ -575,12 +833,14 @@ public class NetworkManager {
     public static final String SEARCH_LINEUP_RESULT_URL =GROND_SERVER_URL+"/lineup/result/result";
     public void getNetworkLineupResult(final Context context,  int matchId, final OnResultListener<LineupResult> listener) {
 
+
         final RequestParams params = new RequestParams();
         params.put("match_id",matchId);
 
         client.get(context,SEARCH_LINEUP_RESULT_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 LineupResult items = gson.fromJson(s, LineupResult.class);
@@ -591,8 +851,11 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
             }
+
+
         });
 
     }
@@ -607,6 +870,7 @@ public class NetworkManager {
         client.get(context,SEARCH_LINEUP_SCORER_URL , params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 LineupScorer items = gson.fromJson(s, LineupScorer.class);
@@ -617,8 +881,11 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 listener.onFail(statusCode);
             }
+
+
         });
 
     }
@@ -670,6 +937,7 @@ public class NetworkManager {
     public static final String SEND_SIGNUP_URL =GROND_SERVER_URL+"/member";
     public void postNetworkSignup(final Context context , UserProfile mUserProfile,  final OnResultListener<SignupData> listener) {
 
+
         final RequestParams params = new RequestParams();
         try {
             if(mUserProfile.mFile != null){
@@ -709,6 +977,7 @@ public class NetworkManager {
         client.post(context, SEND_SIGNUP_URL, params,new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", "sign up : " + s);
@@ -720,8 +989,11 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 Log.d("hello", "status code : " + statusCode);
             }
+
+
         });
 
 
@@ -731,11 +1003,13 @@ public class NetworkManager {
     public static final String SEND_LOGIN_KAKAO_URL =GROND_SERVER_URL+"/member/login/kakao";
     public void postNetworkLoginKakao(final Context context, String token , final OnResultListener<KakaoLogin> listener) {
 
+
         final RequestParams params = new RequestParams();
         params.put("access_token",token);
            client.post(context, SEND_LOGIN_KAKAO_URL, params, new AsyncHttpResponseHandler() {
                @Override
                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                    ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                    String s = new String(responseBody, Charset.forName("UTF-8"));
                    Log.d("hello", "kakao post : " + s);
@@ -747,10 +1021,13 @@ public class NetworkManager {
 
                @Override
                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                    Log.d("hello", "status code : " + statusCode);
 //                   String s = new String(responseBody, Charset.forName("UTF-8"));
 //                   Log.d("hello", "kakao post error : " + s);
                }
+
+
            });
 
     }
@@ -758,11 +1035,13 @@ public class NetworkManager {
     //login kakao after token send
     public void getNetworkLoginKakao(final Context context, String token , final OnResultListener<KakaoResponse> listener) {
 
+
         final RequestParams params = new RequestParams();
 //        params.put("access_token",token);
         client.get(context, SEND_LOGIN_KAKAO_URL, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", "kakao get : " + s);
@@ -774,8 +1053,11 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 Log.d("hello", "status code : " + statusCode);
             }
+
+
         });
 
     }
@@ -784,11 +1066,13 @@ public class NetworkManager {
     public static final String SEND_LOGIN_FACEBOOK_URL =GROND_SERVER_URL+"/member/login/facebook";
     public void postNetworkLoginFacebook(final Context context, String token, final OnResultListener<FacebookLogin> listener) {
 
+
         final RequestParams params = new RequestParams();
         params.put("access_token",token);
         client.post(context, SEND_LOGIN_FACEBOOK_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -800,8 +1084,11 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 Log.d("hello", "status : " + statusCode);
             }
+
+
         });
 
     }
@@ -811,6 +1098,7 @@ public class NetworkManager {
     //make fc club
     public static final String SEND_CLUB_CREATE_URL =GROND_SERVER_URL+"/club/make";
     public void postNetworkMakeClub(final Context context , ClubProfile mClubProfile,  final OnResultListener<EtcData> listener) {
+
 
         final RequestParams params = new RequestParams();
         try {
@@ -840,6 +1128,7 @@ public class NetworkManager {
         client.post(context, SEND_CLUB_CREATE_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -851,8 +1140,11 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 Log.d("hello", "status code : " + statusCode);
             }
+
+
         });
 
     }
@@ -887,6 +1179,7 @@ public class NetworkManager {
         client.post(context, SEND_CLUB_UPDATE_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -898,8 +1191,11 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 Log.d("hello", "status code : " + statusCode);
             }
+
+
         });
 
     }
@@ -908,6 +1204,7 @@ public class NetworkManager {
     public static final String SEND_MY_MESSAGE_URL =GROND_SERVER_URL+"/message/member";
     public void getNetworkMessage(final Context context, int member_id, int page,  final OnResultListener<MyMessageData> listener ){
 
+
         final RequestParams params = new RequestParams();
         params.put("member_id",member_id);
         params.put("page",page);
@@ -915,6 +1212,7 @@ public class NetworkManager {
         client.get(context, SEND_MY_MESSAGE_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -926,8 +1224,11 @@ public class NetworkManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 Log.d("hello", "status code : " + statusCode);
             }
+
+
         });
 
     }
@@ -938,11 +1239,12 @@ public class NetworkManager {
 
         final RequestParams params = new RequestParams();
         params.put("club_id",club_id);
-        params.put("page",page);
+        params.put("page", page);
 
         client.get(context, SEND_CLUB_MESSAGE_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -951,10 +1253,14 @@ public class NetworkManager {
                     listener.onSuccess(items);
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 Log.d("hello", "status code : " + statusCode);
             }
+
+
         });
 
     }
@@ -963,13 +1269,15 @@ public class NetworkManager {
     public static final String SEND_LINEUP_RESULT_FORMATION_URL =GROND_SERVER_URL+"/lineup/result/formation";
     public void getNetworkLineupResultFormation(final Context context, int match_id, int club_id,  final OnResultListener<MatchFormation> listener ){
 
+
         final RequestParams params = new RequestParams();
         params.put("club_id",club_id);
-        params.put("match_id",match_id);
+        params.put("match_id", match_id);
 
         client.get(context, SEND_LINEUP_RESULT_FORMATION_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -978,16 +1286,20 @@ public class NetworkManager {
                     listener.onSuccess(items);
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 Log.d("hello", "status code : " + statusCode);
             }
+
         });
 
     }
     //message noti
     public static final String GET_MESSAGE_NOTI_URL =GROND_SERVER_URL+"/message/noti";
     public void getNetworkNoti(final Context context, int member_id, int page,  final OnResultListener<NotiData> listener ){
+
 
         final RequestParams params = new RequestParams();
         params.put("member_id",member_id);
@@ -996,6 +1308,7 @@ public class NetworkManager {
         client.get(context, GET_MESSAGE_NOTI_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1004,10 +1317,14 @@ public class NetworkManager {
                     listener.onSuccess(items);
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 Log.d("hello", "status code : " + statusCode);
             }
+
+
         });
 
     }
@@ -1016,6 +1333,7 @@ public class NetworkManager {
     public void cancelAll(Context context) {
         client.cancelRequests(context, true);
     }
+
 
 
 

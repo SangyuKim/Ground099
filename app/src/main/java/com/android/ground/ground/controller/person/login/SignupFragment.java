@@ -97,11 +97,14 @@ public class SignupFragment extends Fragment {
         clearReferences();
     }
 
+
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         clearReferences();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
     }
+
     private void clearReferences() {
         Activity currActivity = MyApplication.getCurrentActivity();
         if (currActivity != null && currActivity.equals(this)) {

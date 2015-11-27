@@ -25,6 +25,7 @@ import com.android.ground.ground.controller.person.message.CustomDialogMessageFr
 import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
@@ -216,6 +217,13 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
 
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
