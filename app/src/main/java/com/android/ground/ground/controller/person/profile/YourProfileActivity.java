@@ -38,6 +38,7 @@ import java.util.List;
 
 public class YourProfileActivity extends AppCompatActivity implements Profile {
 
+    int id;
     TextView memNameGender, memIntro, winLoseDraw, score, mvp, skill, clubName
             ,age, memLocationName ,oldClubName1,oldClubName2,oldClubName3;
     ImageView memImage, oldClubImage1, oldClubImage2, oldClubImage3, clubImage
@@ -111,6 +112,12 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         memMainDay_Fri= (CheckBox)findViewById(R.id.memMainDay_Fri);
         memMainDay_Sat=(CheckBox)findViewById(R.id.memMainDay_Sat);
         memMainDay_Sun= (CheckBox)findViewById(R.id.memMainDay_Sun);
+        setTitle("프로필");
+        id = getIntent().getIntExtra("memberId",-1);
+        if(id==-1){
+            finish();
+        }
+        getIntent().putExtra("collector_id",id);
 
 
         btnFc =  (ImageView)findViewById(R.id.btnFc);
@@ -194,11 +201,7 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         });
 
 
-        setTitle("프로필");
-        int id = getIntent().getIntExtra("memberId",-1);
-        if(id==-1){
-            finish();
-        }
+
         //서치
         searchYourPage(id);
         searchYourPageTrans(id);

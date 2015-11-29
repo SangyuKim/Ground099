@@ -210,7 +210,7 @@ public class AlarmFragment extends Fragment {
 
     private void searchNoti() {
         // PropertyManager.getInstance().getUserId()
-        NetworkManager.getInstance().getNetworkNoti(getContext(),1, 1, new NetworkManager.OnResultListener<NotiData>() {
+        NetworkManager.getInstance().getNetworkNoti(getContext(), PropertyManager.getInstance().getUserId(), 1, new NetworkManager.OnResultListener<NotiData>() {
             @Override
             public void onSuccess(NotiData result) {
                 for(NotiDataResult item : result.items){
@@ -279,7 +279,7 @@ public class AlarmFragment extends Fragment {
             if (nextPage != -1) {
                 isUpdate = true;
                 //PropertyManager.getInstance().getUserId()
-                NetworkManager.getInstance().getNetworkNoti(getContext(), 1, nextPage, new NetworkManager.OnResultListener<NotiData>() {
+                NetworkManager.getInstance().getNetworkNoti(getContext(), PropertyManager.getInstance().getUserId(), nextPage, new NetworkManager.OnResultListener<NotiData>() {
                     @Override
                     public void onSuccess(NotiData result) {
                         for (NotiDataResult item : result.items) {

@@ -3,6 +3,7 @@ package com.android.ground.ground.view.fc.fcmain;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMainResult;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -24,10 +27,11 @@ public class FCMemberHeaderItemView extends FrameLayout{
     ImageView clubImage;
     Button memYN;
     ClubMainResult mItem;
-
+    Button btnMsg;
     DisplayImageOptions options;
+    int clubId;
 
-    public FCMemberHeaderItemView(Context context) {
+    public FCMemberHeaderItemView(Context context, int clubId) {
         super(context);
         init();
     }
@@ -40,6 +44,16 @@ public class FCMemberHeaderItemView extends FrameLayout{
 
         clubImage = (ImageView)findViewById(R.id.clubImage);
         memYN = (Button)findViewById(R.id.memYN);
+        btnMsg = (Button)findViewById(R.id.button23);
+
+        btnMsg.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                dialog.show(((AppCompatActivity)MyApplication.getCurrentActivity()).getSupportFragmentManager(), "dialog");
+            }
+        });
+
         memYN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

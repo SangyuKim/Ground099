@@ -2,7 +2,6 @@ package com.android.ground.ground.manager;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
 import com.android.ground.ground.model.fc.fcmain.ClubMatchList.ClubMatchList;
@@ -29,7 +27,6 @@ import com.android.ground.ground.model.login.KakaoResponse;
 import com.android.ground.ground.model.login.SignupData;
 import com.android.ground.ground.model.message.ClubMessageData;
 import com.android.ground.ground.model.message.MyMessageData;
-import com.android.ground.ground.model.naver.NaverMovies;
 import com.android.ground.ground.model.noti.NotiData;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MatchInfo;
@@ -40,6 +37,13 @@ import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.post.fcCreate.ClubProfile;
 import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
+import com.android.ground.ground.model.post.push.MatchCreateData;
+import com.android.ground.ground.model.post.push.Push100;
+import com.android.ground.ground.model.post.push.Push200;
+import com.android.ground.ground.model.post.push.Push201Response;
+import com.android.ground.ground.model.post.push.Push300;
+import com.android.ground.ground.model.post.push.Push301;
+import com.android.ground.ground.model.post.push.Push302;
 import com.android.ground.ground.model.post.push.Push401;
 import com.android.ground.ground.model.post.signup.UserProfile;
 import com.android.ground.ground.model.tmap.TmapItem;
@@ -50,20 +54,13 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.ResponseHandlerInterface;
 
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -74,7 +71,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.message.BasicHeader;
 
@@ -1007,7 +1003,11 @@ public class NetworkManager{
 
                @Override
                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                   try{
                     unShowWaitingDialog();
+                   }catch (IllegalArgumentException e){
+                       e.printStackTrace();
+                   }
                    Log.d("hello", "status code : " + statusCode);
 //                   String s = new String(responseBody, Charset.forName("UTF-8"));
 //                   Log.d("hello", "kakao post error : " + s);
@@ -1422,6 +1422,543 @@ public class NetworkManager{
 
     }
 
+    // message100
+    public static final String SEND_MESSAGE_100_URL =GROND_SERVER_URL+"/message/100";
+    public void postNetworkMessage100(final Context context , Push100 mPush100,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush100.member_id);
+        params.put("sender_id",mPush100.sender_id);
+        params.put("collector_id",mPush100.collector_id);
+        params.put("contents",mPush100.contents);
+
+        client.post(context, SEND_MESSAGE_100_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // push100
+    public static final String SEND_PUSH_100_URL =GROND_SERVER_URL+"/push/100";
+    public void postNetworkPush100(final Context context , Push100 mPush100,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush100.member_id);
+        params.put("sender_id",mPush100.sender_id);
+        params.put("collector_id",mPush100.collector_id);
+        params.put("contents",mPush100.contents);
+
+        client.post(context, SEND_PUSH_100_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+
+    // message200
+    public static final String SEND_MESSAGE_200_URL =GROND_SERVER_URL+"/message/200";
+    public void postNetworkMessage200(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush200.member_id);
+        params.put("sender_id",mPush200.sender_id);
+        params.put("collectorClub_id",mPush200.collectorClub_id);
+        params.put("contents",mPush200.contents);
+
+        client.post(context, SEND_MESSAGE_200_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // push200
+    public static final String SEND_PUSH_200_URL =GROND_SERVER_URL+"/push/200";
+    public void postNetworkPush200(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush200.member_id);
+        params.put("sender_id",mPush200.sender_id);
+        params.put("collectorClub_id",mPush200.collectorClub_id);
+        params.put("contents",mPush200.contents);
+
+        client.post(context, SEND_PUSH_200_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+
+    // message201
+    public static final String SEND_MESSAGE_201_URL =GROND_SERVER_URL+"/message/201";
+    public void postNetworkMessage201(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush200.member_id);
+        params.put("sender_id",mPush200.sender_id);
+        params.put("collectorClub_id",mPush200.collectorClub_id);
+//        params.put("contents",mPush200.contents);
+
+        client.post(context, SEND_MESSAGE_201_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // push201
+    public static final String SEND_PUSH_201_URL =GROND_SERVER_URL+"/push/201";
+    public void postNetworkPush201(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush200.member_id);
+        params.put("sender_id",mPush200.sender_id);
+        params.put("collectorClub_id",mPush200.collectorClub_id);
+//        params.put("contents",mPush200.contents);
+
+        client.post(context, SEND_PUSH_201_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // message201 respeonse
+    public static final String SEND_MESSAGE_201_RESPEONSE_URL =GROND_SERVER_URL+"/message/201/response";
+    public void postNetworkMessage201Response(final Context context , Push201Response mPush201Response,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush201Response.member_id);
+        params.put("club_id",mPush201Response.club_id);
+        params.put("accRej",mPush201Response.accRej);
+        params.put("message_id",mPush201Response.message_id);
+
+        client.post(context, SEND_MESSAGE_201_RESPEONSE_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // message300
+    public static final String SEND_MESSAGE_300_URL =GROND_SERVER_URL+"/message/300";
+    public void postNetworkMessage300(final Context context , Push300 mPush300,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush300.member_id);
+        params.put("sender_id",mPush300.sender_id);
+        params.put("collector_id",mPush300.collector_id);
+        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_300_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // push300
+    public static final String SEND_PUSH_300_URL =GROND_SERVER_URL+"/push/300";
+    public void postNetworkPush300(final Context context , Push300 mPush300,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush300.member_id);
+        params.put("sender_id",mPush300.sender_id);
+        params.put("collector_id",mPush300.collector_id);
+        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_PUSH_300_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // message301
+    public static final String SEND_MESSAGE_301_URL =GROND_SERVER_URL+"/message/301";
+    public void postNetworkMessage301(final Context context , Push301 mPush301,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("home_id",mPush301.home_id);
+        params.put("away_id",mPush301.away_id);
+        params.put("match_id",mPush301.match_id);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_301_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+     // push301
+    public static final String SEND_PUSH_301_URL =GROND_SERVER_URL+"/push/301";
+    public void postNetworkPush301(final Context context , Push301 mPush301,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("home_id",mPush301.home_id);
+        params.put("away_id",mPush301.away_id);
+        params.put("match_id",mPush301.match_id);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_PUSH_301_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // message400
+    public static final String SEND_MESSAGE_400_URL =GROND_SERVER_URL+"/message/400";
+    public void postNetworkMessage400(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush200.member_id);
+        params.put("sender_id",mPush200.sender_id);
+        params.put("collectorClub_id",mPush200.collectorClub_id);
+        params.put("contents",mPush200.contents);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_400_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // push400
+    public static final String SEND_PUSH_400_URL =GROND_SERVER_URL+"/push/400";
+    public void postNetworkPush400(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush200.member_id);
+        params.put("sender_id",mPush200.sender_id);
+        params.put("collectorClub_id",mPush200.collectorClub_id);
+        params.put("contents",mPush200.contents);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_PUSH_400_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // message302
+    public static final String SEND_MESSAGE_302_URL =GROND_SERVER_URL+"/message/302";
+    public void postNetworkMessage302(final Context context , Push302 mPush302,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush302.member_id);
+        params.put("sender_id",mPush302.sender_id);
+        params.put("collector_id",mPush302.collector_id);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_302_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+    // push302
+    public static final String SEND_PUSH_302_URL =GROND_SERVER_URL+"/push/302";
+    public void postNetworkPush302(final Context context , Push302 mPush302,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush302.member_id);
+        params.put("sender_id",mPush302.sender_id);
+        params.put("collector_id",mPush302.collector_id);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_PUSH_302_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
+
+    // match create
+    public static final String SEND_MATCH_CREATE_URL =GROND_SERVER_URL+"/match/create";
+    public void postNetworkMatchCreate(final Context context , MatchCreateData mMatchCreateData,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mMatchCreateData.member_id);
+        params.put("home_id",mMatchCreateData.home_id);
+        params.put("away_id",mMatchCreateData.away_id);
+        params.put("matchDate",mMatchCreateData.matchDate);
+        params.put("startTime",mMatchCreateData.startTime);
+        params.put("endTime",mMatchCreateData.endTime);
+        params.put("matchLocation",mMatchCreateData.matchLocation);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MATCH_CREATE_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+            }
+
+
+        });
+
+    }
     //===================================================
     public void cancelAll(Context context) {
         client.cancelRequests(context, true);

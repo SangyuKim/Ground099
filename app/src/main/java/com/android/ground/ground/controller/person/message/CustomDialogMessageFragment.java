@@ -16,6 +16,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.etc.EtcData;
+import com.android.ground.ground.model.post.push.Push100;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,9 +89,30 @@ public class CustomDialogMessageFragment extends DialogFragment {
                 if (text.equals("")) {
                     Toast.makeText(getContext(), "no input" , Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), "text : " + text, Toast.LENGTH_SHORT).show();
+                    //collector id인지 clubId인지 확인하기
+                    Push100 mPush100 = new Push100();
+                    mPush100.member_id = PropertyManager.getInstance().getUserId();
+                    mPush100.sender_id= PropertyManager.getInstance().getUserId();
+                    mPush100.collector_id = getActivity().getIntent().getIntExtra("collector_id", 0);
+                    mPush100.contents = text;
+
+                    NetworkManager.getInstance().postNetworkMessage100(getContext(), mPush100, new NetworkManager.OnResultListener<EtcData>() {
+                        @Override
+                        public void onSuccess(EtcData result) {
+                            Toast.makeText(getContext(), "메시지를 전송하였습니다." , Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+                            Toast.makeText(getContext(), "메시지 전송 실패" , Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        }
+                    });
                 }
-                dismiss();
+
+
+
             }
         });
         return view;

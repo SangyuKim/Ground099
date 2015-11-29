@@ -105,7 +105,7 @@ public class FragmentFCMember extends Fragment {
 
         listView =  (ListView)view.findViewById(R.id.view_fcmember);
         mAdapter = new FCMemberAdapter();
-        mFCMemberHeaderItemView = new FCMemberHeaderItemView(getContext());
+        mFCMemberHeaderItemView = new FCMemberHeaderItemView(getContext(), clubId);
         searchHeaderFCMember();
         listView.addHeaderView(mFCMemberHeaderItemView);
         listView.addHeaderView(new FCMemberHeaderItemView2(getContext()));

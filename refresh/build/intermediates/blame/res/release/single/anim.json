@@ -12,7 +12,23 @@
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground09\\refresh\\src\\main\\res\\anim\\slide_in_from_bottom.xml"
     },
     {
+        "merged": "C:\\work_android\\Ground099\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_from_bottom.xml",
+        "source": "C:\\work_android\\Ground099\\refresh\\src\\main\\res\\anim\\slide_in_from_bottom.xml"
+    },
+    {
         "merged": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground09\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_from_top.xml",
         "source": "C:\\Users\\Tacademy\\AndroidStudioProjects\\Ground09\\refresh\\src\\main\\res\\anim\\slide_in_from_top.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground099\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_out_to_bottom.xml",
+        "source": "C:\\work_android\\Ground099\\refresh\\src\\main\\res\\anim\\slide_out_to_bottom.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground099\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_from_top.xml",
+        "source": "C:\\work_android\\Ground099\\refresh\\src\\main\\res\\anim\\slide_in_from_top.xml"
+    },
+    {
+        "merged": "C:\\work_android\\Ground099\\refresh\\build\\intermediates\\res\\merged\\release\\anim\\slide_out_to_top.xml",
+        "source": "C:\\work_android\\Ground099\\refresh\\src\\main\\res\\anim\\slide_out_to_top.xml"
     }
 ]
