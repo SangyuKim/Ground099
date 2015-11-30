@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <com.android.ground.ground.custom.CustomCircularImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:id="@+id/imageView_alarm"
         android:focusable="false"
         android:src="@mipmap/ic_launcher"
@@ -42,8 +42,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/notiDate"
-        android:layout_below="@+id/imageView_alarm"
-        android:layout_alignLeft="@+id/textView_alarm_content"
-        android:layout_alignStart="@+id/textView_alarm_content"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:maxLength="10" />
 </RelativeLayout>

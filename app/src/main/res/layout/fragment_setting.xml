@@ -142,7 +142,7 @@
         android:layout_alignParentEnd="true"
         android:layout_above="@+id/button16" />
 
-    <Switch
+    <android.support.v7.widget.SwitchCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switch5"
@@ -151,7 +151,7 @@
         android:layout_alignParentEnd="true"
         android:checked="false" />
 
-    <Switch
+    <android.support.v7.widget.SwitchCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switch6"
@@ -160,7 +160,7 @@
         android:layout_alignParentEnd="true"
         android:checked="false" />
 
-    <Switch
+    <android.support.v7.widget.SwitchCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switch7"
@@ -169,7 +169,7 @@
         android:layout_alignParentEnd="true"
         android:checked="false" />
 
-    <Switch
+    <android.support.v7.widget.SwitchCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switch8"
@@ -198,5 +198,7 @@
         android:layout_below="@+id/textView78"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+
 
 </RelativeLayout>

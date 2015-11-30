@@ -8,11 +8,20 @@ import android.widget.Checkable;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.message.ClubMessageDataResult;
 import com.android.ground.ground.model.message.MyMessageDataResult;
+import com.android.ground.ground.model.post.push.MatchCreateData;
+import com.android.ground.ground.model.post.push.MatchCreateDataResponse;
+import com.android.ground.ground.model.post.push.MatchCreateDataResponseResult;
+import com.android.ground.ground.model.post.push.Push200;
+import com.android.ground.ground.model.post.push.Push201Response;
+import com.android.ground.ground.model.post.push.Push301;
 import com.android.ground.ground.view.OnNoClickListener;
 import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
@@ -24,7 +33,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * Created by Tacademy on 2015-11-02.
  */
 public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
-    public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
 
 
     TextView textViewName, messageDate, msContents;
@@ -88,6 +96,80 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 if (mYesListener != null) {
                     mYesListener.onYesClick(MyMessageItemViewEdit.this);
                 }
+                switch (mClubMessageDataResult.code){
+                    case 201:{
+                        final Push201Response mPush201Response = new Push201Response();
+                        mPush201Response.accRej =1 ;
+                        mPush201Response.member_id = PropertyManager.getInstance().getUserId();
+                        mPush201Response.club_id = mClubMessageDataResult.collectorClub;
+                        mPush201Response.message_id = mClubMessageDataResult.message_id;
+                        mPush201Response.sender_id =  mClubMessageDataResult.sender;
+//                        mPush200.contents
+                        NetworkManager.getInstance().postNetworkMessage201Response(getContext(), mPush201Response, new NetworkManager.OnResultListener<EtcData>() {
+                            @Override
+                            public void onSuccess(EtcData result) {
+                                Toast.makeText(getContext(), "가입 승낙하였습니다. ", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(getContext(), "가입 승낙 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        break;
+                    }
+
+                    case 401: {
+                        MatchCreateData matchCreateData = new MatchCreateData();
+                        matchCreateData.startTime = mClubMessageDataResult.startTime;
+                        matchCreateData.member_id = PropertyManager.getInstance().getUserId();
+                        matchCreateData.matchLocation = mClubMessageDataResult.matchLocation;
+                        matchCreateData.away_id = mClubMessageDataResult.senderClub;
+                        matchCreateData.endTime = mClubMessageDataResult.endTime;
+                        matchCreateData.home_id = mClubMessageDataResult.collectorClub ;
+                        matchCreateData.matchDate = mClubMessageDataResult.matchDate;
+                        NetworkManager.getInstance().postNetworkMatchCreate(getContext(), matchCreateData, new NetworkManager.OnResultListener<MatchCreateDataResponse>() {
+                            @Override
+                            public void onSuccess(MatchCreateDataResponse result) {
+                                Toast.makeText(getContext(), "매치 승낙 성공하였습니다. ", Toast.LENGTH_SHORT).show();
+                                final Push301 mPush301 = new Push301();
+                                mPush301.away_id = mClubMessageDataResult.senderClub;
+                                mPush301.home_id = mClubMessageDataResult.collectorClub;
+
+                                     mPush301.match_id = result.result.match_id;
+
+                                NetworkManager.getInstance().postNetworkMessage301(getContext(), mPush301, new NetworkManager.OnResultListener<EtcData>() {
+                                    @Override
+                                    public void onSuccess(EtcData result) {
+                                        NetworkManager.getInstance().postNetworkPush301(getContext(), mPush301, new NetworkManager.OnResultListener<EtcData>() {
+                                            @Override
+                                            public void onSuccess(EtcData result) {
+                                                Toast.makeText(getContext(), "매치 정보 전달을 성공하였습니다. ", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                            @Override
+                                            public void onFail(int code) {
+                                                Toast.makeText(getContext(), "매치 정보 전달 푸시를 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onFail(int code) {
+                                        Toast.makeText(getContext(), "매치 정보 전달을 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(getContext(), "매치 승낙 실패하였습니다.. " ,Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                        break;
+                    }
+                }
             }
         });
 
@@ -108,7 +190,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
         switch (item.code){
             case 100 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -116,7 +198,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 200 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -124,7 +206,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 201 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -132,7 +214,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 300 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -140,7 +222,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 301 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage("assets://"+(NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -148,7 +230,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 302 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -156,7 +238,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 400 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -164,7 +246,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 401 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -194,7 +276,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
         switch (item.code){
             case 100 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -202,7 +284,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 200 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -210,7 +292,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 201 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage("assets://"+(NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -218,7 +300,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 300 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -226,7 +308,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 301 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -234,7 +316,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 302 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -242,7 +324,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 400 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -250,7 +332,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 401 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage(("assets://"+NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);

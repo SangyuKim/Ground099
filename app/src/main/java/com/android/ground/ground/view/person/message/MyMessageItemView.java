@@ -8,13 +8,17 @@ import android.widget.Checkable;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.message.ClubMessageDataResult;
 import com.android.ground.ground.model.message.MyMessageDataResult;
 import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.model.post.push.Push200;
 import com.android.ground.ground.view.OnNoClickListener;
 import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
@@ -90,6 +94,8 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
                 if (mYesListener != null) {
                     mYesListener.onYesClick(MyMessageItemView.this);
                 }
+
+
             }
         });
 
@@ -109,7 +115,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
         switch (item.code){
             case 100 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -117,7 +123,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 200 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -125,7 +131,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 201 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -133,7 +139,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 300 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -141,7 +147,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 301 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -149,7 +155,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 302 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -157,7 +163,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 400 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -165,7 +171,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 401 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -197,7 +203,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
         switch (item.code){
             case 100 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -205,7 +211,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 200 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -213,7 +219,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 201 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -221,7 +227,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 300 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -229,7 +235,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 301 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -237,7 +243,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 302 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);
@@ -245,7 +251,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 400 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.VISIBLE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -253,7 +259,7 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             }
             case 401 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageViewMessage, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.VISIBLE);
                 yes.setVisibility(View.VISIBLE);

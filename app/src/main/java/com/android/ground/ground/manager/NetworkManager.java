@@ -6,9 +6,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
+
 import com.android.ground.ground.R;
+import com.android.ground.ground.custom.CustomRubberLoaderView;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
@@ -38,6 +41,7 @@ import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.post.fcCreate.ClubProfile;
 import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
 import com.android.ground.ground.model.post.push.MatchCreateData;
+import com.android.ground.ground.model.post.push.MatchCreateDataResponse;
 import com.android.ground.ground.model.post.push.Push100;
 import com.android.ground.ground.model.post.push.Push200;
 import com.android.ground.ground.model.post.push.Push201Response;
@@ -48,7 +52,6 @@ import com.android.ground.ground.model.post.push.Push401;
 import com.android.ground.ground.model.post.signup.UserProfile;
 import com.android.ground.ground.model.tmap.TmapItem;
 import com.google.gson.Gson;
-import com.greenfrvr.rubberloader.RubberLoaderView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
@@ -78,6 +81,8 @@ import cz.msebera.android.httpclient.message.BasicHeader;
 public class NetworkManager{
     public List<Dialog> mDialogList= new ArrayList<Dialog>();
     public final static String GROND_SERVER_URL = "http://54.178.160.114";
+    public final static String ImageUrl ="";
+//    public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
     private static NetworkManager instance;
     public static NetworkManager getInstance() {
 
@@ -177,6 +182,7 @@ public class NetworkManager{
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 //                 listener.onFail(statusCode);
+                listener.onFail(statusCode);
             }
 
         });
@@ -548,6 +554,7 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                listener.onFail(statusCode);
 
             }
 //            @Override
@@ -972,6 +979,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1009,6 +1017,7 @@ public class NetworkManager{
                        e.printStackTrace();
                    }
                    Log.d("hello", "status code : " + statusCode);
+                   listener.onFail(statusCode);
 //                   String s = new String(responseBody, Charset.forName("UTF-8"));
 //                   Log.d("hello", "kakao post error : " + s);
                }
@@ -1042,6 +1051,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1074,6 +1084,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1130,6 +1141,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1181,6 +1193,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1214,6 +1227,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1246,6 +1260,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1279,6 +1294,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
         });
@@ -1310,6 +1326,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1347,6 +1364,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1383,6 +1401,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1415,6 +1434,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1449,6 +1469,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1482,6 +1503,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1516,6 +1538,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1549,6 +1572,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1583,6 +1607,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1616,6 +1641,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1628,6 +1654,7 @@ public class NetworkManager{
         showWaitingDialog(context);
         final RequestParams params = new RequestParams();
         params.put("member_id",mPush201Response.member_id);
+        params.put("sender_id",mPush201Response.sender_id);
         params.put("club_id",mPush201Response.club_id);
         params.put("accRej",mPush201Response.accRej);
         params.put("message_id",mPush201Response.message_id);
@@ -1649,6 +1676,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1682,6 +1710,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1715,6 +1744,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1748,6 +1778,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1781,6 +1812,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1815,6 +1847,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1849,6 +1882,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1882,6 +1916,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1915,6 +1950,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1924,7 +1960,7 @@ public class NetworkManager{
 
     // match create
     public static final String SEND_MATCH_CREATE_URL =GROND_SERVER_URL+"/match/create";
-    public void postNetworkMatchCreate(final Context context , MatchCreateData mMatchCreateData,  final OnResultListener<EtcData> listener) {
+    public void postNetworkMatchCreate(final Context context , MatchCreateData mMatchCreateData,  final OnResultListener<MatchCreateDataResponse> listener) {
         showWaitingDialog(context);
         final RequestParams params = new RequestParams();
         params.put("member_id",mMatchCreateData.member_id);
@@ -1943,7 +1979,7 @@ public class NetworkManager{
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
-                EtcData items = gson.fromJson(s, EtcData.class);
+                MatchCreateDataResponse items = gson.fromJson(s, MatchCreateDataResponse.class);
                 if (items != null) {
                     listener.onSuccess(items);
                 }
@@ -1953,6 +1989,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
             }
 
 
@@ -1969,16 +2006,27 @@ public class NetworkManager{
         mDialogList.add(new Dialog(context));
         mDialogList.get(mDialogList.size()-1).requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialogList.get(mDialogList.size()-1).setContentView(R.layout.fragment_sample_ripple);
-        ((RubberLoaderView) (mDialogList.get(mDialogList.size()-1).findViewById(R.id.loader2))).startLoading();
+        ((CustomRubberLoaderView) (mDialogList.get(mDialogList.size()-1).findViewById(R.id.loader2))).startLoading();
         TextView mTextView = (TextView)mDialogList.get(mDialogList.size()-1).findViewById(R.id.textDialog);
-        mTextView.setText("");
-        mDialogList.get(mDialogList.size()-1).show();
+//        if(MyApplication.getCurrentActivity()!= null){
+//            if(MyApplication.getCurrentActivity().isFinishing()){
+                try {
+                    mDialogList.get(mDialogList.size() - 1).show();
+                }catch (WindowManager.BadTokenException e){
+                    e.printStackTrace();
+                }
+//            }
+//        }
 
     }
 
     public void unShowWaitingDialog(){
-        for(Dialog item : mDialogList){
-            item.dismiss();
+        try{
+            for(Dialog item : mDialogList){
+                item.dismiss();
+            }
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
         }
 
     }

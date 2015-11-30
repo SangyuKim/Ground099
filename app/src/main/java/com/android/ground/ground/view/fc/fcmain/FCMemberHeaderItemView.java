@@ -1,5 +1,6 @@
 package com.android.ground.ground.view.fc.fcmain;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -10,11 +11,16 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMainResult;
+import com.android.ground.ground.model.post.push.Push200;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -22,7 +28,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * Created by Tacademy on 2015-11-02.
  */
 public class FCMemberHeaderItemView extends FrameLayout{
-    public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
     TextView clubIntro, clubName, clubLocationName;
     ImageView clubImage;
     Button memYN;
@@ -33,6 +38,7 @@ public class FCMemberHeaderItemView extends FrameLayout{
 
     public FCMemberHeaderItemView(Context context, int clubId) {
         super(context);
+        this.clubId = clubId;
         init();
     }
 
@@ -63,20 +69,50 @@ public class FCMemberHeaderItemView extends FrameLayout{
                 builder.setMessage("가입 신청하시겠습니까? ");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, int which) {
+                        final Push200 mPush200 = new Push200();
+                        mPush200.collectorClub_id = clubId;
+//                        mPush200.contents;
+                        mPush200.member_id = PropertyManager.getInstance().getUserId();
+                        mPush200.sender_id = PropertyManager.getInstance().getUserId();
+                        NetworkManager.getInstance().postNetworkMessage201(getContext(), mPush200, new NetworkManager.OnResultListener<EtcData>() {
+                            @Override
+                            public void onSuccess(EtcData result) {
+                                NetworkManager.getInstance().postNetworkPush201(getContext(), mPush200, new NetworkManager.OnResultListener<EtcData>() {
+                                    @Override
+                                    public void onSuccess(EtcData result) {
+                                        Toast.makeText(getContext(), "가입신청을 전송하였습니다.", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onFail(int code) {
+                                        Toast.makeText(getContext(), "가입신청 푸시를 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(getContext(), "가입신청을 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
+
 
                     }
                 });
                 builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        dialog.dismiss();
                     }
                 });
                 builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        dialog.dismiss();
                     }
                 });
                 builder.setCancelable(true);
@@ -103,7 +139,7 @@ public class FCMemberHeaderItemView extends FrameLayout{
         clubIntro.setText(items.clubIntro);
         clubName.setText(items.clubName);
         clubLocationName.setText(items.clubLocationName);
-        ImageLoader.getInstance().displayImage((ImageUrl + items.clubImage), clubImage, options);
+        ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + items.clubImage), clubImage, options);
         if(items.memYN == 0){
             memYN.setVisibility(View.INVISIBLE);
         }

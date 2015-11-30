@@ -56,6 +56,7 @@ public class FCMemberAdapter extends BaseAdapter
         } else {
             view = (FCMemberItemView)convertView;
         }
+
         view.setFCMemberListItem(items.get(position));
         return view;
     }

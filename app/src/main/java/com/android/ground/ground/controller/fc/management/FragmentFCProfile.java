@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +62,7 @@ public class FragmentFCProfile extends Fragment {
     TextView clubLocationName, clubName;
     CheckBox clubMainDay_Mon, clubMainDay_Tue, clubMainDay_Wed,clubMainDay_Thu ,clubMainDay_Fri,
             clubMainDay_Sat,clubMainDay_Sun;
-    Switch memYN, matchYN, fieldYN;
+    SwitchCompat memYN, matchYN, fieldYN;
     ImageView clubImage;
 
     ClubMainResult mItem;
@@ -140,9 +141,9 @@ public class FragmentFCProfile extends Fragment {
         clubMainDay_Sat= (CheckBox)view.findViewById(R.id.clubMainDay_Sat);
         clubMainDay_Sun= (CheckBox)view.findViewById(R.id.clubMainDay_Sun);
 
-        memYN= (Switch)view.findViewById(R.id.memYN);
-        matchYN= (Switch)view.findViewById(R.id.matchYN);
-        fieldYN= (Switch)view.findViewById(R.id.fieldYN);
+        memYN= (SwitchCompat)view.findViewById(R.id.memYN);
+        matchYN= (SwitchCompat)view.findViewById(R.id.matchYN);
+        fieldYN= (SwitchCompat)view.findViewById(R.id.fieldYN);
 
         searchHeaderFCMember();
 
@@ -515,7 +516,7 @@ public class FragmentFCProfile extends Fragment {
             fieldYN.setChecked(true);
         }
 
-        ImageLoader.getInstance().displayImage((ImageUrl + item.clubImage), clubImage, options);
+        ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.clubImage), clubImage, options);
 
     }
 }

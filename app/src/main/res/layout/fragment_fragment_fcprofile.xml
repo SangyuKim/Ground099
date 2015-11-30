@@ -278,7 +278,7 @@
                     android:layout_marginRight="15dp"
                     android:textSize="16sp" />
 
-                <Switch
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/fieldYN"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -326,7 +326,7 @@
                     android:layout_marginRight="15dp"
                     android:textSize="16sp" />
 
-                <Switch
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/memYN"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -361,7 +361,7 @@
                     android:layout_marginRight="15dp"
                     android:textSize="16sp" />
 
-                <Switch
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/matchYN"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -431,7 +431,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:text="수정확인"
+                    android:text=" 수정확인 "
                     android:layout_weight="1"
                     android:background="#ff3a1d" />
             </LinearLayout>

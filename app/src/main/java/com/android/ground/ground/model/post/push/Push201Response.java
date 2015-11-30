@@ -8,4 +8,5 @@ public class Push201Response {
     public int club_id;
     public int accRej;
     public int message_id;
+    public int sender_id;
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PropertyManager {
 
-	public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
+	public final static String ImageUrl ="";
 	private static PropertyManager instance;
 	public static PropertyManager getInstance() {
 		if (instance == null) {

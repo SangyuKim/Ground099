@@ -25,8 +25,9 @@ public class MyGcmListenerService extends GcmListenerService {
    public void onMessageReceived(String from, Bundle data) {
 
       Log.d(TAG, "From: " + from);
+      Log.d("hello", data.toString());
       String title = data.getString("title");
-      String message = data.getString("message");
+      String body = data.getString("body");
 
       Log.d(TAG, "GCMListener - onMessageReceived");
 
@@ -52,7 +53,7 @@ public class MyGcmListenerService extends GcmListenerService {
        */
 
       // 도착한 메세지를 사용자에게 알린다.
-      sendNotification(title, message);
+      sendNotification(title, body);
    }
 
    private void sendNotification(String title, String message) {
@@ -60,7 +61,7 @@ public class MyGcmListenerService extends GcmListenerService {
       Log.d("hello", message);
       // 알림 터치시 - MainActivity가 나타나도록
       Intent intent = new Intent(this, SplashActivity.class);
-      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
       PendingIntent pendingIntent = PendingIntent.getActivity(this, 0/* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
       // 알림 효과음
@@ -69,7 +70,7 @@ public class MyGcmListenerService extends GcmListenerService {
       // 알림 객체
       NotificationCompat.Builder noti = new NotificationCompat.Builder(this);
 
-      noti.setSmallIcon(R.drawable.foot)      // 아이콘
+      noti.setSmallIcon(R.drawable.captain)      // 아이콘
       .setContentTitle(title)             // 제목
       .setContentText(message)            // 내용
       .setContentIntent(pendingIntent)    // 알림 선택시

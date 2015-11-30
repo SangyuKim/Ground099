@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
 import com.android.ground.ground.view.OnSpecificDialogClickListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -136,8 +137,8 @@ public class SearchPlayerItemView extends RelativeLayout {
         }
 
 
-        ImageLoader.getInstance().displayImage(ImageUrl+item.memImage, memImage, options);
-        ImageLoader.getInstance().displayImage(ImageUrl+item.clubImage, clubImage, options);
+        ImageLoader.getInstance().displayImage(NetworkManager.ImageUrl+item.memImage, memImage, options);
+        ImageLoader.getInstance().displayImage(NetworkManager.ImageUrl+item.clubImage, clubImage, options);
         Log.d("hello", "image load : " );
         Log.d("hello", "clubImage : " +item. clubImage);
     }

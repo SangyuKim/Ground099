@@ -26,6 +26,7 @@ import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Profile;
+import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTransResult;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -247,6 +248,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
             position.setVisibility(View.INVISIBLE);
         }else{
             position.setVisibility(View.VISIBLE);
+            position.setImageResource(Utils.POSITIONS[mResult.position]);
         }
         if(mResult.managerYN==0){
             managerYN.setImageResource(R.drawable.icon201);

@@ -33,12 +33,15 @@ import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.login.SignupData;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.post.signup.UserProfile;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
+import java.net.PortUnreachableException;
 
 public class MyProfileManagementActivity extends AppCompatActivity {
     int sex;
@@ -135,7 +138,20 @@ public class MyProfileManagementActivity extends AppCompatActivity {
 
                 //서버에서 다시 프로필 받기
                 //PropertyManger 수정
-                searchMyPage(1);
+                UserProfile mUserProfile = new UserProfile();
+
+                NetworkManager.getInstance().postNetworkSignup(MyProfileManagementActivity.this, mUserProfile, new NetworkManager.OnResultListener<SignupData>() {
+                    @Override
+                    public void onSuccess(SignupData result) {
+
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+
+                    }
+                });
+                searchMyPage(PropertyManager.getInstance().getUserId());
 
 
                 Intent intent = new Intent(MyProfileManagementActivity.this, MainActivity.class);
@@ -243,9 +259,9 @@ public class MyProfileManagementActivity extends AppCompatActivity {
             }
         }
     }//onCreate
-
+    MyPageResult item;
     private void setMyPage() {
-        MyPageResult item = PropertyManager.getInstance().getMyPageResult();
+        item = PropertyManager.getInstance().getMyPageResult();
 
         ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + item.memImage), memImage, options);
         age.setText(Integer.toString(item.age));

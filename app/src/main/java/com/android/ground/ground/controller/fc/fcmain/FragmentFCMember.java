@@ -131,7 +131,7 @@ public class FragmentFCMember extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment(clubId);
                 dialog.show(getChildFragmentManager(), "custom");
             }
         });
@@ -151,6 +151,8 @@ public class FragmentFCMember extends Fragment {
         mAdapter.setOnAdapterReplyListener(new OnAdapterReplyListener() {
             @Override
             public void onAdapterReplyClick(Adapter adapter, View view) {
+
+                getActivity().getIntent().putExtra("collector_id" , ((FCMemberItemView)view).mItem.member_id);
                 CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
                 dialog.show(getChildFragmentManager(), "custom");
             }

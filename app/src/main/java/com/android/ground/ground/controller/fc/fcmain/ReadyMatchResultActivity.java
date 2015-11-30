@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -399,6 +400,8 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
     ArrayList<LinearLayout> mLinearLayouts = new ArrayList<LinearLayout>();
 
+    int i;
+    int tempInt;
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -412,80 +415,1503 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         mLinearLayouts.clear();
         gridLayout.removeAllViews();
 
-        for(int i=0; i< 56; i++){
+        for(i=0; i< 56; i++){
             LinearLayout mLinearLayout = new LinearLayout(ReadyMatchResultActivity.this);
             mLinearLayout.setLayoutParams(lp);
             mLinearLayouts.add(mLinearLayout);
-            mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
-                @Override
-                public boolean onDrag(View v, DragEvent event) {
-                    Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
-                    Drawable normalShape = getResources().getDrawable(R.drawable.shape);
-                    switch (event.getAction()) {
-                        case DragEvent.ACTION_DRAG_STARTED:
-                            // do nothing
-                            break;
-                        case DragEvent.ACTION_DRAG_ENTERED:
-                            v.setBackgroundDrawable(enterShape);
-                            break;
-                        case DragEvent.ACTION_DRAG_EXITED:
-                            v.setBackgroundDrawable(normalShape);
-                            break;
-                        case DragEvent.ACTION_DROP:
-                            v.setBackgroundDrawable(normalShape);
+            tempInt= i;
+            if(tempInt <= 1){
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
 
 
-                            // Dropped, reassign View to ViewGroup
+                                // Dropped, reassign View to ViewGroup
 //                            View view = (View) event.getLocalState();
 //                            ViewGroup owner = (ViewGroup) view.getParent();
 //                            owner.removeView(view);
 //                            view.setVisibility(View.VISIBLE);
 
 
-                            LinearLayout container = (LinearLayout) v;
+                                LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                            String text = event.getClipData().getItemAt(0).getText().toString();
-                            gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
-                            gridItemView.setText(text);
-                            gridItemView.setOnTouchListener(new View.OnTouchListener() {
-                                @Override
-                                public boolean onTouch(View v, MotionEvent event) {
-                                    String text = ((GridItemView2) v).getTextView().getText().toString();
-                                    ClipData.Item item = new ClipData.Item(text);
-                                    ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
-                                    v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
-                                    v.setVisibility(View.INVISIBLE);
-                                    return true;
-                                }
-                            });
-                            container.removeAllViews();
-                            container.addView(gridItemView);
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.lw);
 
 
-                            countInField = 0;
-                            for (int i = 0; i < mLinearLayouts.size(); i++) {
-                                if (mLinearLayouts.get(i).getChildAt(0) != null) {
-                                    if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
-                                        countInField++;
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
                                     }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
                                 }
 
-                            }
-                            if (countInField >= 12) {
-                                Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
-                                container.removeAllViews();
-                            }
-
-                            break;
-                        case DragEvent.ACTION_DRAG_ENDED:
-                            v.setBackgroundDrawable(normalShape);
-                        default:
-                            break;
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
                     }
-                    return true;
-                }
-            });
+                });
+
+            }else if(tempInt <= 4){
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.cf);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+
+            }else if(tempInt <= 6){
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.rw);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+
+            }
+
+            else if(tempInt <= 8){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.lm);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else if(tempInt <= 11){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.am);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else if(tempInt <= 13){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.rm);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }
+            else if(tempInt <= 15){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.lm);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else if(tempInt <= 18){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                //                        gridItemView2.setImageRes(R.drawable.cm);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else if(tempInt <= 20){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.rm);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }
+
+            else if(tempInt <= 22){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.lm);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else if(tempInt <= 25){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.dm);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else if(tempInt <= 27){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.rm);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }
+
+            else if(tempInt <= 29){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.lwb);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else if(tempInt <= 32){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.cb);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else if(tempInt <= 34){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.rwb);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }
+
+            else if(tempInt <= 36){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.lb);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else if(tempInt <= 39){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.cb);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else if(tempInt<= 41){
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                gridItemView.setImageRes(R.drawable.rb);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }else{
+
+                mLinearLayouts.get(i).setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+                        Drawable enterShape = getResources().getDrawable(R.drawable.shape_droptarget);
+                        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+                        switch (event.getAction()) {
+                            case DragEvent.ACTION_DRAG_STARTED:
+                                // do nothing
+                                break;
+                            case DragEvent.ACTION_DRAG_ENTERED:
+                                v.setBackgroundDrawable(enterShape);
+                                break;
+                            case DragEvent.ACTION_DRAG_EXITED:
+                                v.setBackgroundDrawable(normalShape);
+                                break;
+                            case DragEvent.ACTION_DROP:
+                                v.setBackgroundDrawable(normalShape);
+
+
+                                // Dropped, reassign View to ViewGroup
+//                            View view = (View) event.getLocalState();
+//                            ViewGroup owner = (ViewGroup) view.getParent();
+//                            owner.removeView(view);
+//                            view.setVisibility(View.VISIBLE);
+
+
+                                LinearLayout container = (LinearLayout) v;
+//                            GridItemView2 container = (GridItemView2)v;
+
+                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
+                                gridItemView.setText(text);
+
+//                           gridItemView.setImageRes();
+                                //                        gridItemView2.setImageRes(R.drawable.gk);
+
+
+                                gridItemView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        String text = ((GridItemView2) v).getTextView().getText().toString();
+                                        ClipData.Item item = new ClipData.Item(text);
+                                        ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                                        v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
+                                        v.setVisibility(View.INVISIBLE);
+                                        return true;
+                                    }
+                                });
+                                container.removeAllViews();
+                                container.addView(gridItemView);
+
+
+                                countInField = 0;
+                                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                                            countInField++;
+                                        }
+                                    }
+
+                                }
+                                if (countInField >= 12) {
+                                    Toast.makeText(ReadyMatchResultActivity.this, "필드에 선수 11명이 이상이 존재합니다. ", Toast.LENGTH_SHORT).show();
+                                    container.removeAllViews();
+                                }
+
+                                break;
+                            case DragEvent.ACTION_DRAG_ENDED:
+                                v.setBackgroundDrawable(normalShape);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+            }
+
             ViewGroup parent = (ViewGroup)mLinearLayouts.get(i).getParent();
             if(parent != null)
                 parent.removeAllViews();

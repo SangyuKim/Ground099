@@ -27,10 +27,13 @@ import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.Profile;
+import com.android.ground.ground.model.Utils;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.person.profile.MyPageTransResult;
+import com.android.ground.ground.model.post.push.Push302;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -150,8 +153,35 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
                 builder.setMessage("영입 신청하시겠습니까? ");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, int which) {
+                        final Push302 mPush302 = new Push302();
+                        mPush302.collector_id = id;
+                        mPush302.member_id =PropertyManager.getInstance().getUserId();
+                        mPush302.sender_id = PropertyManager.getInstance().getUserId();
+                        NetworkManager.getInstance().postNetworkMessage302(YourProfileActivity.this, mPush302, new NetworkManager.OnResultListener<EtcData>() {
+                            @Override
+                            public void onSuccess(EtcData result) {
+                                NetworkManager.getInstance().postNetworkPush302(YourProfileActivity.this, mPush302, new NetworkManager.OnResultListener<EtcData>() {
+                                    @Override
+                                    public void onSuccess(EtcData result) {
+                                        Toast.makeText(YourProfileActivity.this, "영입신청을 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
 
+                                    @Override
+                                    public void onFail(int code) {
+                                        Toast.makeText(YourProfileActivity.this, "영입신청 푸시를 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(YourProfileActivity.this, "영입신청을 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -280,6 +310,7 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
             position.setVisibility(View.INVISIBLE);
         }else{
             position.setVisibility(View.VISIBLE);
+            position.setImageResource(Utils.POSITIONS[mResult.position]);
         }
         if(mResult.managerYN==0){
             managerYN.setImageResource(R.drawable.icon201);

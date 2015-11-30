@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.custom.CustomDragDropListView;
+import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualResResult;
 import com.android.ground.ground.view.OnCustomTouchListener;
 
@@ -61,7 +62,10 @@ public class ReadyMatchResultListItemView extends FrameLayout {
         mItem = item;
         memName.setText(item.memName);
         // position 별로 이미지 넣기
-        position.setImageResource(R.mipmap.ic_launcher);
+//        position.setImageResource(R.mipmap.ic_launcher);
+
+        if(item.position>0 &&item.position<15)
+             position.setImageResource(Utils.POSITIONS[item.position-1]);
 
     }
 

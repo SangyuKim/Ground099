@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.noti.NotiDataResult;
 import com.android.ground.ground.model.person.main.AlarmItemData;
@@ -62,49 +63,49 @@ public class AlarmItemView extends FrameLayout{
         switch (item.code){
             case 100 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageView, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageView, options);
 
                 break;
             }
             case 200 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageView, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageView, options);
 
                 break;
             }
             case 201 :{
                 textViewName.setText(item.senderName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderImage), imageView, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageView, options);
 
                 break;
             }
             case 300 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageView, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
 
                 break;
             }
             case 301 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageView, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
 
                 break;
             }
             case 302 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageView, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
 
                 break;
             }
             case 400 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageView, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
 
                 break;
             }
             case 401 :{
                 textViewName.setText(item.senderClubName);
-                ImageLoader.getInstance().displayImage((ImageUrl + item.senderClubImage), imageView, options);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
 
                 break;
             }

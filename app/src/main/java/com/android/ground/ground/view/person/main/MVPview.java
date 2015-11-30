@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVP;
 import com.android.ground.ground.model.person.main.matchinfo.MVP.MVPResult;
@@ -20,7 +21,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * Created by Tacademy on 2015-10-30.
  */
 public class MVPview extends FrameLayout {
-    public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
+
     ImageView memImageMVP, memImageScr, clubImage, clubImageMVP, clubImageScr, scrPlayerPosition, mvpPlayerPosition ;
     TextView month, memNameCountMVP, memNameCountScr, clubNmaeCount;
     MVP mMVP;
@@ -109,11 +110,11 @@ public class MVPview extends FrameLayout {
         memNameCountScr.setText(itemScr.memName + " / " + itemScr.count + " 골");
         clubNmaeCount.setText(itemWin.clubName + " / " + itemMVP.count + " 승");
 
-        ImageLoader.getInstance().displayImage((ImageUrl + itemMVP.clubImage), clubImageMVP, options);
-        ImageLoader.getInstance().displayImage((ImageUrl + itemMVP.memImage), memImageMVP, options);
-        ImageLoader.getInstance().displayImage((ImageUrl + itemScr.clubImage), clubImageScr, options);
-        ImageLoader.getInstance().displayImage((ImageUrl + itemScr.memImage), memImageScr, options);
-        ImageLoader.getInstance().displayImage((ImageUrl + itemWin.clubImage), clubImage, options);
+        ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + itemMVP.clubImage), clubImageMVP, options);
+        ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + itemMVP.memImage), memImageMVP, options);
+        ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + itemScr.clubImage), clubImageScr, options);
+        ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + itemScr.memImage), memImageScr, options);
+        ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + itemWin.clubImage), clubImage, options);
 
 
 //int a=  Utils.POSITION_AM;
@@ -124,12 +125,9 @@ public class MVPview extends FrameLayout {
 //                break;
 //            }
 //        }
-//        int a = Utils.POSITIONS[itemScr.position];
-//        scrPlayerPosition.setImageResource(R.id);
-//
-//        itemMVP.position
-//        mvpPlayerPosition.setImageResource(R.id);
 
+        scrPlayerPosition.setImageResource(Utils.POSITIONS[itemScr.position]);
+        scrPlayerPosition.setImageResource(Utils.POSITIONS[itemMVP.position]);
 
     }
 
@@ -142,9 +140,6 @@ public class MVPview extends FrameLayout {
         mRequestListener = listener;
     }
 
-    public static String getImageUrl() {
-        return ImageUrl;
-    }
 
     public ImageView getMemImageMVP() {
         return memImageMVP;

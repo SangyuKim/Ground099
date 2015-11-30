@@ -45,6 +45,7 @@ import com.android.ground.ground.manager.ActivityManager;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
@@ -169,6 +170,7 @@ public class MainActivity extends AppCompatActivity
 //                    }
 //                }
 //            });
+        searchMyPage(PropertyManager.getInstance().getUserId());
 
     }//onCreate
 
@@ -430,30 +432,47 @@ public class MainActivity extends AppCompatActivity
 
         return true;
     }
+
     private void searchMyPage(final int memberId) {
+//        showWaitingDialog();
         NetworkManager.getInstance().getNetworkMyPage(MainActivity.this, memberId, new NetworkManager.OnResultListener<MyPage>() {
             @Override
             public void onSuccess(MyPage result) {
+//                unShowWaitingDialog();
+
                 for (MyPageResult item : result.items) {
                     PropertyManager.getInstance().setMyPageResult(item);
+                    searchMyPageTrans(memberId);
                 }
             }
 
             @Override
             public void onFail(int code) {
+//                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                unShowWaitingDialog();
             }
         });
     }
     private void searchMyPageTrans(final int memberId) {
+
+//        showWaitingDialog();
         NetworkManager.getInstance().getNetworkMyPageTrans(MainActivity.this, memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
             @Override
             public void onSuccess(MyPageTrans result) {
+//                unShowWaitingDialog();
+                Log.d("hello",  PropertyManager.getInstance().getDeviceId());
+                Log.d("hello", PropertyManager.getInstance().getRegistrationToken());
+
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
+
             }
 
             @Override
             public void onFail(int code) {
+//                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                unShowWaitingDialog();
             }
         });
     }
+
 }

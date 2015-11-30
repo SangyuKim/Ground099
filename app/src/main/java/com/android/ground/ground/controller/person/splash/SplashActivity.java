@@ -53,7 +53,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-import com.greenfrvr.rubberloader.RubberLoaderView;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
@@ -95,6 +94,12 @@ public class SplashActivity extends AppCompatActivity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     Handler mHandler = new Handler(Looper.getMainLooper());
+    Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            goLoginActivity();
+        }
+    };
 
     AccessTokenTracker mTokenTracker;
     CallbackManager callbackManager;
@@ -114,6 +119,7 @@ public class SplashActivity extends AppCompatActivity {
         mLoginManager = LoginManager.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        mHandler.postDelayed(mRunnable, 3000);
 
 
         handler = new Handler();
@@ -257,6 +263,7 @@ public class SplashActivity extends AppCompatActivity {
                                 @Override
                                 public void onFail(int code) {
 //                                    unShowWaitingDialog();
+                                    mHandler.postDelayed(mRunnable, 2000);
 
                                 }
                             });
@@ -302,18 +309,13 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onFail(int code) {
 //                    unShowWaitingDialog();
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            goLoginActivity();
-                        }
-                    }, 2000);
+                    mHandler.postDelayed(mRunnable, 2000);
 
                 }
             });
         }
 
-    }
+    }//onCreate
 
     private void resolveDeviceID() {
         String androidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -547,8 +549,8 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MyPageTrans result) {
 //                unShowWaitingDialog();
-                Log.d("hello",  PropertyManager.getInstance().getDeviceId());
-                Log.d("hello",  PropertyManager.getInstance().getRegistrationToken());
+                Log.d("hello", PropertyManager.getInstance().getDeviceId());
+                Log.d("hello", PropertyManager.getInstance().getRegistrationToken());
                 NetworkManager.getInstance().postNetworkMemberPush(SplashActivity.this, PropertyManager.getInstance().getDeviceId(), PropertyManager.getInstance().getRegistrationToken(), new NetworkManager.OnResultListener<EtcData>() {
                     @Override
                     public void onSuccess(EtcData result) {
@@ -592,6 +594,8 @@ public class SplashActivity extends AppCompatActivity {
         }
         Session.getCurrentSession().removeCallback(callback);
         NetworkManager.getInstance().cancelAll(MyApplication.getContext());
+        mHandler.removeCallbacks(mRunnable);
+
 
     }
 
@@ -616,6 +620,7 @@ public class SplashActivity extends AppCompatActivity {
                 Logger.e(exception);
             }
             setContentView(R.layout.layout_common_kakao_login);
+            mHandler.postDelayed(mRunnable, 2000);
         }
     }
 
@@ -699,6 +704,8 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 }

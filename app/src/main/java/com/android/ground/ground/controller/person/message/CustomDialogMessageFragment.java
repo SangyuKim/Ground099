@@ -1,7 +1,9 @@
 package com.android.ground.ground.controller.person.message;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.os.NetworkOnMainThreadException;
 import android.support.v4.app.DialogFragment;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.post.push.Push100;
+import com.android.ground.ground.model.post.push.Push200;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +68,12 @@ public class CustomDialogMessageFragment extends DialogFragment {
     public CustomDialogMessageFragment() {
         // Required empty public constructor
     }
+    @SuppressLint("ValidFragment")
+    public CustomDialogMessageFragment(int clubId) {
+        // Required empty public constructor
+        club_id = clubId;
+    }
+    int club_id =-1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,30 +96,75 @@ public class CustomDialogMessageFragment extends DialogFragment {
             public void onClick(View v) {
                 String text = inputView.getText().toString();
                 if (text.equals("")) {
-                    Toast.makeText(getContext(), "no input" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "no input", Toast.LENGTH_SHORT).show();
                 } else {
                     //collector id인지 clubId인지 확인하기
-                    Push100 mPush100 = new Push100();
-                    mPush100.member_id = PropertyManager.getInstance().getUserId();
-                    mPush100.sender_id= PropertyManager.getInstance().getUserId();
-                    mPush100.collector_id = getActivity().getIntent().getIntExtra("collector_id", 0);
-                    mPush100.contents = text;
+                    if (club_id == -1) {
 
-                    NetworkManager.getInstance().postNetworkMessage100(getContext(), mPush100, new NetworkManager.OnResultListener<EtcData>() {
-                        @Override
-                        public void onSuccess(EtcData result) {
-                            Toast.makeText(getContext(), "메시지를 전송하였습니다." , Toast.LENGTH_SHORT).show();
-                            dismiss();
-                        }
 
-                        @Override
-                        public void onFail(int code) {
-                            Toast.makeText(getContext(), "메시지 전송 실패" , Toast.LENGTH_SHORT).show();
-                            dismiss();
-                        }
-                    });
+                        final Push100 mPush100 = new Push100();
+                        mPush100.member_id = PropertyManager.getInstance().getUserId();
+                        mPush100.sender_id = PropertyManager.getInstance().getUserId();
+                        mPush100.collector_id = getActivity().getIntent().getIntExtra("collector_id", 0);
+                        mPush100.contents = text;
+
+                        NetworkManager.getInstance().postNetworkMessage100(getContext(), mPush100, new NetworkManager.OnResultListener<EtcData>() {
+                            @Override
+                            public void onSuccess(EtcData result) {
+
+                                NetworkManager.getInstance().postNetworkPush100(getContext(), mPush100, new NetworkManager.OnResultListener<EtcData>() {
+                                    @Override
+                                    public void onSuccess(EtcData result) {
+                                        Toast.makeText(getContext(), "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
+                                        dismiss();
+                                    }
+
+                                    @Override
+                                    public void onFail(int code) {
+                                        Toast.makeText(getContext(), "푸시 전송 실패", Toast.LENGTH_SHORT).show();
+                                        dismiss();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(getContext(), "메시지 전송 실패", Toast.LENGTH_SHORT).show();
+                                dismiss();
+                            }
+                        });
+                    } else {
+                        final Push200 mPush200 = new Push200();
+                        mPush200.member_id = PropertyManager.getInstance().getUserId();
+                        mPush200.sender_id = PropertyManager.getInstance().getUserId();
+                        mPush200.collectorClub_id = club_id;
+                        mPush200.contents = text;
+                        NetworkManager.getInstance().postNetworkMessage200(getContext(), mPush200, new NetworkManager.OnResultListener<EtcData>() {
+                            @Override
+                            public void onSuccess(EtcData result) {
+                                NetworkManager.getInstance().postNetworkPush200(getContext(), mPush200, new NetworkManager.OnResultListener<EtcData>() {
+                                    @Override
+                                    public void onSuccess(EtcData result) {
+                                        Toast.makeText(getContext(), "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
+                                        dismiss();
+                                    }
+
+                                    @Override
+                                    public void onFail(int code) {
+                                        Toast.makeText(getContext(), "푸시 전송 실패", Toast.LENGTH_SHORT).show();
+                                        dismiss();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(getContext(), "메시지 전송 실패", Toast.LENGTH_SHORT).show();
+                                dismiss();
+                            }
+                        });
+                    }
                 }
-
 
 
             }

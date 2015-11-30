@@ -96,4 +96,30 @@
         <attr name="childHeight" format="dimension"/>
     </declare-styleable>
 
+
+        <declare-styleable name="CustomRubberLoaderView">
+            <attr name="loaderSize" format="enum">
+                <enum name="extra_tiny" value="0"/>
+                <enum name="tiny" value="1"/>
+                <enum name="small" value="2"/>
+                <enum name="normal" value="3"/>
+                <enum name="medium" value="4"/>
+                <enum name="large" value="5"/>
+            </attr>
+            <attr name="loaderMode" format="enum">
+                <enum name="normal" value="0"/>
+                <enum name="equal" value="1"/>
+                <enum name="centered" value="2"/>
+            </attr>
+            <attr name="loaderRippleMode" format="enum">
+                <enum name="none" value="0"/>
+                <enum name="normal" value="1"/>
+                <enum name="reverse" value="2"/>
+                <enum name="cycle" value="3"/>
+            </attr>
+            <attr name="loaderPrimeColor" format="color|reference"/>
+            <attr name="loaderExtraColor" format="color|reference"/>
+            <attr name="loaderRippleColor" format="color|reference"/>
+        </declare-styleable>
+
 </resources>

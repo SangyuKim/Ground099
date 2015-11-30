@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
 import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
@@ -19,7 +21,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * Created by Tacademy on 2015-11-02.
  */
 public class FCMemberItemView extends FrameLayout {
-    public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
 
     TextView memName, skill;
     ImageView memImage, position, managerYN;
@@ -82,15 +83,15 @@ public class FCMemberItemView extends FrameLayout {
         skill.setText(Double.toString(item.skill));
 
 
-        ImageLoader.getInstance().displayImage((ImageUrl + item.memImage), memImage, options);
+        ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.memImage), memImage, options);
         //position 별로 할당된 이미지 출력
-        if(item.position >0)
-            position.setImageResource(R.mipmap.ic_launcher);
+        if(item.position >0 && item.position<15)
+            position.setImageResource(Utils.POSITIONS[item.position-1]);
 
         if(item.managerYN ==0){
-            managerYN.setVisibility(View.INVISIBLE);
+            managerYN.setImageResource(R.drawable.icon201);
         }else{
-            managerYN.setVisibility(View.VISIBLE);
+            managerYN.setImageResource(R.drawable.captain);
         }
 
 

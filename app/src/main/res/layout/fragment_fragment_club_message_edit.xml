@@ -15,44 +15,31 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전체선택"
+        <CheckBox
+            android:layout_width="19.5dp"
+            android:layout_height="19.5dp"
             android:id="@+id/button6"
-            android:visibility="visible"
-            android:focusable="false" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="편집취소"
-            android:id="@+id/button46"
-            android:focusable="false" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout_clear_cancel"
-        android:visibility="visible"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="삭제"
-            android:id="@+id/button12"
-            android:layout_gravity="bottom"
+            android:checked="false"
+            android:button="@drawable/check_box_club_message"
             android:focusable="false"
-            android:visibility="visible" />
+            android:focusableInTouchMode="false"
+            android:layout_gravity="center_vertical" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/textView27"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button12"
+            android:src="@drawable/delete801"
+            android:layout_gravity="center_vertical" />
+
     </LinearLayout>
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
@@ -63,5 +50,8 @@
         android:choiceMode="multipleChoice"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout51"
-        android:layout_above="@+id/linearLayout_clear_cancel" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:dividerHeight="1dp"
+        android:divider="@drawable/list_divider"/>
 </RelativeLayout>

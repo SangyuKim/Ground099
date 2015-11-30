@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,9 +24,11 @@ import com.android.ground.ground.controller.person.message.MyMessageAdapter;
 import com.android.ground.ground.controller.person.profile.YourProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.message.ClubMessageData;
 import com.android.ground.ground.model.message.ClubMessageDataResult;
 import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.model.post.push.MatchCreateData;
 import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
@@ -126,7 +129,7 @@ public class FragmentClubMessageEdit extends Fragment {
 
         //전체선택
         btn2 = (Button)view.findViewById(R.id.button6);
-        mLinearLayout = (LinearLayout)view.findViewById(R.id.linearLayout_clear_cancel);
+
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,7 +159,7 @@ public class FragmentClubMessageEdit extends Fragment {
             }
         });
 
-        Button btnClear = (Button)view.findViewById(R.id.button12);
+        ImageView btnClear = (ImageView)view.findViewById(R.id.button12);
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,18 +167,9 @@ public class FragmentClubMessageEdit extends Fragment {
             }
         });
 
-
-        btn  = (Button)view.findViewById(R.id.button46);
-
-        mLinearLayout.setVisibility(View.VISIBLE);
+//        mLinearLayout.setVisibility(View.VISIBLE);
         mAdapter.setCheckBoxVisible(View.VISIBLE);
         mAdapter.notifyDataSetChanged();
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
         mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
             public void onAdapterProfileClick(Adapter adapter, View view) {
@@ -254,6 +248,9 @@ public class FragmentClubMessageEdit extends Fragment {
                 ClubMessageDataResult item = ((MyMessageItemViewEdit) view).mClubMessageDataResult;
                 if (item.sender != PropertyManager.getInstance().getMyPageResult().club_id) {
                     Toast.makeText(getContext(), "YES", Toast.LENGTH_SHORT).show();
+
+
+
                 }
 
             }

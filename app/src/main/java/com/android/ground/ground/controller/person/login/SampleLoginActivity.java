@@ -100,6 +100,7 @@ public class SampleLoginActivity extends AppCompatActivity {
             setContentView(R.layout.layout_common_kakao_login);
             checkFacebookLogin();
         }
+//        setContentView(R.layout.layout_common_kakao_login);
 
     }
 
@@ -132,7 +133,8 @@ public class SampleLoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFail(int code) {
-
+                    Toast.makeText(getApplicationContext(), "서버 에러 나중에 시도하세요.", Toast.LENGTH_SHORT).show();
+//                    setContentView(R.layout.layout_common_kakao_login);
                 }
             });
         }
@@ -402,7 +404,8 @@ public class SampleLoginActivity extends AppCompatActivity {
 
             @Override
             public void onFail(int code) {
-
+                Toast.makeText(getApplicationContext(), "서버 에러 나중에 시도하세요.", Toast.LENGTH_SHORT).show();
+//                setContentView(R.layout.layout_common_kakao_login);
             }
         });
     }

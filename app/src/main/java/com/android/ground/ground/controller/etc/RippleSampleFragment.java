@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.ground.ground.R;
-import com.greenfrvr.rubberloader.RubberLoaderView;
+import com.android.ground.ground.custom.CustomRubberLoaderView;
+
 
 /**
  * Created by greenfrvr
@@ -16,7 +17,7 @@ public class RippleSampleFragment extends BaseFragment {
 
 
 
-    RubberLoaderView rubberLoader2;
+    CustomRubberLoaderView rubberLoader2;
 
 
     @Nullable
@@ -24,7 +25,7 @@ public class RippleSampleFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sample_ripple, container, false);
 
-        rubberLoader2 = (RubberLoaderView)view.findViewById(R.id.loader2);
+        rubberLoader2 = (CustomRubberLoaderView)view.findViewById(R.id.loader2);
 
         return view;
     }

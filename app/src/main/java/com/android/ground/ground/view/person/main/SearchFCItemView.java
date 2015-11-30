@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.custom.CustomRoundCornerProgressBar;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.person.main.searchClub.SearchClubResult;
 import com.android.ground.ground.view.OnSpecificDialogClickListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -140,7 +141,7 @@ public class SearchFCItemView extends RelativeLayout {
             clubMainDay_Sun.setChecked(false);
         else
             clubMainDay_Sun.setChecked(true);
-        ImageLoader.getInstance().displayImage((ImageUrl+item.clubImage), clubImage, options);
+        ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl+item.clubImage), clubImage, options);
         if(item.memYN ==0)
             memYN.setVisibility(View.INVISIBLE);
         else{

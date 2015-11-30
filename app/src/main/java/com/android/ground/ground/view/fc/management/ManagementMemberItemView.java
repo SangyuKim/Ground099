@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -16,7 +17,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  */
 public class ManagementMemberItemView extends FrameLayout{
 
-    public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
     TextView memName;
     ImageView memImage;
     public ClubAndMemberResult mItem;
@@ -47,7 +47,7 @@ public class ManagementMemberItemView extends FrameLayout{
     public void setManagementMemberItem(ClubAndMemberResult item){
         mItem = item;
         memName.setText(item.memName);
-       ImageLoader.getInstance().displayImage((ImageUrl + item.memImage), memImage, options);
+       ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.memImage), memImage, options);
 
     }
 

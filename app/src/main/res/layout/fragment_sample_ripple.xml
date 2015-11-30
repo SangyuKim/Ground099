@@ -1,14 +1,29 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="100dp"
-    android:layout_height="100dp">
+    android:layout_width="250dp"
+    android:layout_height="100dp"
+    android:background="#090909">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#825e5d5d">
+       >
 
-        <com.greenfrvr.rubberloader.RubberLoaderView
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Loading ..."
+            android:id="@+id/textDialog"
+            android:layout_gravity="center_horizontal|top"
+            android:textColor="#ffffff"
+            android:visibility="visible"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/loader2"
+            android:layout_toEndOf="@+id/loader2" />
+
+        <com.android.ground.ground.custom.CustomRubberLoaderView
             android:id="@+id/loader2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,19 +34,9 @@
             app:loaderSize="tiny"
             app:loaderRippleMode="cycle"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/textDialog"
-            android:layout_gravity="center_horizontal|top"
-            android:textColor="#ffffff"
-            android:visibility="gone"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp" />
     </RelativeLayout>
 
 </FrameLayout>

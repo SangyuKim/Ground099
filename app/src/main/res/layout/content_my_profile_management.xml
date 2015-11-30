@@ -146,16 +146,6 @@
                 android:layout_alignRight="@+id/textView47"
                 android:layout_alignEnd="@+id/textView47" />
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="FC탈퇴"
-                android:id="@+id/button5"
-                android:layout_below="@+id/textView52"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -318,6 +308,18 @@
                 android:layout_alignLeft="@+id/position"
                 android:layout_alignStart="@+id/position"
                 android:focusable="false" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FC탈퇴"
+                android:id="@+id/button5"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="112dp"
+                android:layout_below="@+id/skill" />
 
         </RelativeLayout>
     </ScrollView>

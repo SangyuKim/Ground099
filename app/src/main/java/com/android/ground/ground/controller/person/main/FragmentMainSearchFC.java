@@ -39,9 +39,11 @@ import com.android.ground.ground.custom.MatchRequestFragment;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.person.main.searchClub.SearchClub;
 import com.android.ground.ground.model.person.main.searchClub.SearchClubAdapter;
 import com.android.ground.ground.model.person.main.searchClub.SearchClubResult;
+import com.android.ground.ground.model.post.push.Push200;
 import com.android.ground.ground.view.OnAdapterSpecificDialogListener;
 import com.android.ground.ground.view.person.main.SearchFCItemView;
 import com.android.ground.ground.view.person.main.SearchPlayerItemView;
@@ -119,7 +121,7 @@ public class FragmentMainSearchFC extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    int club_id;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -185,30 +187,60 @@ public class FragmentMainSearchFC extends Fragment {
             @Override
             public void onAdapterDialogClick(Adapter adapter, View view, String tag) {
                 SearchFCItemView mView = (SearchFCItemView)view;
-                int club_id = mView.getmItem().club_id;
+                club_id = mView.getmItem().club_id;
                 String club_name = mView.getmItem().clubName;
 
                 if(tag.equals("입단신청")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setIcon(R.mipmap.ic_launcher);
-                    builder.setTitle("입단 신청하기");
-                    builder.setMessage(club_id + "팀에게 " + "입단 신청하시겠습니까? ");
+                    builder.setTitle("가입신청");
+                    builder.setMessage("가입 신청하시겠습니까? ");
                     builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(final DialogInterface dialog, int which) {
+                            final Push200 mPush200 = new Push200();
+                            mPush200.collectorClub_id = club_id;
+//                        mPush200.contents;
+                            mPush200.member_id = PropertyManager.getInstance().getUserId();
+                            mPush200.sender_id = PropertyManager.getInstance().getUserId();
+                            NetworkManager.getInstance().postNetworkMessage201(getContext(), mPush200, new NetworkManager.OnResultListener<EtcData>() {
+                                @Override
+                                public void onSuccess(EtcData result) {
+                                    NetworkManager.getInstance().postNetworkPush201(getContext(), mPush200, new NetworkManager.OnResultListener<EtcData>() {
+                                        @Override
+                                        public void onSuccess(EtcData result) {
+                                            Toast.makeText(getContext(), "가입신청을 전송하였습니다.", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                        }
+
+                                        @Override
+                                        public void onFail(int code) {
+                                            Toast.makeText(getContext(), "가입신청 푸시를 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+                                    Toast.makeText(getContext(), "가입신청을 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
+                            });
+
 
                         }
                     });
                     builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            dialog.dismiss();
                         }
                     });
                     builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            dialog.dismiss();
                         }
                     });
                     builder.setCancelable(true);
@@ -432,7 +464,7 @@ public class FragmentMainSearchFC extends Fragment {
                 }
                 @Override
                 public void onFail(int code) {
-                    Toast.makeText(MyApplication.getContext(), "Search FC error code :  " + code, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MyApplication.getContext(), "Search FC error code :  " + code, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
