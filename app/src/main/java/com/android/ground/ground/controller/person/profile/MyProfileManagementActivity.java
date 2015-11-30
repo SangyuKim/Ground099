@@ -140,6 +140,48 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                 //PropertyManger 수정
                 UserProfile mUserProfile = new UserProfile();
 
+                mUserProfile.age = Integer.parseInt(age.getText().toString());
+                mUserProfile.position = Integer.parseInt(position.getText().toString());
+                mUserProfile.skill = ((int)Double.parseDouble(skill.getText().toString()));
+                mUserProfile.memIntro = memIntro.getText().toString();
+                mUserProfile.memLocationName = memLocationName.getText().toString();
+                if(memMainDay_Mon.isChecked()){
+                    mUserProfile.memMainDay_Mon = 1;
+                }else{
+                    mUserProfile.memMainDay_Mon = 0;
+                }
+               if(memMainDay_Tue.isChecked()){
+                     mUserProfile.memMainDay_Tue = 1;
+                }else{
+                    mUserProfile.memMainDay_Tue = 0;
+                }
+                 if(memMainDay_Wed.isChecked()){
+                    mUserProfile.memMainDay_Wed = 1;
+                }else{
+                    mUserProfile.memMainDay_Wed = 0;
+                }
+               if(memMainDay_Thu.isChecked()){
+                    mUserProfile.memMainDay_Thu = 1;
+                }else{
+                    mUserProfile.memMainDay_Thu = 0;
+                }
+               if(memMainDay_Fri.isChecked()){
+                    mUserProfile.memMainDay_Fri = 1;
+                }else{
+                    mUserProfile.memMainDay_Fri = 0;
+                }
+               if(memMainDay_Sat.isChecked()){
+                    mUserProfile.memMainDay_Sat = 1;
+                }else{
+                    mUserProfile.memMainDay_Sat = 0;
+                }
+               if(memMainDay_Sun.isChecked()){
+                    mUserProfile.memMainDay_Sun = 1;
+                }else{
+                    mUserProfile.memMainDay_Sun = 0;
+                }
+                mUserProfile.mFile = mSavedFile;
+
                 NetworkManager.getInstance().postNetworkSignup(MyProfileManagementActivity.this, mUserProfile, new NetworkManager.OnResultListener<SignupData>() {
                     @Override
                     public void onSuccess(SignupData result) {
