@@ -39,6 +39,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/button45"
-        android:layout_above="@+id/button7" />
+        android:layout_above="@+id/button7"
+        android:dividerHeight="1dp"
+        android:divider="@drawable/list_divider"/>
 
 </RelativeLayout>

@@ -205,7 +205,7 @@ public class SplashActivity extends AppCompatActivity {
 //                                dialog.dismiss();
 //                            }
 //                        }).show();
-//
+
 
 
 //        postLogin();

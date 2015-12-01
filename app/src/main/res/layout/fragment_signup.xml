@@ -265,7 +265,7 @@
                         android:layout_toRightOf="@+id/textView50"
                         android:layout_toEndOf="@+id/textView50"
                         android:textColor="#ffffffff"
-                        android:hint="FC명을 적어주세요(6자 이내)"
+                        android:hint="자기소개를 적어주세요(6자 이내)"
                         android:textColorHint="#ffffffff"
                         android:theme="@style/Theme.App.EditText"
                         android:textSize="9sp"/>

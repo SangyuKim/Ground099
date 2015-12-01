@@ -10,7 +10,8 @@
     tools:showIn="@layout/activity_my_profile_management"
     tools:context="com.android.ground.ground.controller.person.profile.MyProfileManagementActivity"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:background="@drawable/back401">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,130 +32,9 @@
                 android:id="@+id/button_complete"
                 android:layout_gravity="center_horizontal|top"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="성별"
-                android:id="@+id/textView45"
-                android:layout_above="@+id/linearLayout6"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/gender"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/linearLayout6">
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="활동지역"
-                android:id="@+id/textView47"
-                android:layout_below="@+id/textView46"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="35dp" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="지역 검색"
-                android:id="@+id/button_area_search"
-                android:layout_alignTop="@+id/textView47"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="주 활동 요일"
-                android:id="@+id/textView48"
-                android:layout_below="@+id/button_area_search"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="사진입력"
-                android:id="@+id/memName"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/memImage"
-                android:layout_toStartOf="@+id/memImage" />
-
-            <com.android.ground.ground.custom.CustomCircularImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/memImage"
-                android:src="@mipmap/ic_launcher"
-                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                app:siBorderWidth="6dp"
-                app:siBorderColor="@color/colorPrimary"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="소개"
-                android:id="@+id/textView50"
-                android:layout_below="@+id/linearLayout55"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/memIntro"
-                android:layout_below="@+id/linearLayout55"
-                android:layout_toRightOf="@+id/textView50"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:text="memIntro" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="포지션"
-                android:id="@+id/textView51"
-                android:layout_below="@+id/memIntro"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="본인 실력"
-                android:id="@+id/textView52"
-                android:layout_below="@+id/position"
-                android:layout_alignRight="@+id/textView47"
-                android:layout_alignEnd="@+id/textView47" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="나이"
-                android:id="@+id/textView46"
-                android:layout_below="@+id/linearLayout6"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_marginBottom="72dp"
+                android:layout_below="@+id/relativeLayout100" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -162,152 +42,11 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="이름"
                 android:id="@+id/memName"
-                android:layout_below="@+id/memImage"
-                android:layout_centerHorizontal="true" />
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/gender"
-                android:layout_below="@+id/memName"
-                android:layout_centerHorizontal="true">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="남"
-                    android:id="@+id/radioButton"
-                    android:checked="false" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="여"
-                    android:id="@+id/radioButton2"
-                    android:layout_gravity="center_horizontal"
-                    android:checked="false" />
-
-            </RadioGroup>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView48"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/linearLayout55">
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="월"
-                    android:id="@+id/memMainDay_Mon"
-                    android:checked="false"
-                    android:layout_alignBaseline="@+id/memMainDay_Tue"
-                    android:layout_alignBottom="@+id/memMainDay_Tue"
-                    android:layout_alignLeft="@+id/memMainDay_Tue"
-                    android:layout_alignStart="@+id/memMainDay_Tue" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="화"
-                    android:id="@+id/memMainDay_Tue"
-                    android:checked="false"
-                    android:layout_above="@+id/memMainDay_Wed"
-                    android:layout_alignLeft="@+id/memMainDay_Wed"
-                    android:layout_alignStart="@+id/memMainDay_Wed" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="수"
-                    android:id="@+id/memMainDay_Wed"
-                    android:checked="false"
-                    android:layout_below="@+id/memIntro"
-                    android:layout_alignLeft="@+id/memMainDay_Thu"
-                    android:layout_alignStart="@+id/memMainDay_Thu" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="목"
-                    android:id="@+id/memMainDay_Thu"
-                    android:checked="false"
-                    android:layout_alignTop="@+id/memMainDay_Fri"
-                    android:layout_centerHorizontal="true" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="금"
-                    android:id="@+id/memMainDay_Fri"
-                    android:checked="false"
-                    android:layout_alignTop="@+id/memMainDay_Sat"
-                    android:layout_toLeftOf="@+id/memMainDay_Sat"
-                    android:layout_toStartOf="@+id/memMainDay_Sat" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="토"
-                    android:id="@+id/memMainDay_Sat"
-                    android:checked="false"
-                    android:layout_alignTop="@+id/memMainDay_Sun"
-                    android:layout_toLeftOf="@+id/button_complete"
-                    android:layout_toStartOf="@+id/button_complete" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="일"
-                    android:id="@+id/memMainDay_Sun"
-                    android:checked="false"
-                    android:layout_above="@+id/button5"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/age"
-                android:layout_below="@+id/textView46"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/position"
-                android:layout_below="@+id/memIntro"
-                android:layout_toRightOf="@+id/textView47"
-                android:layout_toEndOf="@+id/textView47" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/skill"
-                android:layout_alignBottom="@+id/textView52"
-                android:layout_alignLeft="@+id/position"
-                android:layout_alignStart="@+id/position" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/memLocationName"
-                android:layout_alignTop="@+id/textView47"
-                android:layout_toLeftOf="@+id/button_area_search"
-                android:layout_alignLeft="@+id/position"
-                android:layout_alignStart="@+id/position"
-                android:focusable="false" />
+                android:textColor="#ffffffff"
+                android:textSize="27sp"
+                android:layout_below="@+id/frameLayout6"
+                android:layout_alignRight="@+id/button_complete"
+                android:layout_alignEnd="@+id/button_complete" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -315,11 +54,482 @@
                 android:layout_height="wrap_content"
                 android:text="FC탈퇴"
                 android:id="@+id/button5"
-                android:layout_alignParentBottom="true"
+                android:layout_alignBottom="@+id/button_complete"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="112dp"
-                android:layout_below="@+id/skill" />
+                android:layout_below="@+id/relativeLayout100" />
+
+            <FrameLayout
+                android:layout_width="122.5dp"
+                android:layout_height="122.5dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/frameLayout6">
+
+                <com.android.ground.ground.custom.CustomCircularImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/memImage"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center" />
+
+                <ImageView
+                    android:layout_width="31.75dp"
+                    android:layout_height="31.75dp"
+                    android:id="@+id/imageView13"
+                    android:layout_gravity="right|bottom"
+                    android:src="@drawable/icon403" />
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/memName"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/relativeLayout100">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout92"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="성     별"
+                        android:id="@+id/textView45"
+                        android:textColor="#ffffffff"
+                        android:layout_above="@+id/button_complete"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/gender"
+                        android:layout_above="@+id/memName"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_vertical">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="남"
+                            android:id="@+id/radioButton"
+                            android:checked="false"
+                            android:textColor="#ffffffff"
+                            android:button="@drawable/radio_gender"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="10dp" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="여"
+                            android:id="@+id/radioButton2"
+                            android:layout_gravity="center_vertical"
+                            android:checked="false"
+                            android:textColor="#ffffffff"
+                            android:button="@drawable/radio_gender" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout92"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/linearLayout96"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="나     이"
+                        android:id="@+id/textView46"
+                       android:textColor="#ffffffff"
+                        android:layout_above="@+id/textView52"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="center_vertical" />
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="111dp"
+                        android:layout_height="28dp"
+                        android:id="@+id/linearLayout97"
+                        android:background="@drawable/shape_droptarget"
+                        android:layout_gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="연도"
+                            android:id="@+id/age"
+                            android:textColor="#ffffffff"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:layout_gravity="center" />
+
+                        <ImageView
+                            android:layout_width="17.5dp"
+                            android:layout_height="11dp"
+                            android:id="@+id/imageView17"
+                            android:src="@drawable/add701"
+                            android:layout_gravity="center_vertical|right" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout91"
+                    android:layout_below="@+id/linearLayout96"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="활동지역"
+                        android:id="@+id/textView47"
+                       android:textColor="#ffffffff"
+                        android:layout_above="@+id/linearLayout6"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_below="@+id/textView55"
+                        android:background="@drawable/shape_droptarget"
+                        android:id="@+id/button_area_search"
+                        android:layout_gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="169.75dp"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="지역 검색"
+                            android:id="@+id/memLocationName"
+                            android:layout_below="@+id/textView55"
+                            android:layout_toRightOf="@+id/button_area_search"
+                            android:layout_toEndOf="@+id/button_area_search"
+                            android:textColor="#ffffffff"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textSize="16sp"
+                            android:singleLine="true" />
+
+                        <ImageView
+                            android:layout_width="17dp"
+                            android:layout_height="16.75dp"
+                            android:id="@+id/imageView20"
+                            android:src="@drawable/icon402"
+                            android:layout_gravity="center_vertical|right" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout93"
+                    android:layout_below="@+id/linearLayout91"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="활동요일"
+                        android:id="@+id/textView48"
+                                        android:textColor="#ffffffff"
+                        android:layout_above="@+id/button_area_search"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:id="@+id/linearLayout55"
+                        android:layout_above="@+id/gender"
+                        android:layout_centerHorizontal="true">
+
+                        <CheckBox
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:id="@+id/memMainDay_Mon"
+                            android:checked="false"
+                            android:layout_alignBaseline="@+id/memMainDay_Tue"
+                            android:layout_alignBottom="@+id/memMainDay_Tue"
+                            android:layout_alignLeft="@+id/memMainDay_Tue"
+                            android:layout_alignStart="@+id/memMainDay_Tue"
+                            android:textColor="#ffffffff"
+                            android:button="@drawable/check_box_mon_fc"
+                            android:layout_gravity="center_vertical" />
+
+                        <CheckBox
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:id="@+id/memMainDay_Tue"
+                            android:checked="false"
+                            android:layout_above="@+id/memMainDay_Wed"
+                            android:layout_alignLeft="@+id/memMainDay_Wed"
+                            android:layout_alignStart="@+id/memMainDay_Wed"
+                            android:textColor="#ffffffff"
+                            android:button="@drawable/check_box_tue_fc"
+                            android:layout_gravity="center_vertical" />
+
+                        <CheckBox
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:id="@+id/memMainDay_Wed"
+                            android:checked="false"
+                            android:layout_below="@+id/memIntro"
+                            android:layout_alignLeft="@+id/memMainDay_Thu"
+                            android:layout_alignStart="@+id/memMainDay_Thu"
+                            android:textColor="#ffffffff"
+                            android:button="@drawable/check_box_wed_fc"
+                            android:layout_gravity="center_vertical" />
+
+                        <CheckBox
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:id="@+id/memMainDay_Thu"
+                            android:checked="false"
+                            android:layout_alignTop="@+id/memMainDay_Fri"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="#ffffffff"
+                            android:button="@drawable/check_box_thu_fc"
+                            android:layout_gravity="center_vertical" />
+
+                        <CheckBox
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:id="@+id/memMainDay_Fri"
+                            android:checked="false"
+                            android:layout_alignTop="@+id/memMainDay_Sat"
+                            android:layout_toLeftOf="@+id/memMainDay_Sat"
+                            android:layout_toStartOf="@+id/memMainDay_Sat"
+                            android:textColor="#ffffffff"
+                            android:button="@drawable/check_box_fri_fc"
+                            android:layout_gravity="center_vertical" />
+
+                        <CheckBox
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:id="@+id/memMainDay_Sat"
+                            android:checked="false"
+                            android:layout_alignTop="@+id/memMainDay_Sun"
+                            android:layout_toLeftOf="@+id/button_complete"
+                            android:layout_toStartOf="@+id/button_complete"
+                            android:textColor="#ffffffff"
+                            android:button="@drawable/check_box_sat_fc"
+                            android:layout_gravity="center_vertical" />
+
+                        <CheckBox
+                            android:layout_width="22.75dp"
+                            android:layout_height="22.75dp"
+                            android:id="@+id/memMainDay_Sun"
+                            android:checked="false"
+                            android:layout_above="@+id/button5"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:textColor="#ffffffff"
+                            android:button="@drawable/check_box_sun_fc"
+                            android:layout_gravity="center_vertical" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout94"
+                    android:layout_below="@+id/linearLayout93"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="소     개"
+                        android:id="@+id/textView50"
+
+                        android:textColor="#ffffffff"
+                        android:layout_above="@+id/textView48"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <EditText
+
+                        android:id="@+id/memIntro"
+
+                        android:layout_width="169.5dp"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+
+                        android:layout_below="@+id/linearLayout53"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toRightOf="@+id/textView50"
+                        android:layout_toEndOf="@+id/textView50"
+                        android:textColor="#ffffffff"
+                        android:hint="자기소개를 적어주세요(6자 이내)"
+                        android:textColorHint="#ffffffff"
+                        android:theme="@style/Theme.App.EditText"
+                        android:textSize="9sp"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout95"
+                    android:layout_below="@+id/linearLayout94"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="포 지 션"
+                        android:id="@+id/textView51"
+                                      android:textColor="#ffffffff"
+                        android:layout_above="@+id/memIntro"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Medium Text"
+                        android:id="@+id/position"
+                        android:textColor="#ffffffff"
+                        android:layout_alignBaseline="@+id/textView45"
+                        android:layout_alignBottom="@+id/textView45"
+                        android:layout_alignLeft="@+id/gender"
+                        android:layout_alignStart="@+id/gender"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <Spinner
+                        android:layout_width="100.25dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/spinner_position"
+                        android:layout_below="@+id/memIntro"
+                        android:layout_toRightOf="@+id/textView51"
+                        android:layout_toEndOf="@+id/textView51"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout95"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/linearLayout99">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="본인실력"
+                        android:id="@+id/textView52"
+                        android:textColor="#ffffffff"
+                        android:layout_above="@+id/textView51"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="16sp"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Medium Text"
+                        android:id="@+id/skill"
+                        android:textColor="#ffffffff"
+                        android:layout_above="@+id/position"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <Spinner
+                        android:layout_width="100.25dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/spinner_ability"
+                        android:layout_alignTop="@+id/textView52"
+                        android:layout_toRightOf="@+id/textView52"
+                        android:layout_toEndOf="@+id/textView52"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="매니저탈퇴"
+                android:id="@+id/button2"
+                android:layout_alignTop="@+id/button5"
+                android:layout_toRightOf="@+id/button5"
+                android:layout_toEndOf="@+id/button5" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원탈퇴"
+                android:id="@+id/button28"
+                android:layout_below="@+id/relativeLayout100"
+                android:layout_toRightOf="@+id/button2"
+                android:layout_toEndOf="@+id/button2" />
 
         </RelativeLayout>
     </ScrollView>

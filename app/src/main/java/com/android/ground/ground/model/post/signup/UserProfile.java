@@ -23,4 +23,5 @@ public class UserProfile implements Serializable {
     public int skill;
     public double latitude;
     public double longitude;
+    public int updateYN;
 }

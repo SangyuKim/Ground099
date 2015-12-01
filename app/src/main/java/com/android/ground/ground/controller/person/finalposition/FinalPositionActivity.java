@@ -79,7 +79,7 @@ public class FinalPositionActivity extends AppCompatActivity{
             catch(Exception e){
                 e.printStackTrace();
             }
-
+        setTitle("최종라인업");
             match_id = getIntent().getIntExtra("matchId", -1);
             home_id = getIntent().getIntExtra("home_id", -1);
             away_id = getIntent().getIntExtra("away_id", -1);

@@ -18,7 +18,12 @@ import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.message.ClubMessageDataResult;
 import com.android.ground.ground.model.message.MyMessageDataResult;
 import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.model.post.push.MatchCreateData;
+import com.android.ground.ground.model.post.push.MatchCreateDataResponse;
 import com.android.ground.ground.model.post.push.Push200;
+import com.android.ground.ground.model.post.push.Push201Response;
+import com.android.ground.ground.model.post.push.Push301;
+import com.android.ground.ground.model.post.push.Push301Response;
 import com.android.ground.ground.view.OnNoClickListener;
 import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
@@ -93,6 +98,26 @@ public class MyMessageItemView extends FrameLayout implements Checkable {
             public void onClick(View v) {
                 if (mYesListener != null) {
                     mYesListener.onYesClick(MyMessageItemView.this);
+                }
+                switch (mItem.code){
+                    case 301:{
+                        Push301Response mPush301Response = new Push301Response();
+                        mPush301Response.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+                        mPush301Response.match_id = mItem.match_id ;
+                        mPush301Response.member_id = PropertyManager.getInstance().getUserId();
+                        NetworkManager.getInstance().postNetworkMessage301Response(getContext(), mPush301Response, new NetworkManager.OnResultListener<EtcData>() {
+                            @Override
+                            public void onSuccess(EtcData result) {
+                                Toast.makeText(getContext(), "매치 참가 승낙하였습니다." ,Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(getContext(), "매치 참가 승낙 실패하였습니다." ,Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        break;
+                    }
                 }
 
 

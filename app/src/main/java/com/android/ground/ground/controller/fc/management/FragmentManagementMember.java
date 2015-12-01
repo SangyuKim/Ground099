@@ -12,15 +12,19 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
+import com.android.ground.ground.manager.ClubManagerData;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
+import com.android.ground.ground.view.fc.management.ManagementMemberItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,13 +173,49 @@ public class FragmentManagementMember extends Fragment {
             int position = selection.keyAt(index);
             if (selection.get(position)) {
                 sb.append(Integer.toString(position)).append(",");
+                ClubManagerData mClubManagerData = new ClubManagerData();
+                mClubManagerData.member_id = PropertyManager.getInstance().getUserId();
+                mClubManagerData.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+
+
+                View view = getViewByPosition(position, listView);
+                mClubManagerData.manager_id =    ((ManagementMemberItemView)view).mItem.member_id;
+                NetworkManager.getInstance().postNetworkClubManager(getContext(), mClubManagerData, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+                        if(result.code ==200){
+                            Toast.makeText(getContext(), "매니저 임명 성공하였습니다. ", Toast.LENGTH_SHORT).show();
+                        }else {
+                            if(result.msg != null)
+                                Toast.makeText(getContext(),result.msg , Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(getContext(), "매니저 임명 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
-        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();
+
+
 
     }
 
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
 
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

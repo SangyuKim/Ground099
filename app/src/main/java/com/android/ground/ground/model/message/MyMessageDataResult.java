@@ -27,6 +27,7 @@ public class MyMessageDataResult {
 
     public String msContents;
 
+    public int match_id;
     public String matchDate;
     public String matchLocation;
     public int matchClub_id;

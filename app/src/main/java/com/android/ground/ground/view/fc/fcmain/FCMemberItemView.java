@@ -93,6 +93,7 @@ public class FCMemberItemView extends FrameLayout {
         }else{
             managerYN.setImageResource(R.drawable.captain);
         }
+        position.setImageResource(Utils.POSITIONS[item.position]);
 
 
     }

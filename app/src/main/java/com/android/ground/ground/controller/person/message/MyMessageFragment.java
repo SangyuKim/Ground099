@@ -231,6 +231,7 @@ public class MyMessageFragment extends Fragment {
                     Toast.makeText(getContext(), "YES", Toast.LENGTH_SHORT).show();
                 }
 
+
             }
         });
         mAdapter.setOnAdapterNoListener(new OnAdapterNoListener() {

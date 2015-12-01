@@ -17,22 +17,31 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
+import com.android.ground.ground.controller.person.login.MySpinnerSignupAdapter;
 import com.android.ground.ground.controller.person.main.MainActivity;
+import com.android.ground.ground.controller.person.splash.SplashActivity;
 import com.android.ground.ground.custom.CustomToolbar;
+import com.android.ground.ground.manager.ClubManagerData;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.login.SignupData;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
@@ -46,13 +55,18 @@ import java.net.PortUnreachableException;
 public class MyProfileManagementActivity extends AppCompatActivity {
     int sex;
     ImageView memImage;
-    TextView age, position, skill;
-    EditText memLocationName, memIntro;
+    TextView age, position, skill, memLocationName, memName;
+    EditText memIntro;
     CheckBox memMainDay_Mon,memMainDay_Tue,memMainDay_Wed,memMainDay_Thu
              ,memMainDay_Fri,memMainDay_Sat,memMainDay_Sun;
     RadioGroup gender;
     RadioButton rButton, rButton2;
+    LinearLayout btnAreaSearch, linearLayoutAge;
+    UserProfile mUserProfile;
 
+    Spinner spinner;
+    MySpinnerSignupAdapter mySpinnerAdapter;
+    Button managerOut, memberDelete;
 
     DisplayImageOptions options;
 
@@ -75,7 +89,10 @@ public class MyProfileManagementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile_management);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mUserProfile = new UserProfile();
         setSupportActionBar(toolbar);
+        setSpinner(R.id.spinner_ability, R.array.items_player_ability);
+        setSpinner(R.id.spinner_position, R.array.items_player_position);
 
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                 ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
@@ -98,7 +115,7 @@ public class MyProfileManagementActivity extends AppCompatActivity {
         skill = (TextView)findViewById(R.id.skill);
 
         memIntro = (EditText)findViewById(R.id.memIntro);
-        memLocationName = (EditText)findViewById(R.id.memLocationName);
+        memLocationName = (TextView)findViewById(R.id.memLocationName);
 
         memMainDay_Mon= (CheckBox)findViewById(R.id.memMainDay_Mon);
         memMainDay_Tue= (CheckBox)findViewById(R.id.memMainDay_Tue);
@@ -107,7 +124,12 @@ public class MyProfileManagementActivity extends AppCompatActivity {
         memMainDay_Fri= (CheckBox)findViewById(R.id.memMainDay_Fri);
         memMainDay_Sat= (CheckBox)findViewById(R.id.memMainDay_Sat);
         memMainDay_Sun= (CheckBox)findViewById(R.id.memMainDay_Sun);
+        memName = (TextView)findViewById(R.id.memName);
+        Button btnComplete = (Button)findViewById(R.id.button_complete);
+        Button btnOut = (Button)findViewById(R.id.button5);
 
+        managerOut = (Button)findViewById(R.id.button2);
+        memberDelete = (Button)findViewById(R.id.button28);
 
 
         gender = (RadioGroup)findViewById(R.id.gender);
@@ -125,10 +147,97 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                 }
             }
         });
+        linearLayoutAge = (LinearLayout)findViewById(R.id.linearLayout97);
+
+        managerOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClubManagerData mClubManagerData = new ClubManagerData();
+                mClubManagerData.manager_id = PropertyManager.getInstance().getUserId();
+                mClubManagerData.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+                mClubManagerData.member_id = PropertyManager.getInstance().getUserId();
+                NetworkManager.getInstance().postNetworkClubManagerStop(MyProfileManagementActivity.this, mClubManagerData, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+                        Toast.makeText(MyProfileManagementActivity.this, "매니저 탈퇴하였습니다. ", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(MyProfileManagementActivity.this, "매니저 탈퇴 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+        memberDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetworkManager.getInstance().postNetworkMemberStop(MyProfileManagementActivity.this, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+                        Toast.makeText(MyProfileManagementActivity.this, "회원 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MyProfileManagementActivity.this, SplashActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(MyProfileManagementActivity.this, "회원 삭제 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        linearLayoutAge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                getActivity().showDialog(MONTHYEARDATESELECTOR_ID);
+                RelativeLayout linearLayout = new RelativeLayout(MyProfileManagementActivity.this);
+                final NumberPicker aNumberPicker = new NumberPicker(MyProfileManagementActivity.this);
+                //올해 년도로 넣기
+                aNumberPicker.setMaxValue(2015);
+                aNumberPicker.setMinValue(1940);
+                aNumberPicker.setValue(2015);
 
 
-        Button btn = (Button)findViewById(R.id.button_complete);
-        btn.setOnClickListener(new View.OnClickListener() {
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+                RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+                linearLayout.setLayoutParams(params);
+                linearLayout.addView(aNumberPicker,numPicerParams);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MyProfileManagementActivity.this);
+                alertDialogBuilder.setTitle("Select the number");
+                alertDialogBuilder.setView(linearLayout);
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+//                                        Log.e("hello","New Quantity Value : "+ aNumberPicker.getValue());
+                                        mUserProfile.age = aNumberPicker.getValue();
+                                        age.setText(Integer.toString(aNumberPicker.getValue())+"년");
+
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+
+
+
+        btnComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //// TODO: 2015-11-12
@@ -138,11 +247,23 @@ public class MyProfileManagementActivity extends AppCompatActivity {
 
                 //서버에서 다시 프로필 받기
                 //PropertyManger 수정
-                UserProfile mUserProfile = new UserProfile();
+
+                mUserProfile.updateYN =1;
+                if(mSavedFile!=null) {
+                    mUserProfile.mFile = mSavedFile;
+                }else{
+                    mUserProfile.mFile =  new File(Environment.getExternalStorageDirectory(),"temp_" + System.currentTimeMillis()/1000);
+                }
+                if( mUserProfile.gender == 0){
+                    mUserProfile.gender =0;
+                }else{
+                    mUserProfile.gender = 1;
+                }
 
                 mUserProfile.age = Integer.parseInt(age.getText().toString());
                 mUserProfile.position = Integer.parseInt(position.getText().toString());
                 mUserProfile.skill = ((int)Double.parseDouble(skill.getText().toString()));
+
                 mUserProfile.memIntro = memIntro.getText().toString();
                 mUserProfile.memLocationName = memLocationName.getText().toString();
                 if(memMainDay_Mon.isChecked()){
@@ -180,12 +301,14 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                 }else{
                     mUserProfile.memMainDay_Sun = 0;
                 }
-                mUserProfile.mFile = mSavedFile;
+
 
                 NetworkManager.getInstance().postNetworkSignup(MyProfileManagementActivity.this, mUserProfile, new NetworkManager.OnResultListener<SignupData>() {
                     @Override
                     public void onSuccess(SignupData result) {
-
+                        if (result.code == 200) {
+                            searchMyPage(PropertyManager.getInstance().getUserId());
+                        }
                     }
 
                     @Override
@@ -193,7 +316,7 @@ public class MyProfileManagementActivity extends AppCompatActivity {
 
                     }
                 });
-                searchMyPage(PropertyManager.getInstance().getUserId());
+//                searchMyPage(PropertyManager.getInstance().getUserId());
 
 
                 Intent intent = new Intent(MyProfileManagementActivity.this, MainActivity.class);
@@ -201,8 +324,8 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                 finish();
             }
         });
-        btn = (Button)findViewById(R.id.button_area_search);
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnAreaSearch = (LinearLayout)findViewById(R.id.button_area_search);
+        btnAreaSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(getContext(), "지역 검색으로 이동", Toast.LENGTH_SHORT).show();
@@ -210,8 +333,8 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQ_AREA_SEARCH);
             }
         });
-        btn = (Button)findViewById(R.id.button5);
-        btn.setOnClickListener(new View.OnClickListener() {
+
+        btnOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MyProfileManagementActivity.this);
@@ -309,7 +432,7 @@ public class MyProfileManagementActivity extends AppCompatActivity {
         age.setText(Integer.toString(item.age));
         position.setText(Integer.toString(item.position));
         skill.setText(Double.toString(item.skill));
-
+        memName.setText(item.memName);
         memLocationName.setText(item.memLocationName);
         memIntro.setText(item.memIntro);
         if(item.memMainDay_Mon==0){
@@ -415,5 +538,51 @@ public class MyProfileManagementActivity extends AppCompatActivity {
         this.menu = menu;
         return true;
     }
+    private void setSpinner(int id, int dataId) {
+
+        spinner = (Spinner)findViewById(id);
+        mySpinnerAdapter = new MySpinnerSignupAdapter(MyProfileManagementActivity.this);
+        spinner.setAdapter(mySpinnerAdapter);
+        if(id == R.id.spinner_position) {
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+
+                    mUserProfile.position = position+1;
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }else{
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+                    mUserProfile.skill = position+1;
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
+        initSpinnerData(dataId, mySpinnerAdapter);
+    }
+
+    private void initSpinnerData(int id, MySpinnerSignupAdapter mSpinnerAdapter) {
+
+        String[] items = getResources().getStringArray(id);
+        for (String s : items) {
+            mSpinnerAdapter.add(s);
+        }
+    }
+
 
 }

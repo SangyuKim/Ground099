@@ -128,6 +128,10 @@ public class MatchInfoAdapter extends BaseExpandableListAdapter implements Searc
                 groupName= "종료된 매치";
                 break;
             }
+            case "myMat":{
+                groupName= "내가 뛰었던 매치";
+                break;
+            }
         }
 
         CheckMatchListGroupItem g = null;

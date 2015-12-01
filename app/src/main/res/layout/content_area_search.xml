@@ -14,7 +14,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="지역검색"
         android:id="@+id/button44"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"

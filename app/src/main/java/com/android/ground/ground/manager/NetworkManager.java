@@ -47,6 +47,7 @@ import com.android.ground.ground.model.post.push.Push200;
 import com.android.ground.ground.model.post.push.Push201Response;
 import com.android.ground.ground.model.post.push.Push300;
 import com.android.ground.ground.model.post.push.Push301;
+import com.android.ground.ground.model.post.push.Push301Response;
 import com.android.ground.ground.model.post.push.Push302;
 import com.android.ground.ground.model.post.push.Push401;
 import com.android.ground.ground.model.post.signup.UserProfile;
@@ -756,6 +757,7 @@ public class NetworkManager{
         });
 
     }
+
     //Lineup virtual res
     public static final String SEARCH_LINEUP_VIRTUAL_RES_URL =GROND_SERVER_URL+"/lineup/virtual/res";
     public void getNetworkLineupVirtualRes(final Context context,int clubId,  int matchId, final OnResultListener<LineupVirtualRes> listener) {
@@ -787,8 +789,9 @@ public class NetworkManager{
         });
 
     }
-    //Lineup virtual fomation
-    public static final String SEARCH_LINEUP_VIRTUAL_FOMATION_URL =GROND_SERVER_URL+"/lineup/virtual/fomation";
+
+    //Lineup virtual formation
+    public static final String SEARCH_LINEUP_VIRTUAL_FOMATION_URL =GROND_SERVER_URL+"/lineup/virtual/formation";
     public void getNetworkLineupVirtualFomation(final Context context,int clubId,  int matchId, final OnResultListener<LineupVirtualFomation> listener) {
 
 
@@ -802,6 +805,7 @@ public class NetworkManager{
 
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
                 LineupVirtualFomation items = gson.fromJson(s, LineupVirtualFomation.class);
                 if (items != null){
                     listener.onSuccess(items);
@@ -812,6 +816,7 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
                 listener.onFail(statusCode);
+                Log.d("hello", "가상 lineup 에러 " +statusCode);
             }
 
         });
@@ -955,6 +960,7 @@ public class NetworkManager{
         params.put("latitude", mUserProfile.latitude);
 //        Log.d("hello", "latitude : " + mUserProfile.latitude);
         params.put("longitude", mUserProfile.longitude);
+        params.put("updateYN", mUserProfile.updateYN);
 //        Log.d("hello", "longitude : " + mUserProfile.longitude);
 
 //        params.setForceMultipartEntityContentType(true);
@@ -1216,7 +1222,7 @@ public class NetworkManager{
 
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
-                Log.d("hello", s);
+                Log.d("hello", "match id 확인용 :"+s);
                 MyMessageData items = gson.fromJson(s, MyMessageData.class);
                 if (items != null) {
                     listener.onSuccess(items);
@@ -1267,7 +1273,6 @@ public class NetworkManager{
         });
 
     }
-
     //match result postion fomation
     public static final String SEND_LINEUP_RESULT_FORMATION_URL =GROND_SERVER_URL+"/lineup/result/formation";
     public void getNetworkLineupResultFormation(final Context context, int match_id, int club_id,  final OnResultListener<MatchFormation> listener ){
@@ -1300,6 +1305,7 @@ public class NetworkManager{
         });
 
     }
+
     //message noti
     public static final String GET_MESSAGE_NOTI_URL =GROND_SERVER_URL+"/message/noti";
     public void getNetworkNoti(final Context context, int member_id, int page,  final OnResultListener<NotiData> listener ){
@@ -1654,7 +1660,7 @@ public class NetworkManager{
         showWaitingDialog(context);
         final RequestParams params = new RequestParams();
         params.put("member_id",mPush201Response.member_id);
-        params.put("sender_id",mPush201Response.sender_id);
+        params.put("sender_id", mPush201Response.sender_id);
         params.put("club_id",mPush201Response.club_id);
         params.put("accRej",mPush201Response.accRej);
         params.put("message_id",mPush201Response.message_id);
@@ -1751,7 +1757,9 @@ public class NetworkManager{
         });
 
     }
-    // message301
+
+
+    // message301 경기일정(FC - >소속회원)
     public static final String SEND_MESSAGE_301_URL =GROND_SERVER_URL+"/message/301";
     public void postNetworkMessage301(final Context context , Push301 mPush301,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
@@ -1785,7 +1793,7 @@ public class NetworkManager{
         });
 
     }
-     // push301
+     // push301 경기일정(FC - >소속회원)
     public static final String SEND_PUSH_301_URL =GROND_SERVER_URL+"/push/301";
     public void postNetworkPush301(final Context context , Push301 mPush301,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
@@ -1819,6 +1827,7 @@ public class NetworkManager{
         });
 
     }
+
     // message400
     public static final String SEND_MESSAGE_400_URL =GROND_SERVER_URL+"/message/400";
     public void postNetworkMessage400(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
@@ -1889,7 +1898,9 @@ public class NetworkManager{
         });
 
     }
-    // message302
+
+
+    // message302 가입권유
     public static final String SEND_MESSAGE_302_URL =GROND_SERVER_URL+"/message/302";
     public void postNetworkMessage302(final Context context , Push302 mPush302,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
@@ -1923,7 +1934,7 @@ public class NetworkManager{
         });
 
     }
-    // push302
+    // push302 가입권유
     public static final String SEND_PUSH_302_URL =GROND_SERVER_URL+"/push/302";
     public void postNetworkPush302(final Context context , Push302 mPush302,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
@@ -1957,6 +1968,41 @@ public class NetworkManager{
         });
 
     }
+    // push303 response 매치 참석 승낙
+    public static final String SEND_MESSAGE_301_RESPONSE_URL =GROND_SERVER_URL+"/message/301/response";
+    public void postNetworkMessage301Response(final Context context , Push301Response mPush301Response,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush301Response.member_id);
+        params.put("club_id",mPush301Response.club_id);
+        params.put("match_id",mPush301Response.match_id);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_301_RESPONSE_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+
 
     // match create
     public static final String SEND_MATCH_CREATE_URL =GROND_SERVER_URL+"/match/create";
@@ -1966,7 +2012,7 @@ public class NetworkManager{
         params.put("member_id",mMatchCreateData.member_id);
         params.put("home_id",mMatchCreateData.home_id);
         params.put("away_id",mMatchCreateData.away_id);
-        params.put("matchDate",mMatchCreateData.matchDate);
+        params.put("matchDate", mMatchCreateData.matchDate);
         params.put("startTime",mMatchCreateData.startTime);
         params.put("endTime",mMatchCreateData.endTime);
         params.put("matchLocation",mMatchCreateData.matchLocation);
@@ -1980,6 +2026,112 @@ public class NetworkManager{
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
                 MatchCreateDataResponse items = gson.fromJson(s, MatchCreateDataResponse.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+
+    // club  manager 임명
+    public static final String SEND_CLUB_MANAGER_URL =GROND_SERVER_URL+"/club/manager";
+    public void postNetworkClubManager(final Context context , ClubManagerData mClubManagerData,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mClubManagerData.member_id);
+        params.put("club_id",mClubManagerData.club_id);
+        params.put("manager_id",mClubManagerData.manager_id);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_CLUB_MANAGER_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // club  manager 박탈
+    public static final String SEND_CLUB_MANAGER_STOP_URL =GROND_SERVER_URL+"/club/manager/stop";
+    public void postNetworkClubManagerStop(final Context context , ClubManagerData mClubManagerData,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mClubManagerData.member_id);
+        params.put("club_id",mClubManagerData.club_id);
+//        params.put("manager_id",mClubManagerData.manager_id);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_CLUB_MANAGER_STOP_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // 선수 삭제
+    public static final String SEND_MEMBER_STOP_URL =GROND_SERVER_URL+"/member/delete";
+    public void postNetworkMemberStop(final Context context,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+//        params.put("member_id",mClubManagerData.member_id);
+//        params.put("club_id",mClubManagerData.club_id);
+//        params.put("manager_id",mClubManagerData.manager_id);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MEMBER_STOP_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
                 if (items != null) {
                     listener.onSuccess(items);
                 }

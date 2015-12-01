@@ -245,7 +245,7 @@ public class SignupFragment extends Fragment {
                                                         int id) {
 //                                        Log.e("hello","New Quantity Value : "+ aNumberPicker.getValue());
                                         mUserProfile.age = aNumberPicker.getValue();
-                                        textViewAge.setText(Integer.toString(aNumberPicker.getValue())+"세");
+                                        textViewAge.setText(Integer.toString(aNumberPicker.getValue())+"년");
 
                                     }
                                 })
@@ -269,7 +269,7 @@ public class SignupFragment extends Fragment {
             public void onClick(View v) {
 
                 //유저가 사진 입력하지 않았을 때 처리하기 !!
-
+                mUserProfile.updateYN =0;
                 if(mSavedFile!=null) {
                     mUserProfile.mFile = mSavedFile;
                 }else{
