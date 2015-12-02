@@ -1,6 +1,5 @@
 package com.android.ground.ground.controller.fc.management;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.android.ground.ground.view.OnNoClickListener;
 import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
 import com.android.ground.ground.view.OnYesClickListener;
-import com.android.ground.ground.view.person.message.MyMessageItemView;
 import com.android.ground.ground.view.person.message.MyMessageItemViewEdit;
 
 import java.util.ArrayList;

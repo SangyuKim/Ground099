@@ -427,7 +427,7 @@ public class FragmentMainSearchFC extends Fragment {
             int nextPage = mAdapter.getNextPage();
             if (nextPage != -1) {
                 isUpdate = true;
-                NetworkManager.getInstance().getNetworkSearchClub(getContext(), filter,keyword, nextPage, 1, new NetworkManager.OnResultListener<SearchClub>() {
+                NetworkManager.getInstance().getNetworkSearchClub(getContext(), filter,keyword, nextPage, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<SearchClub>() {
                     @Override
                     public void onSuccess(SearchClub result) {
                         for (SearchClubResult item : result.items) {
@@ -446,7 +446,7 @@ public class FragmentMainSearchFC extends Fragment {
     }
     private void searchFCClub(final String filter, final String keyword) {
         if (!TextUtils.isEmpty(filter)) {
-            NetworkManager.getInstance().getNetworkSearchClub(getContext(), filter, keyword,1, 1, new NetworkManager.OnResultListener<SearchClub>() {
+            NetworkManager.getInstance().getNetworkSearchClub(getContext(), filter, keyword,1, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<SearchClub>() {
                 @Override
                 public void onSuccess(SearchClub result) {
                     mAdapter.setKeyword(keyword);

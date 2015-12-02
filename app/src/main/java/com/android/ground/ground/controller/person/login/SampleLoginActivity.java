@@ -93,6 +93,7 @@ public class SampleLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setContentView(R.layout.content_splash);
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
         if (!Session.getCurrentSession().checkAndImplicitOpen()) {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
 import com.android.ground.ground.view.OnSpecificDialogClickListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -127,8 +128,15 @@ public class SearchPlayerItemView extends RelativeLayout {
         }
         if(item.clubYN==0){
             clubYN.setImageResource(R.drawable.match_201);
+            if(PropertyManager.getInstance().getMyPageResult().managerYN==1){
+                btnRequest.setVisibility(View.VISIBLE);}
+            else{
+                btnRequest.setVisibility(View.GONE);
+            }
+
         }else{
             clubYN.setImageResource(R.drawable.match_202);
+            btnRequest.setVisibility(View.GONE);
         }
         if(item.managerYN==0){
             managerYN.setImageResource(R.drawable.icon201);

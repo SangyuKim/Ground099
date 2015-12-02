@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,26 +21,22 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
-import com.android.ground.ground.controller.person.message.MyMessageAdapter;
 import com.android.ground.ground.controller.person.profile.YourProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.message.ClubMessageData;
 import com.android.ground.ground.model.message.ClubMessageDataResult;
-import com.android.ground.ground.model.person.message.MyMessageItem;
-import com.android.ground.ground.model.post.push.MatchCreateData;
+import com.android.ground.ground.model.message.MyMessageDataResult;
+import com.android.ground.ground.model.post.push.MessageDeleteData;
 import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.OnAdapterYesListener;
-import com.android.ground.ground.view.person.message.MyMessageItemView;
 import com.android.ground.ground.view.person.message.MyMessageItemViewEdit;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +47,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class FragmentClubMessageEdit extends Fragment {
+    View selectedView;
     boolean isUpdate = false;
     PullToRefreshListView refreshView;
     ListView listView;
@@ -126,6 +124,29 @@ public class FragmentClubMessageEdit extends Fragment {
         mAdapter = new ClubMessageEditAdapter();
         searchClubMessage();
         listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MessageDeleteData mMessageDeleteData = new MessageDeleteData();
+                selectedView = view;
+                ClubMessageDataResult item = ((MyMessageItemViewEdit)view).mClubMessageDataResult;
+                if(item != null){
+                    mMessageDeleteData.message_id = item.message_id;
+                    mMessageDeleteData.member_id = PropertyManager.getInstance().getUserId();
+                    NetworkManager.getInstance().postNetworkMessageWatch(getContext(), mMessageDeleteData, new NetworkManager.OnResultListener<EtcData>() {
+                        @Override
+                        public void onSuccess(EtcData result) {
+                            selectedView.setBackgroundColor(getResources().getColor(R.color.gray));
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+
+                        }
+                    });
+                }
+            }
+        });
 
         //전체선택
         btn2 = (Button)view.findViewById(R.id.button6);
@@ -269,9 +290,12 @@ public class FragmentClubMessageEdit extends Fragment {
             @Override
             public void onAdapterReplyClick(Adapter adapter, View view) {
                 ClubMessageDataResult item = ((MyMessageItemViewEdit) view).mClubMessageDataResult;
-                if (item.sender != PropertyManager.getInstance().getMyPageResult().club_id) {
-                    CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
-                    dialog.show(getChildFragmentManager(), "custom");
+                 getActivity().getIntent().putExtra("collector_id", item.sender);
+                if(item!=null){
+                    if(item.sender != PropertyManager.getInstance().getUserId()) {
+                        CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                        dialog.show( (getActivity()).getSupportFragmentManager(), "custom");
+                    }
                 }
 
             }
@@ -281,15 +305,33 @@ public class FragmentClubMessageEdit extends Fragment {
         return view;
     }
     private void onChoiceItem() {
+        //삭제 포스트 날리기
         SparseBooleanArray selection = listView.getCheckedItemPositions();
         StringBuilder sb = new StringBuilder();
         for (int index = 0; index < selection.size(); index++) {
             int position = selection.keyAt(index);
             if (selection.get(position)) {
                 sb.append(Integer.toString(position)).append(",");
+                MessageDeleteData mMessageDeleteData = new MessageDeleteData();
+
+                View view = getViewByPosition(position, listView);
+
+                mMessageDeleteData.member_id = PropertyManager.getInstance().getUserId();
+                mMessageDeleteData.message_id =((MyMessageItemViewEdit)view).mClubMessageDataResult.message_id;
+                NetworkManager.getInstance().postNetworkMessageDelete(getContext(), mMessageDeleteData, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+                        Toast.makeText(getContext(), "메시지 삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(getContext(), "메시지 삭제 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
-        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -356,7 +398,7 @@ public class FragmentClubMessageEdit extends Fragment {
                     mAdapter.add(item);
                 }
 //                mAdapter = new MyMessageAdapter(getContext(), result.items);
-//                refreshView.onRefreshComplete();
+                refreshView.onRefreshComplete();
             }
 
             @Override
@@ -384,6 +426,17 @@ public class FragmentClubMessageEdit extends Fragment {
                     }
                 });
             }
+        }
+    }
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
         }
     }
 

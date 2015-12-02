@@ -14,6 +14,7 @@ import com.android.ground.ground.R;
  */
 public class GridItemView2 extends FrameLayout {
     ImageView imageView;
+    public int member_id;
 
     public GridItemView2(Context context) {
         super(context);

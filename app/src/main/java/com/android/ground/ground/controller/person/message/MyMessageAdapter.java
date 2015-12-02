@@ -7,11 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 
-import com.android.ground.ground.R;
-import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.message.MyMessageDataResult;
-import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
-import com.android.ground.ground.model.person.message.MyMessageItem;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.OnAdapterYesListener;
@@ -20,8 +16,7 @@ import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
 import com.android.ground.ground.view.OnYesClickListener;
 import com.android.ground.ground.view.OnAdapterNoListener;
-import com.android.ground.ground.view.person.main.SearchPlayerItemView;
-import com.android.ground.ground.view.person.message.MyMessageItemView;
+import com.android.ground.ground.view.person.message.MyMessageItemViewEdit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,17 +101,18 @@ public class MyMessageAdapter extends BaseAdapter implements OnProfileClickListe
 ////        viewHolder.chk.setChecked(isCheckedConfrim[position]);
 ////        viewHolder.chk.setVisibility(isVisible);
 //        return convertView;
-        MyMessageItemView view;
+        MyMessageItemViewEdit view;
         if (convertView == null) {
-            view = new MyMessageItemView(parent.getContext());
+            view = new MyMessageItemViewEdit(parent.getContext());
             view.setOnProfileListener(this);
             view.setOnReplyListener(this);
             view.setOnYesListener(this);
             view.setOnNoListener(this);
         } else {
-            view = (MyMessageItemView) convertView;
+            view = (MyMessageItemViewEdit) convertView;
         }
         view.setMyMessageItem(items.get(position));
+        view.setCheckBox_messageVisible();
         return view;
     }
     class ViewHolder {
@@ -169,6 +165,7 @@ public class MyMessageAdapter extends BaseAdapter implements OnProfileClickListe
     public int getPage(){return page;}
     public void setPgae(int page){this.page = page;}
     public void setTotalCount(int totalCount) {
+        this.isCheckedConfrim = new boolean[totalCount+1];
         this.totalCount = totalCount;
     }
 

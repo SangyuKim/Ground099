@@ -13,13 +13,13 @@ import android.widget.TextView;
 import com.android.ground.ground.R;
 import com.android.ground.ground.custom.CustomRoundCornerProgressBar;
 import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.person.main.searchClub.SearchClubResult;
 import com.android.ground.ground.view.OnSpecificDialogClickListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class SearchFCItemView extends RelativeLayout {
-    public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
     public SearchFCItemView(Context context) {
         super(context);
         init();
@@ -35,8 +35,7 @@ public class SearchFCItemView extends RelativeLayout {
     SearchClubResult mItem;
     CheckBox clubMainDay_Mon,clubMainDay_Tue,clubMainDay_Wed,
             clubMainDay_Thu,clubMainDay_Fri,clubMainDay_Sat,clubMainDay_Sun;
-    ImageView btnJoin;
-    ImageView btnMatch;
+    ImageView btnJoin, btnMatch;
 
     CustomRoundCornerProgressBar progressBarSkill, progressBarManner;
 
@@ -72,17 +71,19 @@ public class SearchFCItemView extends RelativeLayout {
 
         progressBarSkill.setMax(50);
         progressBarManner.setMax(50);
-
         btnJoin = (ImageView)findViewById(R.id.button21);
         btnJoin.setFocusable(false);
         btnJoin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                   if (mRequestListener != null) {
+                if (mRequestListener != null) {
                     mRequestListener.onDialogClick(SearchFCItemView.this, "입단신청");
                 }
             }
         });
+
+
+
         btnMatch = (ImageView)findViewById(R.id.button34);
         btnMatch.setOnClickListener(new OnClickListener() {
             @Override
@@ -92,6 +93,9 @@ public class SearchFCItemView extends RelativeLayout {
                 }
             }
         });
+
+
+
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_stub)
                 .showImageForEmptyUri(R.drawable.ic_empty)
@@ -142,15 +146,31 @@ public class SearchFCItemView extends RelativeLayout {
         else
             clubMainDay_Sun.setChecked(true);
         ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl+item.clubImage), clubImage, options);
-        if(item.memYN ==0)
+        if(PropertyManager.getInstance().getMyPageResult().clubYN ==1){
+            btnJoin.setVisibility(View.GONE);
+            btnMatch.setVisibility(View.VISIBLE);
+        }else{
+            btnJoin.setVisibility(View.VISIBLE);
+            btnMatch.setVisibility(View.GONE);
+        }
+
+       if(item.memYN ==0){
             memYN.setVisibility(View.INVISIBLE);
+            btnJoin.setVisibility(View.GONE);
+        }
         else{
             memYN.setVisibility(View.VISIBLE);
+           if(PropertyManager.getInstance().getMyPageResult().clubYN ==0)
+              btnJoin.setVisibility(View.VISIBLE);
         }
-        if(item.matchYN ==0)
+        if(item.matchYN ==0){
             matchYN.setVisibility(View.INVISIBLE);
+            btnMatch.setVisibility(View.GONE);
+        }
         else{
             matchYN.setVisibility(View.VISIBLE);
+            if(PropertyManager.getInstance().getMyPageResult().clubYN==1)
+                btnMatch.setVisibility(View.VISIBLE);
         }
         if(item.clubSkill != null)
              progressBarSkill.setProgress((int) (item.clubSkill * 10));
@@ -164,9 +184,6 @@ public class SearchFCItemView extends RelativeLayout {
         mRequestListener = listener;
     }
 
-    public static String getImageUrl() {
-        return ImageUrl;
-    }
 
     public ImageView getClubImage() {
         return clubImage;

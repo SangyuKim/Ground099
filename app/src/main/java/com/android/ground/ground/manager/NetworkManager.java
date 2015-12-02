@@ -38,6 +38,14 @@ import com.android.ground.ground.model.person.main.searchClub.SearchClub;
 import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
+import com.android.ground.ground.model.post.lineup.InputResultMVP;
+import com.android.ground.ground.model.post.lineup.InputResultScorerReal;
+import com.android.ground.ground.model.post.lineup.InputResultSetting;
+import com.android.ground.ground.model.post.lineup.LineupPlan;
+import com.android.ground.ground.model.post.lineup.LineupVirtualFomationPost;
+import com.android.ground.ground.model.post.push.MessageDeleteData;
+import com.android.ground.ground.model.post.push.Push302Response;
+import com.android.ground.ground.model.post.lineup.ScoreMannerSkill;
 import com.android.ground.ground.model.post.fcCreate.ClubProfile;
 import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
 import com.android.ground.ground.model.post.push.MatchCreateData;
@@ -64,6 +72,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -76,6 +85,8 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.entity.ByteArrayEntity;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 
 
@@ -1385,7 +1396,7 @@ public class NetworkManager{
         params.put("sender_id",mPush401.sender_id);
         params.put("collectorClub_id",mPush401.collectorClub_id);
         params.put("matchDate",mPush401.matchDate);
-        params.put("startTime",mPush401.startTime);
+        params.put("startTime", mPush401.startTime);
         params.put("endTime",mPush401.endTime);
         params.put("matchLocation",mPush401.matchLocation);
         params.put("etc",mPush401.etc);
@@ -1968,7 +1979,7 @@ public class NetworkManager{
         });
 
     }
-    // push303 response 매치 참석 승낙
+    // push301 response 매치 참석 승낙
     public static final String SEND_MESSAGE_301_RESPONSE_URL =GROND_SERVER_URL+"/message/301/response";
     public void postNetworkMessage301Response(final Context context , Push301Response mPush301Response,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
@@ -1976,6 +1987,7 @@ public class NetworkManager{
         params.put("member_id",mPush301Response.member_id);
         params.put("club_id",mPush301Response.club_id);
         params.put("match_id",mPush301Response.match_id);
+        params.put("accRej",mPush301Response.accRej);
 //        params.put("contents",mPush300.contents);
 
         client.post(context, SEND_MESSAGE_301_RESPONSE_URL, params, new AsyncHttpResponseHandler() {
@@ -2011,7 +2023,7 @@ public class NetworkManager{
         final RequestParams params = new RequestParams();
         params.put("member_id",mMatchCreateData.member_id);
         params.put("home_id",mMatchCreateData.home_id);
-        params.put("away_id",mMatchCreateData.away_id);
+        params.put("away_id", mMatchCreateData.away_id);
         params.put("matchDate", mMatchCreateData.matchDate);
         params.put("startTime",mMatchCreateData.startTime);
         params.put("endTime",mMatchCreateData.endTime);
@@ -2148,6 +2160,495 @@ public class NetworkManager{
         });
 
     }
+
+
+    //메시지 삭제
+    public static final String SEND_MESSAGE_DELETE_URL =GROND_SERVER_URL+"/message/delete";
+    public void postNetworkMessageDelete(final Context context,  MessageDeleteData mMessageDeleteData,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mMessageDeleteData.member_id);
+        params.put("message_id",mMessageDeleteData.message_id);
+//        params.put("manager_id",mClubManagerData.manager_id);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_DELETE_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    //본 메시지 설정 , 읽음, 읽은 메시지
+    public static final String SEND_MESSAGE_WATCH_URL =GROND_SERVER_URL+"/message/watch";
+    public void postNetworkMessageWatch(final Context context,  MessageDeleteData mMessageDeleteData,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mMessageDeleteData.member_id);
+        params.put("message_id",mMessageDeleteData.message_id);
+//        params.put("manager_id",mClubManagerData.manager_id);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_WATCH_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    //메시지 302, 푸쉬 push message 302 response
+    public static final String SEND_MESSAGE_302_RESPONSE_URL =GROND_SERVER_URL+"/message/302/response";
+    public void postNetworkMessage302Response(final Context context,  Push302Response mPush302Response,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush302Response.member_id);
+        params.put("club_id",mPush302Response.club_id);
+        params.put("accRej",mPush302Response.accRej);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_302_RESPONSE_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+
+
+    //라인업 작전 입력
+    public static final String SEND_LINEUP_PLAN_URL =GROND_SERVER_URL+"/lineup/plan";
+    public void postNetworkLineupPlan(final Context context,  LineupPlan mLineupPlan,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mLineupPlan.member_id);
+        params.put("club_id", mLineupPlan.club_id);
+        params.put("match_id",mLineupPlan.match_id);
+        params.put("plan",mLineupPlan.plan);
+        params.put("homeAway", mLineupPlan.homeAway);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_LINEUP_PLAN_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    //가상 라인업 포메이션 입력 실제 선수 이용
+    public static final String SEND_LINEUP_VIRTUAL_FORMATION_REAL_URL =GROND_SERVER_URL+"/lineup/virtual/formation/real";
+    public void postNetworkLineupVirtualFormationReal(final Context context,  LineupVirtualFomationPost mLineupVirtualFomationPost,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mLineupVirtualFomationPost.member_id);
+        params.put("club_id",mLineupVirtualFomationPost.club_id);
+        params.put("match_id",mLineupVirtualFomationPost.match_id);
+        params.put("locMemInfo",mLineupVirtualFomationPost.itemslocMemInfo);
+//        params.put("contents",mPush300.contents);
+
+
+
+        String bodyAsJson = gson.toJson(mLineupVirtualFomationPost);
+        StringEntity entity  = null;
+        entity = new StringEntity(bodyAsJson,"UTF-8");
+
+        Log.d("hello", entity.toString());
+        client.post(context, SEND_LINEUP_VIRTUAL_FORMATION_REAL_URL, entity, "application/json", new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    //가상 라인업 포메이션 입력 가상 선수 이용
+    public static final String SEND_LINEUP_VIRTUAL_FORMATION_VIR_URL =GROND_SERVER_URL+"/lineup/virtual/formation/vir";
+    public void postNetworkLineupVirtualFormationVir(final Context context,  LineupVirtualFomationPost mLineupVirtualFomationPost,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mLineupVirtualFomationPost.member_id);
+        params.put("club_id",mLineupVirtualFomationPost.club_id);
+        params.put("match_id",mLineupVirtualFomationPost.match_id);
+        params.put("locVirInfo",mLineupVirtualFomationPost.itemslocVirInfo);
+
+//        params.put("contents",mPush300.contents);
+
+        String bodyAsJson = gson.toJson(mLineupVirtualFomationPost);
+        StringEntity entity  = null;
+        entity = new StringEntity(bodyAsJson, "UTF-8");
+
+        Log.d("hello", entity.toString());
+        client.post(context, SEND_LINEUP_VIRTUAL_FORMATION_VIR_URL, entity, "application/json",new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+
+    //실제 라인업 포메이션 입력 실제 선수 이용
+    public static final String SEND_LINEUP_INPUTRESULT_FORMATION_REAL_URL =GROND_SERVER_URL+"/lineup/inputResult/formation/real";
+    public void postNetworkLineupInputResultFormationReal(final Context context,  LineupVirtualFomationPost mLineupVirtualFomationPost,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mLineupVirtualFomationPost.member_id);
+        params.put("club_id",mLineupVirtualFomationPost.club_id);
+        params.put("match_id",mLineupVirtualFomationPost.match_id);
+        params.put("locMemInfo",mLineupVirtualFomationPost.itemslocMemInfo);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_LINEUP_INPUTRESULT_FORMATION_REAL_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    //실제 라인업 포메이션 입력 가상 선수 이용
+    public static final String SEND_LINEUP_INPUTRESULT_FORMATION_VIR_URL =GROND_SERVER_URL+"/lineup/inputResult/formation/vir";
+    public void postNetworkLineupInputResultFormationVir(final Context context,  LineupVirtualFomationPost mLineupVirtualFomationPost,final OnResultListener<EtcData> listener) throws UnsupportedEncodingException {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mLineupVirtualFomationPost.member_id);
+        params.put("club_id",mLineupVirtualFomationPost.club_id);
+        params.put("match_id",mLineupVirtualFomationPost.match_id);
+//        params.put("locVirInfo",mLineupVirtualFomationPost.itemslocVirInfo);
+
+//        params.put("contents",mPush300.contents);
+        StringEntity entity  = new StringEntity(params.toString());
+
+        client.post(context, SEND_LINEUP_INPUTRESULT_FORMATION_VIR_URL, entity, "application/json", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    //양팀 점수, 매너, 스킬 입력
+    public static final String SEND_LINEUP_SCORE_MANNER_SKILL_URL =GROND_SERVER_URL+"/lineup/inputResult/scoreMannerSkill";
+    public void postNetworkLineupInputResultScoreMannerSkill(final Context context,  ScoreMannerSkill mScoreMannerSkill,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mScoreMannerSkill.match_id);
+        params.put("club_id",mScoreMannerSkill.club_id);
+        params.put("homeAway", mScoreMannerSkill.homeAway);
+        params.put("score",mScoreMannerSkill.score);
+        params.put("skill",mScoreMannerSkill.skill);
+        params.put("manner",mScoreMannerSkill.manner);
+        params.put("member_id",mScoreMannerSkill.member_id);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_LINEUP_SCORE_MANNER_SKILL_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    //득점자 입력 실제
+    public static final String SEND_LINEUP_INPUTRESULT_SCORER_REAL_URL =GROND_SERVER_URL+"/lineup/inputResult/scorer/real";
+    public void postNetworkLineupInputResultScorerReal(final Context context,  InputResultScorerReal mInputResultScorerReal,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mInputResultScorerReal.match_id);
+        params.put("club_id",mInputResultScorerReal.club_id);
+        params.put("member_id",mInputResultScorerReal.member_id);
+        params.put("realScorer",mInputResultScorerReal.itemsrealScorer);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_LINEUP_INPUTRESULT_SCORER_REAL_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    //득점자 입력 가상
+    public static final String SEND_LINEUP_INPUTRESULT_SCORER_VIR_URL =GROND_SERVER_URL+"/lineup/inputResult/scorer/vir";
+    public void postNetworkLineupInputResultScorerVir(final Context context,  InputResultScorerReal mInputResultScorerReal,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mInputResultScorerReal.match_id);
+        params.put("club_id",mInputResultScorerReal.club_id);
+        params.put("member_id",mInputResultScorerReal.member_id);
+        params.put("virScorer",mInputResultScorerReal.itemsvirScorer);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_LINEUP_INPUTRESULT_SCORER_VIR_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    //mvp 입력
+    public static final String SEND_LINEUP_INPUTRESULT_MVP_URL =GROND_SERVER_URL+"/lineup/inputResult/mvp";
+    public void postNetworkLineupInputResultMVP(final Context context,  InputResultMVP mInputResultMVP,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mInputResultMVP.match_id);
+        params.put("club_id",mInputResultMVP.club_id);
+        params.put("member_id",mInputResultMVP.member_id);
+        params.put("mvp",mInputResultMVP.mvp);
+        params.put("homeAway",mInputResultMVP.homeAway);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_LINEUP_INPUTRESULT_MVP_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    //결과 입력 정리
+    public static final String SEND_LINEUP_INPUTRESULT_SETTING_URL =GROND_SERVER_URL+"/lineup/inputResult/setting";
+    public void postNetworkLineupInputResultSetting(final Context context,  InputResultSetting mInputResultSetting,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mInputResultSetting.match_id);
+        params.put("club_id",mInputResultSetting.club_id);
+        params.put("member_id",mInputResultSetting.member_id);
+        params.put("homeAway",mInputResultSetting.homeAway);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_LINEUP_INPUTRESULT_SETTING_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+
     //===================================================
     public void cancelAll(Context context) {
         client.cancelRequests(context, true);
@@ -2155,6 +2656,7 @@ public class NetworkManager{
 
 
     public void showWaitingDialog(Context context){
+
         mDialogList.add(new Dialog(context));
         mDialogList.get(mDialogList.size()-1).requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialogList.get(mDialogList.size()-1).setContentView(R.layout.fragment_sample_ripple);

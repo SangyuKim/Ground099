@@ -23,7 +23,7 @@ public class ReadyMatchResultListItemView extends FrameLayout {
     public TextView memName;
 
 
-    LineupVirtualResResult mItem;
+    public LineupVirtualResResult mItem;
 
     public ReadyMatchResultListItemView(Context context) {
         super(context);
@@ -57,6 +57,10 @@ public class ReadyMatchResultListItemView extends FrameLayout {
 //            }
 //        });
 
+    }
+
+    public void setText(String text){
+        memName.setText(text);
     }
     public void setReadyMatchResultListItem(LineupVirtualResResult item){
         mItem = item;

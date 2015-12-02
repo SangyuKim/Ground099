@@ -15,6 +15,9 @@ import android.widget.Button;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.login.TutorialActivity;
 import com.android.ground.ground.controller.person.profile.MyProfileManagementActivity;
+import com.facebook.login.LoginManager;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +84,11 @@ public class SettingFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
+
+
+
         btn = (Button)view.findViewById(R.id.button14);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +100,18 @@ public class SettingFragment extends Fragment {
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            UserManagement.requestLogout(new LogoutResponseCallback() {
+                                @Override
+                                public void onCompleteLogout() {
+                                }
+                            });
+
+                            LoginManager mLoginManager = LoginManager.getInstance();
+                            mLoginManager.logOut();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         Intent intent = new Intent(getContext(), TutorialActivity.class);
                         startActivity(intent);
                         getActivity().finish();

@@ -28,7 +28,7 @@ public class Utils {
             R.drawable.am,
             R.drawable.rm ,R.mipmap.ic_launcher, R.drawable.dm, R.drawable.lwb, R.drawable.cb, R.drawable.rwb
             , R.drawable.lb, R.drawable.rb
-    ,R.mipmap.ic_launcher};
+            ,R.mipmap.ic_launcher};
 
     public static int POSITION_LW = 1;
     public static int POSITION_CF = 2;

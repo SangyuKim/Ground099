@@ -44,6 +44,10 @@ public class MainAlarmAdapter extends BaseAdapter{
         view.setAlarmItemData(items.get(position));
         return view;
     }
+    public void clear() {
+        items.clear();
+        notifyDataSetChanged();
+    }
 
     public void add(NotiDataResult item) {
         items.add(item);

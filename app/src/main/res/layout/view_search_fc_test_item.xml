@@ -340,31 +340,37 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
 
-            <ImageView
-                android:layout_width="51.75dp"
-                android:layout_height="51.75dp"
-                android:id="@+id/button21"
-                android:src="@drawable/uniform_001"
-                android:background="#00000000"
-                android:visibility="visible"
-                android:layout_gravity="top|right"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-    />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="51.75dp"
-                android:layout_height="51.75dp"
-                android:id="@+id/button34"
-                android:src="@drawable/whistle_001"
-                android:layout_above="@+id/linearLayout71"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                <ImageView
+                    android:layout_width="51.75dp"
+                    android:layout_height="51.75dp"
+                    android:id="@+id/button21"
+                    android:src="@drawable/uniform_001"
+                    android:background="#00000000"
+                    android:visibility="visible"
+                    android:layout_gravity="top|right"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+        />
+
+                <ImageView
+                    android:layout_width="51.75dp"
+                    android:layout_height="51.75dp"
+                    android:id="@+id/button34"
+                    android:src="@drawable/whistle_001"
+                    android:layout_above="@+id/linearLayout71"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </FrameLayout>
         </LinearLayout>
 
     </LinearLayout>

@@ -276,7 +276,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searchMatch("", s.toString());
+                searchMatch(filter, s.toString());
            }
 
             @Override
@@ -483,7 +483,8 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
     private void searchMatch(final String filter,final String keyword) {
 
         if(!keyword.equals("")){
-          NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+
+          NetworkManager.getInstance().getNetworkMatchInfo(getContext(), filter, keyword, 1, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<MatchInfo>() {
               @Override
               public void onSuccess(MatchInfo result) {
 
@@ -510,7 +511,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
             flag1 = false;
             flag2 = false;
             if (filter.equals("date")) {
-                NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "futureMat", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+                NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "futureMat", keyword, 1, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<MatchInfo>() {
                     @Override
                     public void onSuccess(MatchInfo result) {
 
@@ -530,7 +531,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 //                    if(result.matPage)
                         flag1 = true;
                         if (flag1) {
-                            NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "ingMat", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+                            NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "ingMat", keyword, 1, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<MatchInfo>() {
                                 @Override
                                 public void onSuccess(MatchInfo result) {
                                     mAdapter.setKeyword(keyword);
@@ -547,7 +548,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                                     refreshView.onRefreshComplete();
                                     flag2 = true;
                                     if (flag2) {
-                                        NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "endMat", keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+                                        NetworkManager.getInstance().getNetworkMatchInfo(getContext(), "endMat", keyword, 1, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<MatchInfo>() {
                                             @Override
                                             public void onSuccess(MatchInfo result) {
                                                 mAdapter.setKeyword(keyword);
@@ -590,7 +591,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
 
             } else {
 
-                NetworkManager.getInstance().getNetworkMatchInfo(getContext(), filter, keyword, 1, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+                NetworkManager.getInstance().getNetworkMatchInfo(getContext(), filter, keyword, 1, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<MatchInfo>() {
                     @Override
                     public void onSuccess(MatchInfo result) {
                         mAdapter.setKeyword(keyword);
@@ -629,7 +630,7 @@ public class FragmentMainCheckMatch extends Fragment implements MVPview.OnHeader
                     int nextPage = mAdapter.getNextPage();
                     if (nextPage != -1) {
 
-                    NetworkManager.getInstance().getNetworkMatchInfo(getContext(), filter, oldKeyword, nextPage, 1, new NetworkManager.OnResultListener<MatchInfo>() {
+                    NetworkManager.getInstance().getNetworkMatchInfo(getContext(), filter, oldKeyword, nextPage, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<MatchInfo>() {
                         @Override
                         public void onSuccess(MatchInfo result) {
                             mAdapter.setKeyword(oldKeyword);

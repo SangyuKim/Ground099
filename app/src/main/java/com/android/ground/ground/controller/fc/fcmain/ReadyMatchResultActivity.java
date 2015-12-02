@@ -25,19 +25,26 @@ import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.fc.fcmain.ReadymatchResult.MyReadyMatchSpinnerAdapter;
 import com.android.ground.ground.controller.fc.fcmain.ReadymatchResult.ReadyMatchResultAdapter;
 import com.android.ground.ground.controller.person.finalposition.GridItemView2;
 import com.android.ground.ground.controller.person.finalposition.ListItemView;
+import com.android.ground.ground.controller.person.main.MySpinnerAdapter;
 import com.android.ground.ground.custom.CustomDragDropListView;
 import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.lineup.match.LineupMatch;
 import com.android.ground.ground.model.lineup.match.LineupMatchResult;
 import com.android.ground.ground.model.lineup.planLoc.LineupPlanLoc;
@@ -51,9 +58,13 @@ import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualRes;
 import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualResResult;
 import com.android.ground.ground.model.person.main.matchinfo.matchFormation.MatchFormation;
 import com.android.ground.ground.model.person.main.matchinfo.matchFormation.MatchFormationResult;
+import com.android.ground.ground.model.post.lineup.LineupPlan;
+import com.android.ground.ground.model.post.lineup.LineupVirtualFomationPlayerPost;
+import com.android.ground.ground.model.post.lineup.LineupVirtualFomationPost;
 import com.android.ground.ground.view.OnAdapterCustomTouchListener;
 import com.android.ground.ground.view.OnCustomTouchListener;
 import com.android.ground.ground.view.fc.fcmain.ReadyMatchResultListItemView;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -64,8 +75,9 @@ import java.util.List;
 
 public class ReadyMatchResultActivity extends AppCompatActivity implements
         CustomDragDropListView.DragListener, CustomDragDropListView.DropListener{
-
-
+    Button btnCreateVirtual, btnComplete;
+    EditText editTextVirtual;
+    ReadyMatchResultListItemView matchResultListItemView;
 
     int w, h, countInField =0;
 
@@ -73,6 +85,8 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
             , startTime, matchLocation, homeAwayPlan, homeScore, awayScore, memName
             , MVPmemName;
     int matchId, clubId, groupPosition;
+    Spinner spinner;
+    MyReadyMatchSpinnerAdapter mySpinnerAdapter;
 
     List<String> listScorer = new ArrayList<String>();
 
@@ -92,6 +106,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
     private ShareActionProvider mShareActionProvider;
     View captureView;
     ScrollView mScrollView;
+
+    LineupPlan mLineupPlan;
+    ArrayList<LineupVirtualFomationPlayerPost> mlistsLineupVirtualFomationPlayerPostReal = new ArrayList<LineupVirtualFomationPlayerPost>();
+    ArrayList<LineupVirtualFomationPlayerPost> mlistsLineupVirtualFomationPlayerPostVir = new ArrayList<LineupVirtualFomationPlayerPost>();
+    LineupVirtualFomationPost mlineupVirtualFomationPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,14 +139,19 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         memName = (TextView)findViewById(R.id.memName);
         MVPmemName= (TextView)findViewById(R.id.MVPmemName);
         mScrollView = (ScrollView)findViewById(R.id.scrollView3);
+        btnCreateVirtual = (Button)findViewById(R.id.button22);
+        editTextVirtual = (EditText)findViewById(R.id.editTextVirtual);
+        btnComplete= (Button)findViewById(R.id.button48);
 
-
+        matchResultListItemView = (ReadyMatchResultListItemView)findViewById(R.id.virtualPlayer);
         gridLayout = (GridLayout) findViewById(R.id.gridLayout);
 
         listItemView = (ListItemView) findViewById(R.id.listItemView);
 
         lineupVirtualRes = (ListView)findViewById(R.id.lineupVirtualRes);
         mReadyMatchResultAdapter = new ReadyMatchResultAdapter();
+        mLineupPlan = new LineupPlan();
+        mlineupVirtualFomationPost =new LineupVirtualFomationPost();
 //        mReadyMatchResultAdapter.setOnAdapterCustomTouchListener(new OnAdapterCustomTouchListener() {
 //            @Override
 //            public void onTouch(View view, LineupVirtualResResult mItem) {
@@ -190,15 +214,142 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         lineupVirtualRes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+
                 String text = ((ReadyMatchResultListItemView) view).memName.getText().toString();
-                ClipData.Item item = new ClipData.Item(text);
+                intent.putExtra("text", text);
+                intent.putExtra("member_id",((ReadyMatchResultListItemView) view).mItem.member_id );
+                ClipData.Item item = new ClipData.Item(intent);
                 ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                 view.startDrag(data, new View.DragShadowBuilder(view), null, 3);
                 return true;
             }
         });
+        matchResultListItemView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Intent intent = new Intent();
+
+                String text = ((ReadyMatchResultListItemView) v).memName.getText().toString();
+                intent.putExtra("text", text);
+                //가상 선수 일경우 -2
+                intent.putExtra("member_id",-2);
+                ClipData.Item item = new ClipData.Item(intent);
+                ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                v.startDrag(data, new View.DragShadowBuilder(v), null, 3);
+                return true;
+            }
+        });
+        btnCreateVirtual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String virtualMemNmae = editTextVirtual.getText().toString();
+
+                matchResultListItemView.setText(virtualMemNmae);
 
 
+            }
+        });
+
+        setWidthHeigth();
+        setSpinner();
+
+        btnComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//===================================================라인업
+                mLineupPlan.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+                if(PropertyManager.getInstance().getMyPageResult().club_id == mLineupMatchResult.home_id){
+                    mLineupPlan.homeAway= 0;
+                }else{
+                    if(PropertyManager.getInstance().getMyPageResult().club_id== mLineupMatchResult.away_id)
+                         mLineupPlan.homeAway= 1;
+                }
+                mLineupPlan.match_id = mLineupMatchResult.match_id;
+                mLineupPlan.member_id = PropertyManager.getInstance().getUserId();
+
+                NetworkManager.getInstance().postNetworkLineupPlan(ReadyMatchResultActivity.this, mLineupPlan, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+
+
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(ReadyMatchResultActivity.this, " 라인업 등록 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                            LineupVirtualFomationPlayerPost mLineupVirtualFomationPlayerPost = new LineupVirtualFomationPlayerPost();
+                            GridItemView2 mGridItemView2 = (GridItemView2) mLinearLayouts.get(i).getChildAt(0);
+                            if (mGridItemView2.member_id > 0) {
+                                mLineupVirtualFomationPlayerPost.locIndex = i;
+                                mLineupVirtualFomationPlayerPost.memName = mGridItemView2.getTextView().getText().toString();
+                                mLineupVirtualFomationPlayerPost.member_id = mGridItemView2.member_id;
+                                mlistsLineupVirtualFomationPlayerPostReal.add(mLineupVirtualFomationPlayerPost);
+                            }
+
+                        }
+                    }
+
+                }
+                Gson gson = new Gson();
+                String locMemInfo = gson.toJson(mlistsLineupVirtualFomationPlayerPostReal);
+
+                mlineupVirtualFomationPost.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+                mlineupVirtualFomationPost.itemslocMemInfo = mlistsLineupVirtualFomationPlayerPostReal;
+                mlineupVirtualFomationPost.match_id = mLineupMatchResult.match_id;
+                mlineupVirtualFomationPost.member_id = PropertyManager.getInstance().getUserId();
+                NetworkManager.getInstance().postNetworkLineupVirtualFormationReal(ReadyMatchResultActivity.this, mlineupVirtualFomationPost, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(ReadyMatchResultActivity.this, " 실제선수 등록 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                for (int i = 0; i < mLinearLayouts.size(); i++) {
+                    if (mLinearLayouts.get(i).getChildAt(0) != null) {
+                        if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
+                            LineupVirtualFomationPlayerPost mLineupVirtualFomationPlayerPost = new LineupVirtualFomationPlayerPost();
+                            GridItemView2 mGridItemView2 = (GridItemView2)mLinearLayouts.get(i).getChildAt(0);
+                            if( mGridItemView2.member_id < 0){
+                                mLineupVirtualFomationPlayerPost.locIndex= i;
+                                mLineupVirtualFomationPlayerPost.memName =mGridItemView2.getTextView().getText().toString() ;
+                                mLineupVirtualFomationPlayerPost.member_id = mGridItemView2.member_id;
+                                mlistsLineupVirtualFomationPlayerPostVir.add(mLineupVirtualFomationPlayerPost);
+                            }
+
+
+                        }
+                    }
+
+                }
+                mlineupVirtualFomationPost.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+                mlineupVirtualFomationPost.itemslocVirInfo =mlistsLineupVirtualFomationPlayerPostVir;
+                mlineupVirtualFomationPost.match_id = mLineupMatchResult.match_id;
+                mlineupVirtualFomationPost.member_id = PropertyManager.getInstance().getUserId();
+                NetworkManager.getInstance().postNetworkLineupVirtualFormationVir(ReadyMatchResultActivity.this, mlineupVirtualFomationPost, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+                        Toast.makeText(ReadyMatchResultActivity.this, " 입력 성공", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(ReadyMatchResultActivity.this, " 가상선수 등록 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -322,9 +473,38 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         matchLocation.setText(mLineupPlanLocResult.matchLocation);
         if(clubId == mLineupPlanLocResult.home_id){
             homeAwayPlan.setText(Integer.toString(mLineupPlanLocResult.homePlan));
+            spinner.setSelection(mLineupPlanLocResult.homePlan-1);
         } else if (clubId == mLineupPlanLocResult.away_id) {
             homeAwayPlan.setText(Integer.toString(mLineupPlanLocResult.awayPlan));
+            spinner.setSelection(mLineupPlanLocResult.homePlan-1);
         }
+    }
+    private void setSpinner() {
+        spinner = (Spinner)findViewById(R.id.spinner3);
+        mySpinnerAdapter = new MyReadyMatchSpinnerAdapter(ReadyMatchResultActivity.this);
+        spinner.setAdapter(mySpinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mLineupPlan.plan = position+1;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        initSpinnerData();
+    }
+
+    private void initSpinnerData() {
+
+        String[] items = getResources().getStringArray(R.array.items_lineup);
+        for (String s : items) {
+            mySpinnerAdapter.add(s);
+        }
+
     }
 
     private void searchLineupVirtualRes(final int clubId, final int matchId) {
@@ -370,7 +550,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
     }
 
     public void searchLineupVirtualFormation(int matchId, int clubId ){
-        NetworkManager.getInstance().getNetworkLineupVirtualFomation(ReadyMatchResultActivity.this, matchId, clubId, new NetworkManager.OnResultListener<LineupVirtualFomation>() {
+        NetworkManager.getInstance().getNetworkLineupVirtualFomation(ReadyMatchResultActivity.this, clubId, matchId, new NetworkManager.OnResultListener<LineupVirtualFomation>() {
             @Override
             public void onSuccess(LineupVirtualFomation result) {
                 for (LineupVirtualFomationResult item : result.items) {
@@ -430,8 +610,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                         gridItemView.setOnTouchListener(new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View v, MotionEvent event) {
+                                Intent intent = new Intent();
+
                                 String text = ((GridItemView2) v).getTextView().getText().toString();
-                                ClipData.Item item = new ClipData.Item(text);
+                                intent.putExtra("text", text);
+                                intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                ClipData.Item item = new ClipData.Item(intent);
                                 ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                 v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                 v.setVisibility(View.INVISIBLE);
@@ -559,12 +743,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
     int i;
     int tempInt;
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
 
-        w= gridLayout.getWidth()/7;
-        h= gridLayout.getHeight()/8;
+    public void setWidthHeigth() {
+
+        w= dpToPx(270)/7;
+        h= dpToPx(400)/8;
 
         Log.d("hello", "w : " + w + "  //  h : " + h);
 
@@ -607,10 +790,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+//                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.lw);
 
@@ -618,8 +803,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -684,10 +873,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.cf);
 
@@ -695,8 +885,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -762,10 +956,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.rw);
 
@@ -773,8 +968,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -842,10 +1041,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
-
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
+                                gridItemView.member_id = mMemberId;
 
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.lm);
@@ -854,8 +1054,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -921,10 +1125,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.am);
 
@@ -932,8 +1137,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -999,9 +1208,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
+                                gridItemView.member_id = mMemberId;
 
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.rm);
@@ -1010,8 +1221,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1078,10 +1293,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.lm);
 
@@ -1089,8 +1305,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1156,10 +1376,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 //                        gridItemView2.setImageRes(R.drawable.cm);
 
@@ -1167,8 +1388,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1234,10 +1459,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.rm);
 
@@ -1245,8 +1471,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1314,10 +1544,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.lm);
 
@@ -1325,8 +1556,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1392,9 +1627,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
+                                gridItemView.member_id = mMemberId;
 
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.dm);
@@ -1403,8 +1640,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1470,10 +1711,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.rm);
 
@@ -1481,8 +1723,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1550,9 +1796,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
+                                gridItemView.member_id = mMemberId;
 
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.lwb);
@@ -1561,8 +1809,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1627,11 +1879,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
-
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.cb);
 
@@ -1639,8 +1891,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1706,10 +1962,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.rwb);
 
@@ -1717,8 +1974,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1786,9 +2047,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
+                                gridItemView.member_id = mMemberId;
 
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.lb);
@@ -1797,8 +2060,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1864,9 +2131,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
+                                gridItemView.member_id = mMemberId;
 
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.cb);
@@ -1875,8 +2144,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -1942,10 +2215,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 gridItemView.setImageRes(R.drawable.rb);
 
@@ -1953,8 +2227,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -2020,10 +2298,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 LinearLayout container = (LinearLayout) v;
 //                            GridItemView2 container = (GridItemView2)v;
 
-                                String text = event.getClipData().getItemAt(0).getText().toString();
+                                String text = event.getClipData().getItemAt(0).getIntent().getStringExtra("text");
+                                int mMemberId = event.getClipData().getItemAt(0).getIntent().getIntExtra("member_id", -1);
                                 gridItemView = new GridItemView2(ReadyMatchResultActivity.this);
                                 gridItemView.setText(text);
-
+                                gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
                                 //                        gridItemView2.setImageRes(R.drawable.gk);
 
@@ -2031,8 +2310,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
                                     @Override
                                     public boolean onTouch(View v, MotionEvent event) {
+                                        Intent intent = new Intent();
+
                                         String text = ((GridItemView2) v).getTextView().getText().toString();
-                                        ClipData.Item item = new ClipData.Item(text);
+                                        intent.putExtra("text", text);
+                                        intent.putExtra("member_id", ((GridItemView2) v).member_id);
+                                        ClipData.Item item = new ClipData.Item(intent);
                                         ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                                         v.startDrag(data, new View.DragShadowBuilder(v), null, 5);
                                         v.setVisibility(View.INVISIBLE);
@@ -2097,5 +2380,10 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
             parent.removeAllViews();
         }
         super.onPause();
+    }
+    private int dpToPx(int dp)
+    {
+        float density = getApplicationContext().getResources().getDisplayMetrics().density;
+        return Math.round((float)dp * density);
     }
 }

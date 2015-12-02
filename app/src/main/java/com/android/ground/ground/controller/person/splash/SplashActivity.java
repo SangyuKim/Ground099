@@ -119,7 +119,7 @@ public class SplashActivity extends AppCompatActivity {
         mLoginManager = LoginManager.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        mHandler.postDelayed(mRunnable, 3000);
+        mHandler.postDelayed(mRunnable, 8000);
 
 
         handler = new Handler();
@@ -215,6 +215,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SplashActivity.this, SampleLoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -581,7 +582,9 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void goLoginActivity() {
-        startActivity(new Intent(this, SampleLoginActivity.class));
+        Intent intent = new Intent(this, SampleLoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
         finish();
     }
 
@@ -635,7 +638,9 @@ public class SplashActivity extends AppCompatActivity {
     private void redirectSignupFragment() {
         Intent intent =new Intent(SplashActivity.this, SampleLoginActivity.class);
 //        intent.putExtra("kakaoSession", true);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
+
         finish();
     }
 

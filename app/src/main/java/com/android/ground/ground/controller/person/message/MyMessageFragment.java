@@ -5,8 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,28 +13,28 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
-import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.controller.person.profile.YourProfileActivity;
+import com.android.ground.ground.manager.ClubManagerData;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.Profile;
+import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.message.MyMessageData;
 import com.android.ground.ground.model.message.MyMessageDataResult;
-import com.android.ground.ground.model.person.main.searchMem.SearchMem;
-import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
 import com.android.ground.ground.model.person.message.MyMessageItem;
+import com.android.ground.ground.model.post.push.MessageDeleteData;
 import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.OnAdapterYesListener;
-import com.android.ground.ground.view.person.main.SearchFCItemView;
-import com.android.ground.ground.view.person.message.MyMessageItemView;
+import com.android.ground.ground.view.fc.management.ManagementMemberItemView;
+import com.android.ground.ground.view.person.message.MyMessageItemViewEdit;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -51,14 +50,14 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class MyMessageFragment extends Fragment {
-
+    View selectedView;
     PullToRefreshListView refreshView;
     ListView listView;
     MyMessageAdapter mAdapter;
     List<MyMessageItem> items = new ArrayList<MyMessageItem>();
     Button btn;
     boolean isUpdate = false;
-
+    boolean isAllchecked= false;
 
     // TODO: Rename parameter arguments, choose names that match
 
@@ -138,27 +137,79 @@ public class MyMessageFragment extends Fragment {
         searchMyMessage();
 
         listView.setAdapter(mAdapter);
-       //편집
-        btn  = (Button)view.findViewById(R.id.button11);
-        btn.setOnClickListener(new View.OnClickListener() {
+
+
+//        전체선택
+         Button btn2 = (Button)view.findViewById(R.id.button6);
+
+        btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment mFragment = (Fragment) MyMessageEditFragment.newInstance("", "");
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, mFragment)
-                        .addToBackStack(null)
-                        .commit();
+                if (!isAllchecked) {
+
+                    for (int i = 0; i < mAdapter.getCount() + 1; i++) {
+
+                        listView.setItemChecked(i, true);
+                        if (!mAdapter.getChecked(i))
+                            mAdapter.setChecked(i);
+                        // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                        mAdapter.notifyDataSetChanged();
+                        isAllchecked = true;
+                    }
+                } else {
+                    for (int i = 0; i < mAdapter.getCount() + 1; i++) {
+
+                        listView.setItemChecked(i, false);
+                        if (mAdapter.getChecked(i))
+                            mAdapter.setChecked(i);
+                        // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                        mAdapter.notifyDataSetChanged();
+                        isAllchecked = false;
+
+                    }
+                }
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MessageDeleteData mMessageDeleteData = new MessageDeleteData();
+                selectedView = view;
+                MyMessageDataResult item = ((MyMessageItemViewEdit)view).mItem;
+                if(item != null){
+                    mMessageDeleteData.message_id = item.message_id;
+                    mMessageDeleteData.member_id = PropertyManager.getInstance().getUserId();
+                    NetworkManager.getInstance().postNetworkMessageWatch(getContext(), mMessageDeleteData, new NetworkManager.OnResultListener<EtcData>() {
+                        @Override
+                        public void onSuccess(EtcData result) {
+                            selectedView.setBackgroundColor(getResources().getColor(R.color.gray));
+                        }
 
+                        @Override
+                        public void onFail(int code) {
 
+                        }
+                    });
+                }
+
+            }
+        });
+        ImageView btnClear = (ImageView)view.findViewById(R.id.button12);
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChoiceItem();
+            }
+        });
+        mAdapter.setCheckBoxVisible(View.VISIBLE);
+        mAdapter.notifyDataSetChanged();
         mAdapter.setOnAdapterProfileListener(new OnAdapterProfileListener() {
             @Override
             public void onAdapterProfileClick(Adapter adapter, View view) {
 
-                MyMessageDataResult item = ((MyMessageItemView) view).mItem;
+                MyMessageDataResult item = ((MyMessageItemViewEdit) view).mItem;
                 if(item.sender != PropertyManager.getInstance().getUserId()) {
-                    switch (((MyMessageItemView) view).mItem.code) {
+                    switch (((MyMessageItemViewEdit) view).mItem.code) {
                         case 100: {
                             //your profile 이동
                             Intent intent = new Intent(getContext(), YourProfileActivity.class);
@@ -226,7 +277,7 @@ public class MyMessageFragment extends Fragment {
         mAdapter.setOnAdapterYesListener(new OnAdapterYesListener() {
             @Override
             public void onAdapterYesClick(Adapter adapter, View view) {
-                MyMessageDataResult item = ((MyMessageItemView) view).mItem;
+                MyMessageDataResult item = ((MyMessageItemViewEdit) view).mItem;
                 if(item.sender != PropertyManager.getInstance().getUserId()) {
                     Toast.makeText(getContext(), "YES", Toast.LENGTH_SHORT).show();
                 }
@@ -237,7 +288,7 @@ public class MyMessageFragment extends Fragment {
         mAdapter.setOnAdapterNoListener(new OnAdapterNoListener() {
             @Override
             public void onAdapterNoClick(Adapter adapter, View view) {
-                MyMessageDataResult item = ((MyMessageItemView) view).mItem;
+                MyMessageDataResult item = ((MyMessageItemViewEdit) view).mItem;
                 if(item.sender != PropertyManager.getInstance().getUserId()) {
                     Toast.makeText(getContext(), "NO", Toast.LENGTH_SHORT).show();
                 }
@@ -247,12 +298,14 @@ public class MyMessageFragment extends Fragment {
         mAdapter.setOnAdapterReplyListener(new OnAdapterReplyListener() {
             @Override
             public void onAdapterReplyClick(Adapter adapter, View view) {
-                MyMessageDataResult item = ((MyMessageItemView) view).mItem;
-                if(item.sender != PropertyManager.getInstance().getUserId()) {
-                    CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
-                    dialog.show(getChildFragmentManager(), "custom");
+                MyMessageDataResult item = ((MyMessageItemViewEdit)view).mItem;
+                getActivity().getIntent().putExtra("collector_id", item.sender);
+                if(item!=null){
+                    if(item.sender != PropertyManager.getInstance().getUserId()) {
+                        CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                        dialog.show((getActivity()).getSupportFragmentManager(), "custom");
+                    }
                 }
-
             }
         });
 
@@ -261,15 +314,33 @@ public class MyMessageFragment extends Fragment {
     }
 
     private void onChoiceItem() {
+        //삭제 포스트 날리기
         SparseBooleanArray selection = listView.getCheckedItemPositions();
         StringBuilder sb = new StringBuilder();
         for (int index = 0; index < selection.size(); index++) {
             int position = selection.keyAt(index);
             if (selection.get(position)) {
                 sb.append(Integer.toString(position)).append(",");
+                MessageDeleteData mMessageDeleteData = new MessageDeleteData();
+
+                View view = getViewByPosition(position, listView);
+
+                mMessageDeleteData.member_id = PropertyManager.getInstance().getUserId();
+                mMessageDeleteData.message_id =((MyMessageItemViewEdit)view).mItem.message_id;
+                NetworkManager.getInstance().postNetworkMessageDelete(getContext(), mMessageDeleteData, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+                        Toast.makeText(getContext(), "메시지 삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(getContext(), "메시지 삭제 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
-        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -345,7 +416,7 @@ public class MyMessageFragment extends Fragment {
                     mAdapter.add(item);
                 }
 //                mAdapter = new MyMessageAdapter(getContext(), result.items);
-//                refreshView.onRefreshComplete();
+                refreshView.onRefreshComplete();
             }
 
             @Override
@@ -375,5 +446,26 @@ public class MyMessageFragment extends Fragment {
             }
         }
     }
+    private AdapterView.OnItemClickListener mItemClickListener = new
+            AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1,
+                                        int position, long arg3) {
+                    mAdapter.setChecked(position);
+                    // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                    mAdapter.notifyDataSetChanged();
 
+                }
+            };
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
+    }
 }

@@ -411,7 +411,7 @@ public class FragmentMainSearchPlayer extends Fragment {
             int nextPage = mAdapter.getNextPage();
             if (nextPage != -1) {
                 isUpdate = true;
-                NetworkManager.getInstance().getNetworkSearchMem(getContext(), filter, keyword, nextPage, 1, new NetworkManager.OnResultListener<SearchMem>() {
+                NetworkManager.getInstance().getNetworkSearchMem(getContext(), filter, keyword, nextPage, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<SearchMem>() {
                     @Override
                     public void onSuccess(SearchMem result) {
                         for (SearchMemResult item : result.items) {
@@ -430,7 +430,7 @@ public class FragmentMainSearchPlayer extends Fragment {
     }
     private void searchMem(final String filter,final  String keyword) {
         if (!TextUtils.isEmpty(filter)) {
-            NetworkManager.getInstance().getNetworkSearchMem(getContext(), filter, keyword, 1, 1, new NetworkManager.OnResultListener<SearchMem>() {
+            NetworkManager.getInstance().getNetworkSearchMem(getContext(), filter, keyword, 1, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<SearchMem>() {
                 @Override
                 public void onSuccess(SearchMem result) {
                     mAdapter.setKeyword(keyword);

@@ -1,37 +1,27 @@
 package com.android.ground.ground.controller.person.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.fc.management.FCManagementActivity;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
-import com.android.ground.ground.controller.person.profile.YourProfileActivity;
-import com.android.ground.ground.manager.ActivityManager;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.message.MyMessageData;
-import com.android.ground.ground.model.message.MyMessageDataResult;
 import com.android.ground.ground.model.noti.NotiData;
 import com.android.ground.ground.model.noti.NotiDataResult;
-import com.android.ground.ground.model.person.main.AlarmItemData;
 import com.android.ground.ground.view.OnAlarmClickListener;
 import com.android.ground.ground.view.person.main.AlarmItemView;
-import com.android.ground.ground.view.person.message.MyMessageItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -121,7 +111,7 @@ public class AlarmFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mAlarmListener.onDialogClick(false);
                 NotiDataResult item = ((AlarmItemView) view).mNotiDataResult;
-                if(item.sender != PropertyManager.getInstance().getUserId()) {
+                if (item.sender != PropertyManager.getInstance().getUserId()) {
                     switch (((AlarmItemView) view).mNotiDataResult.code) {
                         case 100: {
                             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -213,9 +203,11 @@ public class AlarmFragment extends Fragment {
         NetworkManager.getInstance().getNetworkNoti(getContext(), PropertyManager.getInstance().getUserId(), 1, new NetworkManager.OnResultListener<NotiData>() {
             @Override
             public void onSuccess(NotiData result) {
+                mAdapter.clear();
                 for(NotiDataResult item : result.items){
                       mAdapter.add(item);
                 }
+                refreshView.onRefreshComplete();
             }
 
             @Override
