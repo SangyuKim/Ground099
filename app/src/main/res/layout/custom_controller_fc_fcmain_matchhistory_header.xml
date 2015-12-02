@@ -9,7 +9,8 @@
         android:text="FC 신림맨"
         android:id="@+id/clubName"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,7 +19,8 @@
         android:text="(2015.10.19 ~ )"
         android:id="@+id/clubFound"
         android:layout_below="@+id/clubName"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,7 +29,8 @@
         android:text="실력"
         android:id="@+id/clubSkill"
         android:layout_below="@+id/clubFound"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,7 +39,8 @@
         android:text="매너"
         android:id="@+id/clubManner"
         android:layout_below="@+id/clubSkill"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,7 +50,8 @@
         android:id="@+id/textView35"
         android:layout_below="@+id/clubManner"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,7 +61,8 @@
         android:id="@+id/textView36"
         android:layout_below="@+id/textView35"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,7 +72,8 @@
         android:id="@+id/textView37"
         android:layout_below="@+id/textView36"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,7 +83,8 @@
         android:id="@+id/clubAllMatchCnt"
         android:layout_alignBottom="@+id/textView35"
         android:layout_toRightOf="@+id/textView35"
-        android:layout_toEndOf="@+id/textView35" />
+        android:layout_toEndOf="@+id/textView35"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -86,7 +94,8 @@
         android:id="@+id/winDrawLoseNullity"
         android:layout_alignTop="@+id/textView36"
         android:layout_toRightOf="@+id/textView36"
-        android:layout_toEndOf="@+id/textView36" />
+        android:layout_toEndOf="@+id/textView36"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -96,6 +105,7 @@
         android:id="@+id/scoreSumDescore"
         android:layout_alignTop="@+id/textView37"
         android:layout_toRightOf="@+id/textView37"
-        android:layout_toEndOf="@+id/textView37" />
+        android:layout_toEndOf="@+id/textView37"
+        android:textColor="#ffffffff" />
 
 </RelativeLayout>

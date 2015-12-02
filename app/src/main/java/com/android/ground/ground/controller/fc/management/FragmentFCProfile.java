@@ -56,7 +56,6 @@ public class FragmentFCProfile extends Fragment {
 
     ClubProfileUpdate mClubProfileUpdate;
 
-    public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
     DisplayImageOptions options;
     EditText clubIntro, clubField;
     TextView clubLocationName, clubName;

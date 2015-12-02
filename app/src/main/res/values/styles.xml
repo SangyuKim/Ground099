@@ -63,7 +63,7 @@
     </style>
 
     <style name="Theme.App.EditText" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlNormal">#96ff3a1d</item>
 
     </style>
     <style name="Theme.App.FLoatingButton" parent="Theme.AppCompat.Light.DarkActionBar">

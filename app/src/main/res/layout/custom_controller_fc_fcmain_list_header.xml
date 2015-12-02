@@ -10,7 +10,8 @@
         android:id="@+id/clubIntro"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,7 +21,8 @@
         android:id="@+id/clubName"
         android:layout_below="@+id/clubIntro"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,7 +32,8 @@
         android:id="@+id/clubLocationName"
         android:layout_below="@+id/clubName"
         android:layout_alignRight="@+id/clubName"
-        android:layout_alignEnd="@+id/clubName" />
+        android:layout_alignEnd="@+id/clubName"
+        android:textColor="#ffffffff" />
 
     <ImageView
         android:layout_width="100dp"

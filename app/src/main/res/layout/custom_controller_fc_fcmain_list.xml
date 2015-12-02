@@ -37,7 +37,8 @@
         android:id="@+id/memName"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/memImage"
-        android:layout_toEndOf="@+id/memImage" />
+        android:layout_toEndOf="@+id/memImage"
+        android:textColor="#ffffffff" />
 
 
     <Button
@@ -70,5 +71,6 @@
         android:id="@+id/skill"
         android:layout_alignParentBottom="false"
         android:layout_toRightOf="@+id/memName"
-        android:layout_toEndOf="@+id/memName" />
+        android:layout_toEndOf="@+id/memName"
+        android:textColor="#ffffffff" />
 </RelativeLayout>

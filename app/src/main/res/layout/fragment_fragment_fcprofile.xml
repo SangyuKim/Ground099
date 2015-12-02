@@ -385,7 +385,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:id="@+id/clubImage"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/empty_club"
                     android:layout_below="@+id/textView26"
                     android:layout_centerHorizontal="true" />
 

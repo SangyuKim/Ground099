@@ -257,7 +257,7 @@ public class FinalPositionActivity extends AppCompatActivity{
                     else if(item.locIndex <= 15){
                         gridItemView2.setImageRes(R.drawable.lm);
                     }else if(item.locIndex <= 18){
-//                        gridItemView2.setImageRes(R.drawable.cm);
+                        gridItemView2.setImageRes(R.drawable.cm);
                     }else if(item.locIndex <= 20){
                         gridItemView2.setImageRes(R.drawable.rm);
                     }
@@ -285,7 +285,7 @@ public class FinalPositionActivity extends AppCompatActivity{
                     }else if(item.locIndex <= 41){
                         gridItemView2.setImageRes(R.drawable.rb);
                     }else{
-//                        gridItemView2.setImageRes(R.drawable.gk);
+                        gridItemView2.setImageRes(R.drawable.gk);
                     }
                     if(item.virtualFlag==1){
                         gridItemView2.setBackgroundColor(Color.GRAY);
@@ -326,7 +326,7 @@ public class FinalPositionActivity extends AppCompatActivity{
                     else if(item.locIndex <= 15){
                         gridItemView2.setImageRes(R.drawable.lm);
                     }else if(item.locIndex <= 18){
-//                        gridItemView2.setImageRes(R.drawable.cm);
+                        gridItemView2.setImageRes(R.drawable.cm);
                     }else if(item.locIndex <= 20){
                         gridItemView2.setImageRes(R.drawable.rm);
                     }
@@ -354,7 +354,7 @@ public class FinalPositionActivity extends AppCompatActivity{
                     }else if(item.locIndex <= 41){
                         gridItemView2.setImageRes(R.drawable.rb);
                     }else{
-//                        gridItemView2.setImageRes(R.drawable.gk);
+                        gridItemView2.setImageRes(R.drawable.gk);
                     }
                     gridItemView2.setText(item.memName);
                     if(item.virtualFlag==1){

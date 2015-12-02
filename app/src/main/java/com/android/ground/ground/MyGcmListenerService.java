@@ -70,7 +70,7 @@ public class MyGcmListenerService extends GcmListenerService {
       // 알림 객체
       NotificationCompat.Builder noti = new NotificationCompat.Builder(this);
 
-      noti.setSmallIcon(R.drawable.captain)      // 아이콘
+      noti.setSmallIcon(R.mipmap.icon)      // 아이콘
       .setContentTitle(title)             // 제목
       .setContentText(message)            // 내용
       .setContentIntent(pendingIntent)    // 알림 선택시

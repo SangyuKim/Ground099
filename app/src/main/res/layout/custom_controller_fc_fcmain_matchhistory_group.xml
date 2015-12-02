@@ -9,5 +9,6 @@
         android:text="예정된 매치"
         android:id="@+id/textView_fcmatch_group"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 </RelativeLayout>

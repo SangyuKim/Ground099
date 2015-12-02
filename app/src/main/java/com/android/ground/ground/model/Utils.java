@@ -26,9 +26,9 @@ public class Utils {
     }
     public static int[] POSITIONS = new int[]{R.drawable.lw, R.drawable.cf, R.drawable.rw, R.drawable.lm,
             R.drawable.am,
-            R.drawable.rm ,R.mipmap.ic_launcher, R.drawable.dm, R.drawable.lwb, R.drawable.cb, R.drawable.rwb
+            R.drawable.rm ,R.drawable.cm, R.drawable.dm, R.drawable.lwb, R.drawable.cb, R.drawable.rwb
             , R.drawable.lb, R.drawable.rb
-            ,R.mipmap.ic_launcher};
+            ,R.drawable.gk};
 
     public static int POSITION_LW = 1;
     public static int POSITION_CF = 2;

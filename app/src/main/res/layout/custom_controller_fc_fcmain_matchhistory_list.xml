@@ -19,7 +19,8 @@
         android:id="@+id/matchDate"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/imageView9"
-        android:layout_toEndOf="@+id/imageView9" />
+        android:layout_toEndOf="@+id/imageView9"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +30,8 @@
         android:id="@+id/matchDay"
         android:layout_below="@+id/matchDate"
         android:layout_toRightOf="@+id/imageView9"
-        android:layout_toEndOf="@+id/imageView9" />
+        android:layout_toEndOf="@+id/imageView9"
+        android:textColor="#ffffffff" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -50,7 +52,8 @@
         android:id="@+id/homeClubName"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/textView30"
-        android:layout_toStartOf="@+id/textView30" />
+        android:layout_toStartOf="@+id/textView30"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,7 +63,8 @@
         android:id="@+id/homeScore"
         android:layout_below="@+id/homeClubName"
         android:layout_alignRight="@+id/homeClubName"
-        android:layout_alignEnd="@+id/homeClubName" />
+        android:layout_alignEnd="@+id/homeClubName"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,7 +74,8 @@
         android:id="@+id/awayScore"
         android:layout_alignBottom="@+id/imageView9"
         android:layout_alignRight="@+id/awayClubName"
-        android:layout_alignEnd="@+id/awayClubName" />
+        android:layout_alignEnd="@+id/awayClubName"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,7 +84,8 @@
         android:text=":"
         android:id="@+id/textView28"
         android:layout_below="@+id/homeClubName"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -88,7 +94,8 @@
         android:text="  vs  "
         android:id="@+id/textView30"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -98,7 +105,8 @@
         android:id="@+id/awayClubName"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/button27"
-        android:layout_toStartOf="@+id/button27" />
+        android:layout_toStartOf="@+id/button27"
+        android:textColor="#ffffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,6 +116,7 @@
         android:id="@+id/startTime"
         android:layout_below="@+id/matchDay"
         android:layout_toRightOf="@+id/imageView9"
-        android:layout_toEndOf="@+id/imageView9" />
+        android:layout_toEndOf="@+id/imageView9"
+        android:textColor="#ffffffff" />
 
 </RelativeLayout>

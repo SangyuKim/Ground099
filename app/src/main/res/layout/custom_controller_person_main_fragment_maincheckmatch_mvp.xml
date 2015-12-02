@@ -53,22 +53,19 @@
                     android:layout_width="89.25dp"
                     android:layout_height="89dp"
                     android:id="@+id/memImage"
-                    android:src="@mipmap/ic_launcher"
                     android:layout_gravity="center" />
 
                 <com.android.ground.ground.custom.CustomCircularImageView
                     android:layout_width="27.25dp"
                     android:layout_height="27.25dp"
                     android:id="@+id/clubImageMVP"
-                    android:src="@mipmap/ic_launcher"
                     android:layout_gravity="left|top" />
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:id="@+id/mvpPlayerPosition"
-                    android:layout_gravity="right|bottom"
-                    android:src="@mipmap/ic_launcher" />
+                    android:layout_gravity="right|bottom" />
 
             </FrameLayout>
 
@@ -112,22 +109,19 @@
                     android:layout_width="89.25dp"
                     android:layout_height="89dp"
                     android:id="@+id/memImageScr"
-                    android:src="@mipmap/ic_launcher"
                     android:layout_gravity="center" />
 
                 <com.android.ground.ground.custom.CustomCircularImageView
                     android:layout_width="27.25dp"
                     android:layout_height="27.25dp"
                     android:id="@+id/clubImageScr"
-                    android:src="@mipmap/ic_launcher"
                     android:layout_gravity="left|top" />
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:id="@+id/scrPlayerPosition"
-                    android:layout_gravity="right|bottom"
-                    android:src="@mipmap/ic_launcher" />
+                    android:layout_gravity="right|bottom" />
             </FrameLayout>
 
             <TextView
@@ -166,7 +160,6 @@
                 android:layout_width="89.25dp"
                 android:layout_height="89dp"
                 android:id="@+id/clubImage"
-                android:src="@mipmap/ic_launcher"
                 android:layout_gravity="center" />
 
             <TextView

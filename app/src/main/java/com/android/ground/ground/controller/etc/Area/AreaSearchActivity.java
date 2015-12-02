@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,13 +42,14 @@ public class AreaSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_area_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("지역검색");
 
         editText = (EditText)findViewById(R.id.editText6);
         listView = (ListView)findViewById(R.id.listView_area);
         mAdapter = new TmapAdapter();
         listView.setAdapter(mAdapter);
 
-        Button btn = (Button)findViewById(R.id.button44);
+        ImageView btn = (ImageView)findViewById(R.id.button44);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

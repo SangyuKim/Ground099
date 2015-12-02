@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -38,6 +39,7 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.ReadymatchResult.MyReadyMatchSpinnerAdapter;
 import com.android.ground.ground.controller.fc.fcmain.ReadymatchResult.ReadyMatchResultAdapter;
+import com.android.ground.ground.controller.fc.fcmain.ReadymatchResult.ScorerGridViewAdapter;
 import com.android.ground.ground.controller.person.finalposition.GridItemView2;
 import com.android.ground.ground.controller.person.finalposition.ListItemView;
 import com.android.ground.ground.controller.person.main.MySpinnerAdapter;
@@ -75,9 +77,13 @@ import java.util.List;
 
 public class ReadyMatchResultActivity extends AppCompatActivity implements
         CustomDragDropListView.DragListener, CustomDragDropListView.DropListener{
+
+    GridView gridView, gridView2;
+
     Button btnCreateVirtual, btnComplete;
     EditText editTextVirtual;
     ReadyMatchResultListItemView matchResultListItemView;
+    ScorerGridViewAdapter mScorerGridViewAdapter;
 
     int w, h, countInField =0;
 
@@ -146,12 +152,14 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         matchResultListItemView = (ReadyMatchResultListItemView)findViewById(R.id.virtualPlayer);
         gridLayout = (GridLayout) findViewById(R.id.gridLayout);
 
-        listItemView = (ListItemView) findViewById(R.id.listItemView);
+        gridView = (GridView)findViewById(R.id.gridView);
+        gridView2 = (GridView)findViewById(R.id.gridView2);
 
         lineupVirtualRes = (ListView)findViewById(R.id.lineupVirtualRes);
         mReadyMatchResultAdapter = new ReadyMatchResultAdapter();
         mLineupPlan = new LineupPlan();
         mlineupVirtualFomationPost =new LineupVirtualFomationPost();
+        mScorerGridViewAdapter = new ScorerGridViewAdapter();
 //        mReadyMatchResultAdapter.setOnAdapterCustomTouchListener(new OnAdapterCustomTouchListener() {
 //            @Override
 //            public void onTouch(View view, LineupVirtualResResult mItem) {
@@ -200,17 +208,6 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         }
 
 
-//        listItemView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                String text = ((ListItemView) v).getTextView().toString();
-//                ClipData.Item item = new ClipData.Item(text);
-//                ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
-//                v.startDrag(data, new View.DragShadowBuilder(v), null, 1);
-//                return true;
-//            }
-//        });
-
         lineupVirtualRes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -218,7 +215,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
                 String text = ((ReadyMatchResultListItemView) view).memName.getText().toString();
                 intent.putExtra("text", text);
-                intent.putExtra("member_id",((ReadyMatchResultListItemView) view).mItem.member_id );
+                intent.putExtra("member_id", ((ReadyMatchResultListItemView) view).mItem.member_id);
                 ClipData.Item item = new ClipData.Item(intent);
                 ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                 view.startDrag(data, new View.DragShadowBuilder(view), null, 3);
@@ -233,7 +230,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                 String text = ((ReadyMatchResultListItemView) v).memName.getText().toString();
                 intent.putExtra("text", text);
                 //가상 선수 일경우 -2
-                intent.putExtra("member_id",-2);
+                intent.putExtra("member_id", -2);
                 ClipData.Item item = new ClipData.Item(intent);
                 ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                 v.startDrag(data, new View.DragShadowBuilder(v), null, 3);
@@ -259,11 +256,11 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
             public void onClick(View v) {
 //===================================================라인업
                 mLineupPlan.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
-                if(PropertyManager.getInstance().getMyPageResult().club_id == mLineupMatchResult.home_id){
-                    mLineupPlan.homeAway= 0;
-                }else{
-                    if(PropertyManager.getInstance().getMyPageResult().club_id== mLineupMatchResult.away_id)
-                         mLineupPlan.homeAway= 1;
+                if (PropertyManager.getInstance().getMyPageResult().club_id == mLineupMatchResult.home_id) {
+                    mLineupPlan.homeAway = 0;
+                } else {
+                    if (PropertyManager.getInstance().getMyPageResult().club_id == mLineupMatchResult.away_id)
+                        mLineupPlan.homeAway = 1;
                 }
                 mLineupPlan.match_id = mLineupMatchResult.match_id;
                 mLineupPlan.member_id = PropertyManager.getInstance().getUserId();
@@ -319,10 +316,10 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                     if (mLinearLayouts.get(i).getChildAt(0) != null) {
                         if (mLinearLayouts.get(i).getChildAt(0).getVisibility() == View.VISIBLE) {
                             LineupVirtualFomationPlayerPost mLineupVirtualFomationPlayerPost = new LineupVirtualFomationPlayerPost();
-                            GridItemView2 mGridItemView2 = (GridItemView2)mLinearLayouts.get(i).getChildAt(0);
-                            if( mGridItemView2.member_id < 0){
-                                mLineupVirtualFomationPlayerPost.locIndex= i;
-                                mLineupVirtualFomationPlayerPost.memName =mGridItemView2.getTextView().getText().toString() ;
+                            GridItemView2 mGridItemView2 = (GridItemView2) mLinearLayouts.get(i).getChildAt(0);
+                            if (mGridItemView2.member_id < 0) {
+                                mLineupVirtualFomationPlayerPost.locIndex = i;
+                                mLineupVirtualFomationPlayerPost.memName = mGridItemView2.getTextView().getText().toString();
                                 mLineupVirtualFomationPlayerPost.member_id = mGridItemView2.member_id;
                                 mlistsLineupVirtualFomationPlayerPostVir.add(mLineupVirtualFomationPlayerPost);
                             }
@@ -333,7 +330,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
                 }
                 mlineupVirtualFomationPost.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
-                mlineupVirtualFomationPost.itemslocVirInfo =mlistsLineupVirtualFomationPlayerPostVir;
+                mlineupVirtualFomationPost.itemslocVirInfo = mlistsLineupVirtualFomationPlayerPostVir;
                 mlineupVirtualFomationPost.match_id = mLineupMatchResult.match_id;
                 mlineupVirtualFomationPost.member_id = PropertyManager.getInstance().getUserId();
                 NetworkManager.getInstance().postNetworkLineupVirtualFormationVir(ReadyMatchResultActivity.this, mlineupVirtualFomationPost, new NetworkManager.OnResultListener<EtcData>() {
@@ -350,6 +347,10 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
 
             }
         });
+
+
+        gridView.setAdapter(mScorerGridViewAdapter);
+        gridView2.setAdapter(mScorerGridViewAdapter);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -575,7 +576,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                     else if(item.locIndex <= 15){
                         gridItemView.setImageRes(R.drawable.lm);
                     }else if(item.locIndex <= 18){
-//                        gridItemView.setImageRes(R.drawable.cm);
+                        gridItemView.setImageRes(R.drawable.cm);
                     }else if(item.locIndex <= 20){
                         gridItemView.setImageRes(R.drawable.rm);
                     }
@@ -603,7 +604,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                     }else if(item.locIndex <= 41){
                         gridItemView.setImageRes(R.drawable.rb);
                     }else{
-//                        gridItemView2.setImageRes(R.drawable.gk);
+                        gridItemView.setImageRes(R.drawable.gk);
                     }
                     if (item.locIndex > 0 && item.locIndex < 50) {
                         //드래그 가능하게 하기
@@ -661,7 +662,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                     else if(item.locIndex <= 15){
                         gridItemView.setImageRes(R.drawable.lm);
                     }else if(item.locIndex <= 18){
-//                        gridItemView.setImageRes(R.drawable.cm);
+                        gridItemView.setImageRes(R.drawable.cm);
                     }else if(item.locIndex <= 20){
                         gridItemView.setImageRes(R.drawable.rm);
                     }
@@ -689,7 +690,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                     }else if(item.locIndex <= 41){
                         gridItemView.setImageRes(R.drawable.rb);
                     }else{
-//                        gridItemView2.setImageRes(R.drawable.gk);
+                        gridItemView.setImageRes(R.drawable.gk);
                     }
                     if (item.locIndex > 0 && item.locIndex < 50) {
                         mLinearLayouts.get(item.locIndex+7).addView(gridItemView);
@@ -709,10 +710,12 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
         NetworkManager.getInstance().getNetworkLineupScorer(ReadyMatchResultActivity.this, clubId, matchId, new NetworkManager.OnResultListener<LineupScorer>() {
             @Override
             public void onSuccess(LineupScorer result) {
-                listScorer = result.items;
+                mScorerGridViewAdapter.clear();
+                for(String item: result.items){
+                    mScorerGridViewAdapter.add(item);
+                    Log.d("hello", item);
+                }
 
-                if (listScorer != null)
-                    setLineupScorer(listScorer);
             }
 
             @Override
@@ -1382,7 +1385,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setText(text);
                                 gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
-                                //                        gridItemView2.setImageRes(R.drawable.cm);
+                                gridItemView.setImageRes(R.drawable.cm);
 
 
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {
@@ -2304,7 +2307,7 @@ public class ReadyMatchResultActivity extends AppCompatActivity implements
                                 gridItemView.setText(text);
                                 gridItemView.member_id = mMemberId;
 //                           gridItemView.setImageRes();
-                                //                        gridItemView2.setImageRes(R.drawable.gk);
+                                gridItemView.setImageRes(R.drawable.gk);
 
 
                                 gridItemView.setOnTouchListener(new View.OnTouchListener() {

@@ -27,6 +27,7 @@
 
     <color name="red">#ff3a1d</color>
     <color name="gray">#636363</color>
+    <color name="blur_gray">#99636363</color>
     <color name="blue">#0072bc</color>
 
     <color name="floatingGray">#b7b7b7</color>

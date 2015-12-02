@@ -354,7 +354,8 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
             memMainDay_Sun.setChecked(true);
         }
         if(mResult.clubYN == 0){
-            btnFc.setVisibility(View.GONE);
+            btnFc.setVisibility(View.VISIBLE);
+            btnFc.setBackgroundColor(getResources().getColor(R.color.blur_gray));
             btnRequest.setVisibility(View.VISIBLE);
         }else{
             btnFc.setVisibility(View.VISIBLE);

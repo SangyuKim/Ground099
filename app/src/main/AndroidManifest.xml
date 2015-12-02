@@ -21,7 +21,7 @@
     <application
         android:name=".model.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
@@ -76,11 +76,6 @@
         <activity
             android:name=".controller.person.profile.MyProfileManagementActivity"
             android:label="@string/title_activity_my_profile_management"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity
-            android:name=".controller.fc.fcmain.MatchResultActivity"
-            android:label="@string/title_activity_match_result"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity

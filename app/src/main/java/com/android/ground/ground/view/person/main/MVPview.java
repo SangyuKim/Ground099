@@ -2,6 +2,7 @@ package com.android.ground.ground.view.person.main;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -126,8 +127,10 @@ public class MVPview extends FrameLayout {
 //            }
 //        }
 
-        scrPlayerPosition.setImageResource(Utils.POSITIONS[itemScr.position]);
-        scrPlayerPosition.setImageResource(Utils.POSITIONS[itemMVP.position]);
+        if(itemScr.position>0 &&itemScr.position < 15)
+             scrPlayerPosition.setImageResource(Utils.POSITIONS[itemScr.position-1]);
+        if(itemMVP.position>0 &&itemMVP.position< 15)
+            mvpPlayerPosition.setImageResource(Utils.POSITIONS[itemMVP.position-1]);
 
     }
 

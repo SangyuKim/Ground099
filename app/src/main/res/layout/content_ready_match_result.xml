@@ -36,8 +36,7 @@
                     android:layout_below="@+id/relativeLayout4"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_toLeftOf="@+id/listItemView"
-                    android:layout_toStartOf="@+id/listItemView">
+                   >
 
 
                 </GridLayout>
@@ -290,7 +289,7 @@
                 android:visibility="visible"
                 android:layout_below="@+id/relativeLayout7"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="false">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -383,11 +382,46 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
                     android:id="@+id/MVPmemName"
-                    android:layout_alignBottom="@+id/textView70"
-                    android:textColor="#ffffffff" />
+                    android:textColor="#ffffffff"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/textView70"
+                    android:layout_toEndOf="@+id/textView70" />
 
 
             </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/relativeLayout3">
+
+                <GridView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gridView"
+                    android:layout_weight="1"
+                    android:numColumns="2"
+                    android:stretchMode="columnWidth"
+                    android:choiceMode="singleChoice"
+                    android:background="#982d2d" />
+
+                <GridView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gridView2"
+                    android:layout_weight="1"
+                    android:numColumns="2"
+                    android:stretchMode="columnWidth"
+                    android:choiceMode="singleChoice" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Button"
+                    android:id="@+id/button40" />
+            </LinearLayout>
 
         </RelativeLayout>
     </ScrollView>
