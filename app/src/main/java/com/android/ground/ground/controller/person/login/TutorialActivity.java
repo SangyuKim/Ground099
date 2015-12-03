@@ -265,6 +265,7 @@ public class TutorialActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        //// TODO: 2015-12-03  
         if(getSupportFragmentManager().findFragmentByTag(TAG_SIGNUP_FRAGMENT).isVisible()){
             finish();
         }

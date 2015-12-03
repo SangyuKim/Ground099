@@ -112,7 +112,7 @@
                 app:rcBackgroundColor="#66464646"
                 app:rcMax="50"
                 app:rcProgress="25"
-              />
+                android:orientation="horizontal" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
             <com.android.ground.ground.custom.CustomRoundCornerProgressBar
                 android:layout_width="80dp"
                 android:layout_height="8dp"
-                android:id="@+id/progressBarSkill2"
+                android:id="@+id/progressBarManner"
                 android:maxHeight="10dp"
 
                 android:indeterminate="false"
@@ -157,7 +157,7 @@
                 app:rcBackgroundColor="#66464646"
                 app:rcMax="50"
                 app:rcProgress="25"
-          />
+                android:orientation="horizontal" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -317,49 +317,70 @@
                 android:layout_height="20dp"
                 android:id="@+id/clubMainDay_Mon"
                 android:checked="false"
-                android:button="@drawable/check_box_mon_fc" />
+                android:button="@drawable/check_box_mon_fc"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:clickable="false"/>
 
             <CheckBox
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:id="@+id/clubMainDay_Tue"
                 android:checked="false"
-                android:button="@drawable/check_box_tue_fc" />
+                android:button="@drawable/check_box_tue_fc"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:clickable="false"/>
 
             <CheckBox
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:id="@+id/clubMainDay_Wed"
                 android:checked="false"
-                android:button="@drawable/check_box_wed_fc" />
+                android:button="@drawable/check_box_wed_fc"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:clickable="false"/>
 
             <CheckBox
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:id="@+id/clubMainDay_Thu"
                 android:checked="false"
-                android:button="@drawable/check_box_thu_fc" />
+                android:button="@drawable/check_box_thu_fc"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:clickable="false"/>
 
             <CheckBox
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:id="@+id/clubMainDay_Fri"
                 android:checked="false"
-                android:button="@drawable/check_box_fri_fc" />
+                android:button="@drawable/check_box_fri_fc"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:clickable="false"/>
 
             <CheckBox
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:id="@+id/clubMainDay_Sat"
                 android:checked="false"
-                android:button="@drawable/check_box_sat_fc" />
+                android:button="@drawable/check_box_sat_fc"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:clickable="false"/>
 
             <CheckBox
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:id="@+id/clubMainDay_Sun"
                 android:checked="false"
-                android:button="@drawable/check_box_sun_fc" />
+                android:button="@drawable/check_box_sun_fc"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:clickable="false"/>
         </LinearLayout>
     </LinearLayout>
 

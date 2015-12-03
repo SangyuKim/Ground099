@@ -72,7 +72,7 @@
 
                     <EditText
                         android:id="@+id/clubName"
-                        android:layout_width="230dp"
+                        android:layout_width="234dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
@@ -80,7 +80,7 @@
                         android:layout_toRightOf="@+id/textView53"
                         android:textColor="#ffffffff"
                         android:hint="FC명을 적어주세요(6자 이내)"
-                        android:textColorHint="#ffffffff"
+                        android:textColorHint="#82ffffff"
 
                         android:singleLine="true"
                         android:theme="@style/Theme.App.EditText"
@@ -125,7 +125,7 @@
                         android:textColor="#ffffffff"
                         android:theme="@style/Theme.App.EditText"
                         android:hint="한글10자, 영문20자 이내로 입력해주세요."
-                        android:textColorHint="#ffffffff"
+                        android:textColorHint="#82ffffff"
 
                         android:singleLine="true"
                         android:textSize="12sp" />
@@ -162,7 +162,7 @@
 
                     <LinearLayout
                         android:orientation="horizontal"
-                        android:layout_width="169.75dp"
+                        android:layout_width="230dp"
                         android:layout_height="28dp"
                         android:layout_below="@+id/textView55"
                        android:background="@drawable/shape_droptarget"
@@ -343,11 +343,11 @@
                         android:layout_alignBottom="@+id/textView58"
                         android:layout_toRightOf="@+id/textView58"
                         android:layout_toEndOf="@+id/textView58"
-                        android:theme="@style/Theme.App.EditText"/>
+                        android:theme="@style/Theme.App.Switch"/>
 
                     <EditText
                         android:id="@+id/clubField"
-                        android:layout_width="180dp"
+                        android:layout_width="190dp"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffffff"
                         android:layout_alignTop="@+id/textView58"
@@ -358,7 +358,7 @@
                         android:layout_toRightOf="@+id/fieldYN"
                         android:textSize="12sp"
                         android:hint="제휴구장을 입력해주세요."
-                        android:textColorHint="#ffffffff"
+                        android:textColorHint="#82ffffff"
                        />
                 </LinearLayout>
 
@@ -394,7 +394,8 @@
                         android:layout_alignTop="@+id/textView59"
                         android:layout_toLeftOf="@+id/clubField"
                         android:layout_toStartOf="@+id/clubField"
-                        android:theme="@style/Theme.App.EditText"/>
+                        android:theme="@style/Theme.App.Switch"
+                        android:layout_marginRight="40dp" />
 
                     <TextView
                         android:id="@+id/textView60"
@@ -404,7 +405,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="#ffffffff"
                         android:textSize="16sp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="2dp"
                         android:layout_marginLeft="4.5dp" />
 
                     <android.support.v7.widget.SwitchCompat
@@ -412,7 +413,7 @@
                         android:layout_width="51.25dp"
                         android:layout_height="21.5dp"
                         android:checked="false"
-                        android:theme="@style/Theme.App.EditText"
+                        android:theme="@style/Theme.App.Switch"
                         />
 
 

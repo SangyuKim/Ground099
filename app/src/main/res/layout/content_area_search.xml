@@ -38,7 +38,8 @@
             android:layout_weight="1"
             android:theme="@style/Theme.App.EditText"
             android:textSize="12sp"
-             />
+            android:hint="길/읍면동을 입력해주세요."
+            android:textColorHint="#82ffffff" />
 
 
         <ImageView

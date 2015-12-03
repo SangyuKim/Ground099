@@ -37,7 +37,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
     ,age, memLocationName, oldClubName1,oldClubName2,oldClubName3;
     ImageView memImage, oldClubImage1, oldClubImage2, oldClubImage3, clubImage
             , position, managerYN, btnFc;
-    Button btnMsgCollection, btnProfileManagement;
+    Button btnMsgCollection;
     CheckBox memMainDay_Mon,memMainDay_Tue,memMainDay_Wed,memMainDay_Thu,memMainDay_Fri
             ,memMainDay_Sat,memMainDay_Sun;
 
@@ -47,7 +47,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
     DisplayImageOptions options;
     CustomToolbar customToolbar;
     Menu menu;
-
+    ImageView btnProfileManagement;
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -131,7 +131,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
 
             }
         });
-        btnProfileManagement =  (Button)findViewById(R.id.button9);
+        btnProfileManagement =  (ImageView)findViewById(R.id.button9);
         btnProfileManagement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

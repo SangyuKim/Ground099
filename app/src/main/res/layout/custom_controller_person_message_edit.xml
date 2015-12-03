@@ -13,7 +13,8 @@
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout90"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="3dp">
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -40,7 +41,8 @@
             android:layout_toEndOf="@+id/messageDate"
             android:src="@mipmap/icon"
             android:layout_marginRight="13.5dp"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -95,7 +97,8 @@
                     android:textColor="#ffffff"
                     android:textSize="8dp"
                     android:singleLine="true"
-                    android:maxLength="10" />
+                    android:maxLength="10"
+                    android:layout_marginRight="10dp" />
             </LinearLayout>
 
             <TextView
@@ -111,7 +114,8 @@
                 android:layout_alignTop="@+id/button29"
                 android:textColor="#ffffff"
                 android:textSize="12sp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                android:lineSpacingExtra="3dp"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -121,7 +125,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:id="@+id/linearLayout88"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"

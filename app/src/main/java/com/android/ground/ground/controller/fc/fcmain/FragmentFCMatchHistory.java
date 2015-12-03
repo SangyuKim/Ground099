@@ -166,7 +166,7 @@ public class FragmentFCMatchHistory extends Fragment {
             @Override
             public void onAdapterDialogClick(ExpandableListAdapter adapter, View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("경기 정정하기");
                 builder.setMessage("정정 신청하시겠습니까? ");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {

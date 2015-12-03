@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -132,7 +133,7 @@ public class FragmentManagementMember extends Fragment {
             }
         });
         //임명
-        Button btn3 = (Button)view.findViewById(R.id.button38);
+        ImageView btn3 = (ImageView)view.findViewById(R.id.button38);
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,14 +141,14 @@ public class FragmentManagementMember extends Fragment {
             }
         });
         //박탈
-        btn3 = (Button)view.findViewById(R.id.button39);
+        btn3 = (ImageView)view.findViewById(R.id.button39);
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onChoiceItem();
             }
         });
-        btn3 = (Button)view.findViewById(R.id.button37);
+        btn3 = (ImageView)view.findViewById(R.id.button37);
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +156,7 @@ public class FragmentManagementMember extends Fragment {
                 dialog.show(getChildFragmentManager(), "custom");
             }
         });
-        btn3 = (Button)view.findViewById(R.id.button42);
+        btn3 = (ImageView)view.findViewById(R.id.button42);
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

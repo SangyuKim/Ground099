@@ -192,7 +192,7 @@ public class FragmentMainSearchFC extends Fragment {
 
                 if(tag.equals("입단신청")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setIcon(R.mipmap.ic_launcher);
+                    builder.setIcon(R.mipmap.icon);
                     builder.setTitle("가입신청");
                     builder.setMessage("가입 신청하시겠습니까? ");
                     builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {

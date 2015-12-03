@@ -64,6 +64,24 @@
 
     <style name="Theme.App.EditText" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">#96ff3a1d</item>
+        <item name="colorPrimary">#96ff3a1d</item>
+        <item name="colorPrimaryDark">#96ff3a1d</item>
+        <item name="colorAccent">#96ff3a1d</item>
+        <item name="colorControlActivated">#96ff3a1d</item>
+        <item name="colorControlHighlight">#96ff3a1d</item>
+        <!--<item name="colorButtonNormal">#96ff3a1d</item>-->
+        <!--<item name="colorSwitchThumbNormal">#96ff3a1d</item>-->
+
+    </style>
+    <style name="Theme.App.Switch" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">#ff3a1d</item>
+        <item name="colorPrimary">#ff3a1d</item>
+        <item name="colorPrimaryDark">#ff3a1d</item>
+        <item name="colorAccent">#ff3a1d</item>
+        <item name="colorControlActivated">#ff3a1d</item>
+        <item name="colorControlHighlight">#ff3a1d</item>
+        <!--<item name="colorButtonNormal">#96ff3a1d</item>-->
+        <!--<item name="colorSwitchThumbNormal">#96ff3a1d</item>-->
 
     </style>
     <style name="Theme.App.FLoatingButton" parent="Theme.AppCompat.Light.DarkActionBar">

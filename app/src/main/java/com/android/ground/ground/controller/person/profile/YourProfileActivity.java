@@ -147,7 +147,7 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(YourProfileActivity.this);
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("영입하기");
                 builder.setMessage("영입 신청하시겠습니까? ");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {

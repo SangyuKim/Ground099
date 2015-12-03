@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
+import com.android.ground.ground.custom.CustomRoundCornerProgressBar;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
@@ -23,7 +24,7 @@ public class FCMemberItemView extends FrameLayout {
 
     TextView memName, skill;
     ImageView memImage, position, managerYN;
-
+    CustomRoundCornerProgressBar progressBarSkill;
     DisplayImageOptions options;
     public ClubAndMemberResult mItem;
 
@@ -43,6 +44,8 @@ public class FCMemberItemView extends FrameLayout {
         memImage = (ImageView)findViewById(R.id.memImage);
         position =  (ImageView)findViewById(R.id.position);
         managerYN = (ImageView)findViewById(R.id.managerYN);
+        progressBarSkill = (CustomRoundCornerProgressBar)findViewById(R.id.progressBarSkill);
+        progressBarSkill.setMax(50);
 
         //프로필
         mBtn1 = (ImageView)findViewById(R.id.button25);
@@ -93,6 +96,7 @@ public class FCMemberItemView extends FrameLayout {
 //            managerYN.setImageResource(R.drawable.captain);
 //        }
         position.setImageResource(Utils.POSITIONS[item.position]);
+        progressBarSkill.setProgress((int) (item.skill * 10));
 
 
     }

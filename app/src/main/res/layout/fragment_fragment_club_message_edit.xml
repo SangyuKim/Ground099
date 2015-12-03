@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.android.ground.ground.controller.fc.management.FragmentClubMessageEdit"
-    android:background="@drawable/back401">
+    android:background="@drawable/back401"
+    android:paddingTop="10dp">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -24,7 +25,7 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="8dp" />
 
 
         <TextView
@@ -40,7 +41,7 @@
             android:id="@+id/button12"
             android:src="@drawable/delete801"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="8dp" />
 
     </LinearLayout>
 
@@ -55,5 +56,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:dividerHeight="1dp"
-        android:divider="@drawable/list_divider"/>
+        android:divider="@drawable/list_divider_noti"/>
 </RelativeLayout>

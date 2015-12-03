@@ -196,7 +196,7 @@ public class FragmentMainSearchPlayer extends Fragment {
             public void onAdapterDialogClick(Adapter adapter, View view, String tag) {
                 MyApplication.getmIMM().hideSoftInputFromWindow(keywordView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("영입하기");
                 id = ((SearchPlayerItemView)view).getmItem().member_id;
                 builder.setMessage( id + "선수를  "+" 영입 신청하시겠습니까? ");

@@ -182,7 +182,7 @@ public class MyMessageFragment extends Fragment {
                     NetworkManager.getInstance().postNetworkMessageWatch(getContext(), mMessageDeleteData, new NetworkManager.OnResultListener<EtcData>() {
                         @Override
                         public void onSuccess(EtcData result) {
-                            selectedView.setBackgroundColor(getResources().getColor(R.color.gray));
+
                         }
 
                         @Override
@@ -416,6 +416,7 @@ public class MyMessageFragment extends Fragment {
                         for (MyMessageDataResult item : result.items) {
 
                             mAdapter.add(item);
+                            mAdapter.setAllChecked(false);
                         }
 //                mAdapter = new MyMessageAdapter(getContext(), result.items);
                         refreshView.onRefreshComplete();

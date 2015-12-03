@@ -39,7 +39,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  */
 public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
 
-
+    View view;
     TextView textViewName, messageDate, msContents;
     ImageView imageViewMessage ,yes, no, reply;
     public ClubMessageDataResult mClubMessageDataResult;
@@ -60,7 +60,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
         init();
     }
     public void init(){
-        inflate(getContext(), R.layout.custom_controller_person_message_edit, this);
+        view = inflate(getContext(), R.layout.custom_controller_person_message_edit, this);
         textViewName = (TextView)findViewById(R.id.textViewName);
         messageDate = (TextView)findViewById(R.id.messageDate);
         msContents = (TextView)findViewById(R.id.msContents);
@@ -302,7 +302,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 500 :{
                 textViewName.setText("시스템");
-                imageViewMessage.setImageResource(R.mipmap.ic_launcher);
+                imageViewMessage.setImageResource(R.mipmap.icon);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -316,11 +316,11 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
         }
         msContents.setText(item.msContents);
         messageDate.setText(item.messageDate);
-        if(item.watchYN == 1){
-            setBackgroundColor(getResources().getColor(R.color.gray));
-        }else{
-            setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        }
+//        if(item.watchYN == 1){
+//            setBackgroundColor(getResources().getColor(R.color.gray));
+//        }else{
+//            setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//        }
 
 
     }
@@ -394,7 +394,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
             }
             case 500 :{
                 textViewName.setText("시스템");
-                imageViewMessage.setImageResource(R.mipmap.ic_launcher);
+                imageViewMessage.setImageResource(R.mipmap.icon);
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
@@ -408,12 +408,12 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
         }
         msContents.setText(item.msContents);
         messageDate.setText(item.messageDate);
-
-        if(item.watchYN == 1){
-            setBackgroundColor(getResources().getColor(R.color.gray));
-        }else{
-            setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        }
+//
+//        if(item.watchYN == 1){
+//            setBackgroundColor(getResources().getColor(R.color.gray));
+//        }else{
+//            setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//        }
 
 
     }
@@ -427,6 +427,11 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
         if (checked != isChecked) {
             isChecked = checked;
             checkBox_message.setChecked(checked);
+            if(checked){
+                view.setBackgroundColor(getResources().getColor(R.color.gray));
+            }else{
+                view.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            }
         }
     }
 

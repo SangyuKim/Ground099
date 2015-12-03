@@ -267,7 +267,7 @@ public class FragmentFCProfile extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("사진 선택");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
@@ -304,7 +304,7 @@ public class FragmentFCProfile extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("FC없애기");
                 builder.setMessage("FC를 해산하시겠습니까? ");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {

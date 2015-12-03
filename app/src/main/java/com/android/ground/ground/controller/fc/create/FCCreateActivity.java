@@ -239,7 +239,7 @@ public class FCCreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(FCCreateActivity.this);
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("사진 선택");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override

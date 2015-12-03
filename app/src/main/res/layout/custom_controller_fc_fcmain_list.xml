@@ -4,15 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.android.ground.ground.custom.CustomCircularImageView
-        android:layout_width="32.25dp"
-        android:layout_height="32.25dp"
-        android:id="@+id/position"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true" />
-
     <!--<ImageView-->
         <!--android:layout_width="30dp"-->
         <!--android:layout_height="30dp"-->
@@ -21,76 +12,108 @@
         <!--android:layout_toRightOf="@+id/position"-->
         <!--android:layout_toEndOf="@+id/position" />-->
 
-    <com.android.ground.ground.custom.CustomCircularImageView
-        android:layout_width="32.25dp"
-        android:layout_height="32.25dp"
-        android:id="@+id/memImage"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/position"
-        android:layout_toEndOf="@+id/position"
-        android:layout_centerVertical="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="김상철"
-        android:id="@+id/memName"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/memImage"
-        android:layout_toEndOf="@+id/memImage"
-        android:textColor="#ffffffff"
-        android:layout_centerVertical="true" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <com.android.ground.ground.custom.CustomCircularImageView
+            android:layout_width="32.25dp"
+            android:layout_height="32.25dp"
+            android:id="@+id/position"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical" />
 
+        <com.android.ground.ground.custom.CustomCircularImageView
+            android:layout_width="32.25dp"
+            android:layout_height="32.25dp"
+            android:id="@+id/memImage"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/position"
+            android:layout_toEndOf="@+id/position"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="M"
-        android:id="@+id/button26"
-        android:focusable="false"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true" />
-    <com.android.ground.ground.custom.CustomRoundCornerProgressBar
-        android:layout_width="80dp"
-        android:layout_height="8dp"
-        android:id="@+id/progressBarSkill"
-        android:maxHeight="10dp"
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="김상철"
+            android:id="@+id/memName"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/memImage"
+            android:layout_toEndOf="@+id/memImage"
+            android:textColor="#ffffffff"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:singleLine="true" />
 
-        android:indeterminate="false"
-        android:progressDrawable="@drawable/progress_bar"
-        app:rcProgressColor="#ff3a1d"
-        android:layout_gravity="center"
+        <com.android.ground.ground.custom.CustomRoundCornerProgressBar
+            android:layout_width="80dp"
+            android:layout_height="8dp"
+            android:id="@+id/progressBarSkill"
+            android:maxHeight="10dp"
 
-        app:rcBackgroundColor="#66464646"
-        app:rcMax="50"
-        app:rcProgress="25"
-        android:layout_alignBottom="@+id/memName"
-        android:layout_toRightOf="@+id/memName"
-        android:layout_toEndOf="@+id/memName"
-        android:layout_centerVertical="true" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/clubSkill"
-        android:textColor="#ffffffff"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/button25"
-        android:layout_toStartOf="@+id/button25"
-        android:layout_centerVertical="true" />
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/progress_bar"
+            app:rcProgressColor="#ff3a1d"
+            android:layout_gravity="center_vertical"
 
-    <ImageView
-        android:layout_width="17.25dp"
-        android:layout_height="16.25dp"
-        android:id="@+id/button25"
-        android:src="@drawable/icon201"
-        android:layout_alignTop="@+id/progressBarSkill"
-        android:layout_toLeftOf="@+id/button26"
-        android:layout_toStartOf="@+id/button26" />
+            app:rcBackgroundColor="#66464646"
+            app:rcMax="50"
+            app:rcProgress="25"
+            android:layout_alignBottom="@+id/memName"
+            android:layout_toRightOf="@+id/memName"
+            android:layout_toEndOf="@+id/memName"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="0.0"
+            android:id="@+id/clubSkill"
+            android:textColor="#ffffffff"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/progressBarSkill"
+            android:layout_toEndOf="@+id/progressBarSkill"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/textView90"
+            android:visibility="invisible"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical" />
+
+        <ImageView
+            android:layout_width="17.25dp"
+            android:layout_height="16.25dp"
+            android:id="@+id/button25"
+            android:src="@drawable/icon201"
+            android:layout_alignTop="@+id/progressBarSkill"
+            android:layout_toLeftOf="@+id/button26"
+            android:layout_toStartOf="@+id/button26"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="M"
+            android:id="@+id/button26"
+            android:focusable="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
 </RelativeLayout>

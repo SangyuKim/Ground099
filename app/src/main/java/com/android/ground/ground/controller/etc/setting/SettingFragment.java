@@ -94,7 +94,7 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("로그아웃");
                 builder.setMessage("로그아웃하시겠습니까? ");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {

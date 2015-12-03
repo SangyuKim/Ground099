@@ -367,9 +367,10 @@ public class SignupFragment extends Fragment {
         memIntro.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_DONE){
-                    MyApplication.getmIMM().hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                }
+                //// TODO: 2015-12-03  
+//                if(actionId == EditorInfo.IME_ACTION_DONE){
+//                    MyApplication.getmIMM().hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//                }
                 return true;
             }
         });
@@ -378,7 +379,7 @@ public class SignupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("사진 선택");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override

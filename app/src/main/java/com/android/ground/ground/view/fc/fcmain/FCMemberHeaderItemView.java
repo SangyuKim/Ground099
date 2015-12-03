@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
+import com.android.ground.ground.custom.CustomRoundCornerProgressBar;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
@@ -36,6 +37,7 @@ public class FCMemberHeaderItemView extends FrameLayout{
     CheckBox clubMainDay_Mon, clubMainDay_Tue, clubMainDay_Wed, clubMainDay_Thu, clubMainDay_Fri
             ,clubMainDay_Sat, clubMainDay_Sun;
 
+    CustomRoundCornerProgressBar progressBarSkill, progressBarManner;
 
     ClubMainResult mItem;
     DisplayImageOptions options;
@@ -70,6 +72,10 @@ public class FCMemberHeaderItemView extends FrameLayout{
         clubMainDay_Fri = (CheckBox)findViewById(R.id.clubMainDay_Fri);
         clubMainDay_Sat = (CheckBox)findViewById(R.id.clubMainDay_Sat);
         clubMainDay_Sun = (CheckBox)findViewById(R.id.clubMainDay_Sun);
+        progressBarSkill = (CustomRoundCornerProgressBar)findViewById(R.id.progressBarSkill);
+        progressBarManner = (CustomRoundCornerProgressBar)findViewById(R.id.progressBarManner);
+        progressBarSkill.setMax(50);
+        progressBarManner.setMax(50);
 
 
 
@@ -85,7 +91,7 @@ public class FCMemberHeaderItemView extends FrameLayout{
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("가입신청");
                 builder.setMessage("가입 신청하시겠습니까? ");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -207,6 +213,10 @@ public class FCMemberHeaderItemView extends FrameLayout{
         }else{
             clubMainDay_Sun.setChecked(true);
         }
+
+
+        progressBarSkill.setProgress((int) (items.clubSkill * 10));
+        progressBarManner.setProgress((int)(items.clubManner*10));
 
     }
 

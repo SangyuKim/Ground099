@@ -41,7 +41,7 @@
         android:layout_below="@+id/button45"
         android:layout_above="@+id/button7"
         android:dividerHeight="1dp"
-        android:divider="@drawable/list_divider" />
+        android:divider="@drawable/list_divider_noti" />
 
 
 </RelativeLayout>

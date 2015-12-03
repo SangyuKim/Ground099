@@ -337,7 +337,7 @@ public class MyProfileManagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MyProfileManagementActivity.this);
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("FC탈퇴");
                 builder.setMessage("FC 탈퇴하시겠습니까? ");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -368,7 +368,7 @@ public class MyProfileManagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MyProfileManagementActivity.this);
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.icon);
                 builder.setTitle("사진 선택");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override

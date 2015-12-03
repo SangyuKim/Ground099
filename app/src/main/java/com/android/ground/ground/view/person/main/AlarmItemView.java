@@ -111,7 +111,7 @@ public class AlarmItemView extends FrameLayout{
             }
             case 500 :{
                 textViewName.setText("시스템");
-                imageView.setImageResource(R.mipmap.ic_launcher);
+                imageView.setImageResource(R.mipmap.icon);
 
                 break;
             }

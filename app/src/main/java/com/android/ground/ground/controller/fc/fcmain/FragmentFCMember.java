@@ -112,6 +112,7 @@ public class FragmentFCMember extends Fragment {
         listView.addHeaderView(new FCMemberHeaderItemView2(getContext()));
 
         ImageView btnManagementFC = (ImageView)view.findViewById(R.id.button24);
+
         btnManagementFC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,14 +121,20 @@ public class FragmentFCMember extends Fragment {
 //                        .replace(R.id.container, mFragment)
 //                        .addToBackStack(null)
 //                        .commit();
-                ActivityManager.getInstance().activityArrayList.add(getActivity());
-                Intent intent = new Intent(getContext(), FCManagementActivity.class);
-                intent.putExtra("clubId", clubId);
-                startActivity(intent);
-
+                if(PropertyManager.getInstance().getMyPageResult().managerYN==1 &&PropertyManager.getInstance().getMyPageResult().club_id== clubId){
+                    ActivityManager.getInstance().activityArrayList.add(getActivity());
+                    Intent intent = new Intent(getContext(), FCManagementActivity.class);
+                    intent.putExtra("clubId", clubId);
+                    startActivity(intent);
+                }
             }
         });
 
+        if(PropertyManager.getInstance().getMyPageResult().managerYN==1 &&PropertyManager.getInstance().getMyPageResult().club_id== clubId){
+            btnManagementFC.setVisibility(View.VISIBLE);
+        }else{
+            btnManagementFC.setVisibility(View.INVISIBLE);
+        }
         ImageView btnMsg = (ImageView)view.findViewById(R.id.button23);
         btnMsg.setOnClickListener(new View.OnClickListener() {
             @Override
