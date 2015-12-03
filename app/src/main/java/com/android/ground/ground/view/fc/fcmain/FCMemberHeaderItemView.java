@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,14 +29,18 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * Created by Tacademy on 2015-11-02.
  */
 public class FCMemberHeaderItemView extends FrameLayout{
-    TextView clubIntro, clubName, clubLocationName;
+    TextView clubIntro, clubName, clubLocationName, clubSkill, clubManner, clubField
+            , avgAge, clubMemCnt;
     ImageView clubImage;
-    Button memYN;
+
+    CheckBox clubMainDay_Mon, clubMainDay_Tue, clubMainDay_Wed, clubMainDay_Thu, clubMainDay_Fri
+            ,clubMainDay_Sat, clubMainDay_Sun;
+
+
     ClubMainResult mItem;
-    Button btnMsg;
     DisplayImageOptions options;
     int clubId;
-
+    ImageView btnMsg, memYN;
     public FCMemberHeaderItemView(Context context, int clubId) {
         super(context);
         this.clubId = clubId;
@@ -49,8 +54,24 @@ public class FCMemberHeaderItemView extends FrameLayout{
         clubLocationName =(TextView)findViewById(R.id.clubLocationName);
 
         clubImage = (ImageView)findViewById(R.id.clubImage);
-        memYN = (Button)findViewById(R.id.memYN);
-        btnMsg = (Button)findViewById(R.id.button23);
+        memYN = (ImageView)findViewById(R.id.memYN);
+        btnMsg = (ImageView)findViewById(R.id.button23);
+
+        clubSkill =(TextView)findViewById(R.id.clubSkill);
+        clubManner =(TextView)findViewById(R.id.clubManner);
+        clubField =(TextView)findViewById(R.id.clubField);
+        avgAge =(TextView)findViewById(R.id.avgAge);
+        clubMemCnt =(TextView)findViewById(R.id.clubMemCnt);
+
+        clubMainDay_Mon = (CheckBox)findViewById(R.id.clubMainDay_Mon);
+        clubMainDay_Tue = (CheckBox)findViewById(R.id.clubMainDay_Tue);
+        clubMainDay_Wed = (CheckBox)findViewById(R.id.clubMainDay_Wed);
+        clubMainDay_Thu = (CheckBox)findViewById(R.id.clubMainDay_Thu);
+        clubMainDay_Fri = (CheckBox)findViewById(R.id.clubMainDay_Fri);
+        clubMainDay_Sat = (CheckBox)findViewById(R.id.clubMainDay_Sat);
+        clubMainDay_Sun = (CheckBox)findViewById(R.id.clubMainDay_Sun);
+
+
 
         btnMsg.setOnClickListener(new OnClickListener() {
             @Override
@@ -143,6 +164,50 @@ public class FCMemberHeaderItemView extends FrameLayout{
         if(items.memYN == 0){
             memYN.setVisibility(View.INVISIBLE);
         }
+
+
+        clubSkill.setText(Double.toString(items.clubSkill));
+        clubManner.setText(Double.toString(items.clubManner));
+        clubField.setText(items.clubField);
+        avgAge.setText("평균나이("+ Double.toString(items.avgAge)+"세)");
+        clubMemCnt.setText(Integer.toString(items.clubMemCnt)+"명");
+
+        if(items.clubMainDay_Mon ==0){
+            clubMainDay_Mon.setChecked(false);
+        }else{
+            clubMainDay_Mon.setChecked(true);
+        }
+        if(items.clubMainDay_Tue ==0){
+            clubMainDay_Tue.setChecked(false);
+        }else{
+            clubMainDay_Tue.setChecked(true);
+        }
+        if(items.clubMainDay_Wed ==0){
+            clubMainDay_Wed.setChecked(false);
+        }else{
+            clubMainDay_Wed.setChecked(true);
+        }
+        if(items.clubMainDay_Thu ==0){
+            clubMainDay_Thu.setChecked(false);
+        }else{
+            clubMainDay_Thu.setChecked(true);
+        }
+        if(items.clubMainDay_Fri ==0){
+            clubMainDay_Fri.setChecked(false);
+        }else{
+            clubMainDay_Fri.setChecked(true);
+        }
+        if(items.clubMainDay_Sat ==0){
+            clubMainDay_Sat.setChecked(false);
+        }else{
+            clubMainDay_Sat.setChecked(true);
+        }
+        if(items.clubMainDay_Sun ==0){
+            clubMainDay_Sun.setChecked(false);
+        }else{
+            clubMainDay_Sun.setChecked(true);
+        }
+
     }
 
 }

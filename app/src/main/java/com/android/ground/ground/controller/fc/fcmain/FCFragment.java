@@ -1,6 +1,7 @@
 package com.android.ground.ground.controller.fc.fcmain;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TabHost;
 
 import com.android.ground.ground.R;
@@ -88,23 +90,51 @@ public class FCFragment extends Fragment implements Profile {
 
         mAdapter = new FCTabsAdapter(getContext(), getChildFragmentManager(), tabHost, pager);
 
-        mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("FC & 멤버"), FragmentFCMember.class, null);
-        mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("경기 기록"), FragmentFCMatchHistory.class, null);
+        View tabView = createTabView(tabHost.getContext(), R.drawable.tab_301);
+        mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator(tabView), FragmentFCMember.class, null);
+        tabView = createTabView(tabHost.getContext(), R.drawable.tab_302);
+        mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator(tabView), FragmentFCMatchHistory.class, null);
 
         if(tabHost.getCurrentTab()==0){
-            getActivity().setTitle("FC & 멤버");
+            for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+                ImageView tabHostImageView = (ImageView)tabHost.getTabWidget().getChildAt(i).findViewById(R.id.imageView5);
+                String tabID = "tab_31"+(i+1);
+                int resID = getResources().getIdentifier(tabID, "drawable", "com.android.ground.ground");
+                tabHostImageView.setImageResource(resID);
+            }
+            getActivity().setTitle("FC페이지");
+            ImageView tabHostImageView = (ImageView)tabHost.getTabWidget().getChildAt(0).findViewById(R.id.imageView5);
+            tabHostImageView.setImageResource(R.drawable.tab_301);
+
         }
+
         mAdapter.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-                                             @Override
-                                             public void onTabChanged(String tabId) {
-                 if (tabId.equals("tab1")) {
-                     getActivity().setTitle("FC & 멤버");
-                 } else if (tabId.equals("tab2")) {
-                     getActivity().setTitle("경기 기록");
-                 }
-                 }
-         }
-        );
+            @Override
+            public void onTabChanged(String tabId) {
+                for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+//                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLACK); // unselected
+
+                    ImageView tabHostImageView = (ImageView)tabHost.getTabWidget().getChildAt(i).findViewById(R.id.imageView5);
+                    String tabID = "tab_31"+(i+1);
+                    int resID = getResources().getIdentifier(tabID, "drawable", "com.android.ground.ground");
+                    tabHostImageView.setImageResource(resID);
+
+                }
+                if (tabId.equals("tab1")) {
+                    getActivity().setTitle("FC페이지");
+                    ImageView tabHostImageView = (ImageView)tabHost.getTabWidget().getChildAt(0).findViewById(R.id.imageView5);
+                    tabHostImageView.setImageResource(R.drawable.tab_301);
+
+                } else if (tabId.equals("tab2")) {
+                    getActivity().setTitle("경기기록");
+                    ImageView tabHostImageView = (ImageView)tabHost.getTabWidget().getChildAt(1).findViewById(R.id.imageView5);
+                    tabHostImageView.setImageResource(R.drawable.tab_302);
+
+                }
+
+            }
+        });
+
 
         if (savedInstanceState != null) {
             tabHost.setCurrentTab(savedInstanceState.getInt("tabIndex"));
@@ -157,6 +187,14 @@ public class FCFragment extends Fragment implements Profile {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+    private static View createTabView(final Context context, final int res) {
+        View view = LayoutInflater.from(context).inflate(R.layout.tabs_bg, null);
+//        TextView tv = (TextView) view.findViewById(R.id.tabsText);
+//        tv.setText(text);
+        ImageView imageViewTab = (ImageView)view.findViewById(R.id.imageView5);
+//        imageViewTab.setImageResource();
+        return view;
     }
 
 

@@ -1,67 +1,382 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/relativeLayout11"
+        android:layout_toEndOf="@+id/linearLayout14"
+        android:layout_toRightOf="@+id/linearLayout14">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout9"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="11.75sp">
+
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:id="@+id/imageView21"
+                android:src="@drawable/icon_fc" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="FC 신림맨"
+                android:id="@+id/clubName"
+                android:textColor="#ffffffff"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout"
+            android:layout_below="@+id/linearLayout9"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="11.75dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="지역"
+                android:id="@+id/textView31"
+                android:textColor="#ffffffff"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:layout_marginRight="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="서울시 신림동"
+                android:id="@+id/clubLocationName"
+                android:layout_below="@+id/clubName"
+                android:layout_alignRight="@+id/clubName"
+                android:layout_alignEnd="@+id/clubName"
+                android:textColor="#ffffffff"
+                android:textIsSelectable="false"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout4"
+            android:layout_below="@+id/linearLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="11.75dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="실력"
+                android:id="@+id/textView43"
+                android:textColor="#ffffffff"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:layout_marginRight="5dp" />
+            <com.android.ground.ground.custom.CustomRoundCornerProgressBar
+                android:layout_width="80dp"
+                android:layout_height="8dp"
+                android:id="@+id/progressBarSkill"
+                android:maxHeight="10dp"
+
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/progress_bar"
+                app:rcProgressColor="#ff3a1d"
+                android:layout_gravity="center"
+
+                app:rcBackgroundColor="#66464646"
+                app:rcMax="50"
+                app:rcProgress="25"
+              />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/clubSkill"
+                android:text="0.0"
+                android:textColor="#ffffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout10"
+            android:layout_below="@+id/linearLayout4"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="11.75dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="매너"
+                android:id="@+id/textView44"
+                android:textColor="#ffffffff"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:layout_marginRight="5dp" />
+            <com.android.ground.ground.custom.CustomRoundCornerProgressBar
+                android:layout_width="80dp"
+                android:layout_height="8dp"
+                android:id="@+id/progressBarSkill2"
+                android:maxHeight="10dp"
+
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/progress_bar"
+                app:rcProgressColor="#ff3a1d"
+                android:layout_gravity="center"
+
+                app:rcBackgroundColor="#66464646"
+                app:rcMax="50"
+                app:rcProgress="25"
+          />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="0.0"
+                android:id="@+id/clubManner"
+                android:textColor="#ffffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout11"
+            android:layout_below="@+id/linearLayout10"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="11.75dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="인원"
+                android:id="@+id/textView49"
+                android:textColor="#ffffffff"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:layout_marginRight="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="명수"
+                android:id="@+id/clubMemCnt"
+                android:textSize="12sp"
+                android:textColor="#ffffffff"
+                android:layout_marginRight="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="평균나이"
+                android:id="@+id/avgAge"
+                android:textSize="12sp"
+                android:textColor="#ffffffff" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout11"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/linearLayout12">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="주요구장"
+                android:id="@+id/textView77"
+                android:textColor="#ffffffff"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:layout_marginRight="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="구장"
+                android:id="@+id/clubField"
+                android:textSize="12sp"
+                android:textColor="#ffffffff" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout11"
+        android:layout_alignRight="@+id/relativeLayout11"
+        android:layout_alignEnd="@+id/relativeLayout11"
+        android:id="@+id/linearLayout13"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/textView84"
+            android:visibility="invisible"
+            android:layout_weight="1" />
+
+
+
+        <ImageView
+            android:layout_width="53.25dp"
+            android:layout_height="53.25dp"
+            android:id="@+id/button23"
+            android:src="@drawable/button01" />
+
+        <ImageView
+            android:layout_width="53.25dp"
+            android:layout_height="53.25dp"
+            android:id="@+id/memYN"
+            android:src="@drawable/button02" />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/textView80"
+            android:visibility="invisible"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout14">
+
+        <com.android.ground.ground.custom.CustomCircularImageView
+            android:layout_width="103.75dp"
+            android:layout_height="103.5dp"
+            android:id="@+id/clubImage"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/empty_club"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout13"
+            android:layout_alignRight="@+id/relativeLayout11"
+            android:layout_alignEnd="@+id/relativeLayout11">
+
+            <CheckBox
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/clubMainDay_Mon"
+                android:checked="false"
+                android:button="@drawable/check_box_mon_fc" />
+
+            <CheckBox
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/clubMainDay_Tue"
+                android:checked="false"
+                android:button="@drawable/check_box_tue_fc" />
+
+            <CheckBox
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/clubMainDay_Wed"
+                android:checked="false"
+                android:button="@drawable/check_box_wed_fc" />
+
+            <CheckBox
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/clubMainDay_Thu"
+                android:checked="false"
+                android:button="@drawable/check_box_thu_fc" />
+
+            <CheckBox
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/clubMainDay_Fri"
+                android:checked="false"
+                android:button="@drawable/check_box_fri_fc" />
+
+            <CheckBox
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/clubMainDay_Sat"
+                android:checked="false"
+                android:button="@drawable/check_box_sat_fc" />
+
+            <CheckBox
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/clubMainDay_Sun"
+                android:checked="false"
+                android:button="@drawable/check_box_sun_fc" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32.5dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="신림의 전설을 우리가 만든다"
         android:id="@+id/clubIntro"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:layout_below="@+id/linearLayout13"
+        android:layout_centerHorizontal="true"
+        android:textSize="12sp"
+        android:singleLine="true"
+        android:gravity="center"
+        android:background="@color/blur_gray"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="FC 신림맨"
-        android:id="@+id/clubName"
-        android:layout_below="@+id/clubIntro"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="#ffffffff" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="서울시 신림동"
-        android:id="@+id/clubLocationName"
-        android:layout_below="@+id/clubName"
-        android:layout_alignRight="@+id/clubName"
-        android:layout_alignEnd="@+id/clubName"
-        android:textColor="#ffffffff" />
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/clubImage"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="가입신청"
-        android:id="@+id/memYN"
-        android:focusable="false"
-        android:layout_below="@+id/button23"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="메시지"
-        android:id="@+id/button23"
-        android:focusable="false"
-        android:layout_below="@+id/clubImage"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 </RelativeLayout>

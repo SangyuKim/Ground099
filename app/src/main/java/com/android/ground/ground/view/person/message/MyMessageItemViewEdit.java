@@ -41,7 +41,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
 
 
     TextView textViewName, messageDate, msContents;
-    ImageView imageViewMessage ,yes, no;
+    ImageView imageViewMessage ,yes, no, reply;
     public ClubMessageDataResult mClubMessageDataResult;
     public void setCheckBox_message(boolean isChecked) {
         this.checkBox_message.setChecked(isChecked);
@@ -52,7 +52,6 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
 
     CheckBox checkBox_message;
     public MyMessageDataResult mItem;
-    Button   reply;
 
     DisplayImageOptions options;
 
@@ -76,7 +75,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 }
             }
         });
-        reply = (Button)findViewById(R.id.button32);
+        reply = (ImageView)findViewById(R.id.button32);
         reply.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

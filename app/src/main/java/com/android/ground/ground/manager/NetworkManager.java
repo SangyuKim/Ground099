@@ -2450,7 +2450,7 @@ public class NetworkManager{
     //본 메시지 설정 , 읽음, 읽은 메시지
     public static final String SEND_MESSAGE_WATCH_URL =GROND_SERVER_URL+"/message/watch";
     public void postNetworkMessageWatch(final Context context,  MessageDeleteData mMessageDeleteData,final OnResultListener<EtcData> listener) {
-        showWaitingDialog(context);
+//        showWaitingDialog(context);
         final RequestParams params = new RequestParams();
         params.put("member_id",mMessageDeleteData.member_id);
         params.put("message_id",mMessageDeleteData.message_id);
@@ -2461,12 +2461,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_WATCH_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                mDialogHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        unShowWaitingDialog();
-                    }
-                });
+//                mDialogHandler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        unShowWaitingDialog();
+//                    }
+//                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2478,12 +2478,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                mDialogHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        unShowWaitingDialog();
-                    }
-                });
+//                mDialogHandler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        unShowWaitingDialog();
+//                    }
+//                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }

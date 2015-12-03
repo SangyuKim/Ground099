@@ -23,7 +23,8 @@
             android:button="@drawable/check_box_club_message"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp" />
 
 
         <TextView
@@ -34,11 +35,12 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="44.25dp"
+            android:layout_height="28dp"
             android:id="@+id/button12"
             android:src="@drawable/delete801"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp" />
 
     </LinearLayout>
 

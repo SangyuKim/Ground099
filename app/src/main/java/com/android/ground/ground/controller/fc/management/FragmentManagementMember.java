@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -44,7 +45,7 @@ public class FragmentManagementMember extends Fragment {
     ManagemnetMemberAdapter mAdapter;
     List<ClubAndMemberResult> items = new ArrayList<ClubAndMemberResult>();
     Button btn;
-    RadioButton btn2;
+    CheckBox btnEntire;
     boolean isAllchecked= false;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -101,8 +102,8 @@ public class FragmentManagementMember extends Fragment {
         searchClubAndMember();
 
         listView.setOnItemClickListener(mItemClickListener);
-        btn2 = (RadioButton)view.findViewById(R.id.button13);
-        btn2.setOnClickListener(new View.OnClickListener() {
+        btnEntire = (CheckBox)view.findViewById(R.id.button13);
+        btnEntire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isAllchecked) {

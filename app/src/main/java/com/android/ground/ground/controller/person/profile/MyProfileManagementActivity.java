@@ -106,12 +106,12 @@ public class MyProfileManagementActivity extends AppCompatActivity {
         }catch(NullPointerException e){
             e.printStackTrace();
         }
-
+        setTitle("프로필 수정");
 
 
         age = (TextView)findViewById(R.id.age);
         position = (TextView)findViewById(R.id.position);
-        skill = (TextView)findViewById(R.id.skill);
+        skill = (TextView)findViewById(R.id.clubSkill);
 
         memIntro = (EditText)findViewById(R.id.memIntro);
         memLocationName = (TextView)findViewById(R.id.memLocationName);

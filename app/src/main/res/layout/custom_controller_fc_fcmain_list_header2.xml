@@ -13,14 +13,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="팀 맴버 관리"
+
+    <ImageView
+        android:layout_width="23.75dp"
+        android:layout_height="23.75dp"
         android:id="@+id/button24"
+        android:src="@drawable/burron05"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:focusable="false" />
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

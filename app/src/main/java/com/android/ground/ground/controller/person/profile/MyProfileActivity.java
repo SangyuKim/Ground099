@@ -1,10 +1,8 @@
 package com.android.ground.ground.controller.person.profile;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -19,7 +17,6 @@ import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
-import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.controller.person.message.MyMessageActivity;
 import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.NetworkManager;
@@ -83,7 +80,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         winLoseDraw = (TextView)findViewById(R.id.winLoseDraw);
         score = (TextView)findViewById(R.id.score);
         mvp = (TextView)findViewById(R.id.mvp);
-        skill = (TextView)findViewById(R.id.skill);
+        skill = (TextView)findViewById(R.id.clubSkill);
         clubName = (TextView)findViewById(R.id.clubName);
         age= (TextView)findViewById(R.id.age);
         memLocationName =(TextView)findViewById(R.id.memLocationName);

@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
@@ -29,7 +28,7 @@ public class FCMemberItemView extends FrameLayout {
     public ClubAndMemberResult mItem;
 
 
-    public Button mBtn1;
+    public ImageView mBtn1;
     public Button mBtn2;
     public FCMemberItemView(Context context) {
         super(context);
@@ -39,14 +38,14 @@ public class FCMemberItemView extends FrameLayout {
     public void init(){
         inflate(getContext(), R.layout.custom_controller_fc_fcmain_list, this);
         memName = (TextView)findViewById(R.id.memName);
-        skill = (TextView)findViewById(R.id.skill);
+        skill = (TextView)findViewById(R.id.clubSkill);
 
         memImage = (ImageView)findViewById(R.id.memImage);
         position =  (ImageView)findViewById(R.id.position);
         managerYN = (ImageView)findViewById(R.id.managerYN);
 
         //프로필
-        mBtn1 = (Button)findViewById(R.id.button25);
+        mBtn1 = (ImageView)findViewById(R.id.button25);
         mBtn1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,11 +87,11 @@ public class FCMemberItemView extends FrameLayout {
         if(item.position >0 && item.position<15)
             position.setImageResource(Utils.POSITIONS[item.position-1]);
 
-        if(item.managerYN ==0){
-            managerYN.setImageResource(R.drawable.icon201);
-        }else{
-            managerYN.setImageResource(R.drawable.captain);
-        }
+//        if(item.managerYN ==0){
+//            managerYN.setImageResource(R.drawable.icon201);
+//        }else{
+//            managerYN.setImageResource(R.drawable.captain);
+//        }
         position.setImageResource(Utils.POSITIONS[item.position]);
 
 

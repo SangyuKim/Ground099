@@ -10,7 +10,11 @@
         android:layout_alignTop="@+id/memName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:button="@drawable/check_box_club_message"
+        android:layout_margin="5dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="16dp" />
 
     <com.android.ground.ground.custom.CustomCircularImageView
         android:layout_width="65dp"
@@ -19,7 +23,9 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/checkBox15"
         android:layout_toEndOf="@+id/checkBox15"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/icon"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,5 +37,6 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:layout_marginRight="17dp" />
 </RelativeLayout>

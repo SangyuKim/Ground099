@@ -11,7 +11,9 @@
         android:layout_below="@+id/imageViewMessage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout90">
+        android:id="@+id/linearLayout90"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp">
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -26,16 +28,19 @@
             android:visibility="visible"
             android:clickable="false"
             android:button="@drawable/check_box_club_message"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp" />
 
         <com.android.ground.ground.custom.CustomCircularImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:id="@+id/imageViewMessage"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/messageDate"
             android:layout_toEndOf="@+id/messageDate"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/icon"
+            android:layout_marginRight="13.5dp"
+            android:layout_gravity="center_vertical" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -54,7 +59,8 @@
                 android:layout_below="@+id/linearLayout88"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:id="@+id/linearLayout89">
+                android:id="@+id/linearLayout89"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -66,7 +72,16 @@
                     android:layout_toRightOf="@+id/imageViewMessage"
                     android:layout_toEndOf="@+id/imageViewMessage"
                     android:textColor="#ffffff"
-                    android:textSize="12sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/textView85"
+                    android:layout_weight="1"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,7 +93,9 @@
                     android:layout_alignRight="@+id/msContents"
                     android:layout_alignEnd="@+id/msContents"
                     android:textColor="#ffffff"
-                    android:textSize="12sp" />
+                    android:textSize="8dp"
+                    android:singleLine="true"
+                    android:maxLength="10" />
             </LinearLayout>
 
             <TextView
@@ -93,7 +110,8 @@
 
                 android:layout_alignTop="@+id/button29"
                 android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -102,7 +120,16 @@
                 android:layout_below="@+id/button29"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:id="@+id/linearLayout88">
+                android:id="@+id/linearLayout88"
+                android:layout_marginRight="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/textView91"
+                    android:visibility="invisible"
+                    android:layout_weight="1" />
 
                 <ImageView
                     android:layout_width="44.25dp"
@@ -112,7 +139,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/yse801"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="1dp" />
 
                 <ImageView
                     android:layout_width="44.25dp"
@@ -128,16 +156,13 @@
 
 
 
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="답장"
-                    android:id="@+id/button32"
 
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:focusable="false" />
+                <ImageView
+                    android:layout_width="44.25dp"
+                    android:layout_height="18dp"
+                    android:id="@+id/button32"
+                    android:src="@drawable/button11"
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
 
         </LinearLayout>

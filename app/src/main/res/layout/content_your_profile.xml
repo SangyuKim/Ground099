@@ -154,7 +154,7 @@
                         android:id="@+id/mvp"
                         android:layout_alignParentEnd="true"
                         android:textColor="#ffffffff"
-                        android:layout_above="@+id/skill"
+                        android:layout_above="@+id/clubSkill"
                         android:layout_alignParentRight="true"
                         android:textSize="16sp" />
 
@@ -163,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="실력"
-                        android:id="@+id/skill"
+                        android:id="@+id/clubSkill"
                         android:textColor="#ffffffff"
                         android:layout_above="@+id/memIntro"
                         android:layout_alignParentRight="true"

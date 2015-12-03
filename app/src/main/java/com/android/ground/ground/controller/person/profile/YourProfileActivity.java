@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -95,7 +94,7 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         winLoseDraw = (TextView)findViewById(R.id.winLoseDraw);
         score = (TextView)findViewById(R.id.score);
         mvp = (TextView)findViewById(R.id.mvp);
-        skill = (TextView)findViewById(R.id.skill);
+        skill = (TextView)findViewById(R.id.clubSkill);
         clubName = (TextView)findViewById(R.id.clubName);
         age= (TextView)findViewById(R.id.age);
         memLocationName =(TextView)findViewById(R.id.memLocationName);

@@ -22,7 +22,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/frameLayout3"
-                android:layout_marginTop="24.25dp">
+                android:layout_marginTop="14.25dp">
 
                 <com.android.ground.ground.custom.CustomCircularImageView
                     android:id="@+id/memImage"
@@ -50,7 +50,8 @@
                 android:layout_below="@+id/frameLayout3"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ffffffff"
-                android:textSize="27sp" />
+                android:textSize="27sp"
+                android:layout_marginTop="13dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -58,7 +59,8 @@
                 android:layout_below="@+id/memName"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="23dp">
+                android:layout_marginLeft="23dp"
+                android:layout_marginTop="10dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -69,7 +71,7 @@
                     android:layout_below="@+id/memName"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginBottom="23.25dp">
+                    android:layout_marginBottom="15dp">
 
                     <TextView
                         android:id="@+id/textView45"
@@ -130,7 +132,7 @@
                     android:layout_below="@+id/linearLayout54"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginBottom="23.25dp">
+                    android:layout_marginBottom="15dp">
 
                     <TextView
                         android:id="@+id/textView46"
@@ -166,7 +168,8 @@
                             android:layout_height="11dp"
                             android:id="@+id/imageView22"
                             android:src="@drawable/add701"
-                            android:layout_gravity="center_vertical|right" />
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginRight="5dp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -179,7 +182,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:id="@+id/linearLayout75"
-                    android:layout_marginBottom="23.25dp">
+                    android:layout_marginBottom="15dp">
 
                     <TextView
                         android:id="@+id/textView47"
@@ -225,7 +228,8 @@
                             android:layout_height="16.75dp"
                             android:id="@+id/imageView19"
                             android:src="@drawable/icon402"
-                            android:layout_gravity="center_vertical|right" />
+                            android:layout_gravity="center_vertical|right"
+                            android:layout_marginRight="5dp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -237,7 +241,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:id="@+id/linearLayout76"
-                    android:layout_marginBottom="23.25dp">
+                    android:layout_marginBottom="15dp">
 
                     <TextView
                         android:id="@+id/textView50"
@@ -254,7 +258,7 @@
 
                     <EditText
                         android:id="@+id/memIntro"
-                        android:layout_width="169.5dp"
+                        android:layout_width="230dp"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:singleLine="true"
@@ -268,7 +272,7 @@
                         android:hint="자기소개를 적어주세요(6자 이내)"
                         android:textColorHint="#ffffffff"
                         android:theme="@style/Theme.App.EditText"
-                        android:textSize="9sp"/>
+                        android:textSize="12sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -278,7 +282,7 @@
                     android:layout_below="@+id/linearLayout74"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginBottom="23.25dp"
+                    android:layout_marginBottom="15dp"
                     android:id="@+id/LinearLayout90">
 
                     <TextView
@@ -326,7 +330,7 @@
                     android:layout_below="@+id/linearLayout75"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginBottom="23.25dp">
+                    android:layout_marginBottom="15dp">
 
                     <TextView
                         android:id="@+id/textView48"
@@ -350,7 +354,8 @@
                         android:layout_below="@+id/textView48"
                         android:checked="false"
                         android:focusable="false"
-                        android:button="@drawable/check_box_mon_fc" />
+                        android:button="@drawable/check_box_mon_fc"
+                        android:layout_marginRight="3dp" />
 
                     <CheckBox
                         android:id="@+id/memMainDay_Tue"
@@ -361,7 +366,8 @@
                         android:layout_toRightOf="@+id/memMainDay_Mon"
                         android:checked="false"
                         android:focusable="false"
-                        android:button="@drawable/check_box_tue_fc" />
+                        android:button="@drawable/check_box_tue_fc"
+                        android:layout_marginRight="3dp" />
 
                     <CheckBox
                         android:id="@+id/memMainDay_Wed"
@@ -372,7 +378,8 @@
                         android:layout_toRightOf="@+id/memMainDay_Tue"
                         android:checked="false"
                         android:focusable="false"
-                        android:button="@drawable/check_box_wed_fc" />
+                        android:button="@drawable/check_box_wed_fc"
+                        android:layout_marginRight="3dp" />
 
                     <CheckBox
                         android:id="@+id/memMainDay_Thu"
@@ -383,7 +390,8 @@
                         android:layout_toRightOf="@+id/memMainDay_Wed"
                         android:checked="false"
                         android:focusable="false"
-                        android:button="@drawable/check_box_thu_fc" />
+                        android:button="@drawable/check_box_thu_fc"
+                        android:layout_marginRight="3dp" />
 
                     <CheckBox
                         android:id="@+id/memMainDay_Fri"
@@ -394,7 +402,8 @@
                         android:layout_toRightOf="@+id/memMainDay_Thu"
                         android:checked="false"
                         android:focusable="false"
-                        android:button="@drawable/check_box_fri_fc" />
+                        android:button="@drawable/check_box_fri_fc"
+                        android:layout_marginRight="3dp" />
 
                     <CheckBox
                         android:id="@+id/memMainDay_Sat"
@@ -405,7 +414,8 @@
                         android:layout_toRightOf="@+id/memMainDay_Fri"
                         android:checked="false"
                         android:focusable="false"
-                        android:button="@drawable/check_box_sat_fc" />
+                        android:button="@drawable/check_box_sat_fc"
+                        android:layout_marginRight="3dp" />
 
                     <CheckBox
                         android:id="@+id/memMainDay_Sun"
@@ -427,7 +437,7 @@
                     android:layout_below="@+id/linearLayout76"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginBottom="23.25dp">
+                    android:layout_marginBottom="15dp">
 
                     <TextView
                         android:id="@+id/textView51"

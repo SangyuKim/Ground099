@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.android.ground.ground.R;
@@ -110,8 +111,8 @@ public class FragmentFCMember extends Fragment {
         listView.addHeaderView(mFCMemberHeaderItemView);
         listView.addHeaderView(new FCMemberHeaderItemView2(getContext()));
 
-        Button btn = (Button)view.findViewById(R.id.button24);
-        btn.setOnClickListener(new View.OnClickListener() {
+        ImageView btnManagementFC = (ImageView)view.findViewById(R.id.button24);
+        btnManagementFC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Fragment mFragment = (Fragment) FCManagementFragment.newInstance("", "");
@@ -127,8 +128,8 @@ public class FragmentFCMember extends Fragment {
             }
         });
 
-        btn = (Button)view.findViewById(R.id.button23);
-        btn.setOnClickListener(new View.OnClickListener() {
+        ImageView btnMsg = (ImageView)view.findViewById(R.id.button23);
+        btnMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CustomDialogMessageFragment dialog = new CustomDialogMessageFragment(clubId);
