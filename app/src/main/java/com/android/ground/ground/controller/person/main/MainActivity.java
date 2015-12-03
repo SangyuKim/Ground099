@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity
         CustomNavigationView navigationView = (CustomNavigationView) findViewById(R.id.nav_view);
         navigationView.getMenu().clear(); //clear old inflated items.
         if (PropertyManager.getInstance().getMyPageResult().clubYN == 0) {
-            navigationView.inflateMenu(R.menu.activity_main_drawer_noclub);
+            navigationView.inflateMenu(R.menu.activity_main_drawer_noclub2);
         }else{
             navigationView.inflateMenu(R.menu.activity_main_drawer_yesclub);
         }

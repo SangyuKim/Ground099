@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_ground" android:icon="@drawable/icon_ground601"
+            android:title="그라운드" />
+        <item android:id="@+id/nav_fccreate" android:icon="@drawable/icon_fcmake601"
+            android:title="FC 창단하기" />
+    </group>
+
+
+</menu>
