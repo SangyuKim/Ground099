@@ -147,28 +147,15 @@
                     android:visibility="visible"
                     android:layout_above="@+id/textView64" />
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/gridLayout"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@+id/gridLayout"
-                    android:layout_toEndOf="@+id/gridLayout"
-                    android:id="@+id/linearLayout66">
-
-                </LinearLayout>
-
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/editTextVirtual"
-                    android:layout_above="@+id/linearLayout66"
                     android:layout_toRightOf="@+id/gridLayout"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:background="#ffffff" />
+                    android:background="#ffffff"
+                    android:layout_alignBottom="@+id/gridLayout" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -398,29 +385,22 @@
 
                 <GridView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:id="@+id/gridView"
                     android:layout_weight="1"
                     android:numColumns="2"
                     android:stretchMode="columnWidth"
-                    android:choiceMode="singleChoice"
-                    android:background="#982d2d" />
+                    android:choiceMode="singleChoice" />
 
                 <GridView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:id="@+id/gridView2"
                     android:layout_weight="1"
                     android:numColumns="2"
                     android:stretchMode="columnWidth"
                     android:choiceMode="singleChoice" />
 
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="New Button"
-                    android:id="@+id/button40" />
             </LinearLayout>
 
         </RelativeLayout>

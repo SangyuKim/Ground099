@@ -37,7 +37,7 @@ import com.android.ground.ground.controller.person.login.MySpinnerSignupAdapter;
 import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.controller.person.splash.SplashActivity;
 import com.android.ground.ground.custom.CustomToolbar;
-import com.android.ground.ground.manager.ClubManagerData;
+import com.android.ground.ground.model.post.ClubManagerData;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
@@ -50,7 +50,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
-import java.net.PortUnreachableException;
 
 public class MyProfileManagementActivity extends AppCompatActivity {
     int sex;

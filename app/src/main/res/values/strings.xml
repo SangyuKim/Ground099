@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ground</string>
+    <string name="app_name">그라운드</string>
 
 
     <string name="text_for_login_kakao_account">Log in with Kakao</string>

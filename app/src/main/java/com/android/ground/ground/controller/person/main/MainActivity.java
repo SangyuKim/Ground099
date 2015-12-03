@@ -1,10 +1,7 @@
 package com.android.ground.ground.controller.person.main;
 
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ListPopupWindow;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -31,26 +27,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.ground.ground.MyGcmListenerService;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.setting.SettingFragment;
 import com.android.ground.ground.controller.fc.create.FCCreateActivity;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
-import com.android.ground.ground.controller.person.message.MyMessageActivity;
-import com.android.ground.ground.controller.person.message.MyMessageFragment;
 import com.android.ground.ground.controller.person.profile.MyProfileActivity;
 import com.android.ground.ground.custom.CustomDrawerLayout;
 import com.android.ground.ground.custom.CustomNavigationView;
 import com.android.ground.ground.custom.CustomToolbar;
-import com.android.ground.ground.manager.ActivityManager;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
-import com.android.ground.ground.view.OnAlarmClickListener;
-import com.android.ground.ground.view.person.main.NavigationHeaderView;
 import com.facebook.appevents.AppEventsLogger;
 
 public class MainActivity extends AppCompatActivity
@@ -126,6 +117,12 @@ public class MainActivity extends AppCompatActivity
 
 
         CustomNavigationView navigationView = (CustomNavigationView) findViewById(R.id.nav_view);
+        navigationView.getMenu().clear(); //clear old inflated items.
+        if (PropertyManager.getInstance().getMyPageResult().clubYN == 0) {
+            navigationView.inflateMenu(R.menu.activity_main_drawer_noclub);
+        }else{
+            navigationView.inflateMenu(R.menu.activity_main_drawer_yesclub);
+        }
         navigationView.setNavigationItemSelectedListener(this);
 //        navigationView.setHeaderItemSelectedListener(this);
         navigationView.setHeaderImageClickedListener(this);
@@ -265,15 +262,15 @@ public class MainActivity extends AppCompatActivity
             if(!isAlarmOpened){
                 final Fragment mFragment = AlarmFragment.newInstance("", "");
 
-                ((AlarmFragment)mFragment).setOnAlarmClickListener(new OnAlarmClickListener() {
-                    @Override
-                    public void onDialogClick(boolean isClicked) {
-                        alarmItem.setIcon(R.drawable.icon_002);
-                    }
-                });
+//                ((AlarmFragment)mFragment).setOnAlarmClickListener(new OnAlarmClickListener() {
+//                    @Override
+//                    public void onDialogClick(boolean isClicked) {
+//                        alarmItem.setIcon(R.drawable.icon_002);
+//                    }
+//                });
 
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, mFragment)
+                        .add(R.id.container, mFragment, MyGcmListenerService.NOTI_TAG)
                         .addToBackStack(null)
                         .commit();
                 isAlarmOpened = true;

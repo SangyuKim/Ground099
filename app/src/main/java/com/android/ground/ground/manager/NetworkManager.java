@@ -38,6 +38,7 @@ import com.android.ground.ground.model.person.main.searchClub.SearchClub;
 import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
+import com.android.ground.ground.model.post.ClubManagerData;
 import com.android.ground.ground.model.post.lineup.InputResultMVP;
 import com.android.ground.ground.model.post.lineup.InputResultScorerReal;
 import com.android.ground.ground.model.post.lineup.InputResultSetting;
@@ -85,12 +86,12 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.client.HttpClient;
-import cz.msebera.android.httpclient.entity.ByteArrayEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 
 
 public class NetworkManager{
+    Handler mDialogHandler;
     public List<Dialog> mDialogList= new ArrayList<Dialog>();
     public final static String GROND_SERVER_URL = "http://54.178.160.114";
     public final static String ImageUrl ="";
@@ -107,6 +108,7 @@ public class NetworkManager{
     AsyncHttpClient client;
     Gson gson;
     private NetworkManager() {
+        mDialogHandler = new Handler();
 
         try {
             KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -982,7 +984,13 @@ public class NetworkManager{
         client.post(context, SEND_SIGNUP_URL, params,new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", "sign up : " + s);
@@ -994,7 +1002,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1009,14 +1022,14 @@ public class NetworkManager{
     //login kakao
     public static final String SEND_LOGIN_KAKAO_URL =GROND_SERVER_URL+"/member/login/kakao";
     public void postNetworkLoginKakao(final Context context, String token , final OnResultListener<KakaoLogin> listener) {
-        showWaitingDialog(context);
+//        showWaitingDialog(context);
 
         final RequestParams params = new RequestParams();
         params.put("access_token",token);
            client.post(context, SEND_LOGIN_KAKAO_URL, params, new AsyncHttpResponseHandler() {
                @Override
                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    unShowWaitingDialog();
+//                    unShowWaitingDialog();
                    ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                    String s = new String(responseBody, Charset.forName("UTF-8"));
                    Log.d("hello", "kakao post : " + s);
@@ -1028,11 +1041,11 @@ public class NetworkManager{
 
                @Override
                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                   try{
-                    unShowWaitingDialog();
-                   }catch (IllegalArgumentException e){
-                       e.printStackTrace();
-                   }
+//                   try{
+//                    unShowWaitingDialog();
+//                   }catch (IllegalArgumentException e){
+//                       e.printStackTrace();
+//                   }
                    Log.d("hello", "status code : " + statusCode);
                    listener.onFail(statusCode);
 //                   String s = new String(responseBody, Charset.forName("UTF-8"));
@@ -1047,14 +1060,14 @@ public class NetworkManager{
 
     //login kakao after token send
     public void getNetworkLoginKakao(final Context context, String token , final OnResultListener<KakaoResponse> listener) {
-        showWaitingDialog(context);
+//        showWaitingDialog(context);
 
         final RequestParams params = new RequestParams();
 //        params.put("access_token",token);
         client.get(context, SEND_LOGIN_KAKAO_URL, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+//                unShowWaitingDialog();
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", "kakao get : " + s);
@@ -1066,7 +1079,7 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+//                unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1080,14 +1093,14 @@ public class NetworkManager{
     public static final String SEND_LOGIN_FACEBOOK_URL =GROND_SERVER_URL+"/member/login/facebook";
     public void postNetworkLoginFacebook(final Context context, String token, final OnResultListener<FacebookLogin> listener) {
 
-        showWaitingDialog(context);
+//        showWaitingDialog(context);
 
         final RequestParams params = new RequestParams();
         params.put("access_token",token);
         client.post(context, SEND_LOGIN_FACEBOOK_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+//                unShowWaitingDialog();
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1099,7 +1112,7 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+//                unShowWaitingDialog();
                 Log.d("hello", "status : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1280,7 +1293,10 @@ public class NetworkManager{
                 listener.onFail(statusCode);
             }
 
-
+            @Override
+            public boolean getUseSynchronousMode() {
+                return false;
+            }
         });
 
     }
@@ -1345,6 +1361,10 @@ public class NetworkManager{
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
+            @Override
+            public boolean getUseSynchronousMode() {
+                return false;
+            }
 
 
         });
@@ -1404,7 +1424,12 @@ public class NetworkManager{
         client.post(context, SEND_PUSH_401_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1416,7 +1441,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1437,7 +1467,12 @@ public class NetworkManager{
         client.post(context, SEND_MEMBER_PUSH_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1449,7 +1484,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1472,7 +1512,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_100_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1484,7 +1529,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1506,7 +1556,12 @@ public class NetworkManager{
         client.post(context, SEND_PUSH_100_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1518,7 +1573,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1541,7 +1601,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_200_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1553,7 +1618,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1575,7 +1645,12 @@ public class NetworkManager{
         client.post(context, SEND_PUSH_200_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1587,7 +1662,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1610,7 +1690,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_201_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1622,7 +1707,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1644,7 +1734,12 @@ public class NetworkManager{
         client.post(context, SEND_PUSH_201_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1656,7 +1751,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1679,7 +1779,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_201_RESPEONSE_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1691,7 +1796,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1713,7 +1823,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_300_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1725,7 +1840,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1747,7 +1867,12 @@ public class NetworkManager{
         client.post(context, SEND_PUSH_300_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1759,7 +1884,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1783,7 +1913,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_301_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1795,7 +1930,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1817,7 +1957,12 @@ public class NetworkManager{
         client.post(context, SEND_PUSH_301_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1829,7 +1974,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1853,7 +2003,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_400_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1865,7 +2020,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1888,7 +2048,12 @@ public class NetworkManager{
         client.post(context, SEND_PUSH_400_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1900,7 +2065,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1924,7 +2094,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_302_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1936,7 +2111,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1958,7 +2138,12 @@ public class NetworkManager{
         client.post(context, SEND_PUSH_302_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -1970,7 +2155,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -1993,7 +2183,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_301_RESPONSE_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2005,7 +2200,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2033,7 +2233,12 @@ public class NetworkManager{
         client.post(context, SEND_MATCH_CREATE_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2045,7 +2250,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2069,7 +2279,12 @@ public class NetworkManager{
         client.post(context, SEND_CLUB_MANAGER_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2081,7 +2296,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2104,7 +2324,12 @@ public class NetworkManager{
         client.post(context, SEND_CLUB_MANAGER_STOP_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2116,7 +2341,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2139,7 +2369,12 @@ public class NetworkManager{
         client.post(context, SEND_MEMBER_STOP_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2151,7 +2386,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2176,7 +2416,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_DELETE_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2188,7 +2433,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2211,7 +2461,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_WATCH_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2223,7 +2478,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2246,7 +2506,12 @@ public class NetworkManager{
         client.post(context, SEND_MESSAGE_302_RESPONSE_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2258,7 +2523,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2285,7 +2555,12 @@ public class NetworkManager{
         client.post(context, SEND_LINEUP_PLAN_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2297,7 +2572,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2328,7 +2608,12 @@ public class NetworkManager{
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2340,7 +2625,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2369,7 +2659,12 @@ public class NetworkManager{
         client.post(context, SEND_LINEUP_VIRTUAL_FORMATION_VIR_URL, entity, "application/json",new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2381,7 +2676,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2406,7 +2706,12 @@ public class NetworkManager{
         client.post(context, SEND_LINEUP_INPUTRESULT_FORMATION_REAL_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -2418,7 +2723,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -2656,7 +2966,6 @@ public class NetworkManager{
 
 
     public void showWaitingDialog(Context context){
-
         mDialogList.add(new Dialog(context));
         mDialogList.get(mDialogList.size()-1).requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialogList.get(mDialogList.size()-1).setContentView(R.layout.fragment_sample_ripple);

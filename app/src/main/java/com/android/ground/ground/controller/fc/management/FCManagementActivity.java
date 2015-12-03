@@ -22,7 +22,7 @@ public class FCManagementActivity extends AppCompatActivity {
 
     TabHost tabHost;
     ViewPager pager;
-    FCManagemnetTabsAdapter mAdapter;
+    public FCManagemnetTabsAdapter mAdapter;
     CustomToolbar customToolbar;
     Menu menu;
 
@@ -40,7 +40,7 @@ public class FCManagementActivity extends AppCompatActivity {
         try{
             getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             getSupportActionBar().setCustomView(customToolbar, params);
-        }catch (Exception e){
+        }catch (NullPointerException e){
             e.printStackTrace();
         }
 

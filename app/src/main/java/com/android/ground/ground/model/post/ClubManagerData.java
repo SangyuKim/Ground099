@@ -1,4 +1,4 @@
-package com.android.ground.ground.manager;
+package com.android.ground.ground.model.post;
 
 /**
  * Created by Tacademy on 2015-12-01.

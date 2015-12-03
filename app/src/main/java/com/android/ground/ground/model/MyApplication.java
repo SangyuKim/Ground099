@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import com.android.ground.ground.R;
@@ -26,7 +27,11 @@ import org.apache.http.client.HttpClient;
 
 public class MyApplication extends Application {
 
-    private Activity currentTopActivity;
+    public Activity getCurrentTopActivity() {
+        return currentTopActivity;
+    }
+
+    public static Activity currentTopActivity;
     private static Context mContext;
     private static InputMethodManager mIMM;
     private static volatile MyApplication instance = null;
@@ -56,6 +61,7 @@ public class MyApplication extends Application {
         instance = this;
 
         KakaoSDK.init(new KakaoSDKAdapter());
+
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -69,6 +75,7 @@ public class MyApplication extends Application {
 
             @Override
             public void onActivityResumed(Activity activity) {
+                Log.d("hello", activity.toString());
                 currentTopActivity = activity;
             }
 

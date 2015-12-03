@@ -12,12 +12,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
-import com.android.ground.ground.manager.ClubManagerData;
+import com.android.ground.ground.model.post.ClubManagerData;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;

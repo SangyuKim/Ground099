@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.ground.ground.MyGcmListenerService;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.main.MainFragment;
@@ -38,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyMessageActivity extends AppCompatActivity {
-    public static final String TAG_MY_MESSAGE = "1";
     CustomToolbar customToolbar;
     Menu menu;
 
@@ -70,7 +70,7 @@ public class MyMessageActivity extends AppCompatActivity {
         }
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, MyMessageFragment.newInstance("", ""), TAG_MY_MESSAGE).commit();
+                    .replace(R.id.container, MyMessageFragment.newInstance("", ""), MyGcmListenerService.MY_MESSAGE_TAG).commit();
         }
 
 

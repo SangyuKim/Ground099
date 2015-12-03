@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.profile.YourProfileActivity;
-import com.android.ground.ground.manager.ClubManagerData;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
@@ -33,7 +32,6 @@ import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
 import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.OnAdapterYesListener;
-import com.android.ground.ground.view.fc.management.ManagementMemberItemView;
 import com.android.ground.ground.view.person.message.MyMessageItemViewEdit;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -56,6 +54,7 @@ public class MyMessageFragment extends Fragment {
     MyMessageAdapter mAdapter;
     List<MyMessageItem> items = new ArrayList<MyMessageItem>();
     Button btn;
+    Handler mHandler;
     boolean isUpdate = false;
     boolean isAllchecked= false;
 
@@ -134,6 +133,7 @@ public class MyMessageFragment extends Fragment {
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         mAdapter = new MyMessageAdapter();
+        mHandler = new Handler();
         searchMyMessage();
 
         listView.setAdapter(mAdapter);
@@ -403,26 +403,31 @@ public class MyMessageFragment extends Fragment {
             getActivity().setTitle("메시지함");
         }
     }
-    private void searchMyMessage() {
-
-        NetworkManager.getInstance().getNetworkMessage(getContext(), PropertyManager.getInstance().getUserId(), 1, new NetworkManager.OnResultListener<MyMessageData>() {
+    public void searchMyMessage() {
+        mHandler.post(new Runnable() {
             @Override
-            public void onSuccess(MyMessageData result) {
-                mAdapter.setTotalCount(result.itemCount);
-                mAdapter.setPgae(1);
-                mAdapter.clear();
-                for (MyMessageDataResult item : result.items) {
+            public void run() {
+                NetworkManager.getInstance().getNetworkMessage(getContext(), PropertyManager.getInstance().getUserId(), 1, new NetworkManager.OnResultListener<MyMessageData>() {
+                    @Override
+                    public void onSuccess(MyMessageData result) {
+                        mAdapter.setTotalCount(result.itemCount);
+                        mAdapter.setPgae(1);
+                        mAdapter.clear();
+                        for (MyMessageDataResult item : result.items) {
 
-                    mAdapter.add(item);
-                }
+                            mAdapter.add(item);
+                        }
 //                mAdapter = new MyMessageAdapter(getContext(), result.items);
-                refreshView.onRefreshComplete();
-            }
+                        refreshView.onRefreshComplete();
+                    }
 
-            @Override
-            public void onFail(int code) {
+                    @Override
+                    public void onFail(int code) {
+                    }
+                });
             }
         });
+
     }
     private void getMoreItem() {
         if (!isUpdate) {

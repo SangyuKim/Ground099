@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
@@ -56,6 +57,7 @@ public class FragmentClubMessageEdit extends Fragment {
     Button btn, btn2;
     LinearLayout mLinearLayout;
     boolean isAllchecked= false;
+    Handler mHandler;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -122,6 +124,7 @@ public class FragmentClubMessageEdit extends Fragment {
         listView = refreshView.getRefreshableView();
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mAdapter = new ClubMessageEditAdapter();
+        mHandler = new Handler();
         searchClubMessage();
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -386,25 +389,30 @@ public class FragmentClubMessageEdit extends Fragment {
                 }
             };
 
-    private void searchClubMessage() {
-
-        NetworkManager.getInstance().getNetworkClubMessage(getContext(), PropertyManager.getInstance().getMyPageResult().club_id, 1, new NetworkManager.OnResultListener<ClubMessageData>() {
+    public void searchClubMessage() {
+        mHandler.post(new Runnable() {
             @Override
-            public void onSuccess(ClubMessageData result) {
-                mAdapter.setTotalCount(result.itemCount);
-                mAdapter.setPgae(1);
-                mAdapter.clear();
-                for (ClubMessageDataResult item : result.items) {
-                    mAdapter.add(item);
-                }
+            public void run() {
+                NetworkManager.getInstance().getNetworkClubMessage(getContext(), PropertyManager.getInstance().getMyPageResult().club_id, 1, new NetworkManager.OnResultListener<ClubMessageData>() {
+                    @Override
+                    public void onSuccess(ClubMessageData result) {
+                        mAdapter.setTotalCount(result.itemCount);
+                        mAdapter.setPgae(1);
+                        mAdapter.clear();
+                        for (ClubMessageDataResult item : result.items) {
+                            mAdapter.add(item);
+                        }
 //                mAdapter = new MyMessageAdapter(getContext(), result.items);
-                refreshView.onRefreshComplete();
-            }
+                        refreshView.onRefreshComplete();
+                    }
 
-            @Override
-            public void onFail(int code) {
+                    @Override
+                    public void onFail(int code) {
+                    }
+                });
             }
         });
+
     }
     private void getMoreItem() {
         if (!isUpdate) {

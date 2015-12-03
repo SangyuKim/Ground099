@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.android.ground.ground.MyGcmListenerService;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.management.FCManagementActivity;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
@@ -38,6 +40,7 @@ public class AlarmFragment extends Fragment {
     MainAlarmAdapter mAdapter;
     ListView listView;
     boolean isUpdate = false;
+    public Handler mHandler;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -105,11 +108,13 @@ public class AlarmFragment extends Fragment {
         listView = refreshView.getRefreshableView();
 
         mAdapter = new MainAlarmAdapter();
+        mHandler = new Handler();
+
         searchNoti();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mAlarmListener.onDialogClick(false);
+//                mAlarmListener.onDialogClick(false);
                 NotiDataResult item = ((AlarmItemView) view).mNotiDataResult;
                 if (item.sender != PropertyManager.getInstance().getUserId()) {
                     switch (((AlarmItemView) view).mNotiDataResult.code) {
@@ -117,7 +122,7 @@ public class AlarmFragment extends Fragment {
                             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
                             getFragmentManager().beginTransaction()
-                                    .replace(R.id.container, mFragment)
+                                    .replace(R.id.container, mFragment, MyGcmListenerService.MY_MESSAGE_TAG)
                                     .addToBackStack(null)
                                     .commit();
                             break;
@@ -141,7 +146,7 @@ public class AlarmFragment extends Fragment {
                             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
                             getFragmentManager().beginTransaction()
-                                    .replace(R.id.container, mFragment)
+                                    .replace(R.id.container, mFragment, MyGcmListenerService.MY_MESSAGE_TAG)
                                     .addToBackStack(null)
                                     .commit();
                             break;
@@ -150,7 +155,7 @@ public class AlarmFragment extends Fragment {
                             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
                             getFragmentManager().beginTransaction()
-                                    .replace(R.id.container, mFragment)
+                                    .replace(R.id.container, mFragment, MyGcmListenerService.MY_MESSAGE_TAG)
                                     .addToBackStack(null)
                                     .commit();
                             break;
@@ -182,7 +187,7 @@ public class AlarmFragment extends Fragment {
                             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
                             getFragmentManager().beginTransaction()
-                                    .replace(R.id.container, mFragment)
+                                    .replace(R.id.container, mFragment, MyGcmListenerService.MY_MESSAGE_TAG)
                                     .addToBackStack(null)
                                     .commit();
                             break;
@@ -198,23 +203,29 @@ public class AlarmFragment extends Fragment {
         return view;
     }
 
-    private void searchNoti() {
+    public void searchNoti() {
         // PropertyManager.getInstance().getUserId()
-        NetworkManager.getInstance().getNetworkNoti(getContext(), PropertyManager.getInstance().getUserId(), 1, new NetworkManager.OnResultListener<NotiData>() {
+        mHandler.post(new Runnable() {
             @Override
-            public void onSuccess(NotiData result) {
-                mAdapter.clear();
-                for(NotiDataResult item : result.items){
-                      mAdapter.add(item);
-                }
-                refreshView.onRefreshComplete();
-            }
+            public void run() {
+                NetworkManager.getInstance().getNetworkNoti(getContext(), PropertyManager.getInstance().getUserId(), 1, new NetworkManager.OnResultListener<NotiData>() {
+                    @Override
+                    public void onSuccess(NotiData result) {
+                        mAdapter.clear();
+                        for (NotiDataResult item : result.items) {
+                            mAdapter.add(item);
+                        }
+                        refreshView.onRefreshComplete();
+                    }
 
-            @Override
-            public void onFail(int code) {
+                    @Override
+                    public void onFail(int code) {
 
+                    }
+                });
             }
         });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
