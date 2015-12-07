@@ -294,7 +294,7 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
     }
     public void setMyPageResult(MyPageResult mResult){
         myPageResult = mResult;
-        memNameGender.setText(mResult.memName + " (" +mResult.age +")");
+        memNameGender.setText(mResult.memName );
         memIntro.setText(mResult.memIntro);
         winLoseDraw.setText("승 패 : " + mResult.win+"승 " +mResult.lose+"패 "+mResult.draw+"무");
         score.setText("득 점 : " + mResult.score +"골");

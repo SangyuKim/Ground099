@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
 import com.android.ground.ground.controller.person.message.MyMessageActivity;
+import com.android.ground.ground.custom.CustomRoundCornerProgressBar;
 import com.android.ground.ground.custom.CustomToolbar;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
@@ -35,7 +37,7 @@ import java.util.List;
 public class MyProfileActivity extends AppCompatActivity implements Profile {
 
     TextView memNameGender, memIntro, winLoseDraw, score, mvp, skill, clubName
-    ,age, memLocationName, oldClubName1,oldClubName2,oldClubName3;
+    ,age, memLocationName, oldClubName1,oldClubName2,oldClubName3, gender;
     ImageView memImage, oldClubImage1, oldClubImage2, oldClubImage3, clubImage
             , position, managerYN, btnFc;
     Button btnMsgCollection;
@@ -44,6 +46,8 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
 
     MyPageResult myPageResult;
     List<MyPageTransResult> mTransList;
+
+    CustomRoundCornerProgressBar progressBarSkill;
 
     DisplayImageOptions options;
     CustomToolbar customToolbar;
@@ -93,6 +97,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         clubImage =(ImageView)findViewById(R.id.clubImage);
         position =(ImageView)findViewById(R.id.position);
         managerYN =(ImageView)findViewById(R.id.managerYN);
+        gender = (TextView)findViewById(R.id.gender);
 
         memMainDay_Mon =(CheckBox)findViewById(R.id.memMainDay_Mon);
         memMainDay_Tue =(CheckBox)findViewById(R.id.memMainDay_Tue);
@@ -112,6 +117,9 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         oldClubName3 = (TextView)findViewById(R.id.oldClubName3);
 
 
+        progressBarSkill = (CustomRoundCornerProgressBar)findViewById(R.id.progressBarSkill);
+        progressBarSkill.setMax(50);
+
         btnFc =  (ImageView)findViewById(R.id.btnFc);
         btnFc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,15 +131,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
             }
         });
 
-        btnMsgCollection =  (Button)findViewById(R.id.button8);
-        btnMsgCollection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MyProfileActivity.this, MyMessageActivity.class);
-                startActivity(intent);
 
-            }
-        });
         btnProfileManagement =  (ImageView)findViewById(R.id.button9);
         btnProfileManagement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,23 +217,18 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     public void setMyPageResult(MyPageResult mResult){
         myPageResult = mResult;
-        memNameGender.setText(mResult.memName + " (" +mResult.age +")");
+        memNameGender.setText(mResult.memName );
+//        gender.setText(" (" +mResult.age +")");
         memIntro.setText(mResult.memIntro);
         winLoseDraw.setText("승 패 : " + mResult.win+"승 " +mResult.lose+"패 "+mResult.draw+"무");
         score.setText("득 점 : " + mResult.score +"골");
         mvp.setText("MVP : " + mResult.mvp +"회");
-        skill.setText("실 력 : " + Double.toString(mResult.skill));
+        skill.setText(Double.toString(mResult.skill));
+        progressBarSkill.setProgress((int) (mResult.skill * 10));
         clubName.setText(mResult.clubName);
         age.setText(Integer.toString(mResult.age));
         memLocationName.setText(mResult.memLocationName);
@@ -303,10 +298,29 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.fake_main, menu);
+        getMenuInflater().inflate(R.menu.my_profile_message, menu);
         this.menu = menu;
         return true;
     }
+    MenuItem messageItem;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+        }
+        int id = item.getItemId();
+        MyApplication.getmIMM().hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken() , InputMethodManager.HIDE_NOT_ALWAYS);
+        if (id == R.id.action_message) {
 
-
+            messageItem = item;
+//            Drawable mDrawable = getResources().getDrawable(R.drawable.massagebox);
+//            mDrawable.set
+            messageItem.setIcon(R.drawable.massagebox);
+            Intent intent = new Intent(MyProfileActivity.this, MyMessageActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return true;
+    }
 }
