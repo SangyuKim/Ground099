@@ -1,9 +1,7 @@
 package com.android.ground.ground.view.person.message;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
@@ -12,21 +10,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
-import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.manager.Push202;
+import com.android.ground.ground.manager.Push303;
+import com.android.ground.ground.manager.Push402;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.message.ClubMessageDataResult;
 import com.android.ground.ground.model.message.MyMessageDataResult;
 import com.android.ground.ground.model.post.push.MatchCreateData;
 import com.android.ground.ground.model.post.push.MatchCreateDataResponse;
-import com.android.ground.ground.model.post.push.MatchCreateDataResponseResult;
-import com.android.ground.ground.model.post.push.Push200;
-import com.android.ground.ground.model.post.push.Push201Response;
 import com.android.ground.ground.model.post.push.Push301;
-import com.android.ground.ground.model.post.push.Push301Response;
-import com.android.ground.ground.model.post.push.Push302Response;
 import com.android.ground.ground.view.OnNoClickListener;
 import com.android.ground.ground.view.OnProfileClickListener;
 import com.android.ground.ground.view.OnReplyClickListener;
@@ -106,15 +100,28 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 if(mItem != null){
                     switch (mItem.code){
                         case 301:{
-                            Push301Response mPush301Response = new Push301Response();
-                            mPush301Response.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
-                            mPush301Response.match_id = mItem.match_id ;
-                            mPush301Response.member_id = PropertyManager.getInstance().getUserId();
-                            mPush301Response.accRej =1;
-                            NetworkManager.getInstance().postNetworkMessage301Response(getContext(), mPush301Response, new NetworkManager.OnResultListener<EtcData>() {
+
+                            final Push202 mPush202 = new Push202();
+                            mPush202.accRej =1;
+                            mPush202.collectorClub_id= PropertyManager.getInstance().getMyPageResult().club_id;
+                            mPush202.match_id= mItem.match_id ;
+                            mPush202.member_id = PropertyManager.getInstance().getUserId();
+                            NetworkManager.getInstance().postNetworkMessage203(getContext(), mPush202, new NetworkManager.OnResultListener<EtcData>() {
                                 @Override
                                 public void onSuccess(EtcData result) {
-                                    Toast.makeText(getContext(), "매치 참가 승낙하였습니다." ,Toast.LENGTH_SHORT).show();
+                                    NetworkManager.getInstance().postNetworkPush203(getContext(), mPush202, new NetworkManager.OnResultListener<EtcData>() {
+                                        @Override
+                                        public void onSuccess(EtcData result) {
+                                            Toast.makeText(getContext(), "매치 참가 승낙하였습니다.", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onFail(int code) {
+                                            Toast.makeText(getContext(), "매치 참가 승낙 푸시 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+
                                 }
 
                                 @Override
@@ -122,14 +129,31 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                                     Toast.makeText(getContext(), "매치 참가 승낙 실패하였습니다." ,Toast.LENGTH_SHORT).show();
                                 }
                             });
+//                            Push301Response mPush301Response = new Push301Response();
+//                            mPush301Response.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+//                            mPush301Response.match_id = mItem.match_id ;
+//                            mPush301Response.member_id = PropertyManager.getInstance().getUserId();
+//                            mPush301Response.accRej =1;
+//                            NetworkManager.getInstance().postNetworkMessage301Response(getContext(), mPush301Response, new NetworkManager.OnResultListener<EtcData>() {
+//                                @Override
+//                                public void onSuccess(EtcData result) {
+//                                    Toast.makeText(getContext(), "매치 참가 승낙하였습니다." ,Toast.LENGTH_SHORT).show();
+//                                }
+//
+//                                @Override
+//                                public void onFail(int code) {
+//                                    Toast.makeText(getContext(), "매치 참가 승낙 실패하였습니다." ,Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
                             break;
                         }
                         case 302: {
-                            Push302Response mPush302Response = new Push302Response();
-                            mPush302Response.accRej =1;
-                            mPush302Response.club_id = mItem.senderClub;
-                            mPush302Response.member_id = PropertyManager.getInstance().getUserId();
-                            NetworkManager.getInstance().postNetworkMessage302Response(getContext(),mPush302Response , new NetworkManager.OnResultListener<EtcData>() {
+                            Push303  mPush303 = new Push303();
+                            mPush303.sendered_id  = PropertyManager.getInstance().getUserId();
+                            mPush303.member_id  = PropertyManager.getInstance().getUserId();
+                            mPush303.senderClub_id = mItem.senderClub;
+                            mPush303.accRej =1;
+                            NetworkManager.getInstance().postNetworkMessage305(getContext(),mPush303 , new NetworkManager.OnResultListener<EtcData>() {
                                 @Override
                                 public void onSuccess(EtcData result) {
                                     Toast.makeText(getContext(), "가입 승낙하였습니다.", Toast.LENGTH_SHORT).show();
@@ -140,22 +164,49 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                                     Toast.makeText(getContext(), "가입 승낙 실패하였습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
+
+
+//                            Push302Response mPush302Response = new Push302Response();
+//                            mPush302Response.accRej =1;
+//                            mPush302Response.club_id = mItem.senderClub;
+//                            mPush302Response.member_id = PropertyManager.getInstance().getUserId();
+//                            NetworkManager.getInstance().postNetworkMessage302Response(getContext(),mPush302Response , new NetworkManager.OnResultListener<EtcData>() {
+//                                @Override
+//                                public void onSuccess(EtcData result) {
+//                                    Toast.makeText(getContext(), "가입 승낙하였습니다.", Toast.LENGTH_SHORT).show();
+//                                }
+//
+//                                @Override
+//                                public void onFail(int code) {
+//                                    Toast.makeText(getContext(), "가입 승낙 실패하였습니다.", Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+                            break;
                         }
                     }
                 }else{
                     switch (mClubMessageDataResult.code){
                         case 201:{
-                            final Push201Response mPush201Response = new Push201Response();
-                            mPush201Response.accRej =1 ;
-                            mPush201Response.member_id = PropertyManager.getInstance().getUserId();
-                            mPush201Response.club_id = mClubMessageDataResult.collectorClub;
-                            mPush201Response.message_id = mClubMessageDataResult.message_id;
-                            mPush201Response.sender_id =  mClubMessageDataResult.sender;
-//                        mPush200.contents
-                            NetworkManager.getInstance().postNetworkMessage201Response(getContext(), mPush201Response, new NetworkManager.OnResultListener<EtcData>() {
+                            final Push303 mPush303 = new Push303();
+                            mPush303.accRej = 1;
+                            mPush303.member_id = PropertyManager.getInstance().getUserId();
+                            mPush303.senderClub_id= mClubMessageDataResult.collectorClub;
+                            mPush303.sendered_id=  mClubMessageDataResult.sender;
+                            NetworkManager.getInstance().postNetworkMessage303(getContext(),mPush303 , new NetworkManager.OnResultListener<EtcData>() {
                                 @Override
                                 public void onSuccess(EtcData result) {
-                                    Toast.makeText(getContext(), "가입 승낙하였습니다. ", Toast.LENGTH_SHORT).show();
+                                    NetworkManager.getInstance().postNetworkPush303(getContext(), mPush303, new NetworkManager.OnResultListener<EtcData>() {
+                                        @Override
+                                        public void onSuccess(EtcData result) {
+                                            Toast.makeText(getContext(), "가입 승낙하였습니다. ", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onFail(int code) {
+                                            Toast.makeText(getContext(), "가입 승낙 푸시 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
                                 }
 
                                 @Override
@@ -163,6 +214,26 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                                     Toast.makeText(getContext(), "가입 승낙 실패하였습니다. ", Toast.LENGTH_SHORT).show();
                                 }
                             });
+
+
+//                            final Push201Response mPush201Response = new Push201Response();
+//                            mPush201Response.accRej =1 ;
+//                            mPush201Response.member_id = PropertyManager.getInstance().getUserId();
+//                            mPush201Response.club_id = mClubMessageDataResult.collectorClub;
+//                            mPush201Response.message_id = mClubMessageDataResult.message_id;
+//                            mPush201Response.sender_id =  mClubMessageDataResult.sender;
+////                        mPush200.contents
+//                            NetworkManager.getInstance().postNetworkMessage201Response(getContext(), mPush201Response, new NetworkManager.OnResultListener<EtcData>() {
+//                                @Override
+//                                public void onSuccess(EtcData result) {
+//                                    Toast.makeText(getContext(), "가입 승낙하였습니다. ", Toast.LENGTH_SHORT).show();
+//                                }
+//
+//                                @Override
+//                                public void onFail(int code) {
+//                                    Toast.makeText(getContext(), "가입 승낙 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
                             break;
                         }
 
@@ -220,6 +291,112 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 }
             }
         });
+        no.setOnClickListener(new OnClickListener() {
+                                  @Override
+                                  public void onClick(View v) {
+                                      if (mYesListener != null) {
+                                          mYesListener.onYesClick(MyMessageItemViewEdit.this);
+                                      }
+                                      if(mItem != null){
+                                          switch (mItem.code){
+                                              case 301:{
+
+                                                  final Push202 mPush202 = new Push202();
+                                                  mPush202.accRej =0;
+                                                  mPush202.collectorClub_id= PropertyManager.getInstance().getMyPageResult().club_id;
+                                                  mPush202.match_id= mItem.match_id ;
+                                                  mPush202.member_id = PropertyManager.getInstance().getUserId();
+                                                  NetworkManager.getInstance().postNetworkMessage204(getContext(), mPush202, new NetworkManager.OnResultListener<EtcData>() {
+                                                      @Override
+                                                      public void onSuccess(EtcData result) {
+                                                          NetworkManager.getInstance().postNetworkPush204(getContext(), mPush202, new NetworkManager.OnResultListener<EtcData>() {
+                                                              @Override
+                                                              public void onSuccess(EtcData result) {
+                                                                  Toast.makeText(getContext(), "매치 참가 거절하였습니다.", Toast.LENGTH_SHORT).show();
+                                                              }
+
+                                                              @Override
+                                                              public void onFail(int code) {
+
+                                                              }
+                                                          });
+
+                                                      }
+
+                                                      @Override
+                                                      public void onFail(int code) {
+                                                          Toast.makeText(getContext(), "매치 참가 거절 실패하였습니다." ,Toast.LENGTH_SHORT).show();
+                                                      }
+                                                  });
+         break;
+                                              }
+                                              case 302: {
+                                                  Push303  mPush303 = new Push303();
+                                                  mPush303.sendered_id  = PropertyManager.getInstance().getUserId();
+                                                  mPush303.member_id  = PropertyManager.getInstance().getUserId();
+                                                  mPush303.senderClub_id = mItem.senderClub;
+                                                  mPush303.accRej =0;
+                                                  NetworkManager.getInstance().postNetworkMessage305(getContext(),mPush303 , new NetworkManager.OnResultListener<EtcData>() {
+                                                      @Override
+                                                      public void onSuccess(EtcData result) {
+                                                          Toast.makeText(getContext(), "가입 거절하였습니다.", Toast.LENGTH_SHORT).show();
+                                                      }
+
+                                                      @Override
+                                                      public void onFail(int code) {
+                                                          Toast.makeText(getContext(), "가입 거절 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                                      }
+                                                  });
+                                                  break;
+                                              }
+                                          }
+                                      }else{
+                                          switch (mClubMessageDataResult.code){
+                                              case 201:{
+                                                  Push303 mPush303 = new Push303();
+                                                  mPush303.accRej = 0;
+                                                  mPush303.member_id = PropertyManager.getInstance().getUserId();
+                                                  mPush303.senderClub_id= mClubMessageDataResult.collectorClub;
+                                                  mPush303.sendered_id=  mClubMessageDataResult.sender;
+                                                  NetworkManager.getInstance().postNetworkMessage304(getContext(), mPush303, new NetworkManager.OnResultListener<EtcData>() {
+                                                      @Override
+                                                      public void onSuccess(EtcData result) {
+                                                          Toast.makeText(getContext(), "가입 거절하였습니다. ", Toast.LENGTH_SHORT).show();
+                                                      }
+
+                                                      @Override
+                                                      public void onFail(int code) {
+                                                          Toast.makeText(getContext(), "가입 거절 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                                                      }
+                                                  });
+
+                                                  break;
+                                              }
+
+                                              case 401: {
+                                                  Push402 mPush402 = new Push402();
+                                                  mPush402.collectorClub_id = mClubMessageDataResult.collectorClub ;
+                                                  mPush402.member_id = PropertyManager.getInstance().getUserId();
+                                                  mPush402.sender_id = PropertyManager.getInstance().getUserId();
+                                                  NetworkManager.getInstance().postNetworkMessage402(getContext(), mPush402, new NetworkManager.OnResultListener<EtcData>() {
+                                                      @Override
+                                                      public void onSuccess(EtcData result) {
+
+                                                      }
+
+                                                      @Override
+                                                      public void onFail(int code) {
+
+                                                      }
+                                                  });
+                                                  break;
+                                              }
+                                          }
+                                      }
+
+                                  }
+                              }
+        );
 
 
         options = new DisplayImageOptions.Builder()
@@ -256,8 +433,38 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 textViewName.setText(item.senderName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
-                no.setVisibility(View.VISIBLE);
-                yes.setVisibility(View.VISIBLE);
+                if(item.sender != PropertyManager.getInstance().getUserId()){
+                    no.setVisibility(View.VISIBLE);
+                    yes.setVisibility(View.VISIBLE);
+                }else{
+                    no.setVisibility(View.GONE);
+                    yes.setVisibility(View.GONE);
+                }
+
+                break;
+            }
+            case 202 :{
+                textViewName.setText(item.senderName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 203 :{
+                textViewName.setText(item.senderName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 204 :{
+                textViewName.setText(item.senderName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
                 break;
             }
             case 300 :{
@@ -280,8 +487,38 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 textViewName.setText(item.senderClubName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
-                no.setVisibility(View.VISIBLE);
-                yes.setVisibility(View.VISIBLE);
+                if(item.senderClub != PropertyManager.getInstance().getMyPageResult().club_id){
+                    no.setVisibility(View.VISIBLE);
+                    yes.setVisibility(View.VISIBLE);
+                }else{
+                    no.setVisibility(View.GONE);
+                    yes.setVisibility(View.GONE);
+                }
+
+                break;
+            }
+            case 303 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 304 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 305 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
                 break;
             }
             case 400 :{
@@ -296,8 +533,21 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 textViewName.setText(item.senderClubName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
-                no.setVisibility(View.VISIBLE);
-                yes.setVisibility(View.VISIBLE);
+                if(item.senderClub != PropertyManager.getInstance().getMyPageResult().club_id){
+                    no.setVisibility(View.VISIBLE);
+                    yes.setVisibility(View.VISIBLE);
+                }else{
+                    no.setVisibility(View.GONE);
+                    yes.setVisibility(View.GONE);
+                }
+                break;
+            }
+            case 402 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
                 break;
             }
             case 500 :{
@@ -348,8 +598,38 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 textViewName.setText(item.senderName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
-                no.setVisibility(View.VISIBLE);
-                yes.setVisibility(View.VISIBLE);
+                if(item.sender != PropertyManager.getInstance().getUserId()){
+                    no.setVisibility(View.VISIBLE);
+                    yes.setVisibility(View.VISIBLE);
+                }else{
+                    no.setVisibility(View.GONE);
+                    yes.setVisibility(View.GONE);
+                }
+
+                break;
+            }
+            case 202 :{
+                textViewName.setText(item.senderName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 203 :{
+                textViewName.setText(item.senderName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 204 :{
+                textViewName.setText(item.senderName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
                 break;
             }
             case 300 :{
@@ -372,8 +652,38 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 textViewName.setText(item.senderClubName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
-                no.setVisibility(View.VISIBLE);
-                yes.setVisibility(View.VISIBLE);
+                if(item.senderClub != PropertyManager.getInstance().getMyPageResult().club_id){
+                    no.setVisibility(View.VISIBLE);
+                    yes.setVisibility(View.VISIBLE);
+                }else{
+                    no.setVisibility(View.GONE);
+                    yes.setVisibility(View.GONE);
+                }
+
+                break;
+            }
+            case 303 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 304 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 305 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
                 break;
             }
             case 400 :{
@@ -388,8 +698,22 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 textViewName.setText(item.senderClubName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
-                no.setVisibility(View.VISIBLE);
-                yes.setVisibility(View.VISIBLE);
+                if(item.senderClub != PropertyManager.getInstance().getMyPageResult().club_id){
+                    no.setVisibility(View.VISIBLE);
+                    yes.setVisibility(View.VISIBLE);
+                }else{
+                    no.setVisibility(View.GONE);
+                    yes.setVisibility(View.GONE);
+                }
+
+                break;
+            }
+            case 402 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
                 break;
             }
             case 500 :{

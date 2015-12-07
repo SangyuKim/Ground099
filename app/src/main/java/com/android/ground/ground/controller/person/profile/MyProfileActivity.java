@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -241,12 +242,10 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
 
         ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mResult.memImage), memImage, options);
         ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mResult.clubImage), clubImage, options);
-        if(mResult.position==0){
-            position.setVisibility(View.INVISIBLE);
-        }else{
-            position.setVisibility(View.VISIBLE);
-            position.setImageResource(Utils.POSITIONS[mResult.position]);
-        }
+        Log.d("hello", "" + mResult.position);
+
+        position.setVisibility(View.VISIBLE);
+        position.setImageResource(Utils.POSITIONS[mResult.position]);
         if(mResult.managerYN==0){
             managerYN.setImageResource(R.drawable.icon201);
         }else {

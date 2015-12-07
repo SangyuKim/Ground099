@@ -142,6 +142,21 @@ public class AlarmFragment extends Fragment {
 
                             break;
                         }
+                        case 202: {
+
+
+                            break;
+                        }
+                        case 203: {
+
+
+                            break;
+                        }
+                        case 204: {
+
+
+                            break;
+                        }
                         case 300: {
                             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
@@ -169,6 +184,21 @@ public class AlarmFragment extends Fragment {
                                     .commit();
                             break;
                         }
+                        case 303: {
+
+
+                            break;
+                        }
+                        case 304: {
+
+
+                            break;
+                        }
+                        case 305: {
+
+
+                            break;
+                        }
                         case 400: {
                             Intent intent = new Intent(getContext(), FCManagementActivity.class);
                             intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
@@ -181,6 +211,15 @@ public class AlarmFragment extends Fragment {
                             intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
                             startActivity(intent);
 
+                            break;
+                        }
+                        case 402: {
+                            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment, MyGcmListenerService.MY_MESSAGE_TAG)
+                                    .addToBackStack(null)
+                                    .commit();
                             break;
                         }
                         case 500: {

@@ -2,7 +2,6 @@ package com.android.ground.ground.view.fc.fcmain;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +29,6 @@ public class FCMemberItemView extends FrameLayout {
 
 
     public ImageView mBtn1;
-    public Button mBtn2;
     public FCMemberItemView(Context context) {
         super(context);
         init();
@@ -58,7 +56,7 @@ public class FCMemberItemView extends FrameLayout {
             }
         });
         //메시지
-        mBtn2 = (Button)findViewById(R.id.button26);
+        ImageView mBtn2 = (ImageView)findViewById(R.id.button26);
         mBtn2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

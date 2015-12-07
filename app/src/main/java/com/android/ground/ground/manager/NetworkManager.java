@@ -1677,7 +1677,7 @@ public class NetworkManager{
 
     }
 
-    // message201
+    // message201 가입신청
     public static final String SEND_MESSAGE_201_URL =GROND_SERVER_URL+"/message/201";
     public void postNetworkMessage201(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
@@ -1777,6 +1777,280 @@ public class NetworkManager{
         params.put("message_id",mPush201Response.message_id);
 
         client.post(context, SEND_MESSAGE_201_RESPEONSE_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // message202 302번 거절
+    public static final String SEND_MESSAGE_202_URL =GROND_SERVER_URL+"/message/202";
+    public void postNetworkMessage202(final Context context , Push202 mPush202,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush202.member_id);
+        params.put("collectorClub_id", mPush202.collectorClub_id);
+        params.put("accRej",mPush202.accRej);
+//        params.put("accRej",mPush201Response.accRej);
+//        params.put("message_id",mPush201Response.message_id);
+
+        client.post(context, SEND_MESSAGE_202_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push202 302번 거절
+    public static final String SEND_PUSH_202_URL =GROND_SERVER_URL+"/push/202";
+    public void postNetworkPush202(final Context context , Push202 mPush202,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush202.member_id);
+        params.put("collectorClub_id", mPush202.collectorClub_id);
+        params.put("accRej",mPush202.accRej);
+//        params.put("accRej",mPush201Response.accRej);
+//        params.put("message_id",mPush201Response.message_id);
+
+        client.post(context, SEND_PUSH_202_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // message203 301번 수락
+    public static final String SEND_MESSAGE_203_URL =GROND_SERVER_URL+"/message/203";
+    public void postNetworkMessage203(final Context context , Push202 mPush202,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush202.member_id);
+        params.put("collectorClub_id", mPush202.collectorClub_id);
+        params.put("accRej",mPush202.accRej);
+        params.put("match_id",mPush202.match_id);
+//        params.put("accRej",mPush201Response.accRej);
+//        params.put("message_id",mPush201Response.message_id);
+
+        client.post(context, SEND_MESSAGE_203_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push203 301번 수락
+    public static final String SEND_PUSH_203_URL =GROND_SERVER_URL+"/push/203";
+    public void postNetworkPush203(final Context context , Push202 mPush202,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush202.member_id);
+        params.put("collectorClub_id", mPush202.collectorClub_id);
+        params.put("accRej",mPush202.accRej);
+        params.put("match_id",mPush202.match_id);
+//        params.put("accRej",mPush201Response.accRej);
+//        params.put("message_id",mPush201Response.message_id);
+
+        client.post(context, SEND_PUSH_203_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // message203 302번 거절
+    public static final String SEND_MESSAGE_204_URL =GROND_SERVER_URL+"/message/204";
+    public void postNetworkMessage204(final Context context , Push202 mPush202,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush202.member_id);
+        params.put("collectorClub_id", mPush202.collectorClub_id);
+        params.put("accRej",mPush202.accRej);
+        params.put("match_id",mPush202.match_id);
+//        params.put("accRej",mPush201Response.accRej);
+//        params.put("message_id",mPush201Response.message_id);
+
+        client.post(context, SEND_MESSAGE_204_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push203 302번 거절
+    public static final String SEND_PUSH_204_URL =GROND_SERVER_URL+"/push/204";
+    public void postNetworkPush204(final Context context , Push202 mPush202,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush202.member_id);
+        params.put("collectorClub_id", mPush202.collectorClub_id);
+        params.put("accRej",mPush202.accRej);
+        params.put("match_id",mPush202.match_id);
+//        params.put("accRej",mPush201Response.accRej);
+//        params.put("message_id",mPush201Response.message_id);
+
+        client.post(context, SEND_PUSH_204_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 mDialogHandler.post(new Runnable() {
@@ -1988,7 +2262,276 @@ public class NetworkManager{
         });
 
     }
+    // message303 201 수락(가입신청)
+    public static final String SEND_MESSAGE_303_URL =GROND_SERVER_URL+"/message/303";
+    public void postNetworkMessage303(final Context context , Push303 mPush303,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush303.member_id);
+        params.put("senderClub_id",mPush303.senderClub_id);
+        params.put("accRej",mPush303.accRej);
+        params.put("sendered_id",mPush303.sendered_id);
+//        params.put("contents",mPush300.contents);
 
+        client.post(context, SEND_MESSAGE_303_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push303 201 수락(가입신청)
+    public static final String SEND_PUSH_303_URL =GROND_SERVER_URL+"/push/303";
+    public void postNetworkPush303(final Context context , Push303 mPush303,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush303.member_id);
+        params.put("senderClub_id",mPush303.senderClub_id);
+        params.put("accRej",mPush303.accRej);
+        params.put("sendered_id",mPush303.sendered_id);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_PUSH_303_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // message304 201 거절(가입신청)
+    public static final String SEND_MESSAGE_304_URL =GROND_SERVER_URL+"/message/304";
+    public void postNetworkMessage304(final Context context , Push303 mPush303,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush303.member_id);
+        params.put("senderClub_id",mPush303.senderClub_id);
+        params.put("accRej",mPush303.accRej);
+        params.put("sendered_id",mPush303.sendered_id);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_304_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push304 201 거절(가입신청)
+    public static final String SEND_PUSH_304_URL =GROND_SERVER_URL+"/push/304";
+    public void postNetworkPush304(final Context context , Push303 mPush303,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush303.member_id);
+        params.put("senderClub_id",mPush303.senderClub_id);
+        params.put("accRej",mPush303.accRej);
+        params.put("sendered_id",mPush303.sendered_id);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_PUSH_304_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // message305 302 가입권유
+    public static final String SEND_MESSAGE_305_URL =GROND_SERVER_URL+"/message/305";
+    public void postNetworkMessage305(final Context context , Push303 mPush303,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush303.member_id);
+        params.put("senderClub_id",mPush303.senderClub_id);
+        params.put("accRej",mPush303.accRej);
+//        params.put("sendered_id",mPush303.sendered_id);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_305_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push305 302 가입권유
+    public static final String SEND_PUSH_305_URL =GROND_SERVER_URL+"/push/305";
+    public void postNetworkPush305(final Context context , Push303 mPush303,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush303.member_id);
+        params.put("senderClub_id",mPush303.senderClub_id);
+        params.put("accRej",mPush303.accRej);
+//        params.put("sendered_id",mPush303.sendered_id);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_PUSH_305_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
     // message400
     public static final String SEND_MESSAGE_400_URL =GROND_SERVER_URL+"/message/400";
     public void postNetworkMessage400(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
@@ -2216,7 +2759,7 @@ public class NetworkManager{
     }
 
 
-    // match create
+    // match create 401 매치신청 승락
     public static final String SEND_MATCH_CREATE_URL =GROND_SERVER_URL+"/match/create";
     public void postNetworkMatchCreate(final Context context , MatchCreateData mMatchCreateData,  final OnResultListener<MatchCreateDataResponse> listener) {
         showWaitingDialog(context);
@@ -2243,6 +2786,108 @@ public class NetworkManager{
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
                 MatchCreateDataResponse items = gson.fromJson(s, MatchCreateDataResponse.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+
+    // messaage 402 401 매치신청 거절
+    public static final String SEND_MESSAGE_402_URL =GROND_SERVER_URL+"/message/402";
+    public void postNetworkMessage402(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush402.member_id);
+        params.put("sender_id",mPush402.sender_id);
+        params.put("collectorClub_id",mPush402.collectorClub_id);
+//        params.put("home_id",mMatchCreateData.home_id);
+//        params.put("away_id", mMatchCreateData.away_id);
+//        params.put("matchDate", mMatchCreateData.matchDate);
+//        params.put("startTime",mMatchCreateData.startTime);
+//        params.put("endTime",mMatchCreateData.endTime);
+//        params.put("matchLocation",mMatchCreateData.matchLocation);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MESSAGE_402_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+
+    // push 402 401 매치신청 거절
+    public static final String SEND_PUSH_402_URL =GROND_SERVER_URL+"/push/402";
+    public void postNetworkPush402(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush402.member_id);
+        params.put("sender_id",mPush402.sender_id);
+        params.put("collectorClub_id",mPush402.collectorClub_id);
+//        params.put("home_id",mMatchCreateData.home_id);
+//        params.put("away_id", mMatchCreateData.away_id);
+//        params.put("matchDate", mMatchCreateData.matchDate);
+//        params.put("startTime",mMatchCreateData.startTime);
+//        params.put("endTime",mMatchCreateData.endTime);
+//        params.put("matchLocation",mMatchCreateData.matchLocation);
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_PUSH_402_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
                 if (items != null) {
                     listener.onSuccess(items);
                 }
