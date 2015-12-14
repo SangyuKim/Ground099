@@ -1,14 +1,12 @@
 package com.android.ground.ground.view.person.main;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.manager.NetworkManager;
-import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.noti.NotiDataResult;
 import com.android.ground.ground.model.person.main.AlarmItemData;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -18,7 +16,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * Created by Tacademy on 2015-10-30.
  */
 public class AlarmItemView extends FrameLayout{
-    public final static String ImageUrl ="https://s3-ap-northeast-1.amazonaws.com/";
     DisplayImageOptions options;
 
 
@@ -79,6 +76,24 @@ public class AlarmItemView extends FrameLayout{
 
                 break;
             }
+            case 202 :{
+                textViewName.setText(item.senderName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageView, options);
+
+                break;
+            }
+            case 203 :{
+                textViewName.setText(item.senderName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageView, options);
+
+                break;
+            }
+            case 204 :{
+                textViewName.setText(item.senderName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageView, options);
+
+                break;
+            }
             case 300 :{
                 textViewName.setText(item.senderClubName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
@@ -97,6 +112,24 @@ public class AlarmItemView extends FrameLayout{
 
                 break;
             }
+            case 303 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
+
+                break;
+            }
+            case 304 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
+
+                break;
+            }
+            case 305 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
+
+                break;
+            }
             case 400 :{
                 textViewName.setText(item.senderClubName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
@@ -109,7 +142,25 @@ public class AlarmItemView extends FrameLayout{
 
                 break;
             }
+            case 402 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageView, options);
+
+                break;
+            }
             case 500 :{
+                textViewName.setText("시스템");
+                imageView.setImageResource(R.mipmap.icon);
+
+                break;
+            }
+            case 501 :{
+                textViewName.setText("시스템");
+                imageView.setImageResource(R.mipmap.icon);
+
+                break;
+            }
+            case 503 :{
                 textViewName.setText("시스템");
                 imageView.setImageResource(R.mipmap.icon);
 

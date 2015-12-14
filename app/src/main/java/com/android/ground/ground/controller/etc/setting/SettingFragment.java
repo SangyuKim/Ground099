@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -13,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.controller.person.login.TutorialActivity;
+import com.android.ground.ground.controller.person.login.SampleLoginActivity;
 import com.android.ground.ground.controller.person.profile.MyProfileManagementActivity;
+import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.model.etc.EtcData;
 import com.facebook.login.LoginManager;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
@@ -101,20 +102,50 @@ public class SettingFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         try {
+
                             UserManagement.requestLogout(new LogoutResponseCallback() {
                                 @Override
                                 public void onCompleteLogout() {
+                                    NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData>() {
+                                        @Override
+                                        public void onSuccess(EtcData result) {
+                                            Intent intent = new Intent(getContext(), SampleLoginActivity.class);
+                                            getActivity().finish();
+                                            startActivity(intent);
+
+                                        }
+
+                                        @Override
+                                        public void onFail(int code) {
+
+                                        }
+                                    });
                                 }
                             });
 
                             LoginManager mLoginManager = LoginManager.getInstance();
-                            mLoginManager.logOut();
+                            if(mLoginManager != null){
+                                mLoginManager.logOut();
+                                NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData>() {
+                                    @Override
+                                    public void onSuccess(EtcData result) {
+                                        Intent intent = new Intent(getContext(), SampleLoginActivity.class);
+                                        getActivity().finish();
+                                        startActivity(intent);
+
+                                    }
+
+                                    @Override
+                                    public void onFail(int code) {
+
+                                    }
+                                });
+                            }
+
                         }catch (Exception e){
                             e.printStackTrace();
                         }
-                        Intent intent = new Intent(getContext(), TutorialActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
+
                     }
                 });
                 builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

@@ -429,26 +429,6 @@ public class NetworkManager{
 
                 listener.onFail(statusCode);
             }
-//            @Override
-//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPreProcessResponse(instance, response);
-//
-//                _dialog  = new Dialog(context);
-//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                _dialog.setContentView(R.layout.fragment_sample_ripple);
-//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-//                mTextView.setText("getNetworkMyPage");
-//                _dialog.show();
-//
-//            }
-//
-//            @Override
-//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPostProcessResponse(instance, response);
-//                _dialog.dismiss();
-//            }
-
         });
 
     }
@@ -476,26 +456,6 @@ public class NetworkManager{
 
                 listener.onFail(statusCode);
             }
-
-//            @Override
-//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPreProcessResponse(instance, response);
-//
-//                _dialog  = new Dialog(context);
-//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                _dialog.setContentView(R.layout.fragment_sample_ripple);
-//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-//                mTextView.setText("getNetworkMyPageTrans");
-//                _dialog.show();
-//
-//            }
-//
-//            @Override
-//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPostProcessResponse(instance, response);
-//                _dialog.dismiss();
-//            }
         });
 
     }
@@ -523,26 +483,6 @@ public class NetworkManager{
 
                 listener.onFail(statusCode);
             }
-//            @Override
-//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPreProcessResponse(instance, response);
-//
-//                _dialog  = new Dialog(context);
-//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                _dialog.setContentView(R.layout.fragment_sample_ripple);
-//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-//                mTextView.setText("getNetworkClubMain");
-//                _dialog.show();
-//
-//            }
-//
-//            @Override
-//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPostProcessResponse(instance, response);
-//                _dialog.dismiss();
-//            }
-
         });
 
     }
@@ -571,26 +511,6 @@ public class NetworkManager{
                 listener.onFail(statusCode);
 
             }
-//            @Override
-//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPreProcessResponse(instance, response);
-//
-//                _dialog  = new Dialog(context);
-//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                _dialog.setContentView(R.layout.fragment_sample_ripple);
-//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-//                mTextView.setText("getNetworkClubAndMember");
-//                _dialog.show();
-//
-//            }
-//
-//            @Override
-//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPostProcessResponse(instance, response);
-//                _dialog.dismiss();
-//            }
-
         });
 
     }
@@ -621,25 +541,6 @@ public class NetworkManager{
 
                 listener.onFail(statusCode);
             }
-//            @Override
-//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPreProcessResponse(instance, response);
-//
-//                _dialog  = new Dialog(context);
-//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                _dialog.setContentView(R.layout.fragment_sample_ripple);
-//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-//                mTextView.setText("getNetworkClubMatchList");
-//                _dialog.show();
-//
-//            }
-//
-//            @Override
-//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPostProcessResponse(instance, response);
-//                _dialog.dismiss();
-//            }
 
         });
 
@@ -670,26 +571,6 @@ public class NetworkManager{
 
                 listener.onFail(statusCode);
             }
-//            @Override
-//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPreProcessResponse(instance, response);
-//
-//                _dialog  = new Dialog(context);
-//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                _dialog.setContentView(R.layout.fragment_sample_ripple);
-//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-//                mTextView.setText("getNetworkLineupInfo");
-//                _dialog.show();
-//
-//            }
-//
-//            @Override
-//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPostProcessResponse(instance, response);
-//                _dialog.dismiss();
-//            }
-
         });
 
     }
@@ -714,29 +595,8 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
                 listener.onFail(statusCode);
             }
-//            @Override
-//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPreProcessResponse(instance, response);
-//
-//                _dialog  = new Dialog(context);
-//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                _dialog.setContentView(R.layout.fragment_sample_ripple);
-//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-//                mTextView.setText("getNetworkLineupMatch");
-//                _dialog.show();
-//
-//            }
-//
-//            @Override
-//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPostProcessResponse(instance, response);
-//                _dialog.dismiss();
-//            }
-
         });
 
     }
@@ -1264,7 +1124,6 @@ public class NetworkManager{
         });
 
     }
-
     //club message
     public static final String SEND_CLUB_MESSAGE_URL =GROND_SERVER_URL+"/message/club";
     public void getNetworkClubMessage(final Context context, int club_id, int page,  final OnResultListener<ClubMessageData> listener ){
@@ -1361,6 +1220,7 @@ public class NetworkManager{
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
+
             @Override
             public boolean getUseSynchronousMode() {
                 return false;
@@ -1587,7 +1447,6 @@ public class NetworkManager{
         });
 
     }
-
     // message200
     public static final String SEND_MESSAGE_200_URL =GROND_SERVER_URL+"/message/200";
     public void postNetworkMessage200(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
@@ -1676,7 +1535,6 @@ public class NetworkManager{
         });
 
     }
-
     // message201 가입신청
     public static final String SEND_MESSAGE_201_URL =GROND_SERVER_URL+"/message/201";
     public void postNetworkMessage201(final Context context , Push200 mPush200,  final OnResultListener<EtcData> listener) {
@@ -1818,6 +1676,7 @@ public class NetworkManager{
         params.put("member_id",mPush202.member_id);
         params.put("collectorClub_id", mPush202.collectorClub_id);
         params.put("accRej",mPush202.accRej);
+        params.put("message_id",mPush202.message_id);
 //        params.put("accRej",mPush201Response.accRej);
 //        params.put("message_id",mPush201Response.message_id);
 
@@ -1909,6 +1768,7 @@ public class NetworkManager{
         params.put("collectorClub_id", mPush202.collectorClub_id);
         params.put("accRej",mPush202.accRej);
         params.put("match_id",mPush202.match_id);
+        params.put("message_id",mPush202.message_id);
 //        params.put("accRej",mPush201Response.accRej);
 //        params.put("message_id",mPush201Response.message_id);
 
@@ -1992,7 +1852,7 @@ public class NetworkManager{
         });
 
     }
-    // message203 302번 거절
+    // message204 302번 거절
     public static final String SEND_MESSAGE_204_URL =GROND_SERVER_URL+"/message/204";
     public void postNetworkMessage204(final Context context , Push202 mPush202,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
@@ -2001,6 +1861,7 @@ public class NetworkManager{
         params.put("collectorClub_id", mPush202.collectorClub_id);
         params.put("accRej",mPush202.accRej);
         params.put("match_id",mPush202.match_id);
+        params.put("message_id",mPush202.message_id);
 //        params.put("accRej",mPush201Response.accRej);
 //        params.put("message_id",mPush201Response.message_id);
 
@@ -2038,7 +1899,7 @@ public class NetworkManager{
         });
 
     }
-    // push203 302번 거절
+    // push204 302번 거절
     public static final String SEND_PUSH_204_URL =GROND_SERVER_URL+"/push/204";
     public void postNetworkPush204(final Context context , Push202 mPush202,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
@@ -2084,7 +1945,7 @@ public class NetworkManager{
         });
 
     }
-    // message300
+    // message 300
     public static final String SEND_MESSAGE_300_URL =GROND_SERVER_URL+"/message/300";
     public void postNetworkMessage300(final Context context , Push300 mPush300,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
@@ -2128,7 +1989,7 @@ public class NetworkManager{
         });
 
     }
-    // push300
+    // push 300
     public static final String SEND_PUSH_300_URL =GROND_SERVER_URL+"/push/300";
     public void postNetworkPush300(final Context context , Push300 mPush300,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
@@ -2172,8 +2033,6 @@ public class NetworkManager{
         });
 
     }
-
-
     // message301 경기일정(FC - >소속회원)
     public static final String SEND_MESSAGE_301_URL =GROND_SERVER_URL+"/message/301";
     public void postNetworkMessage301(final Context context , Push301 mPush301,  final OnResultListener<EtcData> listener) {
@@ -2182,6 +2041,7 @@ public class NetworkManager{
         params.put("home_id",mPush301.home_id);
         params.put("away_id",mPush301.away_id);
         params.put("match_id",mPush301.match_id);
+        params.put("message_id",mPush301.message_id);
 //        params.put("contents",mPush300.contents);
 
         client.post(context, SEND_MESSAGE_301_URL, params, new AsyncHttpResponseHandler() {
@@ -2268,9 +2128,10 @@ public class NetworkManager{
         showWaitingDialog(context);
         final RequestParams params = new RequestParams();
         params.put("member_id",mPush303.member_id);
-        params.put("senderClub_id",mPush303.senderClub_id);
+        params.put("senderClub_id", mPush303.senderClub_id);
         params.put("accRej",mPush303.accRej);
         params.put("sendered_id",mPush303.sendered_id);
+        params.put("message_id",mPush303.message_id);
 //        params.put("contents",mPush300.contents);
 
         client.post(context, SEND_MESSAGE_303_URL, params, new AsyncHttpResponseHandler() {
@@ -2361,6 +2222,7 @@ public class NetworkManager{
         params.put("senderClub_id",mPush303.senderClub_id);
         params.put("accRej",mPush303.accRej);
         params.put("sendered_id",mPush303.sendered_id);
+        params.put("message_id",mPush303.message_id);
 //        params.put("contents",mPush300.contents);
 
         client.post(context, SEND_MESSAGE_304_URL, params, new AsyncHttpResponseHandler() {
@@ -2622,8 +2484,6 @@ public class NetworkManager{
         });
 
     }
-
-
     // message302 가입권유
     public static final String SEND_MESSAGE_302_URL =GROND_SERVER_URL+"/message/302";
     public void postNetworkMessage302(final Context context , Push302 mPush302,  final OnResultListener<EtcData> listener) {
@@ -2757,8 +2617,6 @@ public class NetworkManager{
         });
 
     }
-
-
     // match create 401 매치신청 승락
     public static final String SEND_MATCH_CREATE_URL =GROND_SERVER_URL+"/match/create";
     public void postNetworkMatchCreate(final Context context , MatchCreateData mMatchCreateData,  final OnResultListener<MatchCreateDataResponse> listener) {
@@ -2807,7 +2665,6 @@ public class NetworkManager{
         });
 
     }
-
     // messaage 402 401 매치신청 거절
     public static final String SEND_MESSAGE_402_URL =GROND_SERVER_URL+"/message/402";
     public void postNetworkMessage402(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
@@ -2816,6 +2673,10 @@ public class NetworkManager{
         params.put("member_id",mPush402.member_id);
         params.put("sender_id",mPush402.sender_id);
         params.put("collectorClub_id",mPush402.collectorClub_id);
+        params.put("matchDate",mPush402.matchDate);
+        params.put("startTime",mPush402.startTime);
+        params.put("endTime",mPush402.endTime);
+        params.put("message_id",mPush402.message_id);
 //        params.put("home_id",mMatchCreateData.home_id);
 //        params.put("away_id", mMatchCreateData.away_id);
 //        params.put("matchDate", mMatchCreateData.matchDate);
@@ -2858,7 +2719,6 @@ public class NetworkManager{
         });
 
     }
-
     // push 402 401 매치신청 거절
     public static final String SEND_PUSH_402_URL =GROND_SERVER_URL+"/push/402";
     public void postNetworkPush402(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
@@ -2866,7 +2726,10 @@ public class NetworkManager{
         final RequestParams params = new RequestParams();
         params.put("member_id",mPush402.member_id);
         params.put("sender_id",mPush402.sender_id);
-        params.put("collectorClub_id",mPush402.collectorClub_id);
+        params.put("collectorClub_id", mPush402.collectorClub_id);
+        params.put("matchDate",mPush402.matchDate);
+        params.put("startTime",mPush402.startTime);
+        params.put("endTime",mPush402.endTime);
 //        params.put("home_id",mMatchCreateData.home_id);
 //        params.put("away_id", mMatchCreateData.away_id);
 //        params.put("matchDate", mMatchCreateData.matchDate);
@@ -2910,6 +2773,492 @@ public class NetworkManager{
 
     }
 
+    //// TODO: 2015-12-08
+    // message 403 정정신청
+    public static final String SEND_MESSAGE_403_URL =GROND_SERVER_URL+"/message/403";
+    public void postNetworkMessage403(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush402.member_id);
+        params.put("sender_id",mPush402.sender_id);
+        params.put("collectorClub_id",mPush402.collectorClub_id);
+        params.put("match_id",mPush402.match_id);
+
+
+        client.post(context, SEND_MESSAGE_403_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push 403 정정신청
+    public static final String SEND_PUSH_403_URL =GROND_SERVER_URL+"/push/403";
+    public void postNetworkPush403(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush402.member_id);
+        params.put("sender_id",mPush402.sender_id);
+        params.put("collectorClub_id",mPush402.collectorClub_id);
+        params.put("match_id",mPush402.match_id);
+
+
+        client.post(context, SEND_PUSH_403_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // message 404 정정신청(403) 거절
+    public static final String SEND_MESSAGE_404_URL =GROND_SERVER_URL+"/message/404";
+    public void postNetworkMessage404(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush402.member_id);
+        params.put("sender_id",mPush402.sender_id);
+        params.put("collectorClub_id",mPush402.collectorClub_id);
+        params.put("match_id",mPush402.match_id);
+
+
+        client.post(context, SEND_MESSAGE_404_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push 404 정정신청(403) 거절
+    public static final String SEND_PUSH_404_URL =GROND_SERVER_URL+"/push/404";
+    public void postNetworkPush404(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush402.member_id);
+        params.put("sender_id",mPush402.sender_id);
+        params.put("collectorClub_id",mPush402.collectorClub_id);
+        params.put("match_id",mPush402.match_id);
+
+
+        client.post(context, SEND_PUSH_404_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // message 405 정정신청(403) 수락
+    public static final String SEND_MESSAGE_405_URL =GROND_SERVER_URL+"/message/405";
+    public void postNetworkMessage405(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush402.member_id);
+        params.put("sender_id",mPush402.sender_id);
+        params.put("collectorClub_id",mPush402.collectorClub_id);
+        params.put("match_id",mPush402.match_id);
+
+
+        client.post(context, SEND_MESSAGE_405_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push 405 정정신청(403) 수락
+    public static final String SEND_PUSH_405_URL =GROND_SERVER_URL+"/push/405";
+    public void postNetworkPush405(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush402.member_id);
+        params.put("sender_id",mPush402.sender_id);
+        params.put("collectorClub_id", mPush402.collectorClub_id);
+        params.put("match_id",mPush402.match_id);
+
+
+        client.post(context, SEND_PUSH_405_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // message 502
+    public static final String SEND_MESSAGE_502_URL =GROND_SERVER_URL+"/message/502";
+    public void postNetworkMessage502(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mPush402.match_id);
+
+
+        client.post(context, SEND_MESSAGE_502_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push 502
+    public static final String SEND_PUSH_502_URL =GROND_SERVER_URL+"/push/502";
+    public void postNetworkPush502(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mPush402.match_id);
+
+
+        client.post(context, SEND_PUSH_502_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // message 504
+    public static final String SEND_MESSAGE_504_URL =GROND_SERVER_URL+"/message/504";
+    public void postNetworkMessage504(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mPush402.match_id);
+
+
+        client.post(context, SEND_MESSAGE_504_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push 504
+    public static final String SEND_PUSHE_504_URL =GROND_SERVER_URL+"/push/504";
+    public void postNetworkPush504(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mPush402.match_id);
+
+
+        client.post(context, SEND_PUSHE_504_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+
+
+    // match reInsert
+    public static final String SEND_MATCH_REINSERT_URL =GROND_SERVER_URL+"/match/reInsert";
+    public void postNetworkMatchReInsert(final Context context , Push402 mPush402,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mPush402.match_id);
+        params.put("member_id", mPush402.member_id);
+        params.put("club_id",mPush402.club_id);
+
+        client.post(context, SEND_MATCH_REINSERT_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+
+//=================================================================================================================================
     // club  manager 임명
     public static final String SEND_CLUB_MANAGER_URL =GROND_SERVER_URL+"/club/manager";
     public void postNetworkClubManager(final Context context , ClubManagerData mClubManagerData,  final OnResultListener<EtcData> listener) {
@@ -3046,7 +3395,98 @@ public class NetworkManager{
 
     }
 
+    // 클럽 탈퇴
+    public static final String SEND_CLUB_DROPOUT_URL =GROND_SERVER_URL+"/club/dropOut";
+    public void postNetworkClubDropOut(final Context context,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",PropertyManager.getInstance().getUserId());
+        params.put("club_id",PropertyManager.getInstance().getMyPageResult().club_id);
+//        params.put("manager_id",mClubManagerData.manager_id);
 
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_CLUB_DROPOUT_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // 로그아웃
+    public static final String SEND_MEMBER_LOGOUT_URL = GROND_SERVER_URL+"/member/logout";
+    public void postNetworkMemberLogout(final Context context,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",PropertyManager.getInstance().getUserId());
+        params.put("device_id",PropertyManager.getInstance().getDeviceId());
+        params.put("os","Android");
+//        params.put("club_id",PropertyManager.getInstance().getMyPageResult().club_id);
+//        params.put("manager_id",mClubManagerData.manager_id);
+
+//        params.put("contents",mPush300.contents);
+
+        client.post(context, SEND_MEMBER_LOGOUT_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
     //메시지 삭제
     public static final String SEND_MESSAGE_DELETE_URL =GROND_SERVER_URL+"/message/delete";
     public void postNetworkMessageDelete(final Context context,  MessageDeleteData mMessageDeleteData,final OnResultListener<EtcData> listener) {
@@ -3292,7 +3732,7 @@ public class NetworkManager{
         params.put("member_id",mLineupVirtualFomationPost.member_id);
         params.put("club_id",mLineupVirtualFomationPost.club_id);
         params.put("match_id",mLineupVirtualFomationPost.match_id);
-        params.put("locVirInfo",mLineupVirtualFomationPost.itemslocVirInfo);
+        params.put("locVirInfo", mLineupVirtualFomationPost.itemslocVirInfo);
 
 //        params.put("contents",mPush300.contents);
 
@@ -3348,7 +3788,13 @@ public class NetworkManager{
 
 //        params.put("contents",mPush300.contents);
 
-        client.post(context, SEND_LINEUP_INPUTRESULT_FORMATION_REAL_URL, params, new AsyncHttpResponseHandler() {
+
+        String bodyAsJson = gson.toJson(mLineupVirtualFomationPost);
+        StringEntity entity  = null;
+        entity = new StringEntity(bodyAsJson, "UTF-8");
+
+        Log.d("hello", entity.toString());
+        client.post(context, SEND_LINEUP_INPUTRESULT_FORMATION_REAL_URL, entity, "application/json",new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 mDialogHandler.post(new Runnable() {
@@ -3357,6 +3803,7 @@ public class NetworkManager{
                         unShowWaitingDialog();
                     }
                 });
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -3390,15 +3837,24 @@ public class NetworkManager{
         params.put("member_id",mLineupVirtualFomationPost.member_id);
         params.put("club_id",mLineupVirtualFomationPost.club_id);
         params.put("match_id",mLineupVirtualFomationPost.match_id);
-//        params.put("locVirInfo",mLineupVirtualFomationPost.itemslocVirInfo);
+        params.put("locVirInfo",mLineupVirtualFomationPost.itemslocVirInfo);
 
 //        params.put("contents",mPush300.contents);
-        StringEntity entity  = new StringEntity(params.toString());
+        String bodyAsJson = gson.toJson(mLineupVirtualFomationPost);
+        StringEntity entity  = null;
+        entity = new StringEntity(bodyAsJson, "UTF-8");
 
-        client.post(context, SEND_LINEUP_INPUTRESULT_FORMATION_VIR_URL, entity, "application/json", new AsyncHttpResponseHandler() {
+        Log.d("hello", entity.toString());
+        client.post(context, SEND_LINEUP_INPUTRESULT_FORMATION_VIR_URL, entity, "application/json",new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -3410,7 +3866,12 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
@@ -3427,10 +3888,10 @@ public class NetworkManager{
         params.put("match_id",mScoreMannerSkill.match_id);
         params.put("club_id",mScoreMannerSkill.club_id);
         params.put("homeAway", mScoreMannerSkill.homeAway);
-        params.put("score",mScoreMannerSkill.score);
+        params.put("score", mScoreMannerSkill.score);
         params.put("skill",mScoreMannerSkill.skill);
         params.put("manner",mScoreMannerSkill.manner);
-        params.put("member_id",mScoreMannerSkill.member_id);
+        params.put("member_id", mScoreMannerSkill.member_id);
 
 //        params.put("contents",mPush300.contents);
 
@@ -3470,10 +3931,21 @@ public class NetworkManager{
 
 //        params.put("contents",mPush300.contents);
 
-        client.post(context, SEND_LINEUP_INPUTRESULT_SCORER_REAL_URL, params, new AsyncHttpResponseHandler() {
+        String bodyAsJson = gson.toJson(mInputResultScorerReal);
+        StringEntity entity  = null;
+        entity = new StringEntity(bodyAsJson, "UTF-8");
+
+        Log.d("hello", entity.toString());
+        client.post(context, SEND_LINEUP_INPUTRESULT_SCORER_REAL_URL, entity, "application/json",new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -3485,12 +3957,15 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
-
-
         });
 
     }
@@ -3506,10 +3981,22 @@ public class NetworkManager{
 
 //        params.put("contents",mPush300.contents);
 
-        client.post(context, SEND_LINEUP_INPUTRESULT_SCORER_VIR_URL, params, new AsyncHttpResponseHandler() {
+
+        String bodyAsJson = gson.toJson(mInputResultScorerReal);
+        StringEntity entity  = null;
+        entity = new StringEntity(bodyAsJson, "UTF-8");
+
+        Log.d("hello", entity.toString());
+        client.post(context, SEND_LINEUP_INPUTRESULT_SCORER_VIR_URL, entity, "application/json",new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -3521,12 +4008,15 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                unShowWaitingDialog();
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
-
-
         });
 
     }
@@ -3567,15 +4057,19 @@ public class NetworkManager{
         });
 
     }
+
     //결과 입력 정리
+    Push402 mPush402;
     public static final String SEND_LINEUP_INPUTRESULT_SETTING_URL =GROND_SERVER_URL+"/lineup/inputResult/setting";
-    public void postNetworkLineupInputResultSetting(final Context context,  InputResultSetting mInputResultSetting,final OnResultListener<EtcData> listener) {
+    public static final String SEND_LINEUP_INPUTRESULT_SETTING_URL2 =GROND_SERVER_URL+"/lineup/inputResult/insertResultYN_2";
+    public void postNetworkLineupInputResultSetting(final Context context,  final InputResultSetting mInputResultSetting,final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
         final RequestParams params = new RequestParams();
         params.put("match_id",mInputResultSetting.match_id);
         params.put("club_id",mInputResultSetting.club_id);
         params.put("member_id",mInputResultSetting.member_id);
         params.put("homeAway",mInputResultSetting.homeAway);
+        params.put("accRej",mInputResultSetting.accRej);
 
 //        params.put("contents",mPush300.contents);
 
@@ -3590,12 +4084,39 @@ public class NetworkManager{
                 if (items != null) {
                     listener.onSuccess(items);
                 }
+                if(items.state ==2){
+                    Log.d("hello", "/setting state 2");
+                    client.post(context, SEND_LINEUP_INPUTRESULT_SETTING_URL2, params, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                            String s = new String(responseBody, Charset.forName("UTF-8"));
+                            Log.d("hello", s);
+                            EtcData items = gson.fromJson(s, EtcData.class);
+                            if (items != null) {
+                                listener.onSuccess(items);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            Log.d("hello", "status code : " + statusCode);
+                            listener.onFail(statusCode);
+                        }
+                    });
+                }else if(items.state ==3){
+
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", "error in setting :  " + s);
+
+
                 listener.onFail(statusCode);
             }
 
@@ -3603,13 +4124,112 @@ public class NetworkManager{
         });
 
     }
+    public static final String SEND_LINEUP_INPUTRESULT_SETTING_URL3 =GROND_SERVER_URL+"/lineup/inputResult/insertResultYN_3";
+    public void postNetworkInsertResultYN_3(final Context context, final InputResultSetting mInputResultSetting,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("match_id",mInputResultSetting.match_id);
+        params.put("club_id",mInputResultSetting.club_id);
+        params.put("member_id",mInputResultSetting.member_id);
+        params.put("homeAway",mInputResultSetting.homeAway);
+        // accRej 0 수락 , 1 거절
+        params.put("accRej",mInputResultSetting.accRej);
+
+//        params.put("contents",mPush300.contents);
+
+        Log.d("hello", "/setting state 3");
+        client.post(context, SEND_LINEUP_INPUTRESULT_SETTING_URL3, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+                if (items.reInsert == 0) {
+                    Log.d("hello", "/setting/reInsert reInsert 0");
+                    mPush402 = new Push402();
+                    mPush402.match_id = mInputResultSetting.match_id;
+                    NetworkManager.getInstance().postNetworkMessage504(context, mPush402, new OnResultListener<EtcData>() {
+                        @Override
+                        public void onSuccess(EtcData result) {
+                            NetworkManager.getInstance().postNetworkPush504(context, mPush402, new OnResultListener<EtcData>() {
+                                @Override
+                                public void onSuccess(EtcData result) {
+
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+
+                        }
+                    });
+                } else {
+                    Log.d("hello", "/setting/reInsert reInsert 1");
+                    mPush402 = new Push402();
+                    mPush402.match_id = mInputResultSetting.match_id;
+                    mPush402.member_id = mInputResultSetting.member_id;
+                    mPush402.club_id = mInputResultSetting.club_id;
+                    NetworkManager.getInstance().postNetworkMatchReInsert(context, mPush402, new OnResultListener<EtcData>() {
+                        @Override
+                        public void onSuccess(EtcData result) {
+                            NetworkManager.getInstance().postNetworkMessage502(context, mPush402, new OnResultListener<EtcData>() {
+                                @Override
+                                public void onSuccess(EtcData result) {
+                                    NetworkManager.getInstance().postNetworkPush502(context, mPush402, new OnResultListener<EtcData>() {
+                                        @Override
+                                        public void onSuccess(EtcData result) {
+
+                                        }
+
+                                        @Override
+                                        public void onFail(int code) {
+
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
+
+    //가상이랑 결과 입력이랑 플랜은 그대로
+
 
     //===================================================
     public void cancelAll(Context context) {
         client.cancelRequests(context, true);
     }
-
-
     public void showWaitingDialog(Context context){
         mDialogList.add(new Dialog(context));
         mDialogList.get(mDialogList.size()-1).requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -3627,7 +4247,6 @@ public class NetworkManager{
 //        }
 
     }
-
     public void unShowWaitingDialog(){
         try{
             for(Dialog item : mDialogList){
@@ -3638,6 +4257,5 @@ public class NetworkManager{
         }
 
     }
-
 }
 

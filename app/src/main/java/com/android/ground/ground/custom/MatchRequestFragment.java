@@ -1,6 +1,5 @@
 package com.android.ground.ground.custom;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -116,13 +115,15 @@ public class MatchRequestFragment extends DialogFragment {
                 mPush401.endTime = "" + hourOfDay + ":" + minute +":00";
             }
         });
-        mPush401.matchDate= ""+matchDate.getYear()+"/"+ (matchDate.getMonth()+1)+"/"+ matchDate.getDayOfMonth();
-        matchDate.init(matchDate.getYear(), matchDate.getMonth(), matchDate.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                mPush401.matchDate = "" + year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
-            }
-        });
+//        mPush401.matchDate= ""+matchDate.getYear()+"/"+ (matchDate.getMonth()+1)+"/"+ matchDate.getDayOfMonth();
+//        matchDate.init(matchDate.getYear(), matchDate.getMonth(), matchDate.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
+//            @Override
+//            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                mPush401.matchDate = "" + year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
+//            }
+//        });
+         String match_date =  getActivity().getIntent().getStringExtra("match_date");
+        mPush401.matchDate = match_date;
 
 
         matchContent.setText(getActivity().getIntent().getStringExtra("club_name")+"팀에게 매치 신청");
@@ -133,7 +134,7 @@ public class MatchRequestFragment extends DialogFragment {
                 mPush401.matchLocation = matchLocation.getText().toString();
                 mPush401.etc = etc.getText().toString();
 
-
+                Log.d("hello", mPush401.matchDate );
                 if(mPush401.startTime ==null){
                     Toast.makeText(MyApplication.getContext(), "시작 시간을 정해주세요.", Toast.LENGTH_SHORT).show();
                 }else if(mPush401.endTime== null){

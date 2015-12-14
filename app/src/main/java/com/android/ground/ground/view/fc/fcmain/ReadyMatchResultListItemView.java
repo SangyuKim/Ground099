@@ -2,16 +2,14 @@ package com.android.ground.ground.view.fc.fcmain;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.ground.ground.R;
-import com.android.ground.ground.custom.CustomDragDropListView;
 import com.android.ground.ground.model.Utils;
+import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
 import com.android.ground.ground.model.lineup.virtual.res.LineupVirtualResResult;
 import com.android.ground.ground.view.OnCustomTouchListener;
 
@@ -72,8 +70,19 @@ public class ReadyMatchResultListItemView extends FrameLayout {
              position.setImageResource(Utils.POSITIONS[item.position-1]);
 
     }
+    ClubAndMemberResult mClubAndMemberResult;
+    public void setReadyMatchResultListItem(ClubAndMemberResult item){
+        mClubAndMemberResult = item;
+        memName.setText(item.memName);
+        // position 별로 이미지 넣기
+//        position.setImageResource(R.mipmap.ic_launcher);
 
-     OnCustomTouchListener mtListener;
+        if(item.position>0 &&item.position<15)
+            position.setImageResource(Utils.POSITIONS[item.position-1]);
+
+    }
+
+    OnCustomTouchListener mtListener;
     public void setOnCustomTouchListener(OnCustomTouchListener listener) {
         mtListener = listener;
     }

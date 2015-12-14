@@ -8,4 +8,5 @@ public class InputResultSetting {
     public int match_id;
     public int club_id;
     public int homeAway;
+    public int accRej;
 }

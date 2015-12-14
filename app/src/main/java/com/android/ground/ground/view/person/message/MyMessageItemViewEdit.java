@@ -18,6 +18,7 @@ import com.android.ground.ground.manager.Push402;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.message.ClubMessageDataResult;
 import com.android.ground.ground.model.message.MyMessageDataResult;
+import com.android.ground.ground.model.post.lineup.InputResultSetting;
 import com.android.ground.ground.model.post.push.MatchCreateData;
 import com.android.ground.ground.model.post.push.MatchCreateDataResponse;
 import com.android.ground.ground.model.post.push.Push301;
@@ -106,6 +107,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                             mPush202.collectorClub_id= PropertyManager.getInstance().getMyPageResult().club_id;
                             mPush202.match_id= mItem.match_id ;
                             mPush202.member_id = PropertyManager.getInstance().getUserId();
+                            mPush202.message_id = mItem.message_id;
                             NetworkManager.getInstance().postNetworkMessage203(getContext(), mPush202, new NetworkManager.OnResultListener<EtcData>() {
                                 @Override
                                 public void onSuccess(EtcData result) {
@@ -148,7 +150,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                             break;
                         }
                         case 302: {
-                            Push303  mPush303 = new Push303();
+                            final Push303  mPush303 = new Push303();
                             mPush303.sendered_id  = PropertyManager.getInstance().getUserId();
                             mPush303.member_id  = PropertyManager.getInstance().getUserId();
                             mPush303.senderClub_id = mItem.senderClub;
@@ -156,9 +158,18 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                             NetworkManager.getInstance().postNetworkMessage305(getContext(),mPush303 , new NetworkManager.OnResultListener<EtcData>() {
                                 @Override
                                 public void onSuccess(EtcData result) {
-                                    Toast.makeText(getContext(), "가입 승낙하였습니다.", Toast.LENGTH_SHORT).show();
-                                }
+                                    NetworkManager.getInstance().postNetworkPush305(getContext(), mPush303, new NetworkManager.OnResultListener<EtcData>() {
+                                        @Override
+                                        public void onSuccess(EtcData result) {
+                                            Toast.makeText(getContext(), "가입 승낙하였습니다.", Toast.LENGTH_SHORT).show();
+                                        }
 
+                                        @Override
+                                        public void onFail(int code) {
+                                            Toast.makeText(getContext(), "가입 승낙 푸시 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
                                 @Override
                                 public void onFail(int code) {
                                     Toast.makeText(getContext(), "가입 승낙 실패하였습니다.", Toast.LENGTH_SHORT).show();
@@ -192,6 +203,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                             mPush303.member_id = PropertyManager.getInstance().getUserId();
                             mPush303.senderClub_id= mClubMessageDataResult.collectorClub;
                             mPush303.sendered_id=  mClubMessageDataResult.sender;
+                            mPush303.message_id = mClubMessageDataResult.message_id;
                             NetworkManager.getInstance().postNetworkMessage303(getContext(),mPush303 , new NetworkManager.OnResultListener<EtcData>() {
                                 @Override
                                 public void onSuccess(EtcData result) {
@@ -215,25 +227,6 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                                 }
                             });
 
-
-//                            final Push201Response mPush201Response = new Push201Response();
-//                            mPush201Response.accRej =1 ;
-//                            mPush201Response.member_id = PropertyManager.getInstance().getUserId();
-//                            mPush201Response.club_id = mClubMessageDataResult.collectorClub;
-//                            mPush201Response.message_id = mClubMessageDataResult.message_id;
-//                            mPush201Response.sender_id =  mClubMessageDataResult.sender;
-////                        mPush200.contents
-//                            NetworkManager.getInstance().postNetworkMessage201Response(getContext(), mPush201Response, new NetworkManager.OnResultListener<EtcData>() {
-//                                @Override
-//                                public void onSuccess(EtcData result) {
-//                                    Toast.makeText(getContext(), "가입 승낙하였습니다. ", Toast.LENGTH_SHORT).show();
-//                                }
-//
-//                                @Override
-//                                public void onFail(int code) {
-//                                    Toast.makeText(getContext(), "가입 승낙 실패하였습니다. ", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
                             break;
                         }
 
@@ -255,7 +248,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                                     mPush301.home_id = mClubMessageDataResult.collectorClub;
 
                                     mPush301.match_id = result.result.match_id;
-
+                                    mPush301.message_id = mClubMessageDataResult.message_id;
                                     NetworkManager.getInstance().postNetworkMessage301(getContext(), mPush301, new NetworkManager.OnResultListener<EtcData>() {
                                         @Override
                                         public void onSuccess(EtcData result) {
@@ -287,6 +280,25 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                             });
                             break;
                         }
+                        case 503:{
+                            InputResultSetting mInputResultSetting = new InputResultSetting();
+//                            mInputResultSetting.homeAway  ;
+                            mInputResultSetting.member_id = PropertyManager.getInstance().getUserId();
+//                            mInputResultSetting.match_id;
+                            mInputResultSetting.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+                            mInputResultSetting.accRej =0;
+                            NetworkManager.getInstance().postNetworkInsertResultYN_3(getContext(),mInputResultSetting , new NetworkManager.OnResultListener<EtcData>() {
+                                @Override
+                                public void onSuccess(EtcData result) {
+                                    Toast.makeText(getContext(),"매치 결과 확인 수락하였습니다.",Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+                                    Toast.makeText(getContext(),"매치 결과 확인 거절하였습니다.",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                 }
             }
@@ -306,6 +318,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                                                   mPush202.collectorClub_id= PropertyManager.getInstance().getMyPageResult().club_id;
                                                   mPush202.match_id= mItem.match_id ;
                                                   mPush202.member_id = PropertyManager.getInstance().getUserId();
+                                                  mPush202.message_id= mItem.message_id;
                                                   NetworkManager.getInstance().postNetworkMessage204(getContext(), mPush202, new NetworkManager.OnResultListener<EtcData>() {
                                                       @Override
                                                       public void onSuccess(EtcData result) {
@@ -331,15 +344,28 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
          break;
                                               }
                                               case 302: {
-                                                  Push303  mPush303 = new Push303();
-                                                  mPush303.sendered_id  = PropertyManager.getInstance().getUserId();
-                                                  mPush303.member_id  = PropertyManager.getInstance().getUserId();
-                                                  mPush303.senderClub_id = mItem.senderClub;
-                                                  mPush303.accRej =0;
-                                                  NetworkManager.getInstance().postNetworkMessage305(getContext(),mPush303 , new NetworkManager.OnResultListener<EtcData>() {
+
+                                                  final Push202 mPush202 = new Push202();
+                                                  mPush202.member_id = PropertyManager.getInstance().getUserId();
+                                                  mPush202.match_id = mItem.match_id;
+                                                  mPush202.collectorClub_id = mItem.senderClub;
+                                                  mPush202.accRej = 0;
+                                                  mPush202.message_id = mItem.message_id;
+
+                                                  NetworkManager.getInstance().postNetworkMessage202(getContext(), mPush202, new NetworkManager.OnResultListener<EtcData>() {
                                                       @Override
                                                       public void onSuccess(EtcData result) {
-                                                          Toast.makeText(getContext(), "가입 거절하였습니다.", Toast.LENGTH_SHORT).show();
+                                                          NetworkManager.getInstance().postNetworkPush202(getContext(), mPush202, new NetworkManager.OnResultListener<EtcData>() {
+                                                              @Override
+                                                              public void onSuccess(EtcData result) {
+                                                                  Toast.makeText(getContext(), "가입 거절하였습니다.", Toast.LENGTH_SHORT).show();
+                                                              }
+
+                                                              @Override
+                                                              public void onFail(int code) {
+                                                                  Toast.makeText(getContext(), "가입 거절 푸시 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                                              }
+                                                          });
                                                       }
 
                                                       @Override
@@ -347,21 +373,48 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                                                           Toast.makeText(getContext(), "가입 거절 실패하였습니다.", Toast.LENGTH_SHORT).show();
                                                       }
                                                   });
+//                                                  Push303  mPush303 = new Push303();
+//                                                  mPush303.sendered_id  = PropertyManager.getInstance().getUserId();
+//                                                  mPush303.member_id  = PropertyManager.getInstance().getUserId();
+//                                                  mPush303.senderClub_id = mItem.senderClub;
+//                                                  mPush303.accRej =0;
+//                                                  NetworkManager.getInstance().postNetworkMessage305(getContext(),mPush303 , new NetworkManager.OnResultListener<EtcData>() {
+//                                                      @Override
+//                                                      public void onSuccess(EtcData result) {
+//                                                          Toast.makeText(getContext(), "가입 거절하였습니다.", Toast.LENGTH_SHORT).show();
+//                                                      }
+//
+//                                                      @Override
+//                                                      public void onFail(int code) {
+//                                                          Toast.makeText(getContext(), "가입 거절 실패하였습니다.", Toast.LENGTH_SHORT).show();
+//                                                      }
+//                                                  });
                                                   break;
                                               }
                                           }
                                       }else{
                                           switch (mClubMessageDataResult.code){
                                               case 201:{
-                                                  Push303 mPush303 = new Push303();
+                                                  final Push303 mPush303 = new Push303();
                                                   mPush303.accRej = 0;
                                                   mPush303.member_id = PropertyManager.getInstance().getUserId();
                                                   mPush303.senderClub_id= mClubMessageDataResult.collectorClub;
                                                   mPush303.sendered_id=  mClubMessageDataResult.sender;
+                                                  mPush303.message_id = mClubMessageDataResult.message_id;
                                                   NetworkManager.getInstance().postNetworkMessage304(getContext(), mPush303, new NetworkManager.OnResultListener<EtcData>() {
                                                       @Override
                                                       public void onSuccess(EtcData result) {
-                                                          Toast.makeText(getContext(), "가입 거절하였습니다. ", Toast.LENGTH_SHORT).show();
+                                                          NetworkManager.getInstance().postNetworkPush304(getContext(), mPush303, new NetworkManager.OnResultListener<EtcData>() {
+                                                              @Override
+                                                              public void onSuccess(EtcData result) {
+                                                                  Toast.makeText(getContext(), "가입 거절하였습니다. ", Toast.LENGTH_SHORT).show();
+                                                              }
+
+                                                              @Override
+                                                              public void onFail(int code) {
+                                                                  Toast.makeText(getContext(), "가입 거절 푸시 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                                                              }
+                                                          });
                                                       }
 
                                                       @Override
@@ -374,19 +427,37 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                                               }
 
                                               case 401: {
-                                                  Push402 mPush402 = new Push402();
+
+
+
+                                                  final Push402 mPush402 = new Push402();
                                                   mPush402.collectorClub_id = mClubMessageDataResult.collectorClub ;
                                                   mPush402.member_id = PropertyManager.getInstance().getUserId();
                                                   mPush402.sender_id = PropertyManager.getInstance().getUserId();
+                                                  mPush402.matchDate= mClubMessageDataResult.matchDate;
+                                                  mPush402.startTime= mClubMessageDataResult.startTime;
+                                                  mPush402.endTime = mClubMessageDataResult.endTime;
+                                                  mPush402.message_id = mClubMessageDataResult.message_id;
+
                                                   NetworkManager.getInstance().postNetworkMessage402(getContext(), mPush402, new NetworkManager.OnResultListener<EtcData>() {
                                                       @Override
                                                       public void onSuccess(EtcData result) {
+                                                            NetworkManager.getInstance().postNetworkPush402(getContext(), mPush402, new NetworkManager.OnResultListener<EtcData>() {
+                                                                @Override
+                                                                public void onSuccess(EtcData result) {
+                                                                    Toast.makeText(getContext(), "매치신청 거절하였습니다. ", Toast.LENGTH_SHORT).show();
+                                                                }
 
+                                                                @Override
+                                                                public void onFail(int code) {
+                                                                    Toast.makeText(getContext(), "매치신청 거절 푸시 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            });
                                                       }
 
                                                       @Override
                                                       public void onFail(int code) {
-
+                                                          Toast.makeText(getContext(), "매치신청 거절 푸시 실패하였습니다. ", Toast.LENGTH_SHORT).show();
                                                       }
                                                   });
                                                   break;
@@ -556,6 +627,14 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 reply.setVisibility(View.GONE);
                 no.setVisibility(View.GONE);
                 yes.setVisibility(View.GONE);
+                break;
+            }
+            case 503 :{
+                textViewName.setText("시스템");
+                imageViewMessage.setImageResource(R.mipmap.icon);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.VISIBLE);
+                yes.setVisibility(View.VISIBLE);
                 break;
             }
         }

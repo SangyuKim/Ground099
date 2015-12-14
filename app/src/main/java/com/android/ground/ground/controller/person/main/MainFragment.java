@@ -1,11 +1,8 @@
 package com.android.ground.ground.controller.person.main;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -20,7 +17,11 @@ import android.widget.TextView;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.manager.NetworkManager;
+import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
+import com.android.ground.ground.model.person.profile.MyPage;
+import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.person.profile.MyPageTrans;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -232,5 +233,50 @@ public class MainFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        searchMyPage(PropertyManager.getInstance().getUserId());
+        super.onResume();
+    }
+    private void searchMyPage(final int memberId) {
+//        showWaitingDialog();
+        NetworkManager.getInstance().getNetworkMyPage(getContext(), memberId, new NetworkManager.OnResultListener<MyPage>() {
+            @Override
+            public void onSuccess(MyPage result) {
+//                unShowWaitingDialog();
 
+                for (MyPageResult item : result.items) {
+                    PropertyManager.getInstance().setMyPageResult(item);
+                    searchMyPageTrans(memberId);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+//                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                unShowWaitingDialog();
+            }
+        });
+    }
+    private void searchMyPageTrans(final int memberId) {
+
+//        showWaitingDialog();
+        NetworkManager.getInstance().getNetworkMyPageTrans(getContext(), memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
+            @Override
+            public void onSuccess(MyPageTrans result) {
+//                unShowWaitingDialog();
+                Log.d("hello", PropertyManager.getInstance().getDeviceId());
+                Log.d("hello", PropertyManager.getInstance().getRegistrationToken());
+
+                PropertyManager.getInstance().setMyPageTransResult(result.items);
+
+            }
+
+            @Override
+            public void onFail(int code) {
+//                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                unShowWaitingDialog();
+            }
+        });
+    }
 }

@@ -308,7 +308,8 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         ImageLoader.getInstance().displayImage((PropertyManager.ImageUrl + mResult.clubImage), clubImage, options);
         Log.d("hello", "" + mResult.position);
         position.setVisibility(View.VISIBLE);
-        position.setImageResource(Utils.POSITIONS[mResult.position]);
+        if(mResult.position>0 && mResult.position<=14)
+           position.setImageResource(Utils.POSITIONS[mResult.position-1]);
 
         if(mResult.managerYN==0){
             managerYN.setImageResource(R.drawable.icon201);

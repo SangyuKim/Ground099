@@ -154,6 +154,11 @@
             android:label="@string/title_activity_fcmanagement"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".controller.etc.input.InputMatchResultActivity"
+            android:label="매치결과입력"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

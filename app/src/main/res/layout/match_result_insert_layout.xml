@@ -9,7 +9,14 @@
     android:id="@+id/captureView"
     android:focusable="true"
     android:focusableInTouchMode="true">
+    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
 
+        <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,8 +24,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true">
 
             <RelativeLayout
@@ -36,7 +42,7 @@
                     android:layout_below="@+id/relativeLayout4"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                   >
+                    >
 
 
                 </GridLayout>
@@ -127,7 +133,7 @@
                         android:id="@+id/textView57" />
 
                     <Spinner
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:id="@+id/spinner3"
                         android:layout_weight="1" />
@@ -378,106 +384,10 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/linearLayout11"
-                android:layout_below="@+id/linearLayout10">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText"
-                    android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff"
-                    android:hint="score" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText2"
-                    android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff"
-                    android:hint="skill" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText102"
-                    android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff"
-                    android:hint="manner" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="매너점수실력"
-                    android:id="@+id/button111" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText103"
-                    android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff"
-                    android:hint="mvp" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MVP"
-                    android:id="@+id/button112" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="가상득점"
-                    android:id="@+id/button113" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="실제득점"
-                    android:id="@+id/button114" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="세팅"
-                    android:id="@+id/button8" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="가상포지션"
-                    android:id="@+id/button40" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="실제포지션"
-                    android:id="@+id/button11" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="작전"
-                    android:id="@+id/button41" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/relativeLayout3"
-                android:id="@+id/linearLayout10">
+                android:layout_below="@+id/relativeLayout3">
 
                 <GridView
                     android:layout_width="wrap_content"

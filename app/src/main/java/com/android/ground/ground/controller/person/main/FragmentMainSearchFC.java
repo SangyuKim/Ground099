@@ -12,7 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -32,10 +31,7 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.fc.fcmain.FCActivity;
-import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
-import com.android.ground.ground.controller.person.profile.MyProfileActivity;
-import com.android.ground.ground.controller.person.profile.YourProfileActivity;
-import com.android.ground.ground.custom.MatchRequestFragment;
+import com.android.ground.ground.custom.MatchRequestDateFragment;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
@@ -46,7 +42,6 @@ import com.android.ground.ground.model.person.main.searchClub.SearchClubResult;
 import com.android.ground.ground.model.post.push.Push200;
 import com.android.ground.ground.view.OnAdapterSpecificDialogListener;
 import com.android.ground.ground.view.person.main.SearchFCItemView;
-import com.android.ground.ground.view.person.main.SearchPlayerItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -249,9 +244,15 @@ public class FragmentMainSearchFC extends Fragment {
 
                 }else if(tag.equals("매치신청")){
 
-                    MatchRequestFragment dialog = new MatchRequestFragment();
                     getActivity().getIntent().putExtra("collectorClub_id",club_id);
-                    getActivity().getIntent().putExtra("club_name",club_name);
+                    getActivity().getIntent().putExtra("club_name", club_name);
+
+//                        MatchRequestFragment dialog = new MatchRequestFragment();
+//                        dialog.show(getFragmentManager(), "dialog");
+
+                    MatchRequestDateFragment dialog_date = new MatchRequestDateFragment();
+                    dialog_date.show(getFragmentManager(), "dialog_date");
+
 
 //                    collectorClub_id = club_id;
 
@@ -279,7 +280,7 @@ public class FragmentMainSearchFC extends Fragment {
 //                    });
 //                    builder.setCancelable(true);
 //                    AlertDialog dialog = builder.create();
-                    dialog.show(getFragmentManager(), "dialog");
+
                 }
 
 

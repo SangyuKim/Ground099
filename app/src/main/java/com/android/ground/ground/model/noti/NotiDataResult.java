@@ -36,10 +36,7 @@ public class NotiDataResult {
     public String messageDate;
 
 
-
-
-
-
+    public int match_id;
 
 
 

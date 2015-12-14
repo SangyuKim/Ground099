@@ -8,4 +8,5 @@ public class Push303 {
     public int senderClub_id;
     public int accRej;
     public int sendered_id;
+    public int message_id;
 }

@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AbsListView;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,14 +28,12 @@ import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.lineup.match.LineupMatch;
 import com.android.ground.ground.model.lineup.match.LineupMatchResult;
-import com.android.ground.ground.model.person.main.matchinfo.MatchInfoResult;
 import com.android.ground.ground.model.person.main.matchinfo.matchFormation.MatchFormation;
 import com.android.ground.ground.model.person.main.matchinfo.matchFormation.MatchFormationResult;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class FinalPositionActivity extends AppCompatActivity{
@@ -213,7 +209,7 @@ public class FinalPositionActivity extends AppCompatActivity{
         h = gridLayout.getHeight() / 14;
 
         Log.d("hello", "w : " + w + "  //  h : " + h);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w,h);
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(w,h);
         mLinearLayouts.clear();
         gridLayout.removeAllViews();
         for(int i=0; i< 98; i++){

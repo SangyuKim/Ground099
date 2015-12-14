@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.android.ground.ground.MyGcmListenerService;
 import com.android.ground.ground.R;
+import com.android.ground.ground.controller.etc.input.InputMatchResultActivity;
 import com.android.ground.ground.controller.fc.management.FCManagementActivity;
 import com.android.ground.ground.controller.person.message.MyMessageFragment;
 import com.android.ground.ground.manager.NetworkManager;
@@ -143,17 +144,23 @@ public class AlarmFragment extends Fragment {
                             break;
                         }
                         case 202: {
-
+                            Intent intent = new Intent(getContext(), FCManagementActivity.class);
+                            intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
+                            startActivity(intent);
 
                             break;
                         }
                         case 203: {
-
+                            Intent intent = new Intent(getContext(), FCManagementActivity.class);
+                            intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
+                            startActivity(intent);
 
                             break;
                         }
                         case 204: {
-
+                            Intent intent = new Intent(getContext(), FCManagementActivity.class);
+                            intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
+                            startActivity(intent);
 
                             break;
                         }
@@ -185,17 +192,32 @@ public class AlarmFragment extends Fragment {
                             break;
                         }
                         case 303: {
-
+                            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment, MyGcmListenerService.MY_MESSAGE_TAG)
+                                    .addToBackStack(null)
+                                    .commit();
 
                             break;
                         }
                         case 304: {
-
+                            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment, MyGcmListenerService.MY_MESSAGE_TAG)
+                                    .addToBackStack(null)
+                                    .commit();
 
                             break;
                         }
                         case 305: {
-
+                            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment, MyGcmListenerService.MY_MESSAGE_TAG)
+                                    .addToBackStack(null)
+                                    .commit();
 
                             break;
                         }
@@ -229,6 +251,20 @@ public class AlarmFragment extends Fragment {
                                     .replace(R.id.container, mFragment, MyGcmListenerService.MY_MESSAGE_TAG)
                                     .addToBackStack(null)
                                     .commit();
+                            break;
+                        }
+                        case 501: {
+                            Intent intent = new Intent(getContext(), InputMatchResultActivity.class);
+                            intent.putExtra("matchId",item.match_id);
+                            intent.putExtra("clubId",PropertyManager.getInstance().getMyPageResult().club_id);
+//                            intent.putExtra("groupPosition",0);
+                            startActivity(intent);
+                            break;
+                        }
+                        case 503: {
+                            Intent intent = new Intent(getContext(), FCManagementActivity.class);
+                            intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
+                            startActivity(intent);
                             break;
                         }
 

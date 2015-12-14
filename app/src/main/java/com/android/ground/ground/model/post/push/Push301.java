@@ -7,5 +7,6 @@ public class Push301 {
     public int home_id;
     public int away_id;
     public int match_id;
+    public int message_id;
 
 }

@@ -93,7 +93,8 @@ public class FCMemberItemView extends FrameLayout {
 //        }else{
 //            managerYN.setImageResource(R.drawable.captain);
 //        }
-        position.setImageResource(Utils.POSITIONS[item.position]);
+        if(item.position > 0 && item.position <=14)
+            position.setImageResource(Utils.POSITIONS[item.position -1]);
         progressBarSkill.setProgress((int) (item.skill * 10));
 
 

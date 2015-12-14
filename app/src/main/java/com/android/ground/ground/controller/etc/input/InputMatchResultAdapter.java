@@ -1,4 +1,4 @@
-package com.android.ground.ground.controller.fc.fcmain.ReadymatchResult;
+package com.android.ground.ground.controller.etc.input;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReadyMatchResultAdapter extends BaseAdapter implements OnCustomTouchListener{
+public class InputMatchResultAdapter extends BaseAdapter implements OnCustomTouchListener{
 
-    List<LineupVirtualResResult> items = new ArrayList<LineupVirtualResResult>();
-    List<ClubAndMemberResult> itemsClubAndMemberResult = new ArrayList<ClubAndMemberResult>();
+    List<ClubAndMemberResult> items = new ArrayList<ClubAndMemberResult>();
 
-    public void add(LineupVirtualResResult item){
+      public void add(ClubAndMemberResult item){
         items.add(item);
-        notifyDataSetChanged();
-    }
-    public void add(ClubAndMemberResult item){
-        itemsClubAndMemberResult.add(item);
         notifyDataSetChanged();
     }
 
     public void clear() {
         items.clear();
-        itemsClubAndMemberResult.clear();
         notifyDataSetChanged();
     }
 

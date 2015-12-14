@@ -226,7 +226,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         memIntro.setText(mResult.memIntro);
         winLoseDraw.setText("승 패 : " + mResult.win+"승 " +mResult.lose+"패 "+mResult.draw+"무");
         score.setText("득 점 : " + mResult.score +"골");
-        mvp.setText("MVP : " + mResult.mvp +"회");
+        mvp.setText("MVP : " + mResult.mvp + "회");
         skill.setText(Double.toString(mResult.skill));
         progressBarSkill.setProgress((int) (mResult.skill * 10));
         clubName.setText(mResult.clubName);
@@ -240,7 +240,8 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         Log.d("hello", "" + mResult.position);
 
         position.setVisibility(View.VISIBLE);
-        position.setImageResource(Utils.POSITIONS[mResult.position]);
+        if(mResult.position>0 && mResult.position<=14)
+            position.setImageResource(Utils.POSITIONS[mResult.position -1]);
         if(mResult.managerYN==0){
             managerYN.setImageResource(R.drawable.icon201);
         }else {

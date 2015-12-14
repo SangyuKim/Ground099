@@ -135,6 +135,8 @@ public class MyProfileManagementActivity extends AppCompatActivity {
         rButton = (RadioButton)findViewById(R.id.radioButton);
         rButton2 =(RadioButton)findViewById(R.id.radioButton2);
 
+
+
         gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -343,7 +345,17 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        NetworkManager.getInstance().postNetworkClubDropOut(MyProfileManagementActivity.this, new NetworkManager.OnResultListener<EtcData>() {
+                            @Override
+                            public void onSuccess(EtcData result) {
+                                Toast.makeText(MyProfileManagementActivity.this, "fc 탈퇴 성공하였습니다.",Toast.LENGTH_SHORT).show();
+                            }
 
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(MyProfileManagementActivity.this, "fc 탈퇴 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
