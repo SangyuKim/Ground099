@@ -35,4 +35,5 @@ public class ClubMessageDataResult {
     public int accRej;
 
     public String messageDate;
+    public int match_id;
 }

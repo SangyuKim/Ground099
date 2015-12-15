@@ -4132,7 +4132,7 @@ public class NetworkManager{
         params.put("club_id",mInputResultSetting.club_id);
         params.put("member_id",mInputResultSetting.member_id);
         params.put("homeAway",mInputResultSetting.homeAway);
-        // accRej 0 수락 , 1 거절
+        // accRej 0 거절 , 1 수락
         params.put("accRej",mInputResultSetting.accRej);
 
 //        params.put("contents",mPush300.contents);

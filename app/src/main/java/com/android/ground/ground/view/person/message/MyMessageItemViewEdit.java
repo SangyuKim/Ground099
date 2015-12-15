@@ -16,6 +16,8 @@ import com.android.ground.ground.manager.Push202;
 import com.android.ground.ground.manager.Push303;
 import com.android.ground.ground.manager.Push402;
 import com.android.ground.ground.model.etc.EtcData;
+import com.android.ground.ground.model.lineup.match.LineupMatch;
+import com.android.ground.ground.model.lineup.match.LineupMatchResult;
 import com.android.ground.ground.model.message.ClubMessageDataResult;
 import com.android.ground.ground.model.message.MyMessageDataResult;
 import com.android.ground.ground.model.post.lineup.InputResultSetting;
@@ -38,6 +40,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
     TextView textViewName, messageDate, msContents;
     ImageView imageViewMessage ,yes, no, reply;
     public ClubMessageDataResult mClubMessageDataResult;
+    InputResultSetting mInputResultSetting;
     public void setCheckBox_message(boolean isChecked) {
         this.checkBox_message.setChecked(isChecked);
     }
@@ -281,23 +284,10 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                             break;
                         }
                         case 503:{
-                            InputResultSetting mInputResultSetting = new InputResultSetting();
-//                            mInputResultSetting.homeAway  ;
-                            mInputResultSetting.member_id = PropertyManager.getInstance().getUserId();
-//                            mInputResultSetting.match_id;
-                            mInputResultSetting.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
-                            mInputResultSetting.accRej =0;
-                            NetworkManager.getInstance().postNetworkInsertResultYN_3(getContext(),mInputResultSetting , new NetworkManager.OnResultListener<EtcData>() {
-                                @Override
-                                public void onSuccess(EtcData result) {
-                                    Toast.makeText(getContext(),"매치 결과 확인 수락하였습니다.",Toast.LENGTH_SHORT).show();
-                                }
+                            mInputResultSetting = new InputResultSetting();
+                            searchLineupMatch(mClubMessageDataResult.match_id);
 
-                                @Override
-                                public void onFail(int code) {
-                                    Toast.makeText(getContext(),"매치 결과 확인 거절하였습니다.",Toast.LENGTH_SHORT).show();
-                                }
-                            });
+
                         }
                     }
                 }
@@ -869,5 +859,51 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
 
 
 
+    LineupMatchResult mLineupMatchResult;
+    int homeAway;
+    private void searchLineupMatch(final int matchId) {
+        NetworkManager.getInstance().getNetworkLineupMatch(getContext(), matchId, new NetworkManager.OnResultListener<LineupMatch>() {
+            @Override
+            public void onSuccess(LineupMatch result) {
+                for (LineupMatchResult item : result.items) {
+                    mLineupMatchResult = item;
+                    if (mLineupMatchResult != null) {
+                        setLineupMatchResult(mLineupMatchResult);
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+//                Log.d("hello", "searchLineupMatch 실패 ");
+//                Log.d("hello", "실패");
+
+            }
+        });
+    }
+
+    private void setLineupMatchResult(LineupMatchResult mLineupMatchResult) {
+        if(mLineupMatchResult.home_id == PropertyManager.getInstance().getMyPageResult().club_id){
+            homeAway =0;
+        }else{
+            homeAway =1;
+        }
+        mInputResultSetting.homeAway = homeAway;
+        mInputResultSetting.member_id = PropertyManager.getInstance().getUserId();
+        mInputResultSetting.match_id = mClubMessageDataResult.match_id;
+        mInputResultSetting.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+        mInputResultSetting.accRej =1;
+        NetworkManager.getInstance().postNetworkInsertResultYN_3(getContext(),mInputResultSetting , new NetworkManager.OnResultListener<EtcData>() {
+            @Override
+            public void onSuccess(EtcData result) {
+                Toast.makeText(getContext(),"매치 결과 확인 수락하였습니다.",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFail(int code) {
+                Toast.makeText(getContext(),"매치 결과 확인 거절하였습니다.",Toast.LENGTH_SHORT).show();
+            }
+        });
+   }
 
 }
