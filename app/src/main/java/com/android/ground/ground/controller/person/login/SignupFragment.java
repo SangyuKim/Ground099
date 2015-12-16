@@ -7,19 +7,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -37,28 +33,23 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
 import com.android.ground.ground.controller.person.main.MainActivity;
-import com.android.ground.ground.controller.person.message.MyMessageActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.etc.EtcData;
-import com.android.ground.ground.model.login.KakaoLogin;
 import com.android.ground.ground.model.login.SignupData;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.post.signup.UserProfile;
-import com.android.ground.ground.model.widget.KakaoToast;
 import com.android.ground.ground.model.widget.WaitingDialog;
-import com.facebook.AccessToken;
-import com.kakao.auth.ApiResponseCallback;
+import com.facebook.login.LoginManager;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.UnLinkResponseCallback;
 
 import java.io.File;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -245,7 +236,7 @@ public class SignupFragment extends Fragment {
                                                         int id) {
 //                                        Log.e("hello","New Quantity Value : "+ aNumberPicker.getValue());
                                         mUserProfile.age = aNumberPicker.getValue();
-                                        textViewAge.setText(Integer.toString(aNumberPicker.getValue())+"년");
+                                        textViewAge.setText(Integer.toString(aNumberPicker.getValue()));
 
                                     }
                                 })
@@ -278,9 +269,7 @@ public class SignupFragment extends Fragment {
                 if( mUserProfile.gender == 0)
                     mUserProfile.gender =0;
 
-                //년도로 보내기
-                if( mUserProfile.age == 0)
-                    mUserProfile.age=1991;
+
 
                 mUserProfile.memLocationName =textViewUserArea.getText().toString();
 
@@ -321,36 +310,92 @@ public class SignupFragment extends Fragment {
                 }
 
                 mUserProfile.memIntro=memIntro.getText().toString();
-                NetworkManager.getInstance().postNetworkSignup(getContext(), mUserProfile, new NetworkManager.OnResultListener<SignupData>() {
-                    @Override
-                    public void onSuccess(SignupData result) {
-                        if(result.code==200){
-                            searchMyPage(PropertyManager.getInstance().getUserId());
+
+
+                if (mUserProfile.memLocationName.equals("지역 검색")){
+                    Toast.makeText(getContext(), "지역을 입력하세요.", Toast.LENGTH_SHORT).show();
+                }else if(mUserProfile.age == 0){
+                    Toast.makeText(getContext(), "나이를 입력하세요.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    NetworkManager.getInstance().postNetworkSignup(getContext(), mUserProfile, new NetworkManager.OnResultListener<SignupData>() {
+                        @Override
+                        public void onSuccess(SignupData result) {
+                            if(result.code==200){
+                                searchMyPage(PropertyManager.getInstance().getUserId());
+                            }else if(result.code>=400 && result.code<500){
+                                try{
+                                    Toast.makeText(getContext(),result.msg , Toast.LENGTH_SHORT);
+                                }catch(NullPointerException e){
+                                    e.printStackTrace();
+                                }
+
+                                if(result.code == 401){
+                                    try {
+
+                                        UserManagement.requestLogout(new LogoutResponseCallback() {
+                                            @Override
+                                            public void onCompleteLogout() {
+                                                NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData>() {
+                                                    @Override
+                                                    public void onSuccess(EtcData result) {
+                                                        Intent intent = new Intent(getContext(), SampleLoginActivity.class);
+                                                        getActivity().finish();
+                                                        startActivity(intent);
+                                                    }
+
+                                                    @Override
+                                                    public void onFail(int code) {
+
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                        LoginManager mLoginManager = LoginManager.getInstance();
+                                        if(mLoginManager != null){
+                                            mLoginManager.logOut();
+                                            NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData>() {
+                                                @Override
+                                                public void onSuccess(EtcData result) {
+                                                    Intent intent = new Intent(getContext(), SampleLoginActivity.class);
+                                                    getActivity().finish();
+                                                    startActivity(intent);
+                                                }
+
+                                                @Override
+                                                public void onFail(int code) {
+
+                                                }
+                                            });
+                                        }
+
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }else if(result.code>=500 && result.code<600){
+                                try{
+                                    Toast.makeText(getContext(),"서버 연결이 좋지 않습니다." , Toast.LENGTH_SHORT);
+                                }catch(NullPointerException e){
+                                    e.printStackTrace();
+                                }
+                            }else{
+                                try{
+                                    Toast.makeText(getContext(),result.msg , Toast.LENGTH_SHORT);
+                                }catch(NullPointerException e){
+                                    e.printStackTrace();
+                                }
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFail(int code) {
+                        @Override
+                        public void onFail(int code) {
 //                        Toast.makeText(MyApplication.getContext(), "error code in signup: " + code, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                //선수 등록이 끝났을 경우 -> 서버에게 데이터 전달
-//                NetworkManager.getInstance().signupFacebook(getContext(), "message", new NetworkManager.OnResultListener<String>() {
-//                    @Override
-//                    public void onSuccess(String result) {
-//                        AccessToken token = AccessToken.getCurrentAccessToken();
-////                        PropertyManager.getInstance().setFacebookId(token.getUserId());
-//                        startActivity(new Intent(getContext(), MainActivity.class));
-//                        getActivity().finish();
-//                    }
-//
-//                    @Override
-//                    public void onFail(int code) {
-//
-//                    }
-//                });
-
+                        }
+                    });
+                }
 
 
             }

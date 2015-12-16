@@ -32,7 +32,7 @@ public class ClubMessageDataResult {
     public String matchClubName;
 
     public int watchYN;
-    public int accRej;
+    public Integer accRej;
 
     public String messageDate;
     public int match_id;

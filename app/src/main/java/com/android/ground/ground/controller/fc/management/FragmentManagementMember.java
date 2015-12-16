@@ -2,7 +2,6 @@ package com.android.ground.ground.controller.fc.management;
 
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -13,18 +12,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.message.CustomDialogMessageFragment;
-import com.android.ground.ground.model.post.ClubManagerData;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
+import com.android.ground.ground.model.post.ClubManagerData;
+import com.android.ground.ground.model.post.push.Push301Response;
 import com.android.ground.ground.view.fc.management.ManagementMemberItemView;
 
 import java.util.ArrayList;
@@ -137,7 +136,7 @@ public class FragmentManagementMember extends Fragment {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChoiceItem();
+                onChoiceItem(0);
             }
         });
         //박탈
@@ -145,9 +144,10 @@ public class FragmentManagementMember extends Fragment {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChoiceItem();
+                onChoiceItem(1);
             }
         });
+        //메시지 보내기기
         btn3 = (ImageView)view.findViewById(R.id.button37);
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,48 +156,129 @@ public class FragmentManagementMember extends Fragment {
                 dialog.show(getChildFragmentManager(), "custom");
             }
         });
+        //추방
         btn3 = (ImageView)view.findViewById(R.id.button42);
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChoiceItem();
+                onChoiceItem(2);
             }
         });
 
         return view;
     }
-
-    private void onChoiceItem() {
+    ClubManagerData mClubManagerData;
+    private void onChoiceItem(final int AddStop) {
         SparseBooleanArray selection = listView.getCheckedItemPositions();
         StringBuilder sb = new StringBuilder();
         for (int index = 0; index < selection.size(); index++) {
             int position = selection.keyAt(index);
             if (selection.get(position)) {
                 sb.append(Integer.toString(position)).append(",");
-                ClubManagerData mClubManagerData = new ClubManagerData();
+                mClubManagerData = new ClubManagerData();
                 mClubManagerData.member_id = PropertyManager.getInstance().getUserId();
                 mClubManagerData.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
-
-
                 View view = getViewByPosition(position, listView);
                 mClubManagerData.manager_id =    ((ManagementMemberItemView)view).mItem.member_id;
-                NetworkManager.getInstance().postNetworkClubManager(getContext(), mClubManagerData, new NetworkManager.OnResultListener<EtcData>() {
-                    @Override
-                    public void onSuccess(EtcData result) {
-                        if(result.code ==200){
-                            Toast.makeText(getContext(), "매니저 임명 성공하였습니다. ", Toast.LENGTH_SHORT).show();
-                        }else {
-                            if(result.msg != null)
-                                Toast.makeText(getContext(),result.msg , Toast.LENGTH_SHORT).show();
+                mClubManagerData.drop_id =    ((ManagementMemberItemView)view).mItem.member_id;
+                if(AddStop == 0 ){
+                    NetworkManager.getInstance().postNetworkClubManager(getContext(), mClubManagerData, new NetworkManager.OnResultListener<EtcData>() {
+                        @Override
+                        public void onSuccess(EtcData result) {
+                            if(result.code ==200){
+                                Toast.makeText(getContext(), "매니저 임명 성공하였습니다. ", Toast.LENGTH_SHORT).show();
+                            }else {
+                                if(result.msg != null){
+                                    try{
+                                        Toast.makeText(getContext(),result.msg , Toast.LENGTH_SHORT).show();
+                                    }catch(NullPointerException e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+
                         }
 
-                    }
+                        @Override
+                        public void onFail(int code) {
+                            Toast.makeText(getContext(), "매니저 임명 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else if(AddStop ==1){
+                    NetworkManager.getInstance().postNetworkClubManagerStop(getContext(), mClubManagerData, new NetworkManager.OnResultListener<EtcData>() {
+                        @Override
+                        public void onSuccess(EtcData result) {
+                            if(result.code ==200){
+                                Toast.makeText(getContext(), "매니저 박탈 성공하였습니다. ", Toast.LENGTH_SHORT).show();
+                            }else {
+                                if(result.msg != null){
+                                    try{
+                                        Toast.makeText(getContext(),result.msg , Toast.LENGTH_SHORT).show();
+                                    }catch(NullPointerException e){
+                                        e.printStackTrace();
+                                    }
 
-                    @Override
-                    public void onFail(int code) {
-                        Toast.makeText(getContext(), "매니저 임명 실패하였습니다. ", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+                            Toast.makeText(getContext(), "매니저 박탈 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                }else if(AddStop ==2){
+                    NetworkManager.getInstance().postNetworkClubMemberDrop(getContext(), mClubManagerData, new NetworkManager.OnResultListener<EtcData>() {
+                        @Override
+                        public void onSuccess(EtcData result) {
+                            if(result.code ==200){
+
+                                final Push301Response mPush301Response = new Push301Response();
+                                mPush301Response.member_id = PropertyManager.getInstance().getUserId();
+                                mPush301Response.sender_id = PropertyManager.getInstance().getUserId();
+                                mPush301Response.collector_id = mClubManagerData.drop_id;
+                                NetworkManager.getInstance().postNetworkMessage306(getContext(), mPush301Response, new NetworkManager.OnResultListener<EtcData>() {
+                                    @Override
+                                    public void onSuccess(EtcData result) {
+                                        NetworkManager.getInstance().postNetworkPush306(getContext(), mPush301Response, new NetworkManager.OnResultListener<EtcData>() {
+                                            @Override
+                                            public void onSuccess(EtcData result) {
+                                                Toast.makeText(getContext(), "선수 추방 성공하였습니다. ", Toast.LENGTH_SHORT).show();
+                                            }
+                                            @Override
+                                            public void onFail(int code) {
+                                                Toast.makeText(getContext(), "선수 추방 푸시 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onFail(int code) {
+                                        Toast.makeText(getContext(), "선수 추방  메시지 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }else {
+                                if(result.msg != null){
+                                    try{
+                                        Toast.makeText(getContext(),result.msg , Toast.LENGTH_SHORT).show();
+                                    }catch(NullPointerException e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onFail(int code) {
+                            Toast.makeText(getContext(), "선수 추방 실패하였습니다. ", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
             }
         }
 //        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();

@@ -78,7 +78,6 @@ public class ClubMessageEditAdapter extends BaseAdapter implements OnProfileClic
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         MyMessageItemViewEdit view;
         if (convertView == null) {
             view = new MyMessageItemViewEdit(parent.getContext());

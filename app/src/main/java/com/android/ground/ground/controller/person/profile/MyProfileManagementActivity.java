@@ -37,7 +37,6 @@ import com.android.ground.ground.controller.person.login.MySpinnerSignupAdapter;
 import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.controller.person.splash.SplashActivity;
 import com.android.ground.ground.custom.CustomToolbar;
-import com.android.ground.ground.model.post.ClubManagerData;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
@@ -45,6 +44,7 @@ import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.login.SignupData;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.post.ClubManagerData;
 import com.android.ground.ground.model.post.signup.UserProfile;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -220,7 +220,7 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                                                         int id) {
 //                                        Log.e("hello","New Quantity Value : "+ aNumberPicker.getValue());
                                         mUserProfile.age = aNumberPicker.getValue();
-                                        age.setText(Integer.toString(aNumberPicker.getValue())+"년");
+                                        age.setText(Integer.toString(aNumberPicker.getValue()));
 
                                     }
                                 })
@@ -244,8 +244,6 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                 //// TODO: 2015-11-12
 
                 //완료시 서버 전송
-
-
                 //서버에서 다시 프로필 받기
                 //PropertyManger 수정
 
@@ -260,11 +258,17 @@ public class MyProfileManagementActivity extends AppCompatActivity {
                 }else{
                     mUserProfile.gender = 1;
                 }
+                int tempAge = Integer.parseInt(age.getText().toString());
+                //// TODO: 2015-12-15 current year로 바꾸기  2015 -> date 받아오기
 
-                mUserProfile.age = Integer.parseInt(age.getText().toString());
-                mUserProfile.position = Integer.parseInt(position.getText().toString());
-                mUserProfile.skill = ((int)Double.parseDouble(skill.getText().toString()));
+                if(tempAge >100){
+                    mUserProfile.age = tempAge;
+                }else{
+                    mUserProfile.age = 2015 -  tempAge + 1;
+                }
 
+//                mUserProfile.position = Integer.parseInt(position.getText().toString());
+//                mUserProfile.skill = ((int)Double.parseDouble(skill.getText().toString()));
                 mUserProfile.memIntro = memIntro.getText().toString();
                 mUserProfile.memLocationName = memLocationName.getText().toString();
                 if(memMainDay_Mon.isChecked()){

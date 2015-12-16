@@ -218,7 +218,7 @@ public class NetworkManager{
 
 //        params.put("sort", filter);
         params.put("page", page);
-        params.put("member_id", memberId);
+//        params.put("member_id", memberId);
 
 
         client.get(context, url, params, new AsyncHttpResponseHandler() {
@@ -238,29 +238,9 @@ public class NetworkManager{
 //                unShowWaitingDialog();
             }
 
-//            @Override
-//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPreProcessResponse(instance, response);
-//
-//                    _dialog  = new Dialog(context);
-//                    _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                    _dialog.setContentView(R.layout.fragment_sample_ripple);
-//                    ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-//                    TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-//                    mTextView.setText("getNetworkSearchClub");
-//                _dialog.show();
-//
-//            }
-//
-//            @Override
-//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPostProcessResponse(instance, response);
-//                _dialog.dismiss();
-//            }
         });
 
     }
-
     public static final String SEARCH_MEM_URL =GROND_SERVER_URL+"/member/search";
     public void getNetworkSearchMem(final Context context, String filter,String keyword, int page, int memberId, final OnResultListener<SearchMem> listener) {
         final RequestParams params = new RequestParams();
@@ -274,7 +254,7 @@ public class NetworkManager{
         }
 //        params.put("sort", filter);
         params.put("page", page);
-        params.put("member_id", memberId);
+//        params.put("member_id", memberId);
 
 
         client.get(context, url, params, new AsyncHttpResponseHandler() {
@@ -293,27 +273,6 @@ public class NetworkManager{
 //                unShowWaitingDialog();
                   listener.onFail(statusCode);
             }
-
-//            @Override
-//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPreProcessResponse(instance, response);
-//
-//                _dialog  = new Dialog(context);
-//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                _dialog.setContentView(R.layout.fragment_sample_ripple);
-//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-//                mTextView.setText("getNetworkSearchMem");
-//                _dialog.show();
-//
-//            }
-//
-//            @Override
-//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPostProcessResponse(instance, response);
-//                _dialog.dismiss();
-//            }
-
 
         });
 
@@ -337,27 +296,6 @@ public class NetworkManager{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 listener.onFail(statusCode);
             }
-//            @Override
-//            public void onPreProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPreProcessResponse(instance, response);
-//
-//                _dialog  = new Dialog(context);
-//                _dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                _dialog.setContentView(R.layout.fragment_sample_ripple);
-//                ((RubberLoaderView) (_dialog.findViewById( R.id.loader2))).startLoading();
-//                TextView mTextView = (TextView)_dialog.findViewById(R.id.textDialog);
-//                mTextView.setText("getNetworkMatchInfoMVP");
-//                _dialog.show();
-//
-//            }
-//
-//            @Override
-//            public void onPostProcessResponse(ResponseHandlerInterface instance, HttpResponse response) {
-//                super.onPostProcessResponse(instance, response);
-//                _dialog.dismiss();
-//            }
-
-
         });
 
     }
@@ -376,7 +314,7 @@ public class NetworkManager{
 
 //        params.put("sort", filter);
         params.put("page", page);
-        params.put("member_id", memberId);
+//        params.put("member_id", memberId);
 //        params.put("search", keyword);
 
         client.get(context,url , params, new AsyncHttpResponseHandler() {
@@ -755,50 +693,6 @@ public class NetworkManager{
         });
 
     }
-//    //facebook
-//    public static final String SEND_FACEBOOK_URL =GROND_SERVER_URL+"/member/login";
-//    public void postNetworkFacebook(final Context context,String accesstoken) {
-//
-//        final RequestParams params = new RequestParams();
-//        params.put("access_token",accesstoken);
-//        client.post(context, SEND_FACEBOOK_URL, params, new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
-//                String s = new String(responseBody, Charset.forName("UTF-8"));
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//
-//            }
-//        });
-//
-//    }
-
-    //login local
-//    public static final String SEND_LOGIN_URL =GROND_SERVER_URL+"/member/login";
-//    public void postNetworkLogin(final Context context) {
-//
-//        final RequestParams params = new RequestParams();
-//        params.put("member_id","1");
-//        params.put("password","234");
-//        client.post(context, SEND_LOGIN_URL, params, new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
-//                String s = new String(responseBody, Charset.forName("UTF-8"));
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//
-//            }
-//        });
-//
-//    }
-
     //signup
     public static final String SEND_SIGNUP_URL =GROND_SERVER_URL+"/member";
     public void postNetworkSignup(final Context context , UserProfile mUserProfile,  final OnResultListener<SignupData> listener) {
@@ -901,15 +795,9 @@ public class NetworkManager{
 
                @Override
                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//                   try{
 //                    unShowWaitingDialog();
-//                   }catch (IllegalArgumentException e){
-//                       e.printStackTrace();
-//                   }
                    Log.d("hello", "status code : " + statusCode);
                    listener.onFail(statusCode);
-//                   String s = new String(responseBody, Charset.forName("UTF-8"));
-//                   Log.d("hello", "kakao post error : " + s);
                }
 
 
@@ -917,7 +805,6 @@ public class NetworkManager{
            });
 
     }
-
     //login kakao after token send
     public void getNetworkLoginKakao(final Context context, String token , final OnResultListener<KakaoResponse> listener) {
 //        showWaitingDialog(context);
@@ -948,7 +835,6 @@ public class NetworkManager{
         });
 
     }
-
     //login facebook
     public static final String SEND_LOGIN_FACEBOOK_URL =GROND_SERVER_URL+"/member/login/facebook";
     public void postNetworkLoginFacebook(final Context context, String token, final OnResultListener<FacebookLogin> listener) {
@@ -973,7 +859,7 @@ public class NetworkManager{
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 //                unShowWaitingDialog();
-                Log.d("hello", "status : " + statusCode);
+                Log.d("hello", "facebook error status : " + statusCode);
                 listener.onFail(statusCode);
             }
 
@@ -981,8 +867,6 @@ public class NetworkManager{
         });
 
     }
-
-
 
     //make fc club
     public static final String SEND_CLUB_CREATE_URL =GROND_SERVER_URL+"/club/make";
@@ -2617,6 +2501,93 @@ public class NetworkManager{
         });
 
     }
+    // message 306
+    public static final String SEND_MESSAGE_306_URL =GROND_SERVER_URL+"/message/306";
+    public void postNetworkMessage306(final Context context , Push301Response mPush301Response,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush301Response.member_id);
+        params.put("sender_id",mPush301Response.sender_id);
+        params.put("collector_id",mPush301Response.collector_id);
+
+        client.post(context, SEND_MESSAGE_306_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+    // push 306
+    public static final String SEND_PUSH_306_URL =GROND_SERVER_URL+"/push/306";
+    public void postNetworkPush306(final Context context , Push301Response mPush301Response,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+        params.put("member_id",mPush301Response.member_id);
+        params.put("sender_id",mPush301Response.sender_id);
+        params.put("collector_id",mPush301Response.collector_id);
+
+        client.post(context, SEND_PUSH_306_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+
+
+        });
+
+    }
+
     // match create 401 매치신청 승락
     public static final String SEND_MATCH_CREATE_URL =GROND_SERVER_URL+"/match/create";
     public void postNetworkMatchCreate(final Context context , MatchCreateData mMatchCreateData,  final OnResultListener<MatchCreateDataResponse> listener) {
@@ -3311,11 +3282,64 @@ public class NetworkManager{
         final RequestParams params = new RequestParams();
         params.put("member_id",mClubManagerData.member_id);
         params.put("club_id",mClubManagerData.club_id);
+
+        client.post(context, SEND_CLUB_MANAGER_STOP_URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                mDialogHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        unShowWaitingDialog();
+                    }
+                });
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+                try{
+                    String s = new String(responseBody, Charset.forName("UTF-8"));
+                    Log.d("hello", s);
+                    EtcData items = gson.fromJson(s, EtcData.class);
+                    if (items != null) {
+                        listener.onSuccess(items);
+                    }
+                }catch(NullPointerException e){
+                    e.printStackTrace();
+                }
+
+            }
+
+
+        });
+
+    }
+    // 선수 삭제
+    public static final String SEND_MEMBER_STOP_URL =GROND_SERVER_URL+"/member/delete";
+    public void postNetworkMemberStop(final Context context,  final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+//        params.put("member_id",mClubManagerData.member_id);
+//        params.put("club_id",mClubManagerData.club_id);
 //        params.put("manager_id",mClubManagerData.manager_id);
 
 //        params.put("contents",mPush300.contents);
 
-        client.post(context, SEND_CLUB_MANAGER_STOP_URL, params, new AsyncHttpResponseHandler() {
+        client.post(context, SEND_MEMBER_STOP_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 mDialogHandler.post(new Runnable() {
@@ -3349,18 +3373,19 @@ public class NetworkManager{
         });
 
     }
-    // 선수 삭제
-    public static final String SEND_MEMBER_STOP_URL =GROND_SERVER_URL+"/member/delete";
-    public void postNetworkMemberStop(final Context context,  final OnResultListener<EtcData> listener) {
+    // 선수 추방
+    public static final String SEND_CLUB_MEMBER_DROP_URL =GROND_SERVER_URL+"/club/memDrop";
+    public void postNetworkClubMemberDrop(final Context context, ClubManagerData mClubManagerData,  final OnResultListener<EtcData> listener) {
         showWaitingDialog(context);
         final RequestParams params = new RequestParams();
-//        params.put("member_id",mClubManagerData.member_id);
-//        params.put("club_id",mClubManagerData.club_id);
+        params.put("member_id",mClubManagerData.member_id);
+        params.put("club_id",mClubManagerData.club_id);
 //        params.put("manager_id",mClubManagerData.manager_id);
+        params.put("manager_id",mClubManagerData.drop_id);
 
 //        params.put("contents",mPush300.contents);
 
-        client.post(context, SEND_MEMBER_STOP_URL, params, new AsyncHttpResponseHandler() {
+        client.post(context, SEND_CLUB_MEMBER_DROP_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 mDialogHandler.post(new Runnable() {
@@ -4129,11 +4154,14 @@ public class NetworkManager{
         showWaitingDialog(context);
         final RequestParams params = new RequestParams();
         params.put("match_id",mInputResultSetting.match_id);
-        params.put("club_id",mInputResultSetting.club_id);
+        params.put("club_id", mInputResultSetting.club_id);
         params.put("member_id",mInputResultSetting.member_id);
         params.put("homeAway",mInputResultSetting.homeAway);
         // accRej 0 거절 , 1 수락
         params.put("accRej",mInputResultSetting.accRej);
+        params.put("message_id",mInputResultSetting.message_id);
+        // 0 이면 처음, 1이면 재입력
+        params.put("checkInsert",mInputResultSetting.checkInsert);
 
 //        params.put("contents",mPush300.contents);
 
@@ -4141,6 +4169,7 @@ public class NetworkManager{
         client.post(context, SEND_LINEUP_INPUTRESULT_SETTING_URL3, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
@@ -4148,8 +4177,10 @@ public class NetworkManager{
                 if (items != null) {
                     listener.onSuccess(items);
                 }
-                if (items.reInsert == 0) {
+                if (items.reInsert == 0 && items.matchEnd ==1) {
                     Log.d("hello", "/setting/reInsert reInsert 0");
+                    Log.d("hello", "/setting/reInsert matchEnd 1");
+
                     mPush402 = new Push402();
                     mPush402.match_id = mInputResultSetting.match_id;
                     NetworkManager.getInstance().postNetworkMessage504(context, mPush402, new OnResultListener<EtcData>() {
@@ -4173,7 +4204,7 @@ public class NetworkManager{
 
                         }
                     });
-                } else {
+                } else if(items.reInsert == 1 && items.matchEnd ==1){
                     Log.d("hello", "/setting/reInsert reInsert 1");
                     mPush402 = new Push402();
                     mPush402.match_id = mInputResultSetting.match_id;
@@ -4216,15 +4247,44 @@ public class NetworkManager{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
             }
         });
 
     }
+    public static final String SEND_CLUB_DELETE =GROND_SERVER_URL+"/club/delete";
+    public void postNetworkClubDelete(final Context context, final InputResultSetting mInputResultSetting,final OnResultListener<EtcData> listener) {
+        showWaitingDialog(context);
+        final RequestParams params = new RequestParams();
+          params.put("club_id",mInputResultSetting.club_id);
+        params.put("member_id",mInputResultSetting.member_id);
 
-    //가상이랑 결과 입력이랑 플랜은 그대로
 
+        client.post(context, SEND_CLUB_DELETE, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                unShowWaitingDialog();
+                ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
+                String s = new String(responseBody, Charset.forName("UTF-8"));
+                Log.d("hello", s);
+                EtcData items = gson.fromJson(s, EtcData.class);
+                if (items != null) {
+                    listener.onSuccess(items);
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                unShowWaitingDialog();
+                Log.d("hello", "status code : " + statusCode);
+                listener.onFail(statusCode);
+            }
+        });
+
+    }
 
     //===================================================
     public void cancelAll(Context context) {

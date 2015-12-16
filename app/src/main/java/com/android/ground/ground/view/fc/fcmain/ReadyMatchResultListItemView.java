@@ -70,7 +70,7 @@ public class ReadyMatchResultListItemView extends FrameLayout {
              position.setImageResource(Utils.POSITIONS[item.position-1]);
 
     }
-    ClubAndMemberResult mClubAndMemberResult;
+    public ClubAndMemberResult mClubAndMemberResult;
     public void setReadyMatchResultListItem(ClubAndMemberResult item){
         mClubAndMemberResult = item;
         memName.setText(item.memName);

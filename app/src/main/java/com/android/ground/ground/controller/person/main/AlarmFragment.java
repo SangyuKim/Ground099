@@ -3,10 +3,10 @@ package com.android.ground.ground.controller.person.main;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -261,6 +261,14 @@ public class AlarmFragment extends Fragment {
                             startActivity(intent);
                             break;
                         }
+                        case 502: {
+                            Intent intent = new Intent(getContext(), InputMatchResultActivity.class);
+                            intent.putExtra("matchId",item.match_id);
+                            intent.putExtra("clubId",PropertyManager.getInstance().getMyPageResult().club_id);
+//                            intent.putExtra("groupPosition",0);
+                            startActivity(intent);
+                            break;
+                        }
                         case 503: {
                             Intent intent = new Intent(getContext(), FCManagementActivity.class);
                             intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
@@ -357,6 +365,7 @@ public class AlarmFragment extends Fragment {
             if (nextPage != -1) {
                 isUpdate = true;
                 //PropertyManager.getInstance().getUserId()
+                Log.d("hello", "page : " + nextPage);
                 NetworkManager.getInstance().getNetworkNoti(getContext(), PropertyManager.getInstance().getUserId(), nextPage, new NetworkManager.OnResultListener<NotiData>() {
                     @Override
                     public void onSuccess(NotiData result) {

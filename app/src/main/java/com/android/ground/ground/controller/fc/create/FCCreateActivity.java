@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,20 +12,17 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import android.support.v7.widget.SwitchCompat;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +38,8 @@ import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.post.fcCreate.ClubProfile;
-import com.android.ground.ground.model.post.signup.UserProfile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 public class FCCreateActivity extends AppCompatActivity {
 
@@ -148,10 +140,7 @@ public class FCCreateActivity extends AppCompatActivity {
                     mClubProfile.mFile = testFile;
                 }
 
-                mClubProfile.clubName= clubName.getText().toString();
-                Log.d("hello", clubName.getText().toString());
 
-                mClubProfile.clubLocationName =textArea.getText().toString();
 //                mClubProfile.latitude =91.0;
 //                mClubProfile.longitude=92.0;
 
@@ -214,23 +203,47 @@ public class FCCreateActivity extends AppCompatActivity {
 
                 mClubProfile.clubIntro=clubIntro.getText().toString();
 
-                NetworkManager.getInstance().postNetworkMakeClub(FCCreateActivity.this, mClubProfile, new NetworkManager.OnResultListener<EtcData>() {
-                    @Override
-                    public void onSuccess(EtcData result) {
-                        if (result.code == 200) {
-                            searchMyPage(PropertyManager.getInstance().getUserId());
+                mClubProfile.clubName= clubName.getText().toString();
 
+                mClubProfile.clubLocationName =textArea.getText().toString();
 
-                        } else {
-                            Toast.makeText(MyApplication.getContext(), result.msg, Toast.LENGTH_SHORT).show();
+                if(mClubProfile.clubName == null || mClubProfile.clubName.equals("")){
+                    Toast.makeText(FCCreateActivity.this, "팀 명을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }else if(mClubProfile.clubLocationName.equals("지역검색")) {
+                    Toast.makeText(FCCreateActivity.this, "지역을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }else{
+                    NetworkManager.getInstance().postNetworkMakeClub(FCCreateActivity.this, mClubProfile, new NetworkManager.OnResultListener<EtcData>() {
+                        @Override
+                        public void onSuccess(EtcData result) {
+                            if (result.code == 200) {
+                                searchMyPage(PropertyManager.getInstance().getUserId());
+
+                            }else if(result.code >=400 &&result.code <500 ){
+                                try{
+                                    Toast.makeText(MyApplication.getContext(), result.msg, Toast.LENGTH_SHORT).show();
+                                }catch(NullPointerException e){
+                                    e.printStackTrace();
+                                }
+                            }else if(result.code >=500 &&result.code <600){
+                                Toast.makeText(MyApplication.getContext(), "서버 오류 입니다.", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                try{
+                                    Toast.makeText(MyApplication.getContext(), result.msg, Toast.LENGTH_SHORT).show();
+                                }catch(NullPointerException e){
+                                    e.printStackTrace();
+                                }
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFail(int code) {
+                        @Override
+                        public void onFail(int code) {
 
-                    }
-                });
+                        }
+                    });
+                }
+
+
 
             }
         });

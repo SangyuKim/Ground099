@@ -8,4 +8,6 @@ public class Push301Response {
     public int club_id;
     public int match_id;
     public int accRej;
+    public int sender_id;
+    public int collector_id;
 }

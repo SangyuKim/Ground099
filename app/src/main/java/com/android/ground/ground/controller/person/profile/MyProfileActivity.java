@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,10 +37,12 @@ import java.util.List;
 
 public class MyProfileActivity extends AppCompatActivity implements Profile {
 
+    FrameLayout profileFrame;
+
     TextView memNameGender, memIntro, winLoseDraw, score, mvp, skill, clubName
     ,age, memLocationName, oldClubName1,oldClubName2,oldClubName3, gender;
     ImageView memImage, oldClubImage1, oldClubImage2, oldClubImage3, clubImage
-            , position, managerYN, btnFc;
+            , position, managerYN, btnFc , btnMsg;
     Button btnMsgCollection;
     CheckBox memMainDay_Mon,memMainDay_Tue,memMainDay_Wed,memMainDay_Thu,memMainDay_Fri
             ,memMainDay_Sat,memMainDay_Sun;
@@ -80,6 +83,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         }catch(NullPointerException e){
             e.printStackTrace();
         }
+        profileFrame = (FrameLayout)findViewById(R.id.frameLayout4);
         memNameGender =(TextView)findViewById(R.id.memNameGender);
         memIntro =(TextView)findViewById(R.id.memIntro);
         winLoseDraw = (TextView)findViewById(R.id.winLoseDraw);
@@ -115,7 +119,7 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         oldClubName1 = (TextView)findViewById(R.id.oldClubName1);
         oldClubName2 = (TextView)findViewById(R.id.oldClubName2);
         oldClubName3 = (TextView)findViewById(R.id.oldClubName3);
-
+        profileFrame.bringChildToFront(position);
 
         progressBarSkill = (CustomRoundCornerProgressBar)findViewById(R.id.progressBarSkill);
         progressBarSkill.setMax(50);
@@ -125,12 +129,13 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyProfileActivity.this, FCActivity.class);
-                if(myPageResult.club_id != 0)
-                    intent.putExtra("clubId",myPageResult.club_id);
+                if (myPageResult.club_id != 0)
+                    intent.putExtra("clubId", myPageResult.club_id);
                 startActivity(intent);
             }
         });
-
+        btnMsg = (ImageView)findViewById(R.id.btnMsg);
+        btnMsg.setImageResource(R.drawable.send_massage_non);
 
         btnProfileManagement =  (ImageView)findViewById(R.id.button9);
         btnProfileManagement.setOnClickListener(new View.OnClickListener() {
@@ -240,8 +245,10 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
         Log.d("hello", "" + mResult.position);
 
         position.setVisibility(View.VISIBLE);
-        if(mResult.position>0 && mResult.position<=14)
+
+        if(mResult.position>0 && mResult.position<=14){
             position.setImageResource(Utils.POSITIONS[mResult.position -1]);
+        }
         if(mResult.managerYN==0){
             managerYN.setImageResource(R.drawable.icon201);
         }else {
@@ -284,9 +291,11 @@ public class MyProfileActivity extends AppCompatActivity implements Profile {
             memMainDay_Sun.setChecked(true);
         }
         if(mResult.clubYN==0){
-            btnFc.setVisibility(View.GONE);
+            btnFc.setImageResource(R.drawable.fcpage_non);
+            btnFc.setClickable(false);
         }else{
-            btnFc.setVisibility(View.VISIBLE);
+            btnFc.setImageResource(R.drawable.fcbox501);
+            btnFc.setClickable(true);
         }
 
     }

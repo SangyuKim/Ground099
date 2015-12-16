@@ -9,4 +9,6 @@ public class InputResultSetting {
     public int club_id;
     public int homeAway;
     public int accRej;
+    public int message_id;
+    public int checkInsert;
 }

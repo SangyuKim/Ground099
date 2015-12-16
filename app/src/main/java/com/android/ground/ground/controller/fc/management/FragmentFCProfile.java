@@ -5,11 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -25,7 +22,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +33,11 @@ import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMainResult;
-import com.android.ground.ground.model.post.fcCreate.ClubProfile;
+import com.android.ground.ground.model.person.profile.MyPage;
+import com.android.ground.ground.model.person.profile.MyPageResult;
+import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
+import com.android.ground.ground.model.post.lineup.InputResultSetting;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -310,12 +309,35 @@ public class FragmentFCProfile extends Fragment {
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
 
 //                        Fragment mFragment = (Fragment) MainFragment.newInstance("", "");
 //                        getChildFragmentManager().beginTransaction()
 //                                .replace(R.id.container, mFragment)
 //                                .commit();
+                        InputResultSetting mInputResultSetting = new InputResultSetting();
+                        mInputResultSetting.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+                        mInputResultSetting.member_id = PropertyManager.getInstance().getUserId();
+                        NetworkManager.getInstance().postNetworkClubDelete(getContext(),mInputResultSetting , new NetworkManager.OnResultListener<EtcData>() {
+                            @Override
+                            public void onSuccess(EtcData result) {
+                                if(result.code==200){
+                                    Toast.makeText(getContext(), "FC 해산하였습니다.", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(getContext(), result.msg , Toast.LENGTH_SHORT).show();
+                                }
+                                getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                getActivity().finish();
+                                searchMyPage(PropertyManager.getInstance().getUserId());
+
+                            }
+
+                            @Override
+                            public void onFail(int code) {
+                                Toast.makeText(getContext(), "FC 해산 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -517,5 +539,47 @@ public class FragmentFCProfile extends Fragment {
 
         ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.clubImage), clubImage, options);
 
+    }
+
+    private void searchMyPage(final int memberId) {
+//        showWaitingDialog();
+        NetworkManager.getInstance().getNetworkMyPage(getContext(), memberId, new NetworkManager.OnResultListener<MyPage>() {
+            @Override
+            public void onSuccess(MyPage result) {
+//                unShowWaitingDialog();
+
+                for (MyPageResult item : result.items) {
+                    PropertyManager.getInstance().setMyPageResult(item);
+                    searchMyPageTrans(memberId);
+                }
+            }
+
+            @Override
+            public void onFail(int code) {
+//                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                unShowWaitingDialog();
+            }
+        });
+    }
+    private void searchMyPageTrans(final int memberId) {
+
+//        showWaitingDialog();
+        NetworkManager.getInstance().getNetworkMyPageTrans(getContext(), memberId, new NetworkManager.OnResultListener<MyPageTrans>() {
+            @Override
+            public void onSuccess(MyPageTrans result) {
+//                unShowWaitingDialog();
+                Log.d("hello", PropertyManager.getInstance().getDeviceId());
+                Log.d("hello", PropertyManager.getInstance().getRegistrationToken());
+
+                PropertyManager.getInstance().setMyPageTransResult(result.items);
+
+            }
+
+            @Override
+            public void onFail(int code) {
+//                Toast.makeText(SplashActivity.this, "선수 정보 찾기 error code : " + code, Toast.LENGTH_SHORT).show();
+//                unShowWaitingDialog();
+            }
+        });
     }
 }

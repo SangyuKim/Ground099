@@ -9,4 +9,5 @@ public class EtcData {
     public int state;
     public EtcDatResult result;
     public int reInsert;
+    public int matchEnd;
 }

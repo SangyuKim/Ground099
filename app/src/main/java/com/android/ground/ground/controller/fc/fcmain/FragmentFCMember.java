@@ -1,18 +1,14 @@
 package com.android.ground.ground.controller.fc.fcmain;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -25,7 +21,6 @@ import com.android.ground.ground.manager.ActivityManager;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.Profile;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMemberResult;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
@@ -35,9 +30,6 @@ import com.android.ground.ground.view.OnAdapterReplyListener;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView;
 import com.android.ground.ground.view.fc.fcmain.FCMemberHeaderItemView2;
 import com.android.ground.ground.view.fc.fcmain.FCMemberItemView;
-import com.android.ground.ground.view.person.main.SearchPlayerItemView;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -126,6 +118,7 @@ public class FragmentFCMember extends Fragment {
                     Intent intent = new Intent(getContext(), FCManagementActivity.class);
                     intent.putExtra("clubId", clubId);
                     startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });

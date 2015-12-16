@@ -118,7 +118,7 @@ public class InputMatchResultActivity extends AppCompatActivity implements
     LineupVirtualFomationPost mlineupVirtualFomationPost;
 
     EditText editText, editText2, editText102, editText103, editText104, editText105;
-    Button btnScoreMannerSkill , btnSetting, btnMVP , btnRealPosition, btnRealScorer, btnVirtualPosition, btnVirtualScorer;
+    Button btnScoreMannerSkill , btnSetting, btnMVP , btnRealPosition, btnRealScorer, btnVirtualPosition, btnVirtualScorer, btnPlan;
     int homeAway;
 
 
@@ -175,24 +175,13 @@ public class InputMatchResultActivity extends AppCompatActivity implements
         btnRealScorer = (Button)findViewById(R.id.button114);
         btnRealPosition = (Button)findViewById(R.id.button11);
         btnVirtualPosition = (Button)findViewById(R.id.button40);
+        btnPlan = (Button)findViewById(R.id.button41);
 
         mInputMatchResultAdapter = new InputMatchResultAdapter();
         mLineupPlan = new LineupPlan();
         mlineupVirtualFomationPost =new LineupVirtualFomationPost();
         mScorerGridViewAdapter = new ScorerGridViewAdapter();
-//        mReadyMatchResultAdapter.setOnAdapterCustomTouchListener(new OnAdapterCustomTouchListener() {
-//            @Override
-//            public void onTouch(View view, LineupVirtualResResult mItem) {
-//                Log.d("hello", " list touched");
-//                String text = mItem.memName;
-//                ReadyMatchResultListItemView tempView = new ReadyMatchResultListItemView(ReadyMatchResultActivity.this);
-//                tempView.setReadyMatchResultListItem(mItem);
-//                ClipData.Item item = new ClipData.Item(text);
-//                ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
-//                view.startDrag(data, new View.DragShadowBuilder(view), null, 3);
-//            }
-//        });
-        lineupVirtualRes.setAdapter(mInputMatchResultAdapter);
+         lineupVirtualRes.setAdapter(mInputMatchResultAdapter);
         lineupVirtualRes.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -237,7 +226,7 @@ public class InputMatchResultActivity extends AppCompatActivity implements
 
                 String text = ((ReadyMatchResultListItemView) view).memName.getText().toString();
                 intent.putExtra("text", text);
-                intent.putExtra("member_id", ((ReadyMatchResultListItemView) view).mItem.member_id);
+                intent.putExtra("member_id", ((ReadyMatchResultListItemView) view).mClubAndMemberResult.member_id);
                 ClipData.Item item = new ClipData.Item(intent);
                 ClipData data = new ClipData(text, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                 view.startDrag(data, new View.DragShadowBuilder(view), null, 3);
@@ -270,8 +259,36 @@ public class InputMatchResultActivity extends AppCompatActivity implements
             }
         });
 
+
         setWidthHeigth();
         setSpinner();
+        btnPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLineupPlan.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
+                if (PropertyManager.getInstance().getMyPageResult().club_id == mLineupMatchResult.home_id) {
+                    mLineupPlan.homeAway = 0;
+                } else {
+                    if (PropertyManager.getInstance().getMyPageResult().club_id == mLineupMatchResult.away_id)
+                        mLineupPlan.homeAway = 1;
+                }
+                mLineupPlan.match_id = mLineupMatchResult.match_id;
+                mLineupPlan.member_id = PropertyManager.getInstance().getUserId();
+
+                NetworkManager.getInstance().postNetworkLineupPlan(InputMatchResultActivity.this, mLineupPlan, new NetworkManager.OnResultListener<EtcData>() {
+                    @Override
+                    public void onSuccess(EtcData result) {
+
+                        Toast.makeText(InputMatchResultActivity.this, " 라인업 등록 성공", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(InputMatchResultActivity.this, " 라인업 등록 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
         btnComplete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -512,7 +529,7 @@ public class InputMatchResultActivity extends AppCompatActivity implements
                    ArrayList<LineupVirtualFomationPlayerPost> itemslocMemInfo =  new ArrayList<LineupVirtualFomationPlayerPost>() ;
                    for(int i=0; i<1; i++){
                        LineupVirtualFomationPlayerPost mLineupVirtualFomationPlayerPost = new LineupVirtualFomationPlayerPost();
-                       mLineupVirtualFomationPlayerPost.locIndex = i;
+                       mLineupVirtualFomationPlayerPost.locIndex = i+ 15;
                        mLineupVirtualFomationPlayerPost.member_id = PropertyManager.getInstance().getUserId();
                        itemslocMemInfo.add(mLineupVirtualFomationPlayerPost);
                    }

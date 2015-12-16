@@ -118,6 +118,15 @@ public class MyMessageFragment extends Fragment {
         refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                for(int i=0; i< mAdapter.getCount()+1; i++){
+
+                    listView.setItemChecked(i, false);
+                    if(!mAdapter.getChecked(i))
+                        mAdapter.setChecked(i);
+                    // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                    mAdapter.notifyDataSetChanged();
+                    isAllchecked = false;
+                }
                 searchMyMessage();
             }
         });
@@ -326,22 +335,30 @@ public class MyMessageFragment extends Fragment {
                 View view = getViewByPosition(position, listView);
 
                 mMessageDeleteData.member_id = PropertyManager.getInstance().getUserId();
-                mMessageDeleteData.message_id =((MyMessageItemViewEdit)view).mItem.message_id;
+                if(view instanceof MyMessageItemViewEdit)
+                    mMessageDeleteData.message_id =((MyMessageItemViewEdit)view).mItem.message_id;
                 NetworkManager.getInstance().postNetworkMessageDelete(getContext(), mMessageDeleteData, new NetworkManager.OnResultListener<EtcData>() {
                     @Override
                     public void onSuccess(EtcData result) {
-                        Toast.makeText(getContext(), "메시지 삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFail(int code) {
-                        Toast.makeText(getContext(), "메시지 삭제 실패하였습니다.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         }
 //        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();
+        for(int i=0; i< mAdapter.getCount()+1; i++){
 
+            listView.setItemChecked(i, false);
+            if(!mAdapter.getChecked(i))
+                mAdapter.setChecked(i);
+            // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+            mAdapter.notifyDataSetChanged();
+            isAllchecked = false;
+        }
+        searchMyMessage();
     }
 
 

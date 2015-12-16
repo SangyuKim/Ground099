@@ -354,11 +354,14 @@ public class YourProfileActivity extends AppCompatActivity implements Profile {
         }
         if(mResult.clubYN == 0){
             btnFc.setVisibility(View.VISIBLE);
-            btnFc.setBackgroundColor(getResources().getColor(R.color.blur_gray));
             btnRequest.setVisibility(View.VISIBLE);
+            btnFc.setImageResource(R.drawable.fcpage_non);
+            btnFc.setClickable(false);
         }else{
             btnFc.setVisibility(View.VISIBLE);
             btnRequest.setVisibility(View.GONE);
+            btnFc.setImageResource(R.drawable.fcbox501);
+            btnFc.setClickable(true);
         }
 
     }

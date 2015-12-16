@@ -7,4 +7,5 @@ public class ClubManagerData {
     public int member_id;
     public int club_id;
     public int manager_id;
+    public int drop_id;
 }

@@ -57,7 +57,8 @@
                         android:layout_below="@+id/memImage"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:layout_gravity="right|bottom" />
+                        android:layout_gravity="right|bottom"
+                        android:visibility="visible" />
 
                 </FrameLayout>
 
@@ -619,7 +620,8 @@
                 android:layout_below="@+id/relativeLayout9"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
-                android:textColor="#ffffffff" />
+                android:textColor="#ffffffff"
+                android:layout_marginBottom="20dp" />
 
         </RelativeLayout>
     </ScrollView>

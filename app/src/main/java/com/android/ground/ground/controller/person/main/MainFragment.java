@@ -174,9 +174,14 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt("tabIndex", tabHost.getCurrentTab());
-        mAdapter.onSaveInstanceState(outState);
+        try{
+            outState.putInt("tabIndex", tabHost.getCurrentTab());
+            mAdapter.onSaveInstanceState(outState);
+            super.onSaveInstanceState(outState);
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+
     }
 
 

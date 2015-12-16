@@ -3,10 +3,8 @@ package com.android.ground.ground.controller.fc.management;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +23,9 @@ import com.android.ground.ground.controller.person.message.CustomDialogMessageFr
 import com.android.ground.ground.controller.person.profile.YourProfileActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
-import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.message.ClubMessageData;
 import com.android.ground.ground.model.message.ClubMessageDataResult;
-import com.android.ground.ground.model.message.MyMessageDataResult;
 import com.android.ground.ground.model.post.push.MessageDeleteData;
 import com.android.ground.ground.view.OnAdapterNoListener;
 import com.android.ground.ground.view.OnAdapterProfileListener;
@@ -110,6 +106,15 @@ public class FragmentClubMessageEdit extends Fragment {
         refreshView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                for(int i=0; i< mAdapter.getCount()+1; i++){
+
+                    listView.setItemChecked(i, false);
+                    if(!mAdapter.getChecked(i))
+                        mAdapter.setChecked(i);
+                    // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+                    mAdapter.notifyDataSetChanged();
+                    isAllchecked = false;
+                }
                 searchClubMessage();
             }
         });
@@ -139,7 +144,7 @@ public class FragmentClubMessageEdit extends Fragment {
                     NetworkManager.getInstance().postNetworkMessageWatch(getContext(), mMessageDeleteData, new NetworkManager.OnResultListener<EtcData>() {
                         @Override
                         public void onSuccess(EtcData result) {
-                            selectedView.setBackgroundColor(getResources().getColor(R.color.gray));
+//                            selectedView.setBackgroundColor(getResources().getColor(R.color.gray));
                         }
 
                         @Override
@@ -320,21 +325,30 @@ public class FragmentClubMessageEdit extends Fragment {
                 View view = getViewByPosition(position, listView);
 
                 mMessageDeleteData.member_id = PropertyManager.getInstance().getUserId();
-                mMessageDeleteData.message_id =((MyMessageItemViewEdit)view).mClubMessageDataResult.message_id;
+                if(view instanceof MyMessageItemViewEdit )
+                  mMessageDeleteData.message_id =((MyMessageItemViewEdit)view).mClubMessageDataResult.message_id;
                 NetworkManager.getInstance().postNetworkMessageDelete(getContext(), mMessageDeleteData, new NetworkManager.OnResultListener<EtcData>() {
                     @Override
                     public void onSuccess(EtcData result) {
-                        Toast.makeText(getContext(), "메시지 삭제 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                    }
+                                 }
 
                     @Override
                     public void onFail(int code) {
-                        Toast.makeText(getContext(), "메시지 삭제 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                    }
+                           }
                 });
             }
         }
 //        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();
+        for(int i=0; i< mAdapter.getCount()+1; i++){
+
+            listView.setItemChecked(i, false);
+            if(!mAdapter.getChecked(i))
+                mAdapter.setChecked(i);
+            // Data 변경시 호출 Adapter에 Data 변경 사실을 알려줘서 Update 함.
+            mAdapter.notifyDataSetChanged();
+            isAllchecked = false;
+        }
+        searchClubMessage();
 
     }
 
@@ -440,12 +454,25 @@ public class FragmentClubMessageEdit extends Fragment {
         final int firstListItemPosition = listView.getFirstVisiblePosition();
         final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
 
+
         if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            try{
             return listView.getAdapter().getView(pos, null, listView);
+            }catch(IndexOutOfBoundsException e){
+                e.printStackTrace();
+            }
         } else {
-            final int childIndex = pos - firstListItemPosition;
-            return listView.getChildAt(childIndex);
+            try{
+                final int childIndex = pos - firstListItemPosition;
+                return listView.getChildAt(childIndex);
+            }catch(IndexOutOfBoundsException e){
+                e.printStackTrace();
+            }
+
         }
+        return null;
+
+
     }
 
 }

@@ -282,10 +282,10 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                                 }
                             });
                             break;
-                        }
+                        }//401
                         case 503:{
                             mInputResultSetting = new InputResultSetting();
-                            searchLineupMatch(mClubMessageDataResult.match_id);
+                            searchLineupMatch(mClubMessageDataResult.match_id , 1);
 
 
                         }
@@ -451,7 +451,13 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                                                       }
                                                   });
                                                   break;
-                                              }
+                                              }//401
+                                              case 503:{
+                                                  mInputResultSetting = new InputResultSetting();
+                                                  searchLineupMatch(mClubMessageDataResult.match_id , 0);
+
+
+                                              }//503
                                           }
                                       }
 
@@ -495,8 +501,14 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 if(item.sender != PropertyManager.getInstance().getUserId()){
-                    no.setVisibility(View.VISIBLE);
-                    yes.setVisibility(View.VISIBLE);
+                    if(item.accRej==null){
+                        no.setVisibility(View.VISIBLE);
+                        yes.setVisibility(View.VISIBLE);
+                    }else{
+                        no.setVisibility(View.GONE);
+                        yes.setVisibility(View.GONE);
+                    }
+
                 }else{
                     no.setVisibility(View.GONE);
                     yes.setVisibility(View.GONE);
@@ -540,8 +552,13 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 textViewName.setText(item.senderClubName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
-                no.setVisibility(View.VISIBLE);
-                yes.setVisibility(View.VISIBLE);
+                if(item.accRej==null){
+                    no.setVisibility(View.VISIBLE);
+                    yes.setVisibility(View.VISIBLE);
+                }else{
+                    no.setVisibility(View.GONE);
+                    yes.setVisibility(View.GONE);
+                }
                 break;
             }
             case 302 :{
@@ -549,8 +566,13 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 if(item.senderClub != PropertyManager.getInstance().getMyPageResult().club_id){
-                    no.setVisibility(View.VISIBLE);
-                    yes.setVisibility(View.VISIBLE);
+                    if(item.accRej==null){
+                        no.setVisibility(View.VISIBLE);
+                        yes.setVisibility(View.VISIBLE);
+                    }else{
+                        no.setVisibility(View.GONE);
+                        yes.setVisibility(View.GONE);
+                    }
                 }else{
                     no.setVisibility(View.GONE);
                     yes.setVisibility(View.GONE);
@@ -595,8 +617,13 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 if(item.senderClub != PropertyManager.getInstance().getMyPageResult().club_id){
-                    no.setVisibility(View.VISIBLE);
-                    yes.setVisibility(View.VISIBLE);
+                    if(item.accRej==null){
+                        no.setVisibility(View.VISIBLE);
+                        yes.setVisibility(View.VISIBLE);
+                    }else{
+                        no.setVisibility(View.GONE);
+                        yes.setVisibility(View.GONE);
+                    }
                 }else{
                     no.setVisibility(View.GONE);
                     yes.setVisibility(View.GONE);
@@ -619,12 +646,25 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 yes.setVisibility(View.GONE);
                 break;
             }
+            case 502:{
+                textViewName.setText("시스템");
+                imageViewMessage.setImageResource(R.mipmap.icon);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
             case 503 :{
                 textViewName.setText("시스템");
                 imageViewMessage.setImageResource(R.mipmap.icon);
                 reply.setVisibility(View.GONE);
-                no.setVisibility(View.VISIBLE);
-                yes.setVisibility(View.VISIBLE);
+                if(item.accRej==null){
+                    no.setVisibility(View.VISIBLE);
+                    yes.setVisibility(View.VISIBLE);
+                }else{
+                    no.setVisibility(View.GONE);
+                    yes.setVisibility(View.GONE);
+                }
                 break;
             }
         }
@@ -668,8 +708,13 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 if(item.sender != PropertyManager.getInstance().getUserId()){
-                    no.setVisibility(View.VISIBLE);
-                    yes.setVisibility(View.VISIBLE);
+                    if(item.accRej==null){
+                        no.setVisibility(View.VISIBLE);
+                        yes.setVisibility(View.VISIBLE);
+                    }else{
+                        no.setVisibility(View.GONE);
+                        yes.setVisibility(View.GONE);
+                    }
                 }else{
                     no.setVisibility(View.GONE);
                     yes.setVisibility(View.GONE);
@@ -713,8 +758,13 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 textViewName.setText(item.senderClubName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
-                no.setVisibility(View.VISIBLE);
-                yes.setVisibility(View.VISIBLE);
+                if(item.accRej==null){
+                    no.setVisibility(View.VISIBLE);
+                    yes.setVisibility(View.VISIBLE);
+                }else{
+                    no.setVisibility(View.GONE);
+                    yes.setVisibility(View.GONE);
+                }
                 break;
             }
             case 302 :{
@@ -722,8 +772,13 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 if(item.senderClub != PropertyManager.getInstance().getMyPageResult().club_id){
-                    no.setVisibility(View.VISIBLE);
-                    yes.setVisibility(View.VISIBLE);
+                    if(item.accRej==null){
+                        no.setVisibility(View.VISIBLE);
+                        yes.setVisibility(View.VISIBLE);
+                    }else{
+                        no.setVisibility(View.GONE);
+                        yes.setVisibility(View.GONE);
+                    }
                 }else{
                     no.setVisibility(View.GONE);
                     yes.setVisibility(View.GONE);
@@ -768,8 +823,13 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);
                 if(item.senderClub != PropertyManager.getInstance().getMyPageResult().club_id){
-                    no.setVisibility(View.VISIBLE);
-                    yes.setVisibility(View.VISIBLE);
+                    if(item.accRej==null){
+                        no.setVisibility(View.VISIBLE);
+                        yes.setVisibility(View.VISIBLE);
+                    }else{
+                        no.setVisibility(View.GONE);
+                        yes.setVisibility(View.GONE);
+                    }
                 }else{
                     no.setVisibility(View.GONE);
                     yes.setVisibility(View.GONE);
@@ -786,6 +846,43 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 break;
             }
             case 500 :{
+                textViewName.setText("시스템");
+                imageViewMessage.setImageResource(R.mipmap.icon);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 501:{
+                textViewName.setText("시스템");
+                imageViewMessage.setImageResource(R.mipmap.icon);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 502:{
+                textViewName.setText("시스템");
+                imageViewMessage.setImageResource(R.mipmap.icon);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 503 :{
+                textViewName.setText("시스템");
+                imageViewMessage.setImageResource(R.mipmap.icon);
+                reply.setVisibility(View.GONE);
+                if(item.accRej==null){
+                    no.setVisibility(View.VISIBLE);
+                    yes.setVisibility(View.VISIBLE);
+                }else{
+                    no.setVisibility(View.GONE);
+                    yes.setVisibility(View.GONE);
+                }
+                break;
+            }
+            case 504 :{
                 textViewName.setText("시스템");
                 imageViewMessage.setImageResource(R.mipmap.icon);
                 reply.setVisibility(View.GONE);
@@ -861,14 +958,14 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
 
     LineupMatchResult mLineupMatchResult;
     int homeAway;
-    private void searchLineupMatch(final int matchId) {
+    private void searchLineupMatch(final int matchId, final int yesNo) {
         NetworkManager.getInstance().getNetworkLineupMatch(getContext(), matchId, new NetworkManager.OnResultListener<LineupMatch>() {
             @Override
             public void onSuccess(LineupMatch result) {
                 for (LineupMatchResult item : result.items) {
                     mLineupMatchResult = item;
                     if (mLineupMatchResult != null) {
-                        setLineupMatchResult(mLineupMatchResult);
+                        setLineupMatchResult(mLineupMatchResult, yesNo);
                     }
                 }
             }
@@ -882,7 +979,7 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
         });
     }
 
-    private void setLineupMatchResult(LineupMatchResult mLineupMatchResult) {
+    private void setLineupMatchResult(LineupMatchResult mLineupMatchResult, final int yesNo) {
         if(mLineupMatchResult.home_id == PropertyManager.getInstance().getMyPageResult().club_id){
             homeAway =0;
         }else{
@@ -892,7 +989,9 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
         mInputResultSetting.member_id = PropertyManager.getInstance().getUserId();
         mInputResultSetting.match_id = mClubMessageDataResult.match_id;
         mInputResultSetting.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
-        mInputResultSetting.accRej =1;
+        mInputResultSetting.accRej =yesNo;
+        mInputResultSetting.message_id = mClubMessageDataResult.message_id;
+
         NetworkManager.getInstance().postNetworkInsertResultYN_3(getContext(),mInputResultSetting , new NetworkManager.OnResultListener<EtcData>() {
             @Override
             public void onSuccess(EtcData result) {

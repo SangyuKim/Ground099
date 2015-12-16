@@ -34,7 +34,7 @@ public class MyMessageDataResult {
     public String matchClubName;
 
     public int watchYN;
-    public int accRej;
+    public Integer accRej;
 
     public String messageDate;
 

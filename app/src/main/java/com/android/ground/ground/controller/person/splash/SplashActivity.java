@@ -79,7 +79,6 @@ public class SplashActivity extends AppCompatActivity {
     protected static Activity self;
 
     static final private String TAG = "GCM_Example";
-    static final private String serverAddress = "http://192.168.0.105:3000";
 
     private Handler handler;
 
