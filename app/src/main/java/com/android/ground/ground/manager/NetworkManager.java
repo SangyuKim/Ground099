@@ -9,11 +9,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-
 import com.android.ground.ground.R;
 import com.android.ground.ground.custom.CustomRubberLoaderView;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.etc.EtcData;
+import com.android.ground.ground.model.etc.EtcData2;
 import com.android.ground.ground.model.fc.fcmain.ClubAndMember.ClubAndMember;
 import com.android.ground.ground.model.fc.fcmain.ClubMatchList.ClubMatchList;
 import com.android.ground.ground.model.fc.fcmain.clubMain.ClubMain;
@@ -39,26 +39,29 @@ import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.android.ground.ground.model.post.ClubManagerData;
+import com.android.ground.ground.model.post.fcCreate.ClubProfile;
+import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
 import com.android.ground.ground.model.post.lineup.InputResultMVP;
 import com.android.ground.ground.model.post.lineup.InputResultScorerReal;
 import com.android.ground.ground.model.post.lineup.InputResultSetting;
 import com.android.ground.ground.model.post.lineup.LineupPlan;
 import com.android.ground.ground.model.post.lineup.LineupVirtualFomationPost;
-import com.android.ground.ground.model.post.push.MessageDeleteData;
-import com.android.ground.ground.model.post.push.Push302Response;
 import com.android.ground.ground.model.post.lineup.ScoreMannerSkill;
-import com.android.ground.ground.model.post.fcCreate.ClubProfile;
-import com.android.ground.ground.model.post.fcUpdate.ClubProfileUpdate;
 import com.android.ground.ground.model.post.push.MatchCreateData;
 import com.android.ground.ground.model.post.push.MatchCreateDataResponse;
+import com.android.ground.ground.model.post.push.MessageDeleteData;
 import com.android.ground.ground.model.post.push.Push100;
 import com.android.ground.ground.model.post.push.Push200;
 import com.android.ground.ground.model.post.push.Push201Response;
+import com.android.ground.ground.model.post.push.Push202;
 import com.android.ground.ground.model.post.push.Push300;
 import com.android.ground.ground.model.post.push.Push301;
 import com.android.ground.ground.model.post.push.Push301Response;
 import com.android.ground.ground.model.post.push.Push302;
+import com.android.ground.ground.model.post.push.Push302Response;
+import com.android.ground.ground.model.post.push.Push303;
 import com.android.ground.ground.model.post.push.Push401;
+import com.android.ground.ground.model.post.push.Push402;
 import com.android.ground.ground.model.post.signup.UserProfile;
 import com.android.ground.ground.model.tmap.TmapItem;
 import com.google.gson.Gson;
@@ -67,7 +70,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
-
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -3380,8 +3382,7 @@ public class NetworkManager{
         final RequestParams params = new RequestParams();
         params.put("member_id",mClubManagerData.member_id);
         params.put("club_id",mClubManagerData.club_id);
-//        params.put("manager_id",mClubManagerData.manager_id);
-        params.put("manager_id",mClubManagerData.drop_id);
+        params.put("drop_id",mClubManagerData.drop_id);
 
 //        params.put("contents",mPush300.contents);
 
@@ -3413,6 +3414,17 @@ public class NetworkManager{
                 });
                 Log.d("hello", "status code : " + statusCode);
                 listener.onFail(statusCode);
+                try{
+                    String s = new String(responseBody, Charset.forName("UTF-8"));
+                    Log.d("hello", s);
+                    EtcData items = gson.fromJson(s, EtcData.class);
+                    if (items != null) {
+                        listener.onSuccess(items);
+                    }
+                }catch(NullPointerException e){
+                    e.printStackTrace();
+                }
+
             }
 
 
@@ -3467,16 +3479,12 @@ public class NetworkManager{
     }
     // 로그아웃
     public static final String SEND_MEMBER_LOGOUT_URL = GROND_SERVER_URL+"/member/logout";
-    public void postNetworkMemberLogout(final Context context,  final OnResultListener<EtcData> listener) {
+    public void postNetworkMemberLogout(final Context context,  final OnResultListener<EtcData2> listener) {
         showWaitingDialog(context);
         final RequestParams params = new RequestParams();
         params.put("member_id",PropertyManager.getInstance().getUserId());
         params.put("device_id",PropertyManager.getInstance().getDeviceId());
         params.put("os","Android");
-//        params.put("club_id",PropertyManager.getInstance().getMyPageResult().club_id);
-//        params.put("manager_id",mClubManagerData.manager_id);
-
-//        params.put("contents",mPush300.contents);
 
         client.post(context, SEND_MEMBER_LOGOUT_URL, params, new AsyncHttpResponseHandler() {
             @Override
@@ -3490,10 +3498,16 @@ public class NetworkManager{
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseBody);
                 String s = new String(responseBody, Charset.forName("UTF-8"));
                 Log.d("hello", s);
-                EtcData items = gson.fromJson(s, EtcData.class);
-                if (items != null) {
-                    listener.onSuccess(items);
+                try{
+                    EtcData2 items = gson.fromJson(s, EtcData2.class);
+                    if (items != null) {
+                        listener.onSuccess(items);
+                    }
+                }catch(IllegalStateException e){
+                    e.printStackTrace();
                 }
+
+
             }
 
             @Override

@@ -461,7 +461,10 @@ public class MainActivity extends AppCompatActivity
                 Log.d("hello", PropertyManager.getInstance().getRegistrationToken());
 
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
-
+//                final Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                startActivity(intent);
+//                finish();
             }
 
             @Override

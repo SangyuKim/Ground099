@@ -54,7 +54,8 @@
                 android:layout_height="28dp"
                 android:id="@+id/button39"
                 android:src="@drawable/manage_out_901"
-                android:layout_marginRight="3dp" />
+                android:layout_marginRight="3dp"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="53dp"

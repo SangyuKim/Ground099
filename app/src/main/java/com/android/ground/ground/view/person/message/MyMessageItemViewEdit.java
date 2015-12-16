@@ -12,9 +12,9 @@ import android.widget.Toast;
 import com.android.ground.ground.R;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
-import com.android.ground.ground.manager.Push202;
-import com.android.ground.ground.manager.Push303;
-import com.android.ground.ground.manager.Push402;
+import com.android.ground.ground.model.post.push.Push202;
+import com.android.ground.ground.model.post.push.Push303;
+import com.android.ground.ground.model.post.push.Push402;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.lineup.match.LineupMatch;
 import com.android.ground.ground.model.lineup.match.LineupMatchResult;
@@ -803,6 +803,14 @@ public class MyMessageItemViewEdit extends FrameLayout implements Checkable {
                 break;
             }
             case 305 :{
+                textViewName.setText(item.senderClubName);
+                ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
+                reply.setVisibility(View.GONE);
+                no.setVisibility(View.GONE);
+                yes.setVisibility(View.GONE);
+                break;
+            }
+            case 306 :{
                 textViewName.setText(item.senderClubName);
                 ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + item.senderClubImage), imageViewMessage, options);
                 reply.setVisibility(View.GONE);

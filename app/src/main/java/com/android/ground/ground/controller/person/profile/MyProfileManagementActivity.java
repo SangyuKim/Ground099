@@ -318,15 +318,15 @@ public class MyProfileManagementActivity extends AppCompatActivity {
 
                     @Override
                     public void onFail(int code) {
-
+                        Intent intent = new Intent(MyProfileManagementActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 });
 //                searchMyPage(PropertyManager.getInstance().getUserId());
 
 
-                Intent intent = new Intent(MyProfileManagementActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+
             }
         });
         btnAreaSearch = (LinearLayout)findViewById(R.id.button_area_search);
@@ -532,6 +532,9 @@ public class MyProfileManagementActivity extends AppCompatActivity {
             public void onSuccess(MyPage result) {
                 for (MyPageResult item : result.items) {
                     PropertyManager.getInstance().setMyPageResult(item);
+                    Intent intent = new Intent(MyProfileManagementActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
 

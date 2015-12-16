@@ -274,6 +274,10 @@ public class MainFragment extends Fragment {
                 Log.d("hello", PropertyManager.getInstance().getRegistrationToken());
 
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
+//                final Intent intent = new Intent(getContext(), MainActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                startActivity(intent);
+//                getActivity().finish();
 
             }
 

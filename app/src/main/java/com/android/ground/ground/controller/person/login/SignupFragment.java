@@ -37,6 +37,7 @@ import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.etc.EtcData;
+import com.android.ground.ground.model.etc.EtcData2;
 import com.android.ground.ground.model.login.SignupData;
 import com.android.ground.ground.model.person.profile.MyPage;
 import com.android.ground.ground.model.person.profile.MyPageResult;
@@ -336,9 +337,9 @@ public class SignupFragment extends Fragment {
                                         UserManagement.requestLogout(new LogoutResponseCallback() {
                                             @Override
                                             public void onCompleteLogout() {
-                                                NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData>() {
+                                                NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData2>() {
                                                     @Override
-                                                    public void onSuccess(EtcData result) {
+                                                    public void onSuccess(EtcData2 result) {
                                                         Intent intent = new Intent(getContext(), SampleLoginActivity.class);
                                                         getActivity().finish();
                                                         startActivity(intent);
@@ -355,9 +356,9 @@ public class SignupFragment extends Fragment {
                                         LoginManager mLoginManager = LoginManager.getInstance();
                                         if(mLoginManager != null){
                                             mLoginManager.logOut();
-                                            NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData>() {
+                                            NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData2>() {
                                                 @Override
-                                                public void onSuccess(EtcData result) {
+                                                public void onSuccess(EtcData2 result) {
                                                     Intent intent = new Intent(getContext(), SampleLoginActivity.class);
                                                     getActivity().finish();
                                                     startActivity(intent);

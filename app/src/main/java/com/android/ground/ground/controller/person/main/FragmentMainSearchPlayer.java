@@ -4,9 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.os.Handler;
-import android.os.NetworkOnMainThreadException;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -38,10 +36,6 @@ import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
 import com.android.ground.ground.model.etc.EtcData;
-import com.android.ground.ground.model.naver.MovieItem;
-import com.android.ground.ground.model.naver.NaverMovies;
-import com.android.ground.ground.model.person.main.searchClub.SearchClub;
-import com.android.ground.ground.model.person.main.searchClub.SearchClubResult;
 import com.android.ground.ground.model.person.main.searchMem.SearchMem;
 import com.android.ground.ground.model.person.main.searchMem.SearchMemAdapter;
 import com.android.ground.ground.model.person.main.searchMem.SearchMemResult;
@@ -75,7 +69,7 @@ public class FragmentMainSearchPlayer extends Fragment {
     //    SwipeRefreshLayout refreshLayout;
     SearchMemAdapter mAdapter;
     private static final boolean isNaverMovie = true;
-    boolean isUpdate = false;
+    boolean isUpdate;
     boolean isLastItem = false;
 
 
@@ -125,7 +119,7 @@ public class FragmentMainSearchPlayer extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        isUpdate = false;
        view = inflater.inflate(R.layout.fragment_fragment_main_search_player, container, false);
         setSearchFab();
         setSpinner();
@@ -407,10 +401,11 @@ public class FragmentMainSearchPlayer extends Fragment {
 //    }
     private void getMoreItem() {
         if (!isUpdate) {
+            isUpdate = true;
             String keyword = mAdapter.getKeyword();
             int nextPage = mAdapter.getNextPage();
             if (nextPage != -1) {
-                isUpdate = true;
+
                 NetworkManager.getInstance().getNetworkSearchMem(getContext(), filter, keyword, nextPage, PropertyManager.getInstance().getUserId(), new NetworkManager.OnResultListener<SearchMem>() {
                     @Override
                     public void onSuccess(SearchMem result) {

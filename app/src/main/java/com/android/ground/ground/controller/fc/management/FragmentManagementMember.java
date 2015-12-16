@@ -3,6 +3,7 @@ package com.android.ground.ground.controller.fc.management;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class FragmentManagementMember extends Fragment {
     ListView listView;
     ManagemnetMemberAdapter mAdapter;
     List<ClubAndMemberResult> items = new ArrayList<ClubAndMemberResult>();
+    ArrayList<Integer> messageIds = new ArrayList<Integer>();
     Button btn;
     CheckBox btnEntire;
     boolean isAllchecked= false;
@@ -152,8 +154,8 @@ public class FragmentManagementMember extends Fragment {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
-                dialog.show(getChildFragmentManager(), "custom");
+                onChoiceItem(3);
+
             }
         });
         //추방
@@ -179,8 +181,9 @@ public class FragmentManagementMember extends Fragment {
                 mClubManagerData.member_id = PropertyManager.getInstance().getUserId();
                 mClubManagerData.club_id = PropertyManager.getInstance().getMyPageResult().club_id;
                 View view = getViewByPosition(position, listView);
-                mClubManagerData.manager_id =    ((ManagementMemberItemView)view).mItem.member_id;
-                mClubManagerData.drop_id =    ((ManagementMemberItemView)view).mItem.member_id;
+                mClubManagerData.manager_id =((ManagementMemberItemView)view).mItem.member_id;
+                mClubManagerData.drop_id =((ManagementMemberItemView)view).mItem.member_id;
+                messageIds.add(((ManagementMemberItemView)view).mItem.member_id);
                 if(AddStop == 0 ){
                     NetworkManager.getInstance().postNetworkClubManager(getContext(), mClubManagerData, new NetworkManager.OnResultListener<EtcData>() {
                         @Override
@@ -280,6 +283,16 @@ public class FragmentManagementMember extends Fragment {
                 }
 
             }
+        }//for
+        if(AddStop ==3){
+            if(messageIds.size()>0){
+                Log.d("hello", ""+ messageIds.get(0));
+                getActivity().getIntent().putExtra("collector_ids", messageIds);
+                CustomDialogMessageFragment dialog = new CustomDialogMessageFragment();
+                dialog.show(getChildFragmentManager(), "custom");
+            }
+
+
         }
 //        Toast.makeText(getContext(), "items : " + sb.toString(), Toast.LENGTH_SHORT).show();
 

@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.controller.etc.Area.AreaSearchActivity;
+import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.MyApplication;
@@ -243,7 +244,7 @@ public class FragmentFCProfile extends Fragment {
                     @Override
                     public void onSuccess(EtcData result) {
                         if(result.code==200){
-                            getActivity().finish();
+                            searchMyPage(PropertyManager.getInstance().getUserId());
 
                         }else{
                             Toast.makeText(MyApplication.getContext(), result.msg, Toast.LENGTH_SHORT).show();
@@ -327,7 +328,6 @@ public class FragmentFCProfile extends Fragment {
                                     Toast.makeText(getContext(), result.msg , Toast.LENGTH_SHORT).show();
                                 }
                                 getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                getActivity().finish();
                                 searchMyPage(PropertyManager.getInstance().getUserId());
 
                             }
@@ -572,6 +572,10 @@ public class FragmentFCProfile extends Fragment {
                 Log.d("hello", PropertyManager.getInstance().getRegistrationToken());
 
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
+                final Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                getActivity().finish();
 
             }
 

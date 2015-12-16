@@ -15,7 +15,7 @@ import com.android.ground.ground.R;
 import com.android.ground.ground.controller.person.login.SampleLoginActivity;
 import com.android.ground.ground.controller.person.profile.MyProfileManagementActivity;
 import com.android.ground.ground.manager.NetworkManager;
-import com.android.ground.ground.model.etc.EtcData;
+import com.android.ground.ground.model.etc.EtcData2;
 import com.facebook.login.LoginManager;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
@@ -106,9 +106,9 @@ public class SettingFragment extends Fragment {
                             UserManagement.requestLogout(new LogoutResponseCallback() {
                                 @Override
                                 public void onCompleteLogout() {
-                                    NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData>() {
+                                    NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData2>() {
                                         @Override
-                                        public void onSuccess(EtcData result) {
+                                        public void onSuccess(EtcData2 result) {
                                             Intent intent = new Intent(getContext(), SampleLoginActivity.class);
                                             getActivity().finish();
                                             startActivity(intent);
@@ -126,9 +126,9 @@ public class SettingFragment extends Fragment {
                             LoginManager mLoginManager = LoginManager.getInstance();
                             if(mLoginManager != null){
                                 mLoginManager.logOut();
-                                NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData>() {
+                                NetworkManager.getInstance().postNetworkMemberLogout(getContext(), new NetworkManager.OnResultListener<EtcData2>() {
                                     @Override
-                                    public void onSuccess(EtcData result) {
+                                    public void onSuccess(EtcData2 result) {
                                         Intent intent = new Intent(getContext(), SampleLoginActivity.class);
                                         getActivity().finish();
                                         startActivity(intent);

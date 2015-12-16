@@ -15,26 +15,21 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.ground.ground.R;
 import com.android.ground.ground.RegistrationIntentService;
-import com.android.ground.ground.controller.person.login.TutorialActivity;
 import com.android.ground.ground.controller.person.login.SampleLoginActivity;
+import com.android.ground.ground.controller.person.login.TutorialActivity;
 import com.android.ground.ground.controller.person.main.MainActivity;
 import com.android.ground.ground.manager.NetworkManager;
 import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.manager.ServerUtilities;
 import com.android.ground.ground.model.MyApplication;
-import com.android.ground.ground.model.Utils;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.login.FacebookLogin;
 import com.android.ground.ground.model.login.KakaoLogin;
@@ -45,26 +40,19 @@ import com.android.ground.ground.model.person.profile.MyPageTrans;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
-import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
-import com.kakao.usermgmt.callback.UnLinkResponseCallback;
-import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 
 import java.io.IOException;
-
-import com.kakao.auth.ISessionCallback;
 
 /**
  * 샘플에서 사용하게 될 로그인 페이지
@@ -118,7 +106,7 @@ public class SplashActivity extends AppCompatActivity {
         mLoginManager = LoginManager.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        mHandler.postDelayed(mRunnable, 8000);
+        mHandler.postDelayed(mRunnable, 5000);
 
 
         handler = new Handler();
@@ -567,7 +555,6 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 });
                 PropertyManager.getInstance().setMyPageTransResult(result.items);
-
             }
 
             @Override
@@ -675,6 +662,7 @@ public class SplashActivity extends AppCompatActivity {
 
                             @Override
                             public void onFail(int code) {
+                                mHandler.postDelayed(mRunnable, 2000);
 //                                unShowWaitingDialog();
 
                             }

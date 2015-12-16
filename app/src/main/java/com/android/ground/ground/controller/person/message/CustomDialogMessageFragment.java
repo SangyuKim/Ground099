@@ -1,13 +1,11 @@
 package com.android.ground.ground.controller.person.message;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
-import android.os.NetworkOnMainThreadException;
-import android.support.v4.app.DialogFragment;
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +21,9 @@ import com.android.ground.ground.manager.PropertyManager;
 import com.android.ground.ground.model.etc.EtcData;
 import com.android.ground.ground.model.post.push.Push100;
 import com.android.ground.ground.model.post.push.Push200;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,34 +106,68 @@ public class CustomDialogMessageFragment extends DialogFragment {
                         final Push100 mPush100 = new Push100();
                         mPush100.member_id = PropertyManager.getInstance().getUserId();
                         mPush100.sender_id = PropertyManager.getInstance().getUserId();
-                        mPush100.collector_id = getActivity().getIntent().getIntExtra("collector_id", 0);
                         mPush100.contents = text;
+                        Serializable collector_ids = getActivity().getIntent().getSerializableExtra("collector_ids");
+                        if (collector_ids == null) {
+                            mPush100.collector_id = getActivity().getIntent().getIntExtra("collector_id", 0);
+                            NetworkManager.getInstance().postNetworkMessage100(getContext(), mPush100, new NetworkManager.OnResultListener<EtcData>() {
+                                @Override
+                                public void onSuccess(EtcData result) {
 
-                        NetworkManager.getInstance().postNetworkMessage100(getContext(), mPush100, new NetworkManager.OnResultListener<EtcData>() {
-                            @Override
-                            public void onSuccess(EtcData result) {
+                                    NetworkManager.getInstance().postNetworkPush100(getContext(), mPush100, new NetworkManager.OnResultListener<EtcData>() {
+                                        @Override
+                                        public void onSuccess(EtcData result) {
+                                            Toast.makeText(getContext(), "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
+                                            dismiss();
+                                        }
 
-                                NetworkManager.getInstance().postNetworkPush100(getContext(), mPush100, new NetworkManager.OnResultListener<EtcData>() {
+                                        @Override
+                                        public void onFail(int code) {
+                                            Toast.makeText(getContext(), "푸시 전송 실패", Toast.LENGTH_SHORT).show();
+                                            dismiss();
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onFail(int code) {
+                                    Toast.makeText(getContext(), "메시지 전송 실패", Toast.LENGTH_SHORT).show();
+                                    dismiss();
+                                }
+                            });
+                        } else {
+                            ArrayList<Integer> collectorIds = (ArrayList) collector_ids;
+                            for (Integer collector_id : collectorIds) {
+                                mPush100.collector_id = collector_id;
+                                NetworkManager.getInstance().postNetworkMessage100(getContext(), mPush100, new NetworkManager.OnResultListener<EtcData>() {
                                     @Override
                                     public void onSuccess(EtcData result) {
-                                        Toast.makeText(getContext(), "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
-                                        dismiss();
+
+                                        NetworkManager.getInstance().postNetworkPush100(getContext(), mPush100, new NetworkManager.OnResultListener<EtcData>() {
+                                            @Override
+                                            public void onSuccess(EtcData result) {
+                                                Toast.makeText(getContext(), "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
+                                                dismiss();
+                                            }
+
+                                            @Override
+                                            public void onFail(int code) {
+                                                Toast.makeText(getContext(), "푸시 전송 실패", Toast.LENGTH_SHORT).show();
+                                                dismiss();
+                                            }
+                                        });
                                     }
 
                                     @Override
                                     public void onFail(int code) {
-                                        Toast.makeText(getContext(), "푸시 전송 실패", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "메시지 전송 실패", Toast.LENGTH_SHORT).show();
                                         dismiss();
                                     }
                                 });
                             }
+                        }
 
-                            @Override
-                            public void onFail(int code) {
-                                Toast.makeText(getContext(), "메시지 전송 실패", Toast.LENGTH_SHORT).show();
-                                dismiss();
-                            }
-                        });
+
                     } else {
                         final Push200 mPush200 = new Push200();
                         mPush200.member_id = PropertyManager.getInstance().getUserId();

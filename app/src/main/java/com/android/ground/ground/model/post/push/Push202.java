@@ -1,4 +1,4 @@
-package com.android.ground.ground.manager;
+package com.android.ground.ground.model.post.push;
 
 /**
  * Created by local_admin on 2015-12-07.

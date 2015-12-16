@@ -28,6 +28,8 @@ import com.android.ground.ground.view.person.main.AlarmItemView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import java.util.concurrent.Semaphore;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -37,10 +39,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  * create an instance of this fragment.
  */
 public class AlarmFragment extends Fragment {
+    private Semaphore semaphore;
+
     PullToRefreshListView refreshView;
     MainAlarmAdapter mAdapter;
     ListView listView;
-    boolean isUpdate = false;
+    boolean isUpdate;
     public Handler mHandler;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -83,11 +87,14 @@ public class AlarmFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        isUpdate = false;
+        semaphore = new Semaphore(1);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
 
@@ -221,6 +228,16 @@ public class AlarmFragment extends Fragment {
 
                             break;
                         }
+                        case 306: {
+                            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            Fragment mFragment = (Fragment) MyMessageFragment.newInstance("", "");
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.container, mFragment, MyGcmListenerService.MY_MESSAGE_TAG)
+                                    .addToBackStack(null)
+                                    .commit();
+
+                            break;
+                        }
                         case 400: {
                             Intent intent = new Intent(getContext(), FCManagementActivity.class);
                             intent.putExtra("clubId", PropertyManager.getInstance().getMyPageResult().club_id);
@@ -295,6 +312,8 @@ public class AlarmFragment extends Fragment {
                     @Override
                     public void onSuccess(NotiData result) {
                         mAdapter.clear();
+                        mAdapter.setPgae(1);
+                        mAdapter.setTotalCount(result.itemCount);
                         for (NotiDataResult item : result.items) {
                             mAdapter.add(item);
                         }
@@ -360,28 +379,38 @@ public class AlarmFragment extends Fragment {
         mAlarmListener =listener;
     }
     private void getMoreItem() {
-        if (!isUpdate) {
-            int nextPage = mAdapter.getNextPage();
-            if (nextPage != -1) {
-                isUpdate = true;
-                //PropertyManager.getInstance().getUserId()
-                Log.d("hello", "page : " + nextPage);
-                NetworkManager.getInstance().getNetworkNoti(getContext(), PropertyManager.getInstance().getUserId(), nextPage, new NetworkManager.OnResultListener<NotiData>() {
-                    @Override
-                    public void onSuccess(NotiData result) {
-                        for (NotiDataResult item : result.items) {
-                            mAdapter.add(item);
-                        }
-                        isUpdate = false;
-                    }
+//        Log.d("hello", "get More Item");
+        try {
+            semaphore.acquire();
+            try{
+                if (!isUpdate) {
+                    isUpdate = true;
+                    int nextPage = mAdapter.getNextPage();
+                    if (nextPage != -1) {
+                        Log.d("hello", "page : " + nextPage);
+                        NetworkManager.getInstance().getNetworkNoti(getContext(), PropertyManager.getInstance().getUserId(), nextPage, new NetworkManager.OnResultListener<NotiData>() {
+                            @Override
+                            public void onSuccess(NotiData result) {
+                                for (NotiDataResult item : result.items) {
+                                    mAdapter.add(item);
+                                }
+                                isUpdate = false;
+                            }
 
-                    @Override
-                    public void onFail(int code) {
-                        isUpdate = false;
+                            @Override
+                            public void onFail(int code) {
+                                isUpdate = false;
+                            }
+                        });
                     }
-                });
+                }
+            }finally {
+                semaphore.release();
             }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
     }
 
 }

@@ -1,13 +1,10 @@
 package com.android.ground.ground.view.fc.fcmain;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -168,7 +165,12 @@ public class FCMemberHeaderItemView extends FrameLayout{
         clubLocationName.setText(items.clubLocationName);
         ImageLoader.getInstance().displayImage((NetworkManager.ImageUrl + items.clubImage), clubImage, options);
         if(items.memYN == 0){
-            memYN.setVisibility(View.INVISIBLE);
+            memYN.setVisibility(View.GONE);
+        }
+        if(PropertyManager.getInstance().getMyPageResult().clubYN == 0){
+            memYN.setVisibility(View.VISIBLE);
+        }else{
+            memYN.setVisibility(View.GONE);
         }
 
 
